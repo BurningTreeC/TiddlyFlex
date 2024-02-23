@@ -4,8 +4,8 @@ tags: $:/tags/Stylesheet
 \define tiddlyflex-tiddler-z-indexes()
 
 <$list filter="[range<storyListCount>]">
-`.tc-tiddlyflex-story-river-`$(column)$ `.tc-tiddlyflex-story-river > .tc-tiddler-view-frame:nth-child(100n+`<$text text=<<currentTiddler>>/>`),
-`.tc-tiddlyflex-story-river-`$(column)$ `.tc-tiddlyflex-story-river > .tc-tiddler-edit-frame:nth-child(100n+`<$text text=<<currentTiddler>>/>`) {
+`.tc-tiddlyflex-story-river-`$(column)$ `.tc-tiddlyflex-story-river-inner > .tc-tiddler-view-frame:nth-child(100n+`<$text text=<<currentTiddler>>/>`)`,
+`.tc-tiddlyflex-story-river-`$(column)$ `.tc-tiddlyflex-story-river-inner > .tc-tiddler-edit-frame:nth-child(100n+`<$text text=<<currentTiddler>>/>`) {
 z-index: `<$text text={{{ [<storyListCount>add[501]subtract<currentTiddler>] }}}/>`;
 }
 `
