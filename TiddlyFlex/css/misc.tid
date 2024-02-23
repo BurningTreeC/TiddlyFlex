@@ -1,0 +1,10 @@
+title: $:/plugins/BTC/TiddlyFlex/styles/misc
+tags: $:/tags/Stylesheet
+
+.tc-tiddlyflex-sidebar .tc-sidebar-header {
+	transition: none;
+}
+
+.tc-tiddlyflex-top-toolbar .tc-show-sidebar-btn svg.tc-image-chevron-left, .tc-tiddlyflex-top-toolbar .tc-hide-sidebar-btn svg.tc-image-chevron-right {
+	transform: none;
+}
