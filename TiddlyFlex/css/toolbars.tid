@@ -1,0 +1,16 @@
+title: $:/plugins/BTC/TiddlyFlex/styles/toolbars
+tags: $:/tags/Stylesheet
+
+.tc-tiddlyflex-top-toolbar {
+	display: flex;
+	align-items: stretch;
+	line-height: 2em;
+}
+
+.tc-tiddlyflex-top-toolbar-left, .tc-tiddlyflex-top-toolbar-right {
+	flex-grow: 0;
+}
+
+.tc-tiddlyflex-top-toolbar-center {
+	flex-grow: 1;
+}

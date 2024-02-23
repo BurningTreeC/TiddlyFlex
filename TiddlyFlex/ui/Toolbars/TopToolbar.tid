@@ -1,0 +1,17 @@
+title: $:/plugins/BTC/TiddlyFlex/ui/Toolbars/TopToolbar
+tags: $:/tags/TopToolbar
+
+\whitespace trim
+<div class="tc-tiddlyflex-top-toolbar">
+<div class="tc-tiddlyflex-top-toolbar-left">
+
+</div>
+<div class="tc-tiddlyflex-top-toolbar-center">
+
+</div>
+<div class="tc-tiddlyflex-top-toolbar-right">
+<$list filter="[all[shadows+tiddlers]tag[$:/tags/TopRightBar]!is[draft]]" variable="listItem" storyview="pop">
+<$transclude tiddler=<<listItem>>/>
+</$list>
+</div>
+</div>
