@@ -7,10 +7,22 @@ tags: $:/tags/Stylesheet
 	line-height: 2em;
 }
 
+.tc-tiddlyflex-top-toolbar p {
+	margin: 0;
+}
+
 .tc-tiddlyflex-top-toolbar-left, .tc-tiddlyflex-top-toolbar-right {
 	flex-grow: 0;
 }
 
 .tc-tiddlyflex-top-toolbar-center {
 	flex-grow: 1;
+}
+
+.tc-tiddlyflex-top-toolbar-left > div:first-of-type {
+	margin-left: {{$:/config/tiddlyflex/story-river/padding}};
+}
+
+.tc-tiddlyflex-top-toolbar-right button {
+	margin-right: 0.5em;
 }
