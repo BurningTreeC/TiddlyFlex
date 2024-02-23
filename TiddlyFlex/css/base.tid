@@ -125,6 +125,8 @@ tags: $:/tags/Stylesheet
 
 .tc-tiddlyflex-story-river-wrapper .tc-tiddler-frame {
 	width: 100%;
+	-webkit-box-shadow: 0 0 5px <<colour tiddlyflex-box-shadow>>;
+	box-shadow: 0 0 5px <<colour tiddlyflex-box-shadow>>;
 }
 
 .tc-tiddlyflex-story-river-wrapper-inner .tc-tiddlyflex-story-river {

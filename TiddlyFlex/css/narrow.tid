@@ -29,7 +29,7 @@ tags: $:/tags/Stylesheet
 	<% endif %>
 
 	.tc-tiddlyflex-story-river-container-inner {
-		overflow-x: scroll;
+		overflow-x: auto;
 		width: 100vw;
 		scroll-behavior: smooth;
 		scroll-snap-type: x mandatory;
