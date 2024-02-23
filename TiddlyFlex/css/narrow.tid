@@ -16,6 +16,7 @@ tags: $:/tags/Stylesheet
 		z-index: 1001;
 		background-color: <<colour page-background>>;
 		transform: translate3d(0,0,0);
+		-webkit-transition: transform {{$:/config/AnimationDuration}}ms;
 		transition: transform {{$:/config/AnimationDuration}}ms;
 	}
 

@@ -59,6 +59,7 @@ tags: $:/tags/Stylesheet
 	flex-grow: 1;
 	flex-shrink: 0;
 	flex-basis: calc(100% - {{$:/config/tiddlyflex/sidebar/width}});
+	-webkit-transition: flex-basis {{$:/config/AnimationDuration}}ms;
 	transition: flex-basis {{$:/config/AnimationDuration}}ms;
 	overflow: hidden;
 	max-height: 100%;
