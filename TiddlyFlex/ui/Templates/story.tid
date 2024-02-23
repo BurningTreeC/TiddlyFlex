@@ -1,0 +1,69 @@
+title: $:/plugins/BTC/TiddlyFlex/ui/Templates/story
+code-body: yes
+
+\whitespace trim
+\function tiddlyflex-current-column() [<column>]
+\procedure tiddlyflex-activate-column()
+<%if [{$:/columns!!current-column}!match<column>] %>
+	<$action-setfield $tiddler="$:/columns" current-column=<<column>>/>
+<% endif %>
+\end
+<div class={{{ [[tc-tiddlyflex-story-river-wrapper-inner ]addsuffix[tc-tiddlyflex-story-river-]addsuffix<column>] [{$:/columns!!current-column}match<column>then[tc-tiddlyflex-story-river-active]] [{$:/columns!!current-column}is[blank]then<column>match[1]then[tc-tiddlyflex-story-river-active]] :and[unique[]join[ ]] }}}>
+
+	<$navigator story={{{ [[$:/StoryList-]addsuffix<column>] }}} history={{{ [[$:/HistoryList-]addsuffix<column>] }}} openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromOutsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
+
+		<$dropzone enable=<<tv-enable-drag-and-drop>> class={{{ [<column>!is[blank]addprefix[tc-tiddlyflex-dropzone-]] ~tc-tiddlyflex-dropzone-1 }}} importTitle={{{ [[$:/Import-]addsuffix<column>] }}}>
+
+			<$eventcatcher selector=".tc-tiddlyflex-activate-column" $click=<<tiddlyflex-activate-column>> class="tc-tiddlyflex-active-column-wrapper">
+
+				<a class="tc-btn-invisible tc-tiddlyflex-activate-column"/>
+
+			</$eventcatcher>
+
+			<section class="tc-tiddlyflex-story-river" role="main">
+
+				<$messagecatcher $tm-navigate=<<tiddlyflex-navigate-story-river-actions>>>
+
+					<section class="story-backdrop">
+
+						<$set name="aboveStoryTag" value={{{ [[$:/tags/AboveStory-]addsuffix<column>] }}}>
+
+							<$list filter="[all[shadows+tiddlers]tag<aboveStoryTag>!is[draft]]">
+
+								<$transclude/>
+
+							</$list>
+
+						</$set>
+
+					</section>
+
+					<section class="tc-tiddlyflex-story-river-inner">
+
+						<$list filter="[list<tv-story-list>]" history=<<tv-history-list>> template="$:/core/ui/StoryTiddlerTemplate" storyview={{$:/view}}/>
+
+					</section>
+
+					<section class="story-frontdrop">
+
+						<$set name="belowStoryTag" value={{{ [[$:/tags/BelowStory-]addsuffix<column>] }}}>
+
+							<$list filter="[all[shadows+tiddlers]tag<belowStoryTag>!has[draft.of]]">
+
+								<$transclude/>
+
+							</$list>
+
+						</$set>
+
+					</section>
+
+				</$messagecatcher>
+
+			</section>
+
+		</$dropzone>
+
+	</$navigator>
+
+</div>

@@ -1,0 +1,76 @@
+title: $:/plugins/BTC/TiddlyFlex/ui/Layout
+tags: $:/tags/Layout
+description: A Flexbox Layout
+name: ~TiddlyFlex
+code-body: yes
+
+\whitespace trim
+\import [subfilter{$:/core/config/GlobalImportFilter}]
+<$vars
+	tv-config-toolbar-icons={{$:/config/Toolbar/Icons}}
+	tv-config-toolbar-text={{$:/config/Toolbar/Text}}
+	tv-config-toolbar-class={{$:/config/Toolbar/ButtonClass}}
+	tv-enable-drag-and-drop={{$:/config/DragAndDrop/Enable}}
+	tv-show-missing-links={{$:/config/MissingLinks}}
+	storyviewTitle={{$:/view}}
+	languageTitle={{{ [{$:/language}get[name]] }}}>
+	<div class={{{ [all[shadows+tiddlers]tag[$:/tags/ClassFilters/PageTemplate/TiddlyFlex]!is[draft]] :map:flat[subfilter{!!text}] tc-page-container tc-tiddlyflex-container [[tc-page-view-]addsuffix<storyviewTitle>] [[tc-language-]addsuffix<languageTitle>] [{$:/state/sidebar}match[yes]then[tc-sidebar-shown]] :and[unique[]join[ ]] }}} >
+		<$eventcatcher selector=".tc-tiddlyflex-sidebar-shown" $click="""<$action-setfield $tiddler="$:/state/sidebar" text="no"/>""" class="tc-tiddlyflex-sidebar-shown-eventcatcher">
+			<div class={{{ [{$:/state/sidebar}match[yes]then[tc-tiddlyflex-sidebar-hide tc-btn-invisible tc-tiddlyflex-sidebar-shown]else[tc-tiddlyflex-sidebar-hide tc-btn-invisible tc-tiddlyflex-sidebar-hidden]] }}}/>
+		</$eventcatcher>
+		<$navigator story={{{ [[$:/StoryList-]addsuffix{$:/columns!!current-column}!match[$:/StoryList-]] ~$:/StoryList-1 }}} history={{{ [[$:/HistoryList-]addsuffix{$:/columns!!current-column}!match[$:/HistoryList-]] ~$:/HistoryList-1 }}}>
+			<$messagecatcher $tm-navigate=<<tiddlyflex-navigate-story-river-actions>>>
+				<div class="tc-tiddlyflex-header">
+					<$list filter="[all[shadows+tiddlers]tag[$:/tags/TopToolbar]!is[draft]]" variable="listItem" storyview="pop">
+						<$transclude tiddler=<<listItem>>/>
+					</$list>
+				</div>
+			</$messagecatcher>
+		</$navigator>
+		<main class="tc-tiddlyflex-main">
+			<div class="tc-tiddlyflex-story-river-container">
+				<div class="tc-tiddlyflex-story-river-container-inner">
+					<$list filter="[list[$:/columns]] ~1" variable="column" storyview="pop">
+						<$set name="transclusion" value=<<column>>>
+							<div class="tc-tiddlyflex-story-river-wrapper">
+								<div class="tc-tiddlyflex-story-river-header">
+									<$set name="aboveStoryHeaderTag" value={{{ [[$:/tags/AboveStoryHeader-]addsuffix<column>] }}}>
+										<$list filter="[all[shadows+tiddlers]tag<aboveStoryHeaderTag>!is[draft]]" variable="listItem" storyview="pop">
+											<$transclude tiddler=<<listItem>>/>
+										</$list>
+									</$set>
+								</div>
+								<$transclude tiddler="$:/plugins/BTC/TiddlyFlex/ui/Templates/story"/>
+								<div class="tc-tiddlyflex-story-river-footer">
+									<$set name="belowStoryFooterTag" value={{{ [[$:/tags/BelowStoryFooter-]addsuffix<column>] }}}>
+										<$list filter="[all[shadows+tiddlers]tag<belowStoryFooterTag>!is[draft]]" variable="listItem" storyview="pop">
+											<$transclude tiddler=<<listItem>>/>
+										</$list>
+									</$set>
+								</div>
+							</div>
+						</$set>
+					</$list>
+				</div>
+			</div>
+			<div class="tc-tiddlyflex-sidebar">
+				<div class="tc-tiddlyflex-sidebar-container">
+					<div class="tc-tiddlyflex-sidebar-container-inner">
+						<$navigator story={{{ [[$:/StoryList-]addsuffix{$:/columns!!current-column}!match[$:/StoryList-]] ~$:/StoryList-1 }}} history={{{ [[$:/HistoryList-]addsuffix{$:/columns!!current-column}!match[$:/HistoryList-]] ~$:/HistoryList-1 }}}>
+							{{$:/plugins/BTC/TiddlyFlex/ui/Templates/sidebar}}
+						</$navigator>
+					</div>
+				</div>
+			</div>
+		</main>
+		<$navigator story={{{ [[$:/StoryList-]addsuffix{$:/columns!!current-column}!match[$:/StoryList-]] ~$:/StoryList-1 }}} history={{{ [[$:/HistoryList-]addsuffix{$:/columns!!current-column}!match[$:/HistoryList-]] ~$:/HistoryList-1 }}}>
+			<$messagecatcher $tm-navigate=<<tiddlyflex-navigate-story-river-actions>>>
+				<div class="tc-tiddlyflex-footer">
+					<$list filter="[all[shadows+tiddlers]tag[$:/tags/BottomToolbar]!is[draft]]" variable="listItem" storyview="pop">
+						<$transclude tiddler=<<listItem>>/>
+					</$list>
+				</div>
+			</$messagecatcher>
+		</$navigator>
+	</div>
+</$vars>
