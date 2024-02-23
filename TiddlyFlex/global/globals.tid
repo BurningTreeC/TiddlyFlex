@@ -5,6 +5,7 @@ tags: $:/tags/Global
 .tc-tiddlyflex-story-river-$(column)$ [data-tiddler-title="$(navigateToCSSEscaped)$"]
 \end
 \function tiddlyflex-suppress-navigation() [<modifier>match[ctrl]then[true]] [<modifier>match[meta]then[true]] +[match[true]] +[limit[1]]
+\function edit-missing-tiddler() [{$:/config/tiddlyflex/navigation/edit-missing-tiddlers}match[yes]then<event-navigateTo>!is[shadow]is[missing]]
 \procedure tiddlyflex-navigate-story-river-actions-navigate()
 <$action-sendmessage $message="tm-navigate" navigateTo=<<event-navigateTo>> navigateFromTitle=<<event-navigateFromTitle>> navigateSuppressNavigation={{{ [function[tiddlyflex-suppress-navigation]] }}}/>
 \end
@@ -15,6 +16,9 @@ tags: $:/tags/Global
 	<% endif %>
 	<$navigator story=<<storyList>> history=<<historyList>> openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromOutsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
 		<<tiddlyflex-navigate-story-river-actions-navigate>>
+		<%if [function[edit-missing-tiddler]] %>
+			<$action-sendmessage $message="tm-edit-tiddler" $param=<<event-navigateTo>> suppressNavigation={{{ [function[tiddlyflex-suppress-navigation]] }}}/>
+		<% endif %>
 	</$navigator>
 </$let>
 \end
@@ -30,7 +34,6 @@ tags: $:/tags/Global
 <% endif %>
 \end
 \procedure tiddlyflex-navigate-story-river-actions()
-\function edit-missing-tiddler() [{$:/config/tiddlyflex/navigation/edit-missing-tiddlers}match[yes]then<event-navigateTo>!is[shadow]is[missing]]
 \function tiddlyflex-no-shift-alt() [<modifier>!match[shift]then<modifier>!match[alt]]
 <%if [list[$:/columns]] ~1 +[addprefix[$:/StoryList-]] +[enlist-input[]] +[contains<event-navigateTo>] %>
 	<%if [function[tiddlyflex-no-shift-alt]] %>
