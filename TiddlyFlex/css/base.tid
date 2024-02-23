@@ -92,21 +92,6 @@ tags: $:/tags/Stylesheet
 
 }
 
-.tc-flex-story-river-inner-inner {
-	flex-grow: 1;
-	flex-shrink: 1;
-	overflow-y: scroll;
-	scroll-behavior: smooth;
-}
-
-@media (min-width: 800px) {
-
-	.tc-flex-story-river-inner-inner {
-		flex-basis: 0;
-	}
-
-}
-
 .tc-tiddlyflex-story-river-wrapper {
 	display: flex;
 	flex-direction: column;
@@ -126,7 +111,7 @@ tags: $:/tags/Stylesheet
 .tc-tiddlyflex-story-river-wrapper-inner {
 	flex-grow: 1;
 	flex-shrink: 1;
-	overflow-y: scroll;
+	overflow-y: auto;
 	scroll-behavior: smooth;
 }
 
