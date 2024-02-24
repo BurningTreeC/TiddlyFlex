@@ -8,6 +8,6 @@ list-before: $:/plugins/BTC/TiddlyFlex/ui/Buttons/TopToolbar/remove-column
 	<%if [{$:/config/tiddlyflex/story-river/tiddler/drag-enabled}match[no]] %>
 		<$action-setfield $tiddler="$:/config/tiddlyflex/story-river/tiddler/drag-enabled" text="yes"/>
 	<% else %>
-		<$action-setfield $tiddler="$:/config/tiddlyflex/story-river/tiddler/drag-enabled" text="no"/>
+		<$action-deletetiddler $tiddler="$:/config/tiddlyflex/story-river/tiddler/drag-enabled"/>
 	<% endif %>
 </$button>
