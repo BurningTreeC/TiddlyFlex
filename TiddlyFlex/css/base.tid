@@ -55,6 +55,7 @@ tags: $:/tags/Stylesheet
 }
 
 .tc-tiddlyflex-leftbar {
+	display: flex;
 	flex-grow: 0;
 	flex-shrink: 0;
 	box-shadow: 1px 0 5px -1px <<colour tiddlyflex-box-shadow>>;;
@@ -211,6 +212,7 @@ tags: $:/tags/Stylesheet
 .tc-tiddlyflex-sidebar-scrollable {
 	padding-top: 42px;
 	padding-left: 42px;
+	min-width: 100%;
 }
 
 .tc-tiddlyflex-sidebar-hide {
