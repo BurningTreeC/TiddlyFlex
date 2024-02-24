@@ -7,8 +7,7 @@ tags: $:/tags/Global
 \procedure tiddlyflex-bottom-dragenter-actions()
 <$action-setfield $tiddler="$:/state/dragging" starting-next-tiddler="" copying="" target=<<currentTiddler>> margin="bottom" nth={{{ [list<tv-story-list>allbefore<currentTiddler>count[]add[1]] }}} river=<<column>> next-tiddler="" from-index={{{ [list<tv-story-list>allbefore<currentTiddler>count[]add[1]] }}} from-story=<<tv-story-list>>/>
 \end
-\procedure tiddlyflex-top-drop-actions()
-<$action-setfield $tiddler="$:/state/drag-handled" text="yes"/>
+\procedure tiddlyflex-top-drop-actions-inner()
 <$action-listops $tiddler=<<tv-story-list>> $subfilter="+[insertbefore<actionTiddler>,<currentTiddler>]"/>
 <$list filter="[<tv-history-list>get[current-tiddler]match[]] [<tv-history-list>!has[current-tiddler]] +[limit[1]]" variable="ignore">
 	<$action-setfield $tiddler=<<tv-history-list>> current-tiddler=<<actionTiddler>>/>
@@ -21,8 +20,20 @@ tags: $:/tags/Global
 	</$list>
 </$vars>
 \end
-\procedure tiddlyflex-bottom-drop-actions()
+\procedure tiddlyflex-top-drop-actions()
 <$action-setfield $tiddler="$:/state/drag-handled" text="yes"/>
+<$action-setfield $tiddler="$:/state/drag-handled" text="yes"/>
+<$vars prefix="[[" suffix="]]">
+	<%if [<actionTiddler>removeprefix<prefix>removesuffix<suffix>] %>
+		<$set name="actionTiddler" value={{{ [<actionTiddler>removeprefix<prefix>removesuffix<suffix>] }}}>
+			<<tiddlyflex-top-drop-actions-inner>>
+		</$set>
+	<% else %>
+		<<tiddlyflex-top-drop-actions-inner>>
+	<% endif %>
+</$vars>
+\end
+\procedure tiddlyflex-bottom-drop-actions-inner()
 <$set name="nextTiddler" value={{{ [list<tv-story-list>after<currentTiddler>] }}}>
 	<%if [<nextTiddler>match[]] %>
 		<$action-listops $tiddler=<<tv-story-list>> $subfilter="[<actionTiddler>]"/>
@@ -42,6 +53,18 @@ tags: $:/tags/Global
 			<$action-setfield $tiddler=<<fromHistoryList>> current-tiddler={{{ [list<fromStoryList>zth{$:/state/dragging!!starting-from-index}] }}}/>
 		</$list>
 	</$list>
+</$vars>
+\end
+\procedure tiddlyflex-bottom-drop-actions()
+<$action-setfield $tiddler="$:/state/drag-handled" text="yes"/>
+<$vars prefix="[[" suffix="]]">
+	<%if [<actionTiddler>removeprefix<prefix>removesuffix<suffix>] %>
+		<$set name="actionTiddler" value={{{ [<actionTiddler>removeprefix<prefix>removesuffix<suffix>] }}}>
+			<<tiddlyflex-bottom-drop-actions-inner>>
+		</$set>
+	<% else %>
+		<<tiddlyflex-bottom-drop-actions-inner>>
+	<% endif %>
 </$vars>
 \end
 \procedure tiddlyflex-drag-start-actions()
@@ -73,7 +96,6 @@ tags: $:/tags/Global
 \procedure tiddlyflex-drag-end-actions()
 <%if [[$:/state/drag-handled]is[missing]] %>
 	<$let fromStoryList={{$:/state/dragging!!from-story}} fromIndex={{$:/state/dragging!!from-index}} listBeforeTiddler={{{ [list<fromStoryList>zth<fromIndex>] }}} prefix="[[" suffix="]]" actionTiddler={{{ [<actionTiddler>removeprefix<prefix>removesuffix<suffix>] :else[<actionTiddler>] }}}>
-		<$action-log fromStoryList=<<fromStoryList>> actionTiddler=<<actionTiddler>> listBeforeTiddler=<<listBeforeTiddler>>/>
 		<%if [<listBeforeTiddler>!is[blank]] %>
 			<$action-listops $tiddler=<<fromStoryList>> $subfilter="+[insertbefore<actionTiddler>,<listBeforeTiddler>]"/>
 		<% else %>
