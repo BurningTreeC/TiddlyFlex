@@ -189,9 +189,9 @@ Error message and password prompt
 
 <li>Drag&amp;Drop</li>
 
-<li>Headers &amp; Footers</li>
+<li>dragging state fields</li>
 
-<li>New Tiddler</li>
+<li>Headers &amp; Footers</li>
 
 <li>Some Settings</li>
 
@@ -236,9 +236,9 @@ Error message and password prompt
 ,
 {"title":"$:/StoryList","text":"","list":"","revision":"1","bag":"default"}
 ,
-{"title":"$:/StoryList-1","created":"20240223133846487","list":"[[New Tiddler]] About [[This is a left toolbar]] [[This is a bottom toolbar]] Drag&Drop","modified":"20240224164727251","type":"text/vnd.tiddlywiki","revision":"0","bag":"default"}
+{"title":"$:/StoryList-1","created":"20240223133846487","list":"[[dragging state fields]] About [[This is a left toolbar]] [[This is a bottom toolbar]] Drag&Drop","modified":"20240224165920341","type":"text/vnd.tiddlywiki","revision":"0","bag":"default"}
 ,
-{"title":"$:/StoryList-2","created":"20240223125619775","list":"[[Headers & Footers]] [[Some Settings]] [[Tiddler Links]]","modified":"20240224165057747","type":"text/vnd.tiddlywiki","revision":"0","bag":"default"}
+{"title":"$:/StoryList-2","created":"20240223125619775","list":"[[Headers & Footers]] [[Some Settings]] [[Tiddler Links]]","modified":"20240224165940428","type":"text/vnd.tiddlywiki","revision":"0","bag":"default"}
 ,
 {"title":"$:/StoryList-3","created":"20240223125302530","list":"","modified":"20240224060325796","type":"text/vnd.tiddlywiki","revision":"0","bag":"default"}
 ,
@@ -260,11 +260,11 @@ Error message and password prompt
 ,
 {"title":"About","created":"20240223143730532","modified":"20240223151043748","tags":"About","type":"text/vnd.tiddlywiki","text":"!!! This plugin provides a flexible Layout to [ext[TiddlyWiki5|https://tiddlywiki.com]]\n!!! It uses [ext[Flexbox|https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox]] for its Layout","revision":"0","bag":"default"}
 ,
-{"title":"Drag&Drop","created":"20240224102350542","modified":"20240224140342488","tags":"Functionality","type":"text/vnd.tiddlywiki","text":"!!! You can drag tiddlers around\n!!! Enable / disable dragging by clicking the {{$:/core/images/github}} button or by using the Keyboard Shortcut \u003C\u003Cdisplayshortcuts \"((dragging))\" \"\u003Ckbd>\" \"\" \"\u003C/kbd>\">>","revision":"0","bag":"default"}
+{"title":"Drag&Drop","created":"20240224102350542","modified":"20240224170010699","tags":"Functionality","type":"text/vnd.tiddlywiki","text":"!!! You can drag tiddlers around\n!!! You can even drag a tiddler directly to another Wiki to import it there\n!!! Enable / disable dragging by clicking the {{$:/core/images/github}} button or by using the Keyboard Shortcut \u003C\u003Cdisplayshortcuts \"((dragging))\" \"\u003Ckbd>\" \"\" \"\u003C/kbd>\">>","revision":"0","bag":"default"}
+,
+{"title":"dragging state fields","created":"20240224163555457","modified":"20240224165859151","tags":"","type":"text/vnd.tiddlywiki","text":"!!! Drag a tiddler (not this tiddler) to see the information stored in the tiddler $:/state/dragging while dragging\n\n\u003C$list filter=\"[[$:/state/dragging]fields[]]\" variable=\"field\">\n\n\u003C$text text=\u003C\u003Cfield>>/>: \u003C$text text={{{ [[$:/state/dragging]get\u003Cfield>] }}}/>\n\n\u003C/$list>","revision":"0","bag":"default"}
 ,
 {"title":"Headers & Footers","created":"20240223163530837","modified":"20240224044423584","tags":"Functionality","type":"text/vnd.tiddlywiki","text":"!!! You can add a top Toolbar by adding the Tag \u003C\u003Ctag $:/tags/TopToolbar>> to a tiddler\n!!! You can add a bottom Toolbar by adding the Tag \u003C\u003Ctag $:/tags/BottomToolbar>> to a tiddler\n!!! You can add a left Toolbar by adding the Tag \u003C\u003Ctag $:/tags/LeftToolbar>> to a tiddler\n!!! You can add a top single-column Header by adding the Tag \u003C\u003Ctag $:/tags/AboveStoryHeader-1>> (2, 3, ...) to a tiddler\n!!! You can add a bottom single-column Footer by adding the Tag \u003C\u003Ctag $:/tags/BelowStoryFooter-1>> (2, 3, ...) to a tiddler","revision":"0","bag":"default"}
-,
-{"title":"New Tiddler","created":"20240224163555457","modified":"20240224163714530","tags":"","type":"text/vnd.tiddlywiki","text":"\u003C$list filter=\"[[$:/state/dragging]fields[]]\" variable=\"field\">\n\n\u003C$text text=\u003C\u003Cfield>>/>: \u003C$text text={{{ [[$:/state/dragging]get\u003Cfield>] }}}/>\n\n\u003C/$list>","revision":"0","bag":"default"}
 ,
 {"title":"Some Settings","created":"20240224140639804","modified":"20240224141607414","tags":"Configuration","type":"text/vnd.tiddlywiki","text":"~AnimationDuration for the Drag&Drop animations (in ms): \u003C$edit-text tag=\"input\" tiddler=\"$:/config/tiddlyflex/dragndrop/AnimationDuration\"/>\n\nSidebar Width: \u003C$edit-text tag=\"input\" tiddler=\"$:/config/tiddlyflex/sidebar/width\"/>\n\nMargin Bottom of Tiddlers: \u003C$edit-text tag=\"input\" tiddler=\"$:/config/tiddlyflex/story-river/tiddler/margin-bottom\"/>\n\nPadding of the Story Rivers: \u003C$edit-text tag=\"input\" tiddler=\"$:/config/tiddlyflex/story-river/padding\"/>","revision":"0","bag":"default"}
 ,
