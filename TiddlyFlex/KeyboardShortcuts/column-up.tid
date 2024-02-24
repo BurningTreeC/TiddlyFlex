@@ -1,0 +1,7 @@
+title: $:/plugins/BTC/TiddlyFlex/KeyboardShortcuts/column-up
+tags: $:/tags/KeyboardShortcut
+key: ((column-up))
+
+<$let currentColumn={{{ [[$:/columns]get[current-column]] ~1 }}} nextColumn={{{ [list[$:/columns]after<currentColumn>] ~1 }}}>
+	<$action-setfield $tiddler="$:/columns" current-column=<<nextColumn>>/>
+</$let>

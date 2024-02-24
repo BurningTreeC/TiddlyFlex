@@ -1,0 +1,7 @@
+title: $:/plugins/BTC/TiddlyFlex/KeyboardShortcuts/column-down
+tags: $:/tags/KeyboardShortcut
+key: ((column-down))
+
+<$let currentColumn={{{ [[$:/columns]get[current-column]] ~1 }}} columnCount={{{ [list[$:/columns]count[]] ~1 }}} nextColumn={{{ [list[$:/columns]before<currentColumn>] ~[<columnCount>] }}}>
+	<$action-setfield $tiddler="$:/columns" current-column=<<nextColumn>>/>
+</$let>
