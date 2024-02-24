@@ -57,8 +57,20 @@ tags: $:/tags/Stylesheet
 		transition: background {{$:/config/AnimationDuration}}ms 0s;
 	}
 
+}
+
+@media (max-width: 767.98px) {
+	
 	.tc-tiddlyflex-top-toolbar .tc-sidebar-lists .tc-search input {
 		width: 150px;
+	}
+
+}
+
+@media (max-width: 575.98px) {
+	
+	.tc-tiddlyflex-top-toolbar .tc-sidebar-lists .tc-search input {
+		width: 100px;
 	}
 
 }
