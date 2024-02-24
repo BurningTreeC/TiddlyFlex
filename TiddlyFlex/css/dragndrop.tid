@@ -158,10 +158,6 @@ tags: $:/tags/Stylesheet
 	top: -{{$:/config/tiddlyflex/story-river/padding}};
 }
 
-.tc-tiddlyflex-story-river-inner > .tc-tiddler-view-frame > .tc-draggable, .tc-tiddlyflex-story-river-inner > .tc-tiddler-edit-frame > .tc-draggable {
-	cursor: default;
-}
-
 <$let currentRiver={{$:/state/dragging!!start-river}} dragTiddler={{$:/state/dragging!!drag-tiddler}} startingNextTiddler={{$:/state/dragging!!starting-next-tiddler}} startingNextTiddlerCSSEscaped={{{ [<startingNextTiddler>escapecss[]] }}} dragTiddlerCSSEscaped={{{ [<dragTiddler>escapecss[]] }}}>
 
 	<%if [{$:/state/dragging!!copying}!match[yes]] %>
