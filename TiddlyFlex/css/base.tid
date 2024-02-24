@@ -58,7 +58,7 @@ tags: $:/tags/Stylesheet
 	flex-grow: 0;
 	flex-shrink: 0;
 	box-shadow: 1px 0 5px -1px <<colour tiddlyflex-box-shadow>>;;
-	z-index; 998;
+	z-index: 998;
 	background-color: <<colour page-background>>;
 }
 
