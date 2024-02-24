@@ -1,4 +1,4 @@
-title: $:/plugins/BTC/TiddlyFlex/globals
+title: $:/plugins/BTC/TiddlyFlex/globals/navigation
 tags: $:/tags/Global
 
 \define tiddlyflex-navigate-story-river-actions-selector()

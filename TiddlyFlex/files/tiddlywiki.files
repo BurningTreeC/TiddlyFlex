@@ -8,11 +8,25 @@
 				"module-type": "widget-subclass"
 			}
 		},{
+			"file": "modules/widgets/subclasses/droppable.js",
+			"fields": {
+				"type": "application/javascript",
+				"title": "$:/plugins/BTC/TiddlyFlex/modules/widgets/subclasses/droppable.js",
+				"module-type": "widget-subclass"
+			}
+		},{
 			"file": "modules/utils/dom/scroller.js",
 			"fields": {
 				"type": "application/javascript",
 				"title": "$:/core/modules/utils/dom/scroller.js",
 				"module-type": "utils"
+			}
+		},{
+			"file": "modules/storyviews/tiddlyflex.js",
+			"fields": {
+				"type": "application/javascript",
+				"title": "$:/plugins/BTC/TiddlyFlex/modules/storyviews/tiddlyflex.js",
+				"module-type": "storyview"
 			}
 		}
 	]

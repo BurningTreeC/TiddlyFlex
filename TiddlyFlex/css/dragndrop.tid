@@ -1,0 +1,223 @@
+title: $:/plugins/BTC/TiddlyFlex/styles/dragndrop
+tags: $:/tags/Stylesheet
+
+\define tiddlyflex-tiddler-frame-transitions()
+
+.tc-tiddlyflex-story-river-inner > .tc-tiddler-view-frame > .tc-tiddler-frame, .tc-tiddlyflex-story-river-inner > .tc-tiddler-edit-frame > .tc-tiddler-frame {
+	transition: margin-top {{$:/config/tiddlyflex/dragndrop/AnimationDuration}}ms linear, margin-bottom {{$:/config/tiddlyflex/dragndrop/AnimationDuration}}ms linear;
+}
+
+\end
+
+\define tiddlyflex-position-start-tiddlers-no-copying()
+\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
+
+.tc-tiddlyflex-story-river-$(currentRiver)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(startingNextTiddlerCSSEscaped)$"].tc-tiddler-view-frame > .tc-tiddler-frame, .tc-tiddlyflex-story-river-$(currentRiver)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(startingNextTiddlerCSSEscaped)$"].tc-tiddler-edit-frame > .tc-tiddler-frame {
+	transition: none;
+}
+
+.tc-tiddlyflex-story-river-$(currentRiver)$ [data-tiddler-title="$(startingNextTiddlerCSSEscaped)$"] .tc-tiddler-frame {
+	margin-top: calc({{$:/state/dragging!!height}}px + (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}}));
+}
+
+\end
+
+\define tiddlyflex-position-start-tiddlers-no-copying-nth-0()
+\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
+
+.tc-tiddlyflex-story-river-$(currentRiver)$ [data-tiddler-title="$(startingNextTiddlerCSSEscaped)$"] .tc-tiddler-frame {
+	margin-top: calc({{$:/state/dragging!!height}}px + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}});
+}
+
+\end
+
+\define tiddlyflex-position-start-tiddlers-copying()
+\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
+
+.tc-tiddlyflex-story-river-$(currentRiver)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(dragTiddlerCSSEscaped)$"].tc-tiddler-view-frame > .tc-tiddler-frame, .tc-tiddlyflex-story-river-$(currentRiver)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(dragTiddlerCSSEscaped)$"].tc-tiddler-edit-frame > .tc-tiddler-frame {
+	transition: none;
+}
+
+.tc-tiddlyflex-story-river-$(currentRiver)$ [data-tiddler-title="$(dragTiddlerCSSEscaped)$"] .tc-tiddler-frame {
+	margin-top: calc({{$:/state/dragging!!height}}px + (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottomn}}));
+}
+
+\end
+
+\define tiddlyflex-position-start-tiddlers-copying-nth-0()
+\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
+
+.tc-tiddlyflex-story-river-$(currentRiver)$ [data-tiddler-title="$(dragTiddlerCSSEscaped)$"] .tc-tiddler-frame {
+	margin-top: calc({{$:/state/dragging!!height}}px + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}});
+}
+
+\end
+
+\define tiddlyflex-target-tiddler-margin()
+\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
+
+.tc-tiddlyflex-story-river-$(currentRiver)$ .tc-tiddler-view-frame:not([data-tiddler-title="$(targetTiddlerCSSEscaped)$"]) .tc-tiddler-frame, .tc-tiddlyflex-story-river-$(currentRiver)$ .tc-tiddler-edit-frame:not([data-tiddler-title="$(targetTiddlerCSSEscaped)$"]) .tc-tiddler-frame {
+	margin-top: {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}};
+}
+
+.tc-tiddlyflex-story-river-$(currentRiver)$ .tc-tiddler-view-frame:first-of-type:not([data-tiddler-title="$(targetTiddlerCSSEscaped)$"]) .tc-tiddler-frame, .tc-tiddlyflex-story-river-$(currentRiver)$ .tc-tiddler-edit-frame:first-of-type:not([data-tiddler-title="$(targetTiddlerCSSEscaped)$"]) .tc-tiddler-frame {
+	margin-top: 0;
+}
+
+.tc-tiddlyflex-story-river-$(currentRiver)$ [data-tiddler-title="$(targetTiddlerCSSEscaped)$"] .tc-tiddler-frame {
+	margin-top: calc({{$:/state/dragging!!height}}px + (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}}));
+}
+
+\end
+
+\define tiddlyflex-target-tiddler-margin-nth-0()
+\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
+
+.tc-tiddlyflex-story-river-$(currentRiver)$ [data-tiddler-title="$(targetTiddlerCSSEscaped)$"] .tc-tiddler-frame {
+	margin-top: calc({{$:/state/dragging!!height}}px + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}});
+}
+
+\end
+
+<%if [{$:/state/dragging}match[yes]] %>
+
+.tc-tiddlyflex-droppable-top-half {
+	position: absolute;
+	top: -{{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}};
+	left: -{{$:/config/tiddlyflex/story-river/padding}};
+	height: calc(50% + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}});
+	width: calc(100% + (2 * {{$:/config/tiddlyflex/story-river/padding}}));
+	display: none;
+	z-index: 501;
+}
+
+.tc-tiddler-view-frame:first-of-type .tc-tiddlyflex-droppable-top-half, .tc-tiddler-edit-frame:first-of-type .tc-tiddlyflex-droppable-top-half {
+	top: -{{$:/config/tiddlyflex/story-river/padding}};
+	height: calc(50% + {{$:/config/tiddlyflex/story-river/padding}});
+}
+
+.tc-tiddlyflex-droppable-bottom-half {
+	position: absolute;
+	top: 50%;
+	left: -{{$:/config/tiddlyflex/story-river/padding}};
+	height: 50%;
+	width: calc(100% + (2 * {{$:/config/tiddlyflex/story-river/padding}}));
+	z-index: 501;
+	display: none;
+}
+
+.tc-tiddlyflex-droppable-top-half.tc-dragover {
+	height: calc(50% + (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}}) + {{$:/state/dragging!!height}}px);
+	top: calc(-{{$:/state/dragging!!height}}px - (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}}));
+}
+
+.tc-tiddler-view-frame:first-of-type .tc-tiddlyflex-droppable-top-half.tc-dragover, .tc-tiddler-edit-frame:first-of-type .tc-tiddlyflex-droppable-top-half.tc-dragover {
+	height: calc(50% + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + {{$:/config/tiddlyflex/story-river/padding}} + {{$:/state/dragging!!height}}px);
+	top: calc(-{{$:/state/dragging!!height}}px - {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} - {{$:/config/tiddlyflex/story-river/paddingg}});
+}
+
+.tc-tiddlyflex-droppable-bottom-half.tc-dragover {
+	height: calc(50% + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + {{$:/state/dragging!!height}}px);
+}
+
+<%if [{$:/state/dragging}match[yes]] %>
+
+	.tc-tiddlyflex-droppable-top-half, .tc-tiddlyflex-droppable-bottom-half {
+		display: block;
+	}
+
+	<$set name="dragTiddler" value={{$:/state/dragging!!drag-tiddler}}>
+
+		<$set name="dragTiddlerCSSEscaped" value={{{ [<dragTiddler>escapecss[]] }}}>
+
+			<<tiddlyflex-tiddler-frame-transitions>>
+
+		</$set>
+
+	</$set>
+
+<% endif %>
+
+<$let currentRiver={{$:/state/dragging!!river}} story={{{ [[$:/StoryList-]addsuffix<currentRiver>!match[$:/StoryList-1]] ~[[$:/StoryList]] }}} targetTiddler={{$:/state/dragging!!target}} nextTiddler={{{ [list<story>after<targetTiddler>] }}} margin={{$:/state/dragging!!margin}} targetTiddlerCSSEscaped={{{ [<margin>match[top]then<targetTiddler>escapecss[]] :else[<margin>match[bottom]then<nextTiddler>escapecss[]] }}}>
+
+	<<tiddlyflex-target-tiddler-margin>>
+
+	<%if [{$:/state/dragging!!nth}match[0]] %>
+
+		<<tiddlyflex-target-tiddler-margin-nth-0>>
+
+	<% endif %>
+
+</$let>
+
+<$list filter="[{$:/state/dragging}match[yes]]" variable="ignore">
+
+.btc-activate-column-btn {
+	display: none;
+}
+
+.btc-river-inner {
+	height: 100%;
+	/* position: absolute; */
+	width: 100%;
+}
+
+.btc-river-inner > .tc-droppable {
+	position: absolute;
+	height: calc(100% - (2 * {{$:/config/tiddlyflex/story-river/padding}}px));
+	width: calc(100% - (2 * {{$:/config/tiddlyflex/story-river/padding}}px));
+}
+
+</$list>
+
+<%if [{$:/config/tiddlyflex/story-river/tiddler/drag-enabled}!match[no]] %>
+
+	.tc-tiddler-frame img {
+		-webkit-user-drag: none;
+		-khtml-user-drag: none;
+		-moz-user-drag: none;
+		-o-user-drag: none;
+		user-drag: none;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-o-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+		touch-action: none;
+		pointer-events: none;
+	}
+
+<% endif %>
+
+.tc-tiddlyflex-story-river-inner > .tc-tiddler-view-frame > .tc-draggable, .tc-tiddlyflex-story-river-inner > .tc-tiddler-edit-frame > .tc-draggable {
+	cursor: default;
+}
+
+<$let currentRiver={{$:/state/dragging!!start-river}} dragTiddler={{$:/state/dragging!!drag-tiddler}} startingNextTiddler={{$:/state/dragging!!starting-next-tiddler}} startingNextTiddlerCSSEscaped={{{ [<startingNextTiddler>escapecss[]] }}} dragTiddlerCSSEscaped={{{ [<dragTiddler>escapecss[]] }}}>
+
+	<%if [{$:/state/dragging!!copying}!match[yes]] %>
+
+		<<tiddlyflex-position-start-tiddlers-no-copying>>
+
+		<%if [{$:/state/dragging!!nth}match[0]] %>
+
+			<<tiddlyflex-position-start-tiddlers-no-copying-nth-0>>
+
+		<% endif %>
+
+	<% else %>
+
+		<<tiddlyflex-position-start-tiddlers-copying>>
+
+		<%if [{$:/state/dragging!!nth}match[0]] %>
+
+			<<tiddlyflex-position-start-tiddlers-copying-nth-0>>
+
+		<% endif %>
+
+	<% endif %>
+
+</$let>
+
+<% endif %>

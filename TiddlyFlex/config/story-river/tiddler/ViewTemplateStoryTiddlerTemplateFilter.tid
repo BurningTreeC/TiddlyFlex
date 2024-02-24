@@ -1,0 +1,5 @@
+title: $:/config/tiddlyflex/story-river/tiddler/ViewTemplate/StoryTiddlerTemplateFilter
+tags: $:/tags/StoryTiddlerTemplateFilter
+list-before:
+
+[!is[draft]then{$:/layout}match[$:/plugins/BTC/TiddlyFlex/ui/Layout]then[$:/plugins/BTC/TiddlyFlex/ui/Templates/ViewTemplate]]

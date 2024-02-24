@@ -40,7 +40,7 @@ code-body: yes
 
 					<section class="tc-tiddlyflex-story-river-inner">
 
-						<$list filter="[list<tv-story-list>]" history=<<tv-history-list>> template="$:/core/ui/StoryTiddlerTemplate" storyview={{$:/view}}/>
+						<$list filter="[list<tv-story-list>]" history=<<tv-history-list>> template="$:/core/ui/StoryTiddlerTemplate" storyview="tiddlyflex"/>
 
 					</section>
 

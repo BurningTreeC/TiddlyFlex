@@ -153,7 +153,7 @@ tags: $:/tags/Stylesheet
 	margin-bottom: {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}};
 }
 
-.tc-tiddlyflex-story-river .tc-navigating {
+.tc-tiddlyflex-story-river .tc-navigating .tc-tiddler-frame {
 	border: 2px dashed <<colour primary>>;
 }
 
