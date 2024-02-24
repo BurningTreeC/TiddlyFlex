@@ -150,26 +150,6 @@ tags: $:/tags/Stylesheet
 
 </$let>
 
-<$list filter="[{$:/state/dragging}match[yes]]" variable="ignore">
-
-.btc-activate-column-btn {
-	display: none;
-}
-
-.btc-river-inner {
-	height: 100%;
-	/* position: absolute; */
-	width: 100%;
-}
-
-.btc-river-inner > .tc-droppable {
-	position: absolute;
-	height: calc(100% - (2 * {{$:/config/tiddlyflex/story-river/padding}}));
-	width: calc(100% - (2 * {{$:/config/tiddlyflex/story-river/padding}}));
-}
-
-</$list>
-
 <%if [{$:/config/tiddlyflex/story-river/tiddler/drag-enabled}!match[no]] %>
 
 	.tc-tiddler-frame img {

@@ -72,7 +72,7 @@ tags: $:/tags/Global
 \end
 \define tiddlyflex-drag-end-actions()
 <%if [[$:/state/drag-handled]is[missing]] %>
-	<$let fromStoryList={{$:/state/dragging!!from-story}} fromIndex={{$:/state/dragging!!from-index}} listBeforeTiddler={{{ [list<fromStoryList>zth<fromIndex>] }}} actionTiddler={{{ [enlist<actionTiddler>] }}}>
+	<$let fromStoryList={{$:/state/dragging!!from-story}} fromIndex={{$:/state/dragging!!from-index}} listBeforeTiddler={{{ [list<fromStoryList>zth<fromIndex>] }}} prefix="[[" suffix="]]" actionTiddler={{{ [<actionTiddler>removeprefix<prefix>removesuffix<suffix>] :else[<actionTiddler>] }}}>
 		<$action-listops $tiddler=<<fromStoryList>> $subfilter="+[insertbefore<actionTiddler>,<listBeforeTiddler>]"/>
 		<$action-deletetiddler $tiddler="$:/state/drag-handled"/>
 	</$let>
