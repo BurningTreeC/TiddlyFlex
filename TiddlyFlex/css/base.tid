@@ -139,8 +139,8 @@ tags: $:/tags/Stylesheet
 
 .tc-tiddlyflex-story-river-wrapper .tc-tiddler-frame {
 	width: 100%;
-	-webkit-box-shadow: 0 0 5px <<colour tiddlyflex-box-shadow>>;
-	box-shadow: 0 0 5px <<colour tiddlyflex-box-shadow>>;
+	-webkit-box-shadow: 0 0 {{$:/config/tiddlyflex/story-river/tiddler/box-shadow-spread}} <<colour tiddlyflex-box-shadow>>;
+	box-shadow: 0 0 {{$:/config/tiddlyflex/story-river/tiddler/box-shadow-spread}} <<colour tiddlyflex-box-shadow>>;
 }
 
 .tc-tiddlyflex-story-river-wrapper-inner .tc-tiddlyflex-story-river {
@@ -167,15 +167,26 @@ tags: $:/tags/Stylesheet
 	flex-grow: 0;
 	flex-shrink: 0;
 	max-height: 100%;
+	z-index: 998;
+	box-shadow: 0px 0px 5px 0px <<colour tiddlyflex-box-shadow>>;
 }
 
 @media (min-width: 800px) {
 
 	.tc-tiddlyflex-sidebar {
 		width: {{$:/config/tiddlyflex/sidebar/width}};
+		transition: box-shadow {{$:/config/AnimationDuration}}ms;
 	}
 
 }
+
+<%if [{$:/state/sidebar}match[no]] %>
+
+	.tc-tiddlyflex-sidebar {
+		box-shadow: 0px 0px 0px 0px transparent;
+	}
+
+<% endif %>
 
 .tc-tiddlyflex-sidebar-container {
 	display: flex;
