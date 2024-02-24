@@ -3,6 +3,10 @@ tags: $:/tags/Stylesheet
 
 @media (max-width: 800px) {
 
+	.tc-tiddlyflex-main-wrapper {
+		overflow-x: auto;
+	}
+
 	.tc-tiddlyflex-main {
 		overflow-x: hidden;
 	}
@@ -33,7 +37,7 @@ tags: $:/tags/Stylesheet
 	}
 
 	.tc-tiddlyflex-story-river-container-inner {
-		overflow-x: auto;
+		overflow-x: scroll;
 		width: 100vw;
 		scroll-behavior: smooth;
 		scroll-snap-type: x mandatory;
@@ -51,6 +55,10 @@ tags: $:/tags/Stylesheet
 		background: rgba(0,0,0,.6);
 		-webkit-transition: background {{$:/config/AnimationDuration}}ms 0s;
 		transition: background {{$:/config/AnimationDuration}}ms 0s;
+	}
+
+	.tc-tiddlyflex-top-toolbar .tc-sidebar-lists .tc-search input {
+		width: 150px;
 	}
 
 }
