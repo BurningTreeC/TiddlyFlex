@@ -52,6 +52,11 @@ tags: $:/tags/Stylesheet
 	margin-top: calc({{$:/state/dragging!!height}}px + (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}}));
 }
 
+.tc-tiddlyflex-story-river-$(currentRiver)$ [data-tiddler-title="$(dragTiddlerCSSEscaped)$"] .tc-tiddler-frame .tc-tiddlyflex-droppable-top-half {
+	height: calc(50% + (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}}) + {{$:/state/dragging!!height}}px);
+	top: calc(-{{$:/state/dragging!!height}}px - (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}}));
+}
+
 \end
 
 \define tiddlyflex-position-start-tiddlers-copying-nth-0()
@@ -59,6 +64,11 @@ tags: $:/tags/Stylesheet
 
 .tc-tiddlyflex-story-river-$(currentRiver)$ [data-tiddler-title="$(dragTiddlerCSSEscaped)$"] .tc-tiddler-frame {
 	margin-top: calc({{$:/state/dragging!!height}}px + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}});
+}
+
+.tc-tiddlyflex-story-river-$(currentRiver)$ [data-tiddler-title="$(dragTiddlerCSSEscaped)$"] .tc-tiddler-frame .tc-tiddlyflex-droppable-top-half {
+	height: calc(50% + (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}}) + {{$:/state/dragging!!height}}px);
+	top: calc(-{{$:/state/dragging!!height}}px - (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}}));
 }
 
 \end
