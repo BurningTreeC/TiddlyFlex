@@ -154,6 +154,8 @@ tags: $:/tags/Stylesheet
 	position: absolute;
 	width: 100%;
 	height: 100%;
+	left: -{{$:/config/tiddlyflex/story-river/padding}};
+	top: -{{$:/config/tiddlyflex/story-river/padding}};
 }
 
 .tc-tiddlyflex-story-river-inner > .tc-tiddler-view-frame > .tc-draggable, .tc-tiddlyflex-story-river-inner > .tc-tiddler-edit-frame > .tc-draggable {

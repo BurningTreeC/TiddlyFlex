@@ -44,7 +44,7 @@ code-body: yes
 
 						<%if [{$:/state/dragging}match[yes]] %>
 
-							<$droppable class="tc-tiddlyflex-below-story-river-droppable" actions="""<$action-setfield $tiddler="$:/state/drag-handled" text="yes"/><$action-listops $tiddler=<<tv-story-list>> $subfilter="[<actionTiddler>]"/>""" dragenteractions="""<$action-setfield $tiddler="$:/state/dragging" target="" starting-next-tiddler="" copying=""/>"""/>
+							<$droppable class="tc-tiddlyflex-below-story-river-droppable" actions=<<tiddlyflex-story-droppable-drop-actions>> dragenteractions=<<tiddlyflex-story-droppable-dragenter-actions>>/>
 
 						<% endif %>
 
