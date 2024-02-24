@@ -1,7 +1,7 @@
 title: $:/plugins/BTC/TiddlyFlex/styles/narrow
 tags: $:/tags/Stylesheet
 
-@media (max-width: 800px) {
+@media (max-width: 991.98px) {
 
 	.tc-tiddlyflex-main-wrapper {
 		overflow-x: auto;

@@ -30,7 +30,7 @@ tags: $:/tags/Stylesheet
 	position: relative;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 992px) {
 
 	.tc-flex-main {
 		overflow-x: clip;
@@ -98,7 +98,7 @@ tags: $:/tags/Stylesheet
 	flex-shrink: 0;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 992px) {
 
 	.tc-tiddlyflex-story-river-container-inner {
 		overflow: hidden;
@@ -115,7 +115,7 @@ tags: $:/tags/Stylesheet
 	overflow: hidden;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 992px) {
 
 	.tc-tiddlyflex-story-river-wrapper {
 		flex-basis: 0;
@@ -130,7 +130,7 @@ tags: $:/tags/Stylesheet
 	scroll-behavior: smooth;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 992px) {
 
 	.tc-tiddlyflex-story-river-wrapper-inner {
 		flex-basis: 0;
@@ -172,7 +172,7 @@ tags: $:/tags/Stylesheet
 	box-shadow: 0px 0px 5px 0px <<colour tiddlyflex-box-shadow>>;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 992px) {
 
 	.tc-tiddlyflex-sidebar {
 		width: {{$:/config/tiddlyflex/sidebar/width}};
