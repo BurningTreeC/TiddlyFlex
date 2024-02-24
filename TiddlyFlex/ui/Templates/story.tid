@@ -42,6 +42,12 @@ code-body: yes
 
 						<$list filter="[list<tv-story-list>]" history=<<tv-history-list>> template="$:/core/ui/StoryTiddlerTemplate" storyview="tiddlyflex"/>
 
+						<%if [{$:/state/dragging}match[yes]] %>
+
+							<$droppable class="tc-tiddlyflex-below-story-river-droppable" actions="""<$action-setfield $tiddler="$:/state/drag-handled" text="yes"/><$action-listops $tiddler=<<tv-story-list>> $subfilter="[<actionTiddler>]"/>""" dragenteractions="""<$action-setfield $tiddler="$:/state/dragging" target="" starting-next-tiddler="" copying=""/>"""/>
+
+						<% endif %>
+
 					</section>
 
 					<section class="story-frontdrop">

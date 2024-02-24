@@ -150,25 +150,11 @@ tags: $:/tags/Stylesheet
 
 </$let>
 
-<%if [{$:/config/tiddlyflex/story-river/tiddler/drag-enabled}!match[no]] %>
-
-	.tc-tiddler-frame img {
-		-webkit-user-drag: none;
-		-khtml-user-drag: none;
-		-moz-user-drag: none;
-		-o-user-drag: none;
-		user-drag: none;
-		-webkit-user-select: none;
-		-khtml-user-select: none;
-		-moz-user-select: none;
-		-o-user-select: none;
-		-ms-user-select: none;
-		user-select: none;
-		touch-action: none;
-		pointer-events: none;
-	}
-
-<% endif %>
+.tc-tiddlyflex-below-story-river-droppable {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
 
 .tc-tiddlyflex-story-river-inner > .tc-tiddler-view-frame > .tc-draggable, .tc-tiddlyflex-story-river-inner > .tc-tiddler-edit-frame > .tc-draggable {
 	cursor: default;
@@ -199,5 +185,25 @@ tags: $:/tags/Stylesheet
 	<% endif %>
 
 </$let>
+
+<% endif %>
+
+<%if [{$:/config/tiddlyflex/story-river/tiddler/drag-enabled}!match[no]] %>
+
+	.tc-tiddler-frame img {
+		-webkit-user-drag: none;
+		-khtml-user-drag: none;
+		-moz-user-drag: none;
+		-o-user-drag: none;
+		user-drag: none;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-o-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+		touch-action: none;
+		pointer-events: none;
+	}
 
 <% endif %>
