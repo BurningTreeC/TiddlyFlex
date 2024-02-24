@@ -28,6 +28,10 @@ tags: $:/tags/Stylesheet
 
 	<% endif %>
 
+	.tc-tiddlyflex-leftbar {
+		display: none;
+	}
+
 	.tc-tiddlyflex-story-river-container-inner {
 		overflow-x: auto;
 		width: 100vw;

@@ -14,6 +14,12 @@ tags: $:/tags/Stylesheet
 	overflow: clip;
 }
 
+.tc-tiddlyflex-main-wrapper {
+	display: flex;
+	flex-direction: row;
+	flex-grow: 1;
+}
+
 .tc-tiddlyflex-main {
 	display: flex;
 	flex-direction: row;
@@ -40,11 +46,19 @@ tags: $:/tags/Stylesheet
 	background-color: <<colour page-background>>;
 }
 
-.tc-flex-footer {
+.tc-tiddlyflex-footer {
 	flex-grow: 0;
 	flex-shrink: 0;
 	box-shadow: 0 -1px 5px -1px <<colour tiddlyflex-box-shadow>>;
 	z-index: 999;
+	background-color: <<colour page-background>>;
+}
+
+.tc-tiddlyflex-leftbar {
+	flex-grow: 0;
+	flex-shrink: 0;
+	box-shadow: 1px 0 5px -1px <<colour tiddlyflex-box-shadow>>;;
+	z-index; 998;
 	background-color: <<colour page-background>>;
 }
 
