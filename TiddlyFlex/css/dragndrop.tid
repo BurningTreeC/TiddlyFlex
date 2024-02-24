@@ -39,7 +39,7 @@ tags: $:/tags/Stylesheet
 }
 
 .tc-tiddlyflex-story-river-$(currentRiver)$ [data-tiddler-title="$(dragTiddlerCSSEscaped)$"] .tc-tiddler-frame {
-	margin-top: calc({{$:/state/dragging!!height}}px + (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottomn}}));
+	margin-top: calc({{$:/state/dragging!!height}}px + (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}}));
 }
 
 \end
@@ -113,7 +113,7 @@ tags: $:/tags/Stylesheet
 
 .tc-tiddler-view-frame:first-of-type .tc-tiddlyflex-droppable-top-half.tc-dragover, .tc-tiddler-edit-frame:first-of-type .tc-tiddlyflex-droppable-top-half.tc-dragover {
 	height: calc(50% + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + {{$:/config/tiddlyflex/story-river/padding}} + {{$:/state/dragging!!height}}px);
-	top: calc(-{{$:/state/dragging!!height}}px - {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} - {{$:/config/tiddlyflex/story-river/paddingg}});
+	top: calc(-{{$:/state/dragging!!height}}px - {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} - {{$:/config/tiddlyflex/story-river/padding}});
 }
 
 .tc-tiddlyflex-droppable-bottom-half.tc-dragover {
@@ -138,7 +138,7 @@ tags: $:/tags/Stylesheet
 
 <% endif %>
 
-<$let currentRiver={{$:/state/dragging!!river}} story={{{ [[$:/StoryList-]addsuffix<currentRiver>!match[$:/StoryList-1]] ~[[$:/StoryList]] }}} targetTiddler={{$:/state/dragging!!target}} nextTiddler={{{ [list<story>after<targetTiddler>] }}} margin={{$:/state/dragging!!margin}} targetTiddlerCSSEscaped={{{ [<margin>match[top]then<targetTiddler>escapecss[]] :else[<margin>match[bottom]then<nextTiddler>escapecss[]] }}}>
+<$let currentRiver={{$:/state/dragging!!river}} story={{{ [[$:/StoryList-]addsuffix<currentRiver>] }}} targetTiddler={{$:/state/dragging!!target}} nextTiddler={{{ [list<story>after<targetTiddler>] }}} margin={{$:/state/dragging!!margin}} targetTiddlerCSSEscaped={{{ [<margin>match[top]then<targetTiddler>escapecss[]] [<margin>match[bottom]then<nextTiddler>escapecss[]] }}}>
 
 	<<tiddlyflex-target-tiddler-margin>>
 
@@ -164,8 +164,8 @@ tags: $:/tags/Stylesheet
 
 .btc-river-inner > .tc-droppable {
 	position: absolute;
-	height: calc(100% - (2 * {{$:/config/tiddlyflex/story-river/padding}}px));
-	width: calc(100% - (2 * {{$:/config/tiddlyflex/story-river/padding}}px));
+	height: calc(100% - (2 * {{$:/config/tiddlyflex/story-river/padding}}));
+	width: calc(100% - (2 * {{$:/config/tiddlyflex/story-river/padding}}));
 }
 
 </$list>
