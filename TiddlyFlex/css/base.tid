@@ -140,6 +140,7 @@ tags: $:/tags/Stylesheet
 
 .tc-tiddlyflex-story-river-wrapper .tc-tiddler-frame {
 	width: 100%;
+	margin-bottom: 0;
 	-webkit-box-shadow: 0 0 {{$:/config/tiddlyflex/story-river/tiddler/box-shadow-spread}} <<colour tiddlyflex-box-shadow>>;
 	box-shadow: 0 0 {{$:/config/tiddlyflex/story-river/tiddler/box-shadow-spread}} <<colour tiddlyflex-box-shadow>>;
 }
@@ -149,7 +150,7 @@ tags: $:/tags/Stylesheet
 	min-height: 100%;
 }
 
-.tc-tiddlyflex-story-river-inner > .tc-tiddler-frame, .tc-tiddlyflex-story-river-inner > .tc-tiddler-view-frame {
+.tc-tiddlyflex-story-river-inner > .tc-tiddler-view-frame, .tc-tiddlyflex-story-river-inner > .tc-tiddler-edit-frame {
 	margin-bottom: {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}};
 }
 
