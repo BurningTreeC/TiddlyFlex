@@ -16,6 +16,7 @@ tags: $:/tags/Global
 <% endif %>
 \end
 \procedure tiddlyflex-top-drop-actions-inner()
+<$action-log performing="top-drop-actions-inner"/>
 <%if [<actionTiddler>!match<currentTiddler>] %>
 	<$action-listops $tiddler=<<tv-story-list>> $subfilter="+[insertbefore<actionTiddler>,<currentTiddler>]"/>
 	<%if [<tv-history-list>get[current-tiddler]match[]] [<tv-history-list>!has[current-tiddler]] +[limit[1]] %>
@@ -33,6 +34,7 @@ tags: $:/tags/Global
 </$vars>
 \end
 \procedure tiddlyflex-top-drop-actions()
+<$action-log performing="top-drop-actions"/>
 <$action-setfield $tiddler="$:/state/drag-handled" text="yes"/>
 <$vars prefix="[[" suffix="]]">
 	<%if [<actionTiddler>removeprefix<prefix>removesuffix<suffix>] %>
@@ -109,6 +111,7 @@ tags: $:/tags/Global
 <% endif %>
 \end
 \procedure tiddlyflex-drag-end-actions()
+<$action-log performing="drag-end-actions"/>
 <%if [[$:/state/drag-handled]is[missing]] %>
 	<$let fromStoryList={{$:/state/dragging!!starting-from-story}} fromIndex={{$:/state/dragging!!starting-from-index}} listBeforeTiddler={{{ [list<fromStoryList>zth<fromIndex>] }}} prefix="[[" suffix="]]" actionTiddler={{{ [<actionTiddler>removeprefix<prefix>removesuffix<suffix>] :else[<actionTiddler>] }}}>
 		<%if [<listBeforeTiddler>!is[blank]] %>
