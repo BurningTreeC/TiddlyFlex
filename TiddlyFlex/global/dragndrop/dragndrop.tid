@@ -8,20 +8,23 @@ tags: $:/tags/Global
 <$action-setfield $tiddler="$:/state/dragging" starting-next-tiddler="" copying="" target=<<currentTiddler>> margin="bottom" nth={{{ [list<tv-story-list>allbefore<currentTiddler>count[]add[1]] }}} river=<<column>> next-tiddler="" from-index={{{ [list<tv-story-list>allbefore<currentTiddler>count[]add[1]] }}} from-story=<<tv-story-list>>/>
 \end
 \procedure tiddlyflex-top-drop-actions-inner()
-<$action-listops $tiddler=<<tv-story-list>> $subfilter="+[insertbefore<actionTiddler>,<currentTiddler>]"/>
-<$list filter="[<tv-history-list>get[current-tiddler]match[]] [<tv-history-list>!has[current-tiddler]] +[limit[1]]" variable="ignore">
-	<$action-setfield $tiddler=<<tv-history-list>> current-tiddler=<<actionTiddler>>/>
-</$list>
+<%if [<actionTiddler>!match<currentTiddler>] %>
+	<$action-listops $tiddler=<<tv-story-list>> $subfilter="+[insertbefore<actionTiddler>,<currentTiddler>]"/>
+	<%if [<tv-history-list>get[current-tiddler]match[]] [<tv-history-list>!has[current-tiddler]] +[limit[1]] %>
+		<$action-setfield $tiddler=<<tv-history-list>> current-tiddler=<<actionTiddler>>/>
+	<% endif %>
+<% else %>
+	<$action-deletetiddler $tiddler="$:/state/drag-handled"/><$action-deletetiddler $tiddler="$:/state/dragging"/>
+<% endif %>
 <$vars fromStoryList={{$:/state/dragging!!starting-from-story}} fromHistoryList={{$:/state/dragging!!from-history}}>
-	<$list filter="[<fromStoryList>!match<tv-story-list>]" variable="ignore">
-		<$list filter="[{$:/state/dragging!!is-focused-tiddler}match[TRUE]]" variable="ignore">
+	<%if [<fromStoryList>!match<tv-story-list>] %>
+		<%if [{$:/state/dragging!!is-focused-tiddler}match[TRUE]] %>
 			<$action-setfield $tiddler=<<fromHistoryList>> current-tiddler={{{ [list<fromStoryList>zth{$:/state/dragging!!starting-from-index}] }}}/>
-		</$list>
-	</$list>
+		<% endif %>
+	<% endif %>
 </$vars>
 \end
 \procedure tiddlyflex-top-drop-actions()
-<$action-setfield $tiddler="$:/state/drag-handled" text="yes"/>
 <$action-setfield $tiddler="$:/state/drag-handled" text="yes"/>
 <$vars prefix="[[" suffix="]]">
 	<%if [<actionTiddler>removeprefix<prefix>removesuffix<suffix>] %>
@@ -41,18 +44,22 @@ tags: $:/tags/Global
 			<$action-setfield $tiddler=<<tv-history-list>> current-tiddler=<<actionTiddler>>/>
 		</$list>
 	<% else %>
-		<$action-listops $tiddler=<<tv-story-list>> $subfilter="+[insertbefore<actionTiddler>,<nextTiddler>]"/>
-		<$list filter="[<tv-history-list>get[current-tiddler]match[]] [<tv-history-list>!has[current-tiddler]] +[limit[1]]" variable="ignore">
-			<$action-setfield $tiddler=<<tv-history-list>> current-tiddler=<<actionTiddler>>/>
-		</$list>
+		<%if [<actionTiddler>!match<nextTiddler>] %>
+			<$action-listops $tiddler=<<tv-story-list>> $subfilter="+[insertbefore<actionTiddler>,<nextTiddler>]"/>
+			<$list filter="[<tv-history-list>get[current-tiddler]match[]] [<tv-history-list>!has[current-tiddler]] +[limit[1]]" variable="ignore">
+				<$action-setfield $tiddler=<<tv-history-list>> current-tiddler=<<actionTiddler>>/>
+			</$list>
+		<% else %>
+			<$action-deletetiddler $tiddler="$:/state/drag-handled"/><$action-deletetiddler $tiddler="$:/state/dragging"/>
+		<% endif %>
 	<% endif %>
 </$set>
 <$vars fromStoryList={{$:/state/dragging!!starting-from-story}} fromHistoryList={{$:/state/dragging!!from-history}}>
-	<$list filter="[<fromStoryList>!match<tv-story-list>]" variable="ignore">
-		<$list filter="[{$:/state/dragging!!is-focused-tiddler}match[TRUE]]" variable="ignore">
+	<%if [<fromStoryList>!match<tv-story-list>] %>
+		<%if [{$:/state/dragging!!is-focused-tiddler}match[TRUE]] %>
 			<$action-setfield $tiddler=<<fromHistoryList>> current-tiddler={{{ [list<fromStoryList>zth{$:/state/dragging!!starting-from-index}] }}}/>
-		</$list>
-	</$list>
+		<% endif %>
+	<% endif %>
 </$vars>
 \end
 \procedure tiddlyflex-bottom-drop-actions()
