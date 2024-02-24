@@ -152,8 +152,8 @@ tags: $:/tags/Stylesheet
 
 .tc-tiddlyflex-below-story-river-droppable {
 	position: absolute;
-	width: 100%;
-	height: 100%;
+	width: calc(100% + {{$:/config/tiddlyflex/story-river/padding}});
+	height: calc(100% + {{$:/config/tiddlyflex/story-river/padding}});
 	left: -{{$:/config/tiddlyflex/story-river/padding}};
 	top: -{{$:/config/tiddlyflex/story-river/padding}};
 }
