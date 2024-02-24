@@ -3,3 +3,5 @@ title: $:/config/shortcuts/
 column-down: alt-Left
 column-up: alt-Right
 dragging: alt-D
+navigate-down: alt-Down
+navigate-up: alt-Up

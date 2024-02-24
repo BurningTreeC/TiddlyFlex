@@ -24,8 +24,8 @@ exports.prototype.handleNavigateEvent = function(event) {
 	event = $tw.hooks.invokeHook("th-navigating",event);
 	if(event.navigateTo || (event.paramObject && event.paramObject.navigateTo)) {
 		this.addToStory(event.paramObject && event.paramObject.navigateTo ? event.paramObject.navigateTo : event.navigateTo,event.paramObject && event.paramObject.navigateFromTitle ? event.paramObject.navigateFromTitle : event.navigateFromTitle);
-		if(!event.navigateSuppressNavigation && !(event.paramObject ? event.paramObject.navigateSuppressNavigation : true)) {
-			this.addToHistory(event.paramObject && event.paramObject.navigateTo ? event.paramObject.navigateTo : event.navigateTo,event.paramObject && event.paramObject.navigateFromClientRect ? event.paramObject.navigateFromClientRect : event.navigateFromClientRect);
+		if(!event.navigateSuppressNavigation && !(event.paramObject ? event.paramObject.navigateSuppressNavigation : false)) {
+			this.addToHistory((event.paramObject && event.paramObject.navigateTo) ? event.paramObject.navigateTo : event.navigateTo,(event.paramObject && event.paramObject.navigateFromClientRect) ? event.paramObject.navigateFromClientRect : event.navigateFromClientRect);
 		}
 	}
 	return false;

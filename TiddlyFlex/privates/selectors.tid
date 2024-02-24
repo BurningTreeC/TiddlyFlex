@@ -1,0 +1,11 @@
+title: $:/plugins/BTC/TiddlyFlex/privates/selectors
+
+\define tiddlyflex-draft-focus-selector()
+\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
+.tc-tiddlyflex-story-river-<<currentColumn>> .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(cssEscapedTitle)$"] input.tc-titlebar.tc-edit-texteditor
+\end
+\define tiddlyflex-focus-draft-tiddler()
+<$wikify name="focusSelector" text=<<tiddlyflex-draft-focus-selector>>>
+	<$action-sendmessage $message="tm-focus-selector" $param=<<focusSelector>> preventScroll="true"/>
+</$wikify>
+\end

@@ -3,3 +3,5 @@ title: $:/config/ShortcutInfo/
 column-down: Select the next column at the left
 column-up: Select the next column at the right
 dragging: Toggle dragging on or off
+navigate-down: Navigate down to the next tiddler
+navigate-up: Navigate up to the next tiddler

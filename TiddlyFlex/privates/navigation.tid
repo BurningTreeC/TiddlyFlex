@@ -1,0 +1,10 @@
+title: $:/plugins/BTC/TiddlyFlex/privates/navigation
+
+\procedure tiddlyflex-focus-flexcontainer() <$action-sendmessage $message="tm-focus-selector" $param=".tc-tiddlyflex-container" preventScroll="true"/>
+\procedure tiddlyflex-keyboard-navigator(actions)
+<$let currentColumn={{$:/columns!!current-column}} storyList={{{ [[$:/StoryList-]addsuffix<currentColumn>!match[$:/StoryList-]] ~[[$:/StoryList-1]] }}} historyList={{{ [[$:/HistoryList-]addsuffix<currentColumn>!match[$:/HistoryList-]] ~[[$:/HistoryList-1]] }}} currentTiddler={{{ [<historyList>get[current-tiddler]] }}}>
+	<$navigator story=<<storyList>> history=<<historyList>> openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromOutsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
+		<<actions>>
+	</$navigator>
+</$let>
+\end
