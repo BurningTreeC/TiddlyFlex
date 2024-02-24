@@ -2,7 +2,12 @@ title: $:/plugins/BTC/TiddlyFlex/globals/dragndrop
 tags: $:/tags/Global
 
 \procedure tiddlyflex-top-dragenter-actions()
-<$action-setfield $tiddler="$:/state/dragging" starting-next-tiddler="" copying="" target=<<currentTiddler>> margin="top" nth={{{ [list<tv-story-list>allbefore<currentTiddler>count[]] }}} river=<<column>> next-tiddler="" from-index={{{ [list<tv-story-list>allbefore<currentTiddler>count[]] }}} from-story=<<tv-story-list>>/>
+<%if [[$:/state/dragging]has[dragenter-count]] %>
+ 	<$action-setfield $tiddler="$:/state/dragging" dragenter-count={{{ [[$:/state/dragging]get[dragenter-count]add[1]] }}}/>
+ 	<$action-setfield $tiddler="$:/state/dragging" starting-next-tiddler="" copying="" target=<<currentTiddler>> margin="top" nth={{{ [list<tv-story-list>allbefore<currentTiddler>count[]] }}} river=<<column>> next-tiddler="" from-index={{{ [list<tv-story-list>allbefore<currentTiddler>count[]] }}} from-story=<<tv-story-list>>/>
+<% else %>
+	<$action-setfield $tiddler="$:/state/dragging" dragenter-count="1"/>
+<% endif %>
 \end
 \procedure tiddlyflex-bottom-dragenter-actions()
 <$action-setfield $tiddler="$:/state/dragging" starting-next-tiddler="" copying="" target=<<currentTiddler>> margin="bottom" nth={{{ [list<tv-story-list>allbefore<currentTiddler>count[]add[1]] }}} river=<<column>> next-tiddler="" from-index={{{ [list<tv-story-list>allbefore<currentTiddler>count[]add[1]] }}} from-story=<<tv-story-list>>/>
@@ -127,5 +132,9 @@ tags: $:/tags/Global
 </$vars>
 \end
 \procedure tiddlyflex-story-droppable-dragenter-actions()
-<$action-setfield $tiddler="$:/state/dragging" target="" starting-next-tiddler="" copying=""/>
+<%if [[$:/state/dragging]get[dragenter-count]] %>
+	<$action-setfield $tiddler="$:/state/dragging" target="" starting-next-tiddler="" copying=""/>
+<% else %>
+	<$action-setfield $tiddler="$:/state/dragging" dragenter-count="1"/>
+<% endif %>
 \end
