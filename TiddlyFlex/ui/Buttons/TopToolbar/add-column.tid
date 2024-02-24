@@ -1,0 +1,14 @@
+title: $:/plugins/BTC/TiddlyFlex/ui/Buttons/TopToolbar/add-column
+tags: $:/tags/TopRightBar
+list-before: $:/core/ui/TopBar/menu
+
+\whitespace trim
+<$let columns={{{ [list[$:/columns]count[]!match[0]] ~1 }}} nextColumn={{{ [<columns>add[1]] }}}>
+	<$button class="tc-btn-invisible">
+		<%if [list[$:/columns]count[]match[0]] %>
+			<$action-listops $tiddler="$:/columns" $subfilter="1"/>
+		<% endif %>
+		<$action-listops $tiddler="$:/columns" $subfilter="[<nextColumn>]"/>
+		{{$:/core/images/plus-button}}
+	</$button>
+</$let>
