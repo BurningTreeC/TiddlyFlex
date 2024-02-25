@@ -104,7 +104,7 @@ tags: $:/tags/Stylesheet
 .tc-tiddlyflex-droppable-top-half {
 	position: absolute;
 	top: calc( -{{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} - 2px);
-	left: calc( -{{$:/config/tiddlyflex/story-river/padding}} - 2px);
+	left: calc( -{{$:/config/tiddlyflex/story-river/padding}} - 1px);
 	height: calc(50% + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + 2px);
 	width: calc(100% + (2 * {{$:/config/tiddlyflex/story-river/padding}}) + 2px);
 	display: none;
@@ -119,7 +119,7 @@ tags: $:/tags/Stylesheet
 .tc-tiddlyflex-droppable-bottom-half {
 	position: absolute;
 	top: 50%;
-	left: calc( -{{$:/config/tiddlyflex/story-river/padding}} - 2px);
+	left: calc( -{{$:/config/tiddlyflex/story-river/padding}} - 1px);
 	height: calc(50% + 2px);
 	width: calc(100% + (2 * {{$:/config/tiddlyflex/story-river/padding}}) + 2px);
 	z-index: 501;
