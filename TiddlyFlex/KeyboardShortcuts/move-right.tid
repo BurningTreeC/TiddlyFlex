@@ -1,0 +1,50 @@
+title: $:/plugins/BTC/TiddlyFlex/KeyboardShortcuts/move-right
+tags: $:/tags/KeyboardShortcut
+key: ((move-right))
+
+\import $:/plugins/BTC/TiddlyFlex/privates/selectors $:/plugins/BTC/TiddlyFlex/privates/navigation
+\procedure current-tiddler-is-empty-message()
+<$action-listops $tiddler=<<nextStoryList>> $subfilter="+[insertbefore<focusedTiddler>,<firstNextStoryTiddler>]"/>
+<$action-setfield $tiddler=<<nextHistoryList>> current-tiddler=<<focusedTiddler>>/>
+\end
+\define actions()
+<$let scrollTiddler={{{ [list<storyList>after<focusedTiddler>] ~[list<storyList>before<focusedTiddler>] }}}>
+	<%if [<focusedTiddler>!is[blank]] %>
+		<%if [[$:/columns]!contains<nextStoryCounter>] %>
+			<$action-listops $tiddler="$:/columns" $subfilter="[<nextStoryCounter>]"/>
+		<% endif %>
+		<$action-setfield $tiddler=<<historyList>> current-tiddler={{{ [list<storyList>after<focusedTiddler>] ~[list<storyList>before<focusedTiddler>] }}}/>
+		<$action-listops $tiddler=<<storyList>> $subfilter="-[<focusedTiddler>]"/>
+		<%if [<nextHistoryList>get[current-tiddler]!match[]] %>
+			<$set name="nextStoryFocusedTiddler" value={{{ [<nextHistoryList>get[current-tiddler]] }}}>
+				<%if [<nextStoryList>contains<nextStoryFocusedTiddler>] %>
+					<$action-listops $tiddler=<<nextStoryList>> $subfilter="+[insertbefore<focusedTiddler>,<nextStoryFocusedTiddler>]"/>
+					<$action-setfield $tiddler=<<nextHistoryList>> current-tiddler=<<focusedTiddler>>/>
+				<% else %>
+					<<current-tiddler-is-empty-message>>
+				<% endif %>
+			</$set>
+		<% else %>
+			<<current-tiddler-is-empty-message>>
+		<% endif %>
+		<%if [{$:/config/tiddlyflex/story-river/follow-current-column}match[yes]] %>
+			<$action-setfield $tiddler="$:/columns" current-column=<<nextStoryCounter>>/>
+			<%if [<focusedTiddler>is[draft]] %>
+				<$let currentColumn=<<nextStoryCounter>> cssEscapedTitle={{{ [<focusedTiddler>escapecss[]] }}}>
+					<<tiddlyflex-focus-draft-tiddler>>
+				</$let>
+			<% endif %>
+			<$let currentColumn=<<nextStoryCounter>> cssEscapedTitle={{{ [<focusedTiddler>escapecss[]] }}}>
+				<<tiddlyflex-scroll-to-tiddler>>
+			</$let>
+		<% else %>
+			<$let currentTiddler={{{ [list<storyList>after<focusedTiddler>] ~[list<storyList>before<focusedTiddler>] }}} cssEscapedTitle={{{ [<currentTiddler>escapecss[]] }}}>
+				<%if [<currentTiddler>is[draft]] %>
+					<<tiddlyflex-focus-draft-tiddler>>
+				<% endif %>
+			</$let>
+		<% endif %>
+	<% endif %>
+</$let>
+\end
+<$macrocall $name="tiddlyflex-multi-column-keyboard-navigator" actions=<<actions>>/>

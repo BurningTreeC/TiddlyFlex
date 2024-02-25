@@ -37,3 +37,20 @@ title: $:/plugins/BTC/TiddlyFlex/privates/navigation
 	<% endif %>
 </$set>
 \end
+\procedure tiddlyflex-multi-column-keyboard-navigator()
+<$let currentColumn={{$:/columns!!current-column}} 
+	storyList={{{ [[$:/StoryList-]addsuffix<currentColumn>!match[$:/StoryList-]] ~$:/StoryList-1 }}}
+	historyList={{{ [[$:/HistoryList-]addsuffix<currentColumn>!match[$:/HistoryList-]] ~$:/HistoryList-1 }}}
+	focusedTiddler={{{ [<historyList>get[current-tiddler]] }}}
+	nextStoryCounter={{{ [<currentColumn>add[1]] }}}
+	nextStoryList={{{ [<storyList>!match[$:/StoryList]removesuffix<currentColumn>addsuffix<nextStoryCounter>] ~[[$:/StoryList-2]] }}}
+	nextHistoryList={{{ [<historyList>!match[$:/HistoryList]removesuffix<currentColumn>addsuffix<nextStoryCounter>] ~[[$:/HistoryList-2]] }}}
+	firstNextStoryTiddler={{{ [list<nextStoryList>first[]] }}}
+	previousStoryCounter={{{ [<currentColumn>subtract[1]] }}}
+	previousStoryList={{{ [<storyList>!match[$:/StoryList-]removesuffix<currentColumn>addsuffix<previousStoryCounter>] ~$:/StoryList-1 }}}
+	previousHistoryList={{{ [<historyList>!match[$:/HistoryList-]removesuffix<currentColumn>addsuffix<previousStoryCounter>] ~[[$:/HistoryList]] }}}
+	firstPreviousStoryTiddler={{{ [list<previousStoryList>first[]] }}}
+>
+	<<actions>>
+</$let>
+\end
