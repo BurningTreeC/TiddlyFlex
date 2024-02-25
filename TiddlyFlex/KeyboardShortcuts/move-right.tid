@@ -6,12 +6,12 @@ key: ((move-right))
 \procedure current-tiddler-is-empty-message()
 <$action-listops $tiddler=<<nextStoryList>> $subfilter="+[insertbefore<focusedTiddler>,<firstNextStoryTiddler>]"/>
 <$action-setfield $tiddler=<<nextHistoryList>> current-tiddler=<<focusedTiddler>>/>
-\end
 \define actions()
 <$let scrollTiddler={{{ [list<storyList>after<focusedTiddler>] ~[list<storyList>before<focusedTiddler>] }}}>
 	<%if [<focusedTiddler>!is[blank]] %>
 		<%if [[$:/columns]!contains<nextStoryCounter>] %>
 			<$action-listops $tiddler="$:/columns" $subfilter="[<nextStoryCounter>]"/>
+			<$action-setfield $tiddler={{{ [[$:/state/tiddlyflex/removing/]addsuffix<focusedTiddler>] }}} direction="right" column=<<currentColumn>>/>
 		<% else %>
 			<$action-setfield $tiddler={{{ [[$:/state/tiddlyflex/removing/]addsuffix<focusedTiddler>] }}} direction="right" column=<<currentColumn>>/>
 			<$action-setfield $tiddler={{{ [[$:/state/tiddlyflex/adding/]addsuffix<focusedTiddler>] }}} direction="left" column={{{ [<currentColumn>add[1]] }}}/>
