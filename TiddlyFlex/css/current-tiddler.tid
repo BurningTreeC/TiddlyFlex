@@ -21,20 +21,20 @@ tags: $:/tags/Stylesheet
 
 <$let currentColumn={{$:/columns!!current-column}} historyList={{{ [[$:/HistoryList-]addsuffix<currentColumn>!match[$:/HistoryList-]] ~[[$:/HistoryList-1]] }}}>
 
-<$set name="cssEscapedTitle" value={{{ [<historyList>get[current-tiddler]escapecss[]] }}}>
+	<$set name="cssEscapedTitle" value={{{ [<historyList>get[current-tiddler]escapecss[]] }}}>
 
-<<tiddlyflex-style-current-tiddler>>
+		<<tiddlyflex-style-current-tiddler>>
 
-</$set>
+	</$set>
 
-<$list filter="[list[$:/columns]!match<currentColumn>]" variable="column">
+	<$list filter="[list[$:/columns]!match<currentColumn>]" variable="column">
 
-<$let historyList={{{ [[$:/HistoryList-]addsuffix<column>!match[$:/HistoryList-]] ~[[$:/HistoryList-1]] }}} cssEscapedTitle={{{ [<historyList>get[current-tiddler]escapecss[]] }}}>
+		<$let historyList={{{ [[$:/HistoryList-]addsuffix<column>!match[$:/HistoryList-]] ~[[$:/HistoryList-1]] }}} cssEscapedTitle={{{ [<historyList>get[current-tiddler]escapecss[]] }}}>
 
-<<tiddlyflex-style-unfocused-tiddlers>>
+			<<tiddlyflex-style-unfocused-tiddlers>>
 
-</$let>
+		</$let>
 
-</$list>
+	</$list>
 
 </$let>
