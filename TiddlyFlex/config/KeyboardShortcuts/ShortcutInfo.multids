@@ -1,7 +1,9 @@
 title: $:/config/ShortcutInfo/
 
+cancel-close-tiddler: Cancel or close the current tiddler
 column-down: Select the next column at the left
 column-up: Select the next column at the right
 dragging: Toggle dragging on or off
+edit-tiddler: Edit the current tiddler
 navigate-down: Navigate down to the next tiddler
 navigate-up: Navigate up to the next tiddler

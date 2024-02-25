@@ -1,0 +1,65 @@
+title: $:/plugins/BTC/TiddlyFlex/KeyboardShortcuts/cancel-close-tiddler
+tags: $:/tags/KeyboardShortcut
+key: ((cancel-close-tiddler))
+
+\import $:/plugins/BTC/TiddlyFlex/privates/selectors $:/plugins/BTC/TiddlyFlex/privates/navigation
+\procedure tiddlyflex-tiddler-is-draft-actions-draft-of-not-is-missing()
+<$list filter="[list[$:/columns]!match{$:/columns!!current-column}]" variable="column">
+	<$set name="storyList" value={{{ [[$:/StoryList-]addsuffix<column>!match[$:/StoryList-]] ~[[$:/StoryList-1]] }}}>
+		<%if [<storyList>contains<tiddler>] %>
+			<$set name="index" value={{{ [list<storyList>allbefore<tiddler>add[1]] }}}>
+				<$let nextTiddler={{{ [list<storyList>zth<index>] }}} viewTiddler={{{ [<tiddler>get[draft.of]] }}}>
+					<$action-listops $tiddler=<<storyList>> $subfilter="+[insertbefore<viewTiddler>,<nextTiddler>]"/>
+					<$action-listops $tiddler=<<storyList>> $subfilter="-[<tiddler>]"/>
+				</$let>
+			</$set>
+		<% endif %>
+	</$set>
+</$list>
+\end
+\procedure tiddlyflex-tiddler-is-draft-actions()
+<% if [<tiddler>get[draft.of]!is[shadow]is[missing]] %>
+	<$list filter="[list[$:/columns]!match{$:/columns!!current-column}]" variable="column">
+		<$set name="storyList" value={{{ [[$:/StoryList-]addsuffix<column>!match[$:/StoryList-]] ~[[$:/StoryList-1]] }}}>
+			<%if [<storyList>contains<tiddler>] %>
+				<$action-listops $tiddler=<<storyList>> $subfilter="-[<tiddler>]"/>
+			<% endif %>
+		</$set>
+	</$list>
+<% else %>
+	<<tiddlyflex-tiddler-is-draft-actions-draft-of-not-is-missing>>
+<% endif %>
+<$set name="scrollTiddler" value={{{ [list<storyList>after<tiddler>] ~[list<storyList>before<tiddler>] }}}>
+	<%if [<tiddler>get[draft.of]!is[shadow]is[missing]] %>
+		<$action-setfield $tiddler=<<historyList>> current-tiddler=<<scrollTiddler>>/>
+		<%if [<scrollTiddler>is[draft]] %>
+			<$set name="cssEscapedTitle" value={{{ [<scrollTiddler>escapecss[]] }}}>
+				<<tiddlyflex-focus-draft-tiddler>>
+			</$set>
+		<% else %>
+			<<tiddlyflex-focus-flexcontainer>>
+		<% endif %>
+	<% endif %>
+	<$action-sendmessage $message="tm-cancel-tiddler" $param=<<tiddler>>/>
+</$set>
+\end
+\procedure actions()
+<$set name="tiddler" value={{{ [<historyList>get[current-tiddler]] }}}>
+	<%if [<tiddler>!is[draft]] %>
+		<$let scrollTiddler={{{ [list<storyList>after<tiddler>] ~[list<storyList>before<tiddler>] }}}>
+			<$action-setfield $tiddler=<<historyList>> current-tiddler=<<scrollTiddler>>/>
+			<$action-sendmessage $message="tm-close-tiddler" $param=<<tiddler>>/>
+			<%if [<scrollTiddler>is[draft]] %>
+				<$set name="cssEscapedTitle" value={{{ [<scrollTiddler>escapecss[]] }}}>
+					<<tiddlyflex-focus-draft-tiddler>>
+				</$set>
+			<% else %>
+				<<tiddlyflex-focus-flexcontainer>>
+			<% endif %>
+		</$let>
+	<% else %>
+		<<tiddlyflex-tiddler-is-draft-actions>>
+	<% endif %>
+</$set>
+\end
+<$macrocall $name="tiddlyflex-keyboard-navigator" actions=<<actions>>/>

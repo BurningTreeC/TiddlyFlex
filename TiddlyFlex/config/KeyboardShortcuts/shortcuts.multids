@@ -1,7 +1,9 @@
 title: $:/config/shortcuts/
 
+cancel-close-tiddler: alt-C
 column-down: alt-Left
 column-up: alt-Right
 dragging: alt-D
+edit-tiddler: alt-E
 navigate-down: alt-Down
 navigate-up: alt-Up

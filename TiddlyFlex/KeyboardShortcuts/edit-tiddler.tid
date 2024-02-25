@@ -1,0 +1,11 @@
+title: $:/plugins/BTC/TiddlyFlex/KeyboardShortcuts/edit-tiddler
+tags: $:/tags/KeyboardShortcut
+key: ((edit-tiddler))
+
+\import $:/plugins/BTC/TiddlyFlex/privates/navigation
+\define actions()
+<%if [<currentTiddler>!is[draft]] %>
+	<$action-sendmessage $message="tm-edit-tiddler" $param=<<currentTiddler>>/>
+<% endif %>
+\end
+<$macrocall $name="tiddlyflex-keyboard-navigator" actions=<<actions>>/>
