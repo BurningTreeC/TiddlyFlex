@@ -14,7 +14,7 @@ code-body: yes
 	tv-show-missing-links={{$:/config/MissingLinks}}
 	storyviewTitle={{$:/view}}
 	languageTitle={{{ [{$:/language}get[name]] }}}>
-	<div class={{{ [all[shadows+tiddlers]tag[$:/tags/ClassFilters/PageTemplate/TiddlyFlex]!is[draft]] :map:flat[subfilter{!!text}] tc-page-container tc-tiddlyflex-container [[tc-page-view-]addsuffix<storyviewTitle>] [[tc-language-]addsuffix<languageTitle>] [{$:/state/sidebar}match[yes]then[tc-sidebar-shown]] :and[unique[]join[ ]] }}} >
+	<div class={{{ [all[shadows+tiddlers]tag[$:/tags/ClassFilters/PageTemplate/TiddlyFlex]!is[draft]] :map:flat[subfilter{!!text}] tc-page-container tc-tiddlyflex-container [[tc-page-view-]addsuffix<storyviewTitle>] [[tc-language-]addsuffix<languageTitle>] [{$:/state/sidebar}match[yes]then[tc-sidebar-shown]] :and[unique[]join[ ]] }}} tabindex="0">
 		<$eventcatcher selector=".tc-tiddlyflex-sidebar-shown" $click="""<$action-setfield $tiddler="$:/state/sidebar" text="no"/>""" class="tc-tiddlyflex-sidebar-shown-eventcatcher">
 			<div class={{{ [{$:/state/sidebar}!match[no]then[tc-tiddlyflex-sidebar-hide tc-btn-invisible tc-tiddlyflex-sidebar-shown]] [{$:/state/sidebar}match[no]then[tc-tiddlyflex-sidebar-hide tc-btn-invisible tc-tiddlyflex-sidebar-hidden]] }}}/>
 		</$eventcatcher>
