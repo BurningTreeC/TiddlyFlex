@@ -13,19 +13,27 @@ title: $:/plugins/BTC/TiddlyFlex/privates/navigation
 	<<actions>>
 </$navigator>
 \end
+\procedure tiddlyflex-cycle-columns-navigator-inner()
+<%if [<nextTiddler>is[draft]] %>
+	<<tiddlyflex-focus-draft-tiddler>>
+<% else %>
+	<<tiddlyflex-focus-flexcontainer>>
+<% endif %>
+<$navigator story=<<storyList>> history=<<historyList>> openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromOutsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
+	<$action-navigate $to=<<nextTiddler>>/>
+</$navigator>
+\end
 \procedure tiddlyflex-cycle-columns-navigator()
 <$action-setfield $tiddler="$:/columns" current-column=<<nextColumn>>/>
-<%if [<historyList>get[current-tiddler]is[blank]] [<historyList>get[current-tiddler]match[]] [<historyList>!has[current-tiddler]] %>
-	<$action-setfield $tiddler=<<historyList>> current-tiddler={{{ [list<storyList>nth[1]] }}}/>
-<% endif %>
-<$let nextTiddler={{{ [<historyList>get[current-tiddler]] }}} cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
-	<%if [<nextTiddler>is[draft]] %>
-		<<tiddlyflex-focus-draft-tiddler>>
-	<% else %>
-		<<tiddlyflex-focus-flexcontainer>>
+<$set name="currentHistoryListTiddler" value={{{ [<historyList>get[current-tiddler]] }}}>
+	<%if [<storyList>contains<currentHistoryListTiddler>] %>
+		<$let nextTiddler={{{ [<historyList>get[current-tiddler]] }}} cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
+			<<tiddlyflex-cycle-columns-navigator-inner>>
+		</$let>
+	<% elseif [<storyList>!contains<currentHistoryListTiddler>] %>
+		<$let nextTiddler={{{ [list<storyList>nth[1]] }}} cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
+			<<tiddlyflex-cycle-columns-navigator-inner>>
+		</$set>
 	<% endif %>
-	<$navigator story=<<storyList>> history=<<historyList>> openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromOutsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
-		<$action-navigate $to=<<nextTiddler>>/>
-	</$navigator>
-</$let>
+</$set>
 \end
