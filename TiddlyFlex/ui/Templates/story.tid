@@ -3,7 +3,6 @@ code-body: yes
 
 \whitespace trim
 \function tiddlyflex-current-column() [<column>]
-\function tiddlyflex-story-list() [{$:/config/tiddlyflex/story-river/filter}match[yes]] :then[list<tv-story-list>search{$:/temp/search/input}] :else[list<tv-story-list>] 
 \procedure tiddlyflex-activate-column()
 <%if [{$:/columns!!current-column}!match<column>] %>
 	<$action-setfield $tiddler="$:/columns" current-column=<<column>>/>
@@ -41,7 +40,15 @@ code-body: yes
 
 					<section class="tc-tiddlyflex-story-river-inner">
 
-						<$list filter="[function[tiddlyflex-story-list]]" history=<<tv-history-list>> template="$:/core/ui/StoryTiddlerTemplate" storyview="tiddlyflex"/>
+						<%if [{$:/config/tiddlyflex/story-river/filter}match[yes]] %>
+
+							<$list filter="[list<tv-story-list>search{$:/temp/search/input}]" history=<<tv-history-list>> template="$:/core/ui/StoryTiddlerTemplate" storyview="tiddlyflex"/>
+
+						<% else %>
+
+							<$list filter="[list<tv-story-list>]" history=<<tv-history-list>> template="$:/core/ui/StoryTiddlerTemplate" storyview="tiddlyflex"/>
+
+						<% endif %>
 
 						<%if [{$:/state/dragging}match[yes]] %>
 
