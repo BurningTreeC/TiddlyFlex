@@ -10,4 +10,4 @@ move-left: alt-shift-Left
 move-right: alt-shift-Right
 navigate-down: alt-Down
 navigate-up: alt-Up
-remove-column: ctrl-alt-B
+remove-column: ctrl-alt-M
