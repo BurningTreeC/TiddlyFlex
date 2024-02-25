@@ -68,3 +68,57 @@ tags: $:/tags/Global
 	<% endif %>
 <% endif %>
 \end
+\procedure tiddlyflex-cancel-draft-tiddler-actions-draft-of-not-is-missing()
+<$action-log hello="yes"/>
+<$list filter="[list[$:/columns]!match<column>]" variable="column">
+	<$set name="storyList" value={{{ [[$:/StoryList-]addsuffix<column>!match[$:/StoryList-]] ~$:/StoryList-1 }}}>
+		<%if [<storyList>contains<currentTiddler>] %>
+			<$set name="index" value={{{ [list<storyList>allbefore<currentTiddler>add[1]] }}}>
+				<$let nextTiddler={{{ [list<storyList>zth<index>] }}} viewTiddler={{{ [<currentTiddler>get[draft.of]] }}}>
+					<$action-listops $tiddler=<<storyList>> $subfilter="+[insertbefore<viewTiddler>,<nextTiddler>]"/>
+					<$action-listops $tiddler=<<storyList>> $subfilter="-[<currentTiddler>]"/>
+				</$let>
+			</$set>
+		<% endif %>
+	</$set>
+</$list>
+<<delete-edittemplate-state-tiddlers>>
+<$action-sendmessage $message="tm-cancel-tiddler"/>
+\end
+\procedure tiddlyflex-cancel-draft-tiddler-actions()
+<$action-log doing-my-stuff="true"/>
+<%if [<currentTiddler>get[draft.of]!is[shadow]is[missing]] %>
+	<$list filter="[list[$:/columns]!match<column>]" variable="column">
+		<$set name="storyList" value={{{ [[$:/StoryList-]addsuffix<column>!match[$:/StoryList-]] ~$:/StoryList-1 }}}>
+			<$list filter="[<storyList>contains<currentTiddler>]" variable="ignore">
+				<$action-listops $tiddler=<<storyList>> $subfilter="-[<currentTiddler>]"/>
+			</$list>
+		</$set>
+	</$list>
+	<<delete-edittemplate-state-tiddlers>>
+	<$let scrollTiddler={{{ [list<tv-story-list>after<currentTiddler>] ~[list<tv-story-list>before<currentTiddler>] }}}>
+		<$action-setfield $tiddler=<<tv-history-list>> current-tiddler=<<scrollTiddler>>/>
+		<$action-sendmessage $message="tm-cancel-tiddler"/>
+	</$let>
+<% else %>
+	<<tiddlyflex-cancel-draft-tiddler-actions-draft-of-not-is-missing>>
+<% endif %>
+\end
+\procedure tiddlyflex-delete-draft-tiddler-actions()
+<$let deleteTiddlerViewMode={{{ [<currentTiddler>get[draft.of]] }}} deleteTiddlerEditMode=<<currentTiddler>>>
+	<$list filter="[list[$:/columns]!match<column>]" variable="column">
+		<$set name="storyList" value={{{ [[$:/StoryList-]addsuffix<column>!match[$:/StoryList-1]] ~[[$:/StoryList]] }}}>
+			<%if [<storyList>contains<deleteTiddlerViewMode>] %>
+				<$action-listops $tiddler=<<storyList>> $subfilter="-[<deleteTiddlerViewMode>]"/>
+			<% elseif [<storyList>contains<deleteTiddlerEditMode>] %>
+				<$action-listops $tiddler=<<storyList>> $subfilter="-[<deleteTiddlerEditMode>]"/>
+			<% endif %>
+		</$set>
+	</$list>
+</$let>
+<<delete-edittemplate-state-tiddlers>>
+<$let scrollTiddler={{{ [list<tv-story-list>after<currentTiddler>] ~[list<tv-story-list>before<currentTiddler>] }}}>
+	<$action-setfield $tiddler=<<tv-history-list>> current-tiddler=<<scrollTiddler>>/>
+	<$action-sendmessage $message="tm-delete-tiddler"/>
+</$let>
+\end

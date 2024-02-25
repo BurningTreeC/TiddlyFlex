@@ -1,16 +1,13 @@
 title: $:/plugins/BTC/TiddlyFlex/ui/Templates/EditTemplate
+code-body: yes
 
-\define delete-edittemplate-state-tiddlers()
+\procedure delete-edittemplate-state-tiddlers()
 <$set name="safeNewFieldValueTiddlerPrefix" value=<<newFieldValueTiddlerPrefix>> emptyValue=<<qualify "$:/temp/NewFieldValue">> >
 	<$action-deletetiddler $filter="[<newFieldNameTiddler>] [prefix[$:/temp/NewFieldValue]prefix<safeNewFieldValueTiddlerPrefix>] [<newFieldNameInputTiddler>] [<newFieldNameSelectionTiddler>] [<newTagNameTiddler>] [<newTagNameInputTiddler>] [<newTagNameSelectionTiddler>] [<typeInputTiddler>] [<typeSelectionTiddler>]"/>
 </$set>
 \end
 
-<!-- Beware this is duplicated from fields.tid. For details see bug #7054 -->
-\define get-field-value-tiddler-filter() [subfilter<get-field-editor-filter>sha256[16]addprefix[/]addprefix<newFieldValueTiddlerPrefix>]
-\define get-field-editor-filter() [<newFieldNameTiddler>get[text]else[]] :cascade[all[shadows+tiddlers]tag[$:/tags/FieldEditorFilter]!is[draft]get[text]] :and[!is[blank]else{$:/core/ui/EditTemplate/fieldEditor/default}]
-
-\define save-tiddler-actions()
+\procedure save-tiddler-actions()
 \whitespace trim
 <$action-sendmessage $message="tm-add-tag" $param={{{ [<newTagNameTiddler>get[text]] }}}/>
 <$action-sendmessage $message="tm-add-field" $name={{{ [<newFieldNameTiddler>get[text]] }}} $value={{{ [<newFieldNameTiddler>get[text]] :map[subfilter<get-field-value-tiddler-filter>get[text]] }}}/>
@@ -19,10 +16,15 @@ title: $:/plugins/BTC/TiddlyFlex/ui/Templates/EditTemplate
 \end
 
 \define cancel-delete-tiddler-actions(message)
-\whitespace trim
-<<delete-edittemplate-state-tiddlers>>
-<$action-sendmessage $message="tm-$message$-tiddler"/>
+<%if [[$message$]match[delete]] %>
+	<<tiddlyflex-delete-draft-tiddler-actions>>
+<% elseif [[$message$]match[cancel]] %>
+	<<tiddlyflex-cancel-draft-tiddler-actions>>
+<% endif %>
 \end
+
+\procedure get-field-value-tiddler-filter() [subfilter<get-field-editor-filter>sha256[16]addprefix[/]addprefix<newFieldValueTiddlerPrefix>]
+\procedure get-field-editor-filter() [<newFieldNameTiddler>get[text]else[]] :cascade[all[shadows+tiddlers]tag[$:/tags/FieldEditorFilter]!is[draft]get[text]] :and[!is[blank]else{$:/core/ui/EditTemplate/fieldEditor/default}]
 
 \whitespace trim
 <div
@@ -46,7 +48,7 @@ title: $:/plugins/BTC/TiddlyFlex/ui/Templates/EditTemplate
 				typeSelectionTiddler=<<qualify "$:/temp/Type/selected-item">>>
 				<$keyboard key="((cancel-edit-tiddler))" actions=<<cancel-delete-tiddler-actions "cancel">> tag="div">
 					<$keyboard key="((save-tiddler))" actions=<<save-tiddler-actions>> tag="div">
-						<$list filter="[all[shadows+tiddlers]tag[$:/tags/EditTemplate]!has[draft.of]]" variable="listItem">
+						<$list filter="[all[shadows+tiddlers]tag[$:/tags/EditTemplate]!is[draft]]" variable="listItem">
 							<$transclude tiddler=<<listItem>>/>
 						</$list>
 					</$keyboard>
