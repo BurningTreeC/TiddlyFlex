@@ -10,10 +10,11 @@ key: ((move-right))
 \define actions()
 <$let scrollTiddler={{{ [list<storyList>after<focusedTiddler>] ~[list<storyList>before<focusedTiddler>] }}}>
 	<%if [<focusedTiddler>!is[blank]] %>
-		<$action-setfield $tiddler={{{ [[$:/state/tiddlyflex/removing/]addsuffix<focusedTiddler>] }}} direction="right" column=<<currentColumn>>/>
-		<$action-setfield $tiddler={{{ [[$:/state/tiddlyflex/adding/]addsuffix<focusedTiddler>] }}} direction="left" column={{{ [<currentColumn>add[1]] }}}/>
 		<%if [[$:/columns]!contains<nextStoryCounter>] %>
 			<$action-listops $tiddler="$:/columns" $subfilter="[<nextStoryCounter>]"/>
+		<% else %>
+			<$action-setfield $tiddler={{{ [[$:/state/tiddlyflex/removing/]addsuffix<focusedTiddler>] }}} direction="right" column=<<currentColumn>>/>
+			<$action-setfield $tiddler={{{ [[$:/state/tiddlyflex/adding/]addsuffix<focusedTiddler>] }}} direction="left" column={{{ [<currentColumn>add[1]] }}}/>
 		<% endif %>
 		<$action-setfield $tiddler=<<historyList>> current-tiddler={{{ [list<storyList>after<focusedTiddler>] ~[list<storyList>before<focusedTiddler>] }}}/>
 		<$action-listops $tiddler=<<storyList>> $subfilter="-[<focusedTiddler>]"/>

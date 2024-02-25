@@ -5,7 +5,7 @@ tags: $:/tags/Stylesheet
 \rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
 
 .tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"].tc-tiddler-view-frame > .tc-tiddler-frame, .tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"].tc-tiddler-edit-frame > .tc-tiddler-frame {
-	display: none;
+	visibility: hidden;
 }
 
 \end
@@ -23,7 +23,7 @@ tags: $:/tags/Stylesheet
 }
 
 .tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"].tc-tiddler-view-frame > .tc-tiddler-frame, .tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"].tc-tiddler-edit-frame > .tc-tiddler-frame {
-	display: block;
+	visibility: visible;
 	-webkit-animation: slide-out-$(direction)$ {{$:/config/AnimationDuration}}ms linear;
 	-moz-animation: slide-out-$(direction)$ {{$:/config/AnimationDuration}}ms linear;
 	animation: slide-out-$(direction)$ {{$:/config/AnimationDuration}}ms linear;
@@ -55,7 +55,7 @@ tags: $:/tags/Stylesheet
 }
 
 .tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"].tc-tiddler-view-frame > .tc-tiddler-frame, .tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"].tc-tiddler-edit-frame > .tc-tiddler-frame {
-	display: block;
+	visibility: visible;
 	-webkit-animation: slide-in-$(direction)$ {{$:/config/AnimationDuration}}ms linear;
 	-moz-animation: slide-in-$(direction)$ {{$:/config/AnimationDuration}}ms linear;
 	animation: slide-in-$(direction)$ {{$:/config/AnimationDuration}}ms linear;
