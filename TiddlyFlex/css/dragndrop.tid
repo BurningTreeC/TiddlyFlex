@@ -21,8 +21,8 @@ tags: $:/tags/Stylesheet
 }
 
 .tc-tiddlyflex-story-river-$(currentRiver)$ [data-tiddler-title="$(startingNextTiddlerCSSEscaped)$"] .tc-tiddler-frame .tc-tiddlyflex-droppable-top-half {
-	height: calc(50% + (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}}) + {{$:/state/dragging!!height}}px);
-	top: calc(-{{$:/state/dragging!!height}}px - (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}}));
+	height: calc(50% + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + {{$:/config/tiddlyflex/story-river/padding}} + {{$:/state/dragging!!height}}px);
+	top: calc(-{{$:/state/dragging!!height}}px - {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} - {{$:/config/tiddlyflex/story-river/padding}});
 }
 
 \end
@@ -35,8 +35,8 @@ tags: $:/tags/Stylesheet
 }
 
 .tc-tiddlyflex-story-river-$(currentRiver)$ [data-tiddler-title="$(startingNextTiddlerCSSEscaped)$"] .tc-tiddler-frame .tc-tiddlyflex-droppable-top-half {
-	height: calc(50% + (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}}) + {{$:/state/dragging!!height}}px);
-	top: calc(-{{$:/state/dragging!!height}}px - (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}}));
+	height: calc(50% + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + {{$:/config/tiddlyflex/story-river/padding}} + {{$:/state/dragging!!height}}px);
+	top: calc(-{{$:/state/dragging!!height}}px - {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} - {{$:/config/tiddlyflex/story-river/padding}});
 }
 
 \end
@@ -53,8 +53,8 @@ tags: $:/tags/Stylesheet
 }
 
 .tc-tiddlyflex-story-river-$(currentRiver)$ [data-tiddler-title="$(dragTiddlerCSSEscaped)$"] .tc-tiddler-frame .tc-tiddlyflex-droppable-top-half {
-	height: calc(50% + (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}}) + {{$:/state/dragging!!height}}px);
-	top: calc(-{{$:/state/dragging!!height}}px - (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}}));
+	height: calc(50% + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + {{$:/config/tiddlyflex/story-river/padding}} + {{$:/state/dragging!!height}}px);
+	top: calc(-{{$:/state/dragging!!height}}px - {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} - {{$:/config/tiddlyflex/story-river/padding}});
 }
 
 \end
@@ -67,8 +67,8 @@ tags: $:/tags/Stylesheet
 }
 
 .tc-tiddlyflex-story-river-$(currentRiver)$ [data-tiddler-title="$(dragTiddlerCSSEscaped)$"] .tc-tiddler-frame .tc-tiddlyflex-droppable-top-half {
-	height: calc(50% + (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}}) + {{$:/state/dragging!!height}}px);
-	top: calc(-{{$:/state/dragging!!height}}px - (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}}));
+	height: calc(50% + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + {{$:/config/tiddlyflex/story-river/padding}} + {{$:/state/dragging!!height}}px);
+	top: calc(-{{$:/state/dragging!!height}}px - {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} - {{$:/config/tiddlyflex/story-river/padding}});
 }
 
 \end
