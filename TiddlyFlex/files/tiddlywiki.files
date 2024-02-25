@@ -28,6 +28,13 @@
 				"title": "$:/plugins/BTC/TiddlyFlex/modules/storyviews/tiddlyflex.js",
 				"module-type": "storyview"
 			}
+		},{
+			"file": "modules/keyboard.js",
+			"fields": {
+				"type": "application/javascript",
+				"title": "$:/core/modules/keyboard.js",
+				"module-type": "global"
+			}
 		}
 	]
 }

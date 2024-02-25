@@ -8,3 +8,8 @@ title: $:/plugins/BTC/TiddlyFlex/privates/navigation
 	</$navigator>
 </$let>
 \end
+\procedure tiddlyflex-simple-keyboard-navigator()
+<$navigator story={{{ [[$:/StoryList-]addsuffix{$:/columns!!current-column}!match[$:/StoryList-]] ~$:/StoryList-1 }}} history={{{ [[$:/HistoryList-]addsuffix{$:/columns!!current-column}!match[$:/HistoryList-]] ~$:/HistoryList-1 }}} openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromOutsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
+	<<actions>>
+</$navigator>
+\end

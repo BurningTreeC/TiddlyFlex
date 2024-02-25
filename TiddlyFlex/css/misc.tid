@@ -8,3 +8,7 @@ tags: $:/tags/Stylesheet
 .tc-tiddlyflex-top-toolbar .tc-show-sidebar-btn svg.tc-image-chevron-left, .tc-tiddlyflex-top-toolbar .tc-hide-sidebar-btn svg.tc-image-chevron-right {
 	transform: none;
 }
+
+.tc-modal-wrapper {
+	z-index: 999;
+}
