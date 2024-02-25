@@ -1,5 +1,6 @@
 title: $:/config/shortcuts/
 
+add-column: ctrl-alt-N
 cancel-close-tiddler: alt-C
 column-down: alt-Left
 column-up: alt-Right
@@ -9,3 +10,4 @@ move-left: alt-shift-Left
 move-right: alt-shift-Right
 navigate-down: alt-Down
 navigate-up: alt-Up
+remove-column: ctrl-alt-B

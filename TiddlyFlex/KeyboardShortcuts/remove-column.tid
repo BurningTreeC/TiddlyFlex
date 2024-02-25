@@ -1,0 +1,18 @@
+title: $:/plugins/BTC/TiddlyFlex/KeyboardShortcuts/remove-column
+tags: $:/tags/KeyboardShortcut
+key: ((remove-column))
+
+\procedure remove-column-actions()
+<$set name="columnCount" value={{{ [list[$:/columns]count[]] }}}>
+	<$list filter="[[$:/columns]get[current-column]match<columnCount>]">
+		<$action-setfield $tiddler="$:/columns" current-column={{{ [<columnCount>subtract[1]!match[0]] ~1 }}}/>
+	</$list>
+	<$list filter="[<columnCount>!match[1]]">
+		<$action-listops $tiddler="$:/columns" $subfilter="-[<columnCount>]"/>
+	</$list>
+</$set>
+\end
+\whitespace trim
+<$let columns={{{ [list[$:/columns]count[]] ~1 }}}>
+	<<remove-column-actions>>
+</$let>

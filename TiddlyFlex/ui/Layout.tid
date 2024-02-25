@@ -40,7 +40,7 @@ code-body: yes
 			<main class="tc-tiddlyflex-main">
 				<div class="tc-tiddlyflex-story-river-container">
 					<div class="tc-tiddlyflex-story-river-container-inner">
-						<$list filter="[list[$:/columns]] ~1" variable="column" storyview="pop">
+						<$list filter="[list[$:/columns]] ~1" variable="column">	
 							<$set name="transclusion" value=<<column>>>
 								<div class="tc-tiddlyflex-story-river-wrapper">
 									<div class="tc-tiddlyflex-story-river-header">
