@@ -1,6 +1,15 @@
 title: $:/plugins/BTC/TiddlyFlex/styles/tiddler-animations
 tags: $:/tags/Stylesheet
 
+\define tiddlyflex-dont-display-tiddler()
+\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
+
+.tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"].tc-tiddler-view-frame > .tc-tiddler-frame, .tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"].tc-tiddler-edit-frame > .tc-tiddler-frame {
+	display: none;
+}
+
+\end
+
 \define tiddlyflex-remove-tiddler-animation()
 \rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
 
@@ -14,6 +23,7 @@ tags: $:/tags/Stylesheet
 }
 
 .tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"].tc-tiddler-view-frame > .tc-tiddler-frame, .tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"].tc-tiddler-edit-frame > .tc-tiddler-frame {
+	display: block;
 	-webkit-animation: slide-out-$(direction)$ {{$:/config/AnimationDuration}}ms linear;
 	-moz-animation: slide-out-$(direction)$ {{$:/config/AnimationDuration}}ms linear;
 	animation: slide-out-$(direction)$ {{$:/config/AnimationDuration}}ms linear;
@@ -45,6 +55,7 @@ tags: $:/tags/Stylesheet
 }
 
 .tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"].tc-tiddler-view-frame > .tc-tiddler-frame, .tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"].tc-tiddler-edit-frame > .tc-tiddler-frame {
+	display: block;
 	-webkit-animation: slide-in-$(direction)$ {{$:/config/AnimationDuration}}ms linear;
 	-moz-animation: slide-in-$(direction)$ {{$:/config/AnimationDuration}}ms linear;
 	animation: slide-in-$(direction)$ {{$:/config/AnimationDuration}}ms linear;
@@ -107,20 +118,30 @@ tags: $:/tags/Stylesheet
 }
 
 <$list filter="[all[tiddlers]prefix[$:/state/tiddlyflex/removing/]]" variable="stateTiddler">
-	<%if [<stateTiddler>has[height]] %>
-		<$let tiddlerTitle={{{ [<stateTiddler>removeprefix[$:/state/tiddlyflex/removing/]] }}} direction={{{ [<stateTiddler>get[direction]] }}} column={{{ [<stateTiddler>get[column]] }}} tiddlerTitleCSSEscaped={{{ [<tiddlerTitle>escapecss[]] }}} tiddlerHeight={{{ [<stateTiddler>get[height]] }}}>
+	<$let tiddlerTitle={{{ [<stateTiddler>removeprefix[$:/state/tiddlyflex/removing/]] }}} tiddlerTitleCSSEscaped={{{ [<tiddlerTitle>escapecss[]] }}} column={{{ [<stateTiddler>get[column]] }}}>
 
-			<<tiddlyflex-remove-tiddler-animation>>
+		<<tiddlyflex-dont-display-tiddler>>
 
-		</$let>
-	<% endif %>
+		<%if [<stateTiddler>has[height]] %>
+			<$let direction={{{ [<stateTiddler>get[direction]] }}} tiddlerHeight={{{ [<stateTiddler>get[height]] }}}>
+
+				<<tiddlyflex-remove-tiddler-animation>>
+
+			</$let>
+		<% endif %>
+	</$let>
 </$list>
 <$list filter="[all[tiddlers]prefix[$:/state/tiddlyflex/adding/]]" variable="stateTiddler">
-	<%if [<stateTiddler>has[height]] %>
-		<$let tiddlerTitle={{{ [<stateTiddler>removeprefix[$:/state/tiddlyflex/adding/]] }}} direction={{{ [<stateTiddler>get[direction]] }}} column={{{ [<stateTiddler>get[column]] }}} tiddlerTitleCSSEscaped={{{ [<tiddlerTitle>escapecss[]] }}} tiddlerHeight={{{ [<stateTiddler>get[height]] }}}>
+	<$let tiddlerTitle={{{ [<stateTiddler>removeprefix[$:/state/tiddlyflex/adding/]] }}} tiddlerTitleCSSEscaped={{{ [<tiddlerTitle>escapecss[]] }}} column={{{ [<stateTiddler>get[column]] }}}>
 
-			<<tiddlyflex-add-tiddler-animation>>
+		<<tiddlyflex-dont-display-tiddler>>
 
-		</$let>
-	<% endif %>
+		<%if [<stateTiddler>has[height]] %>
+			<$let direction={{{ [<stateTiddler>get[direction]] }}} tiddlerHeight={{{ [<stateTiddler>get[height]] }}}>
+
+				<<tiddlyflex-add-tiddler-animation>>
+
+			</$let>
+		<% endif %>
+	</$let>
 </$list>
