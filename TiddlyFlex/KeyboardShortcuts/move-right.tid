@@ -6,6 +6,7 @@ key: ((move-right))
 \procedure current-tiddler-is-empty-message()
 <$action-listops $tiddler=<<nextStoryList>> $subfilter="+[insertbefore<focusedTiddler>,<firstNextStoryTiddler>]"/>
 <$action-setfield $tiddler=<<nextHistoryList>> current-tiddler=<<focusedTiddler>>/>
+\end
 \define actions()
 <$let scrollTiddler={{{ [list<storyList>after<focusedTiddler>] ~[list<storyList>before<focusedTiddler>] }}}>
 	<%if [<focusedTiddler>!is[blank]] %>
