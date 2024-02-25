@@ -1,0 +1,119 @@
+title: $:/plugins/BTC/TiddlyFlex/styles/tiddler-animations
+tags: $:/tags/Stylesheet
+
+\define tiddlyflex-remove-tiddler-animation()
+\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
+
+@keyframes margin-top-remove-$(column)$-$(tiddlerTitleCSSEscaped)$ {
+	from {
+		margin-top: 0%;
+	}
+	to {
+		margin-top: calc( -{{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} - $(tiddlerHeight)$px);
+	}
+}
+
+.tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"].tc-tiddler-view-frame > .tc-tiddler-frame, .tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"].tc-tiddler-edit-frame > .tc-tiddler-frame {
+	-webkit-animation: slide-out-$(direction)$ {{$:/config/AnimationDuration}}ms linear;
+	-moz-animation: slide-out-$(direction)$ {{$:/config/AnimationDuration}}ms linear;
+	animation: slide-out-$(direction)$ {{$:/config/AnimationDuration}}ms linear;
+	border: 1px solid <<colour tiddlyflex-current-tiddler>>;
+}
+
+.tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"].tc-tiddler-view-frame, .tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"].tc-tiddler-edit-frame {
+	z-index: 999;
+}
+
+.tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"].tc-tiddler-view-frame + .tc-tiddler-view-frame, .tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"].tc-tiddler-view-frame + .tc-tiddler-edit-frame, .tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"].tc-tiddler-edit-frame + .tc-tiddler-view-frame, .tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"].tc-tiddler-edit-frame + .tc-tiddler-edit-frame {
+	-webkit-animation: margin-top-remove-$(column)$-$(tiddlerTitleCSSEscaped)$ {{$:/config/AnimationDuration}}ms linear;
+	-moz-animation: margin-top-remove-$(column)$-$(tiddlerTitleCSSEscaped)$ {{$:/config/AnimationDuration}}ms linear;
+	animation: margin-top-remove-$(column)$-$(tiddlerTitleCSSEscaped)$ {{$:/config/AnimationDuration}}ms linear;
+}
+
+\end
+
+\define tiddlyflex-add-tiddler-animation()
+\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
+
+@keyframes margin-top-add-$(column)$-$(tiddlerTitleCSSEscaped)$ {
+	from {
+		margin-top: calc( -{{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} - $(tiddlerHeight)$px);
+	}
+	to {
+		margin-top: 0%;
+	}
+}
+
+.tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"].tc-tiddler-view-frame > .tc-tiddler-frame, .tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"].tc-tiddler-edit-frame > .tc-tiddler-frame {
+	-webkit-animation: slide-in-$(direction)$ {{$:/config/AnimationDuration}}ms linear;
+	-moz-animation: slide-in-$(direction)$ {{$:/config/AnimationDuration}}ms linear;
+	animation: slide-in-$(direction)$ {{$:/config/AnimationDuration}}ms linear;
+	border: 1px solid <<colour tiddlyflex-current-tiddler>>;
+}
+
+.tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"].tc-tiddler-view-frame, .tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"].tc-tiddler-edit-frame {
+	z-index: 999;
+}
+
+.tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"].tc-tiddler-view-frame + .tc-tiddler-view-frame, .tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"].tc-tiddler-view-frame + .tc-tiddler-edit-frame, .tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"].tc-tiddler-edit-frame + .tc-tiddler-view-frame, .tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"].tc-tiddler-edit-frame + .tc-tiddler-edit-frame {
+	-webkit-animation: margin-top-add-$(column)$-$(tiddlerTitleCSSEscaped)$ {{$:/config/AnimationDuration}}ms linear;
+	-moz-animation: margin-top-add-$(column)$-$(tiddlerTitleCSSEscaped)$ {{$:/config/AnimationDuration}}ms linear;
+	animation: margin-top-add-$(column)$-$(tiddlerTitleCSSEscaped)$ {{$:/config/AnimationDuration}}ms linear;
+}
+
+\end
+
+@keyframes slide-out-left {
+	from {
+		transform: translateX(0%);
+	}
+	to {
+		transform: translateX(calc(-100% - (2 * {{$:/config/tiddlyflex/story-river/padding}})));
+	}
+}
+
+@keyframes slide-out-right {
+	from {
+		transform: translateX(0%);
+	}
+	to {
+		transform: translateX(calc(100% + (2 * {{$:/config/tiddlyflex/story-river/padding}})));
+	}
+}
+
+@keyframes slide-in-left {
+	from {
+		transform: translateX(calc( -100% - (2 * {{$:/config/tiddlyflex/story-river/padding}})));
+	}
+	to {
+		transform: translateX(0%);
+	}
+}
+
+@keyframes slide-in-right {
+	from {
+		transform: translateX(calc(100% + (2 * {{$:/config/tiddlyflex/story-river/padding}})));
+	}
+	to {
+		transform: translateX(0%);
+	}
+}
+
+<$list filter="[all[tiddlers]prefix[$:/state/tiddlyflex/removing/]]" variable="stateTiddler">
+	<%if [<stateTiddler>has[height]] %>
+		<$let tiddlerTitle={{{ [<stateTiddler>removeprefix[$:/state/tiddlyflex/removing/]] }}} direction={{{ [<stateTiddler>get[direction]] }}} column={{{ [<stateTiddler>get[column]] }}} tiddlerTitleCSSEscaped={{{ [<tiddlerTitle>escapecss[]] }}} tiddlerHeight={{{ [<stateTiddler>get[height]] }}}>
+
+			<<tiddlyflex-remove-tiddler-animation>>
+
+		</$let>
+	<% endif %>
+</$list>
+<$list filter="[all[tiddlers]prefix[$:/state/tiddlyflex/adding/]]" variable="stateTiddler">
+	<%if [<stateTiddler>has[height]] %>
+		<$let tiddlerTitle={{{ [<stateTiddler>removeprefix[$:/state/tiddlyflex/adding/]] }}} direction={{{ [<stateTiddler>get[direction]] }}} column={{{ [<stateTiddler>get[column]] }}} tiddlerTitleCSSEscaped={{{ [<tiddlerTitle>escapecss[]] }}} tiddlerHeight={{{ [<stateTiddler>get[height]] }}}>
+
+			<<tiddlyflex-add-tiddler-animation>>
+			
+		</$let>
+	<% endif %>
+</$list>

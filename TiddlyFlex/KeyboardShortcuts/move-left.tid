@@ -10,6 +10,8 @@ key: ((move-left))
 \procedure actions()
 <$let scrollTiddler={{{ [list<storyList>after<focusedTiddler>] ~[list<storyList>before<focusedTiddler>] }}}>
 	<%if [<focusedTiddler>!is[blank]then<storyList>!match[$:/StoryList-1]] %>
+		<$action-setfield $tiddler={{{ [[$:/state/tiddlyflex/removing/]addsuffix<focusedTiddler>] }}} direction="left" column=<<currentColumn>>/>
+		<$action-setfield $tiddler={{{ [[$:/state/tiddlyflex/adding/]addsuffix<focusedTiddler>] }}} direction="right" column={{{ [<currentColumn>subtract[1]] }}}/>
 		<$action-setfield $tiddler=<<historyList>> current-tiddler={{{ [list<storyList>after<focusedTiddler>] ~[list<storyList>before<focusedTiddler>] }}}/>
 		<$action-listops $tiddler=<<storyList>> $subfilter="-[<focusedTiddler>]"/>
 		<%if [<previousHistoryList>get[current-tiddler]!match[]] %>

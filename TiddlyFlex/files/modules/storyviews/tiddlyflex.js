@@ -39,8 +39,9 @@ ClassicStoryView.prototype.navigateTo = function(historyInfo) {
 };
 
 ClassicStoryView.prototype.insert = function(widget) {
-	var duration = $tw.utils.getAnimationDuration();
-	if(duration && !widget.wiki.tiddlerExists("$:/state/dragging")) {
+	var duration = $tw.utils.getAnimationDuration(),
+		tiddlerTitle = widget.parseTreeNode.itemTitle;
+	if(duration && !widget.wiki.tiddlerExists("$:/state/dragging") && !widget.wiki.tiddlerExists("$:/state/tiddlyflex/adding/" + tiddlerTitle)) {
 		var targetElement = widget.findFirstDomNode();
 		// Abandon if the list entry isn't a DOM element (it might be a text node)
 		if(!targetElement || targetElement.nodeType === Node.TEXT_NODE) {
@@ -72,14 +73,23 @@ ClassicStoryView.prototype.insert = function(widget) {
 			{marginBottom: currMarginBottom + "px"},
 			{opacity: "1.0"}
 		]);
-	} else if($tw.wiki.tiddlerExists("$:/state/dragging")) {
+	} else if(duration && !widget.wiki.tiddlerExists("$:/state/dragging") && widget.wiki.tiddlerExists("$:/state/tiddlyflex/adding/" + tiddlerTitle)) {
+		var targetElement = widget.findFirstDomNode();
+		widget.wiki.setText("$:/state/tiddlyflex/adding/" + tiddlerTitle,"height",undefined,targetElement.offsetHeight);
+		setTimeout(function() {
+			widget.wiki.deleteTiddler("$:/state/tiddlyflex/adding/" + tiddlerTitle);
+		},duration);
+	}
+	if($tw.wiki.tiddlerExists("$:/state/dragging")) {
 		widget.wiki.deleteTiddler("$:/state/dragging");
 	}
 };
 
 ClassicStoryView.prototype.remove = function(widget) {
-	var duration = $tw.utils.getAnimationDuration();
-	if(duration && !widget.wiki.tiddlerExists("$:/state/dragging")) {
+	var duration = $tw.utils.getAnimationDuration(),
+		tiddlerTitle = widget.parseTreeNode.itemTitle;
+	console.log(widget);
+	if(duration && !widget.wiki.tiddlerExists("$:/state/dragging") && !widget.wiki.tiddlerExists("$:/state/tiddlyflex/removing/" + tiddlerTitle)) {
 		var targetElement = widget.findFirstDomNode(),
 			removeElement = function() {
 				widget.removeChildDomNodes();
@@ -113,6 +123,14 @@ ClassicStoryView.prototype.remove = function(widget) {
 			{marginBottom: (-currHeight) + "px"},
 			{opacity: "0.0"}
 		]);
+	} else if(duration && !widget.wiki.tiddlerExists("$:/state/dragging") && widget.wiki.tiddlerExists("$:/state/tiddlyflex/removing/" + tiddlerTitle)) {
+		var targetElement = widget.findFirstDomNode(),
+			removeElement = function() {
+				widget.removeChildDomNodes();
+				widget.wiki.deleteTiddler("$:/state/tiddlyflex/removing/" + tiddlerTitle);
+			};
+		widget.wiki.setText("$:/state/tiddlyflex/removing/" + tiddlerTitle,"height",undefined,targetElement.offsetHeight);
+		setTimeout(removeElement,duration);
 	} else {
 		widget.removeChildDomNodes();
 	}
