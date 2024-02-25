@@ -48,8 +48,15 @@ tags: $:/tags/Stylesheet
 	-webkit-animation: slide-in-$(direction)$ {{$:/config/AnimationDuration}}ms linear;
 	-moz-animation: slide-in-$(direction)$ {{$:/config/AnimationDuration}}ms linear;
 	animation: slide-in-$(direction)$ {{$:/config/AnimationDuration}}ms linear;
+}
+
+<%if [{$:/config/tiddlyflex/story-river/follow-current-column}match[yes]] %>
+
+.tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"].tc-tiddler-view-frame > .tc-tiddler-frame, .tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"].tc-tiddler-edit-frame > .tc-tiddler-frame {
 	border: 1px solid <<colour tiddlyflex-current-tiddler>>;
 }
+
+<% endif %>
 
 .tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"].tc-tiddler-view-frame, .tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"].tc-tiddler-edit-frame {
 	z-index: 999;
@@ -113,7 +120,7 @@ tags: $:/tags/Stylesheet
 		<$let tiddlerTitle={{{ [<stateTiddler>removeprefix[$:/state/tiddlyflex/adding/]] }}} direction={{{ [<stateTiddler>get[direction]] }}} column={{{ [<stateTiddler>get[column]] }}} tiddlerTitleCSSEscaped={{{ [<tiddlerTitle>escapecss[]] }}} tiddlerHeight={{{ [<stateTiddler>get[height]] }}}>
 
 			<<tiddlyflex-add-tiddler-animation>>
-			
+
 		</$let>
 	<% endif %>
 </$list>
