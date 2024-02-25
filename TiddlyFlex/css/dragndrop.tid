@@ -17,12 +17,12 @@ tags: $:/tags/Stylesheet
 }
 
 .tc-tiddlyflex-story-river-$(currentRiver)$ [data-tiddler-title="$(startingNextTiddlerCSSEscaped)$"] .tc-tiddler-frame {
-	margin-top: calc({{$:/state/dragging!!height}}px + (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}}));
+	margin-top: calc({{$:/state/dragging!!height}}px + (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}}) + 2px);
 }
 
 .tc-tiddlyflex-story-river-$(currentRiver)$ [data-tiddler-title="$(startingNextTiddlerCSSEscaped)$"] .tc-tiddler-frame .tc-tiddlyflex-droppable-top-half {
-	height: calc(50% + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + {{$:/config/tiddlyflex/story-river/padding}} + {{$:/state/dragging!!height}}px);
-	top: calc(-{{$:/state/dragging!!height}}px - {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} - {{$:/config/tiddlyflex/story-river/padding}});
+	height: calc(50% + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + {{$:/config/tiddlyflex/story-river/padding}} + {{$:/state/dragging!!height}}px + 2px);
+	top: calc(-{{$:/state/dragging!!height}}px - (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}}) - 2px);
 }
 
 \end
@@ -31,12 +31,12 @@ tags: $:/tags/Stylesheet
 \rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
 
 .tc-tiddlyflex-story-river-$(currentRiver)$ [data-tiddler-title="$(startingNextTiddlerCSSEscaped)$"] .tc-tiddler-frame {
-	margin-top: calc({{$:/state/dragging!!height}}px + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}});
+	margin-top: calc({{$:/state/dragging!!height}}px + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + 2px);
 }
 
 .tc-tiddlyflex-story-river-$(currentRiver)$ [data-tiddler-title="$(startingNextTiddlerCSSEscaped)$"] .tc-tiddler-frame .tc-tiddlyflex-droppable-top-half {
-	height: calc(50% + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + {{$:/config/tiddlyflex/story-river/padding}} + {{$:/state/dragging!!height}}px);
-	top: calc(-{{$:/state/dragging!!height}}px - {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} - {{$:/config/tiddlyflex/story-river/padding}});
+	height: calc(50% + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + {{$:/config/tiddlyflex/story-river/padding}} + {{$:/state/dragging!!height}}px + 2px);
+	top: calc(-{{$:/state/dragging!!height}}px - {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} - {{$:/config/tiddlyflex/story-river/padding}} - 2px);
 }
 
 \end
@@ -49,12 +49,12 @@ tags: $:/tags/Stylesheet
 }
 
 .tc-tiddlyflex-story-river-$(currentRiver)$ [data-tiddler-title="$(dragTiddlerCSSEscaped)$"] .tc-tiddler-frame {
-	margin-top: calc({{$:/state/dragging!!height}}px + (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}}));
+	margin-top: calc({{$:/state/dragging!!height}}px + (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}}) + 2px);
 }
 
 .tc-tiddlyflex-story-river-$(currentRiver)$ [data-tiddler-title="$(dragTiddlerCSSEscaped)$"] .tc-tiddler-frame .tc-tiddlyflex-droppable-top-half {
-	height: calc(50% + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + {{$:/config/tiddlyflex/story-river/padding}} + {{$:/state/dragging!!height}}px);
-	top: calc(-{{$:/state/dragging!!height}}px - {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} - {{$:/config/tiddlyflex/story-river/padding}});
+	height: calc(50% + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + {{$:/config/tiddlyflex/story-river/padding}} + {{$:/state/dragging!!height}}px + 2px);
+	top: calc(-{{$:/state/dragging!!height}}px - (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}}) - 2px);
 }
 
 \end
@@ -63,12 +63,12 @@ tags: $:/tags/Stylesheet
 \rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
 
 .tc-tiddlyflex-story-river-$(currentRiver)$ [data-tiddler-title="$(dragTiddlerCSSEscaped)$"] .tc-tiddler-frame {
-	margin-top: calc({{$:/state/dragging!!height}}px + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}});
+	margin-top: calc({{$:/state/dragging!!height}}px + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + 2px);
 }
 
 .tc-tiddlyflex-story-river-$(currentRiver)$ [data-tiddler-title="$(dragTiddlerCSSEscaped)$"] .tc-tiddler-frame .tc-tiddlyflex-droppable-top-half {
-	height: calc(50% + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + {{$:/config/tiddlyflex/story-river/padding}} + {{$:/state/dragging!!height}}px);
-	top: calc(-{{$:/state/dragging!!height}}px - {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} - {{$:/config/tiddlyflex/story-river/padding}});
+	height: calc(50% + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + {{$:/config/tiddlyflex/story-river/padding}} + {{$:/state/dragging!!height}}px + 2px);
+	top: calc(-{{$:/state/dragging!!height}}px - {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} - {{$:/config/tiddlyflex/story-river/padding}} - 2px);
 }
 
 \end
@@ -77,7 +77,7 @@ tags: $:/tags/Stylesheet
 \rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
 
 .tc-tiddlyflex-story-river-$(currentRiver)$ .tc-tiddler-view-frame:not([data-tiddler-title="$(targetTiddlerCSSEscaped)$"]) .tc-tiddler-frame, .tc-tiddlyflex-story-river-$(currentRiver)$ .tc-tiddler-edit-frame:not([data-tiddler-title="$(targetTiddlerCSSEscaped)$"]) .tc-tiddler-frame {
-	margin-top: {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}};
+	margin-top: calc( {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + 2px);
 }
 
 .tc-tiddlyflex-story-river-$(currentRiver)$ .tc-tiddler-view-frame:first-of-type:not([data-tiddler-title="$(targetTiddlerCSSEscaped)$"]) .tc-tiddler-frame, .tc-tiddlyflex-story-river-$(currentRiver)$ .tc-tiddler-edit-frame:first-of-type:not([data-tiddler-title="$(targetTiddlerCSSEscaped)$"]) .tc-tiddler-frame {
@@ -85,7 +85,7 @@ tags: $:/tags/Stylesheet
 }
 
 .tc-tiddlyflex-story-river-$(currentRiver)$ [data-tiddler-title="$(targetTiddlerCSSEscaped)$"] .tc-tiddler-frame {
-	margin-top: calc({{$:/state/dragging!!height}}px + (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}}));
+	margin-top: calc({{$:/state/dragging!!height}}px + (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}}) + 2px);
 }
 
 \end
@@ -94,7 +94,7 @@ tags: $:/tags/Stylesheet
 \rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
 
 .tc-tiddlyflex-story-river-$(currentRiver)$ [data-tiddler-title="$(targetTiddlerCSSEscaped)$"] .tc-tiddler-frame {
-	margin-top: calc({{$:/state/dragging!!height}}px + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}});
+	margin-top: calc({{$:/state/dragging!!height}}px + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + 2px);
 }
 
 \end
@@ -103,41 +103,41 @@ tags: $:/tags/Stylesheet
 
 .tc-tiddlyflex-droppable-top-half {
 	position: absolute;
-	top: -{{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}};
-	left: -{{$:/config/tiddlyflex/story-river/padding}};
-	height: calc(50% + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}});
-	width: calc(100% + (2 * {{$:/config/tiddlyflex/story-river/padding}}));
+	top: calc( -{{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} - 2px);
+	left: calc( -{{$:/config/tiddlyflex/story-river/padding}} - 2px);
+	height: calc(50% + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + 2px);
+	width: calc(100% + (2 * {{$:/config/tiddlyflex/story-river/padding}}) + 2px);
 	display: none;
 	z-index: 501;
 }
 
 .tc-tiddler-view-frame:first-of-type .tc-tiddlyflex-droppable-top-half, .tc-tiddler-edit-frame:first-of-type .tc-tiddlyflex-droppable-top-half {
-	top: -{{$:/config/tiddlyflex/story-river/padding}};
-	height: calc(50% + {{$:/config/tiddlyflex/story-river/padding}});
+	top: calc( -{{$:/config/tiddlyflex/story-river/padding}} - 2px);
+	height: calc(50% + {{$:/config/tiddlyflex/story-river/padding}} + 2px);
 }
 
 .tc-tiddlyflex-droppable-bottom-half {
 	position: absolute;
 	top: 50%;
-	left: -{{$:/config/tiddlyflex/story-river/padding}};
-	height: 50%;
-	width: calc(100% + (2 * {{$:/config/tiddlyflex/story-river/padding}}));
+	left: calc( -{{$:/config/tiddlyflex/story-river/padding}} - 2px);
+	height: calc(50% + 2px);
+	width: calc(100% + (2 * {{$:/config/tiddlyflex/story-river/padding}}) + 2px);
 	z-index: 501;
 	display: none;
 }
 
 .tc-tiddlyflex-droppable-top-half.tc-dragover {
-	height: calc(50% + (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}}) + {{$:/state/dragging!!height}}px);
-	top: calc(-{{$:/state/dragging!!height}}px - (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}}));
+	height: calc(50% + (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}}) + {{$:/state/dragging!!height}}px + 2px);
+	top: calc(-{{$:/state/dragging!!height}}px - (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}}) - 2px);
 }
 
 .tc-tiddler-view-frame:first-of-type .tc-tiddlyflex-droppable-top-half.tc-dragover, .tc-tiddler-edit-frame:first-of-type .tc-tiddlyflex-droppable-top-half.tc-dragover {
-	height: calc(50% + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + {{$:/config/tiddlyflex/story-river/padding}} + {{$:/state/dragging!!height}}px);
-	top: calc(-{{$:/state/dragging!!height}}px - {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} - {{$:/config/tiddlyflex/story-river/padding}});
+	height: calc(50% + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + {{$:/config/tiddlyflex/story-river/padding}} + {{$:/state/dragging!!height}}px + 2px);
+	top: calc(-{{$:/state/dragging!!height}}px - {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} - {{$:/config/tiddlyflex/story-river/padding}} - 2px);
 }
 
 .tc-tiddlyflex-droppable-bottom-half.tc-dragover {
-	height: calc(50% + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + {{$:/state/dragging!!height}}px);
+	height: calc(50% + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + {{$:/state/dragging!!height}}px + 2px);
 }
 
 <%if [{$:/state/dragging}match[yes]] %>
