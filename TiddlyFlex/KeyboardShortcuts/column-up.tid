@@ -3,20 +3,6 @@ tags: $:/tags/KeyboardShortcut
 key: ((column-up))
 
 \import $:/plugins/BTC/TiddlyFlex/privates/selectors $:/plugins/BTC/TiddlyFlex/privates/navigation
-\procedure actions()
-<%if [<historyList>get[current-tiddler]is[blank]] %>
-	<$action-setfield $tiddler=<<historyList>> current-tiddler={{{ [list<storyList>nth[1]] }}}/>
-<% endif %>
-<$let nextTiddler={{{ [<historyList>get[current-tiddler]] }}} cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
-	<%if [<nextTiddler>is[draft]] %>
-		<<tiddlyflex-focus-draft-tiddler>>
-	<% else %>
-		<<tiddlyflex-focus-flexcontainer>>
-	<% endif %>
-	<$action-navigate $to=<<nextTiddler>>/>
-</$let>
-\end
-<$let currentColumn={{{ [[$:/columns]get[current-column]] ~1 }}} nextColumn={{{ [list[$:/columns]after<currentColumn>] ~1 }}}>
-	<$action-setfield $tiddler="$:/columns" current-column=<<nextColumn>>/>
-	<$macrocall $name="tiddlyflex-keyboard-navigator" actions=<<actions>>/>
+<$let currentColumn={{{ [[$:/columns]get[current-column]] ~1 }}} nextColumn={{{ [list[$:/columns]after<currentColumn>] ~1 }}} storyList={{{ [[$:/StoryList-]addsuffix<nextColumn>] }}} historyList={{{ [[$:/HistoryList-]addsuffix<nextColumn>] }}}>
+	<<tiddlyflex-cycle-columns-navigator>>
 </$let>
