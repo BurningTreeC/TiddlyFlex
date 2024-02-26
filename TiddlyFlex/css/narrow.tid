@@ -77,4 +77,8 @@ tags: $:/tags/Stylesheet
 		width: 100px;
 	}
 
+	.tc-tiddlyflex-top-toolbar .tc-sidebar-lists .tc-search .tc-image-down-arrow + em {
+		display: none;
+	}
+
 }
