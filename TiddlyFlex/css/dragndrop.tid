@@ -101,108 +101,108 @@ tags: $:/tags/Stylesheet
 
 <%if [{$:/state/dragging}match[yes]] %>
 
-.tc-tiddlyflex-droppable-top-half {
-	position: absolute;
-	top: calc( -{{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} - 2px);
-	left: calc( -{{$:/config/tiddlyflex/story-river/padding}} - 1px);
-	height: calc(50% + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + 2px);
-	width: calc(100% + (2 * {{$:/config/tiddlyflex/story-river/padding}}) + 2px);
-	display: none;
-	z-index: 501;
-}
-
-.tc-tiddler-view-frame:first-of-type .tc-tiddlyflex-droppable-top-half, .tc-tiddler-edit-frame:first-of-type .tc-tiddlyflex-droppable-top-half {
-	top: calc( -{{$:/config/tiddlyflex/story-river/padding}} - 2px);
-	height: calc(50% + {{$:/config/tiddlyflex/story-river/padding}} + 2px);
-}
-
-.tc-tiddlyflex-droppable-bottom-half {
-	position: absolute;
-	top: 50%;
-	left: calc( -{{$:/config/tiddlyflex/story-river/padding}} - 1px);
-	height: calc(50% + 2px);
-	width: calc(100% + (2 * {{$:/config/tiddlyflex/story-river/padding}}) + 2px);
-	z-index: 501;
-	display: none;
-}
-
-.tc-tiddlyflex-droppable-top-half.tc-dragover {
-	height: calc(50% + (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}}) + {{$:/state/dragging!!height}}px + 2px);
-	top: calc(-{{$:/state/dragging!!height}}px - (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}}) - 2px);
-}
-
-.tc-tiddler-view-frame:first-of-type .tc-tiddlyflex-droppable-top-half.tc-dragover, .tc-tiddler-edit-frame:first-of-type .tc-tiddlyflex-droppable-top-half.tc-dragover {
-	height: calc(50% + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + {{$:/config/tiddlyflex/story-river/padding}} + {{$:/state/dragging!!height}}px + 2px);
-	top: calc(-{{$:/state/dragging!!height}}px - {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} - {{$:/config/tiddlyflex/story-river/padding}} - 2px);
-}
-
-.tc-tiddlyflex-droppable-bottom-half.tc-dragover {
-	height: calc(50% + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + {{$:/state/dragging!!height}}px + 2px);
-}
-
-<%if [{$:/state/dragging}match[yes]] %>
-
-	.tc-tiddlyflex-droppable-top-half, .tc-tiddlyflex-droppable-bottom-half {
-		display: block;
+	.tc-tiddlyflex-droppable-top-half {
+		position: absolute;
+		top: calc( -{{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} - 2px);
+		left: calc( -{{$:/config/tiddlyflex/story-river/padding}} - 1px);
+		height: calc(50% + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + 2px);
+		width: calc(100% + (2 * {{$:/config/tiddlyflex/story-river/padding}}) + 2px);
+		display: none;
+		z-index: 501;
 	}
 
-	<$set name="dragTiddler" value={{$:/state/dragging!!drag-tiddler}}>
+	.tc-tiddler-view-frame:first-of-type .tc-tiddlyflex-droppable-top-half, .tc-tiddler-edit-frame:first-of-type .tc-tiddlyflex-droppable-top-half {
+		top: calc( -{{$:/config/tiddlyflex/story-river/padding}} - 2px);
+		height: calc(50% + {{$:/config/tiddlyflex/story-river/padding}} + 2px);
+	}
 
-		<$set name="dragTiddlerCSSEscaped" value={{{ [<dragTiddler>escapecss[]] }}}>
+	.tc-tiddlyflex-droppable-bottom-half {
+		position: absolute;
+		top: 50%;
+		left: calc( -{{$:/config/tiddlyflex/story-river/padding}} - 1px);
+		height: calc(50% + 2px);
+		width: calc(100% + (2 * {{$:/config/tiddlyflex/story-river/padding}}) + 2px);
+		z-index: 501;
+		display: none;
+	}
 
-			<<tiddlyflex-tiddler-frame-transitions>>
+	.tc-tiddlyflex-droppable-top-half.tc-dragover {
+		height: calc(50% + (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}}) + {{$:/state/dragging!!height}}px + 2px);
+		top: calc(-{{$:/state/dragging!!height}}px - (2 * {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}}) - 2px);
+	}
+
+	.tc-tiddler-view-frame:first-of-type .tc-tiddlyflex-droppable-top-half.tc-dragover, .tc-tiddler-edit-frame:first-of-type .tc-tiddlyflex-droppable-top-half.tc-dragover {
+		height: calc(50% + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + {{$:/config/tiddlyflex/story-river/padding}} + {{$:/state/dragging!!height}}px + 2px);
+		top: calc(-{{$:/state/dragging!!height}}px - {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} - {{$:/config/tiddlyflex/story-river/padding}} - 2px);
+	}
+
+	.tc-tiddlyflex-droppable-bottom-half.tc-dragover {
+		height: calc(50% + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + {{$:/state/dragging!!height}}px + 2px);
+	}
+
+	<%if [{$:/state/dragging}match[yes]] %>
+
+		.tc-tiddlyflex-droppable-top-half, .tc-tiddlyflex-droppable-bottom-half {
+			display: block;
+		}
+
+		<$set name="dragTiddler" value={{$:/state/dragging!!drag-tiddler}}>
+
+			<$set name="dragTiddlerCSSEscaped" value={{{ [<dragTiddler>escapecss[]] }}}>
+
+				<<tiddlyflex-tiddler-frame-transitions>>
+
+			</$set>
 
 		</$set>
 
-	</$set>
-
-<% endif %>
-
-<$let currentRiver={{$:/state/dragging!!river}} story={{{ [[$:/StoryList-]addsuffix<currentRiver>] }}} targetTiddler={{$:/state/dragging!!target}} nextTiddler={{{ [list<story>after<targetTiddler>] }}} margin={{$:/state/dragging!!margin}} targetTiddlerCSSEscaped={{{ [<margin>match[top]then<targetTiddler>escapecss[]] [<margin>match[bottom]then<nextTiddler>escapecss[]] }}}>
-
-	<<tiddlyflex-target-tiddler-margin>>
-
-	<%if [{$:/state/dragging!!nth}match[0]] %>
-
-		<<tiddlyflex-target-tiddler-margin-nth-0>>
-
 	<% endif %>
 
-</$let>
+	<$let currentRiver={{$:/state/dragging!!river}} story={{{ [[$:/StoryList-]addsuffix<currentRiver>] }}} targetTiddler={{$:/state/dragging!!target}} nextTiddler={{{ [list<story>after<targetTiddler>] }}} margin={{$:/state/dragging!!margin}} targetTiddlerCSSEscaped={{{ [<margin>match[top]then<targetTiddler>escapecss[]] [<margin>match[bottom]then<nextTiddler>escapecss[]] }}}>
 
-.tc-tiddlyflex-below-story-river-droppable {
-	position: absolute;
-	width: calc(100% + {{$:/config/tiddlyflex/story-river/padding}});
-	height: calc(100% + {{$:/config/tiddlyflex/story-river/padding}});
-	left: -{{$:/config/tiddlyflex/story-river/padding}};
-	top: -{{$:/config/tiddlyflex/story-river/padding}};
-}
-
-<$let currentRiver={{$:/state/dragging!!start-river}} dragTiddler={{$:/state/dragging!!drag-tiddler}} startingNextTiddler={{$:/state/dragging!!starting-next-tiddler}} startingNextTiddlerCSSEscaped={{{ [<startingNextTiddler>escapecss[]] }}} dragTiddlerCSSEscaped={{{ [<dragTiddler>escapecss[]] }}}>
-
-	<%if [{$:/state/dragging!!copying}!match[yes]] %>
-
-		<<tiddlyflex-position-start-tiddlers-no-copying>>
+		<<tiddlyflex-target-tiddler-margin>>
 
 		<%if [{$:/state/dragging!!nth}match[0]] %>
 
-			<<tiddlyflex-position-start-tiddlers-no-copying-nth-0>>
+			<<tiddlyflex-target-tiddler-margin-nth-0>>
 
 		<% endif %>
 
-	<% else %>
+	</$let>
 
-		<<tiddlyflex-position-start-tiddlers-copying>>
+	.tc-tiddlyflex-below-story-river-droppable {
+		position: absolute;
+		width: calc(100% + {{$:/config/tiddlyflex/story-river/padding}});
+		height: calc(100% + {{$:/config/tiddlyflex/story-river/padding}});
+		left: -{{$:/config/tiddlyflex/story-river/padding}};
+		top: -{{$:/config/tiddlyflex/story-river/padding}};
+	}
 
-		<%if [{$:/state/dragging!!nth}match[0]] %>
+	<$let currentRiver={{$:/state/dragging!!start-river}} dragTiddler={{$:/state/dragging!!drag-tiddler}} startingNextTiddler={{$:/state/dragging!!starting-next-tiddler}} startingNextTiddlerCSSEscaped={{{ [<startingNextTiddler>escapecss[]] }}} dragTiddlerCSSEscaped={{{ [<dragTiddler>escapecss[]] }}}>
 
-			<<tiddlyflex-position-start-tiddlers-copying-nth-0>>
+		<%if [{$:/state/dragging!!copying}!match[yes]] %>
+
+			<<tiddlyflex-position-start-tiddlers-no-copying>>
+
+			<%if [{$:/state/dragging!!nth}match[0]] %>
+
+				<<tiddlyflex-position-start-tiddlers-no-copying-nth-0>>
+
+			<% endif %>
+
+		<% else %>
+
+			<<tiddlyflex-position-start-tiddlers-copying>>
+
+			<%if [{$:/state/dragging!!nth}match[0]] %>
+
+				<<tiddlyflex-position-start-tiddlers-copying-nth-0>>
+
+			<% endif %>
 
 		<% endif %>
 
-	<% endif %>
-
-</$let>
+	</$let>
 
 <% endif %>
 
