@@ -1,8 +1,8 @@
 title: $:/plugins/BTC/TiddlyFlex/StartupActions/current-tiddlers
-tags: $:/tags/StartupAction
+tags: $:/tags/StartupAction/Browser
 
 <$list filter="[list[$:/columns]]" variable="column">
-	<$let storyList={{{ [[$:/StoryList-]addsuffix<column>!match[$:/StoryList-]] ~StoryList-1 }}} HistoryList={{{ [[$:/HistoryList-]addsuffix<column>!match[$:/HistoryList-]] ~HistoryList-1 }}} currentTiddler={{{ [list<storyList>nth[1]] }}}>
+	<$let storyList={{{ [[$:/StoryList-]addsuffix<column>!match[$:/StoryList-]] ~$:/StoryList-1 }}} historyList={{{ [[$:/HistoryList-]addsuffix<column>!match[$:/HistoryList-]] ~$:/HistoryList-1 }}} currentTiddler={{{ [list<storyList>nth[1]] }}}>
 		<%if [<currentTiddler>!is[blank]!match[]] %>
 			<$action-setfield $tiddler=<<historyList>> current-tiddler=<<currentTiddler>>/>
 		<% endif %>
