@@ -40,15 +40,7 @@ code-body: yes
 
 					<section class="tc-tiddlyflex-story-river-inner">
 
-						<%if [{$:/config/tiddlyflex/story-river/filter}match[yes]] %>
-
-							<$list filter="[list<tv-story-list>search{$:/temp/search/input}]" history=<<tv-history-list>> template="$:/core/ui/StoryTiddlerTemplate" storyview="tiddlyflex"/>
-
-						<% else %>
-
-							<$list filter="[list<tv-story-list>]" history=<<tv-history-list>> template="$:/core/ui/StoryTiddlerTemplate" storyview="tiddlyflex"/>
-
-						<% endif %>
+						<$list filter="[list<tv-story-list>] :filter[{$:/config/tiddlyflex/story-river/filter}match[yes]then<currentTiddler>search{$:/temp/search/input}else{$:/config/tiddlyflex/story-river/filter}!match[yes]then<currentTiddler>]" history=<<tv-history-list>> template="$:/core/ui/StoryTiddlerTemplate" storyview="tiddlyflex"/>
 
 						<%if [{$:/state/dragging}match[yes]] %>
 
