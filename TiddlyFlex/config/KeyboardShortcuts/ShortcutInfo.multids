@@ -7,8 +7,10 @@ column-up: Select the next column at the right
 dragging: Toggle dragging on or off
 edit-tiddler: Edit the current tiddler
 filter-river: Filter the story river by the search input
+move-down: Move the current tiddler down
 move-left: Move the current tiddler to the left
 move-right: Move the current tiddler to the right
+move-up: Move the current tiddler up
 navigate-down: Navigate down to the next tiddler
 navigate-up: Navigate up to the next tiddler
 remove-column: Remove one column

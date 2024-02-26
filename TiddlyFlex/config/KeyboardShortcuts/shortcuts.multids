@@ -7,8 +7,10 @@ column-up: alt-Right
 dragging: alt-D
 edit-tiddler: alt-E
 filter-river: alt-F
+move-down: alt-shift-Down
 move-left: alt-shift-Left
 move-right: alt-shift-Right
+move-up: alt-shift-Up
 navigate-down: alt-Down
 navigate-up: alt-Up
 remove-column: ctrl-alt-M

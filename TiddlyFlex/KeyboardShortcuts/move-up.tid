@@ -1,0 +1,13 @@
+title: $:/plugins/BTC/TiddlyFlex/KeyboardShortcuts/move-up
+tags: $:/tags/KeyboardShortcut
+key: ((move-up))
+
+\import $:/plugins/BTC/TiddlyFlex/privates/navigation
+\procedure actions()
+<$set name="previousTiddler" value={{{ [list<storyList>before<currentTiddler>] }}}>
+	<%if [<previousTiddler>!is[blank]!match[]] %>
+		<$action-listops $tiddler=<<storyList>> $subfilter="+[insertbefore:previousTiddler<currentTiddler>]"/>
+	<% endif %>
+</$set>
+\end
+<$macrocall $name="tiddlyflex-keyboard-navigator" actions=<<actions>>/>

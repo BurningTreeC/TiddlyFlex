@@ -1,0 +1,13 @@
+title: $:/plugins/BTC/TiddlyFlex/KeyboardShortcuts/move-down
+tags: $:/tags/KeyboardShortcut
+key: ((move-down))
+
+\import $:/plugins/BTC/TiddlyFlex/privates/navigation
+\procedure actions()
+<$set name="nextTiddler" value={{{ [list<storyList>after<currentTiddler>] }}}>
+	<%if [<nextTiddler>!is[blank]!match[]] %>
+		<$action-listops $tiddler=<<storyList>> $subfilter="+[insertbefore:currentTiddler<nextTiddler>]"/>
+	<% endif %>
+</$set>
+\end
+<$macrocall $name="tiddlyflex-keyboard-navigator" actions=<<actions>>/>
