@@ -23,28 +23,28 @@ tags: $:/tags/Stylesheet
 
 <$list filter="[list[$:/columns]] ~1" variable="column">
 
-<$set name="storyList" value={{{ [[$:/StoryList-]addsuffix<column>] }}}>
+	<$set name="storyList" value={{{ [[$:/StoryList-]addsuffix<column>] }}}>
 
-<$list filter="[list<storyList>nth[1]]" variable="tiddler">
+		<$list filter="[list<storyList>nth[1]]" variable="tiddler">
 
-<$set name="cssEscapedTitle" value={{{ [<tiddler>escapecss[]] }}}>
+			<$set name="cssEscapedTitle" value={{{ [<tiddler>escapecss[]] }}}>
 
-<<tiddlyflex-scroll-margin-top-story-river-padding>>
+				<<tiddlyflex-scroll-margin-top-story-river-padding>>
 
-</$set>
+			</$set>
 
-</$list>
+		</$list>
 
-<$list filter="[list<storyList>] -[list<storyList>nth[1]]" variable="tiddler">
+		<$list filter="[list<storyList>] -[list<storyList>nth[1]]" variable="tiddler">
 
-<$set name="cssEscapedTitle" value={{{ [<tiddler>escapecss[]] }}}>
+			<$set name="cssEscapedTitle" value={{{ [<tiddler>escapecss[]] }}}>
 
-<<tiddlyflex-scroll-margin-top>>
+				<<tiddlyflex-scroll-margin-top>>
 
-</$set>
+			</$set>
 
-</$list>
+		</$list>
 
-</$set>
+	</$set>
 
 </$list>
