@@ -1,0 +1,9 @@
+title: $:/plugins/BTC/TiddlyFlex/KeyboardShortcuts/filter-river
+tags: $:/tags/KeyboardShortcut
+key: ((filter-river))
+
+<%if [{$:/config/tiddlyflex/story-river/filter}!match[yes]] %>
+	<$action-setfield $tiddler="$:/config/tiddlyflex/story-river/filter" text="yes"/>
+<% else %>
+	<$action-deletetiddler $tiddler="$:/config/tiddlyflex/story-river/filter"/>
+<% endif %>

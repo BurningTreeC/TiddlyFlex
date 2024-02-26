@@ -6,6 +6,7 @@ column-down: alt-Left
 column-up: alt-Right
 dragging: alt-D
 edit-tiddler: alt-E
+filter-river: alt-F
 move-left: alt-shift-Left
 move-right: alt-shift-Right
 navigate-down: alt-Down
