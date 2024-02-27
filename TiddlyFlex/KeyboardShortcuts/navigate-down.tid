@@ -13,15 +13,15 @@ key: ((navigate-down))
 	<$action-navigate $to=<<nextTiddler>>/>
 <% endif %>
 \end
-\procedure actions()
+\define actions()
 <%if [{$:/config/tiddlyflex/story-river/filter}match[yes]] %>
 	<$set name="focusedTiddler" value={{{ [<historyList>get[current-tiddler]] }}}>
-		<%if [list<storyList>search{$:/temp/search/input}match<focusedTiddler>] %>
-			<$let nextTiddler={{{ [list<storyList>search{$:/temp/search/input}after<focusedTiddler>] ~[list<storyList>search{$:/temp/search/input}nth[1]] }}} cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
+		<%if [list<storyList>search:$(searchFields)$:$(searchFlags)${$:/temp/search/input}match<focusedTiddler>] %>
+			<$let nextTiddler={{{ [list<storyList>search:$(searchFields)$:$(searchFlags)${$:/temp/search/input}after<focusedTiddler>] ~[list<storyList>search:$(searchFields)$:$(searchFlags)${$:/temp/search/input}nth[1]] }}} cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
 				<<actions-inner>>
 			</$let>
 		<% else %>
-			<$let nextTiddler={{{ [list<storyList>search{$:/temp/search/input}nth[1]] }}} cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
+			<$let nextTiddler={{{ [list<storyList>search:$(searchFields)$:$(searchFlags)${$:/temp/search/input}nth[1]] }}} cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
 				<<actions-inner>>
 			</$let>
 		<% endif %>
@@ -32,4 +32,6 @@ key: ((navigate-down))
 	</$let>
 <% endif %>
 \end
-<$macrocall $name="tiddlyflex-keyboard-navigator" actions=<<actions>>/>
+<$vars searchFields={{{ [[$:/config/tiddlyflex/story-river/filter/fields]get[text]!is[blank]!match[]] ~[[tags,text,title]] }}} searchFlags={{{ [[$:/config/tiddlyflex/story-river/filter/flags]get[text]!is[blank]!match[]] ~[[words]] }}}>
+	<$macrocall $name="tiddlyflex-keyboard-navigator" actions=<<actions>>/>
+</$vars>

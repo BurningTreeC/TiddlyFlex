@@ -43,10 +43,10 @@ key: ((cancel-close-tiddler))
 	<$action-sendmessage $message="tm-cancel-tiddler" $param=<<tiddler>>/>
 </$set>
 \end
-\procedure actions()
+\define actions()
 <$set name="tiddler" value={{{ [<historyList>get[current-tiddler]] }}}>
 	<%if [<tiddler>!is[draft]] %>
-		<$let scrollTiddler={{{ [list<storyList>after<tiddler>] ~[list<storyList>before<tiddler>] }}}>
+		<$let scrollTiddler={{{ [list<storyList>] :filter[{$:/config/tiddlyflex/story-river/filter}match[yes]then<currentTiddler>search:$(searchFields)$:$(searchFlags)${$:/temp/search/input}else{$:/config/tiddlyflex/story-river/filter}!match[yes]then<currentTiddler>] +[after<tiddler>] ~[before<tiddler>] }}}>
 			<$action-setfield $tiddler=<<historyList>> current-tiddler=<<scrollTiddler>>/>
 			<$action-sendmessage $message="tm-close-tiddler" $param=<<tiddler>>/>
 			<%if [<scrollTiddler>is[draft]] %>
@@ -62,4 +62,6 @@ key: ((cancel-close-tiddler))
 	<% endif %>
 </$set>
 \end
-<$macrocall $name="tiddlyflex-keyboard-navigator" actions=<<actions>>/>
+<$vars searchFields={{{ [[$:/config/tiddlyflex/story-river/filter/fields]get[text]!is[blank]!match[]] ~[[tags,text,title]] }}} searchFlags={{{ [[$:/config/tiddlyflex/story-river/filter/flags]get[text]!is[blank]!match[]] ~[[words]] }}}>
+	<$macrocall $name="tiddlyflex-keyboard-navigator" actions=<<actions>>/>
+</$vars>

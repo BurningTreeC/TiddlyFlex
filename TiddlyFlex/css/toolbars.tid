@@ -50,3 +50,7 @@ tags: $:/tags/Stylesheet
 	stroke: <<colour foreground>>;
 	fill: none;
 }
+
+.tc-tiddlyflex-top-toolbar-right .tc-selected svg.feather.feather-feather {
+	stroke: <<colour primary>>;
+}

@@ -5,5 +5,5 @@ key: ((filter-river))
 <%if [{$:/config/tiddlyflex/story-river/filter}!match[yes]] %>
 	<$action-setfield $tiddler="$:/config/tiddlyflex/story-river/filter" text="yes"/>
 <% else %>
-	<$action-deletetiddler $filter="$:/config/tiddlyflex/story-river/filter $:/temp/search/input $:/temp/search"/>
+	<$action-deletetiddler $tiddler="$:/config/tiddlyflex/story-river/filter"/>
 <% endif %>

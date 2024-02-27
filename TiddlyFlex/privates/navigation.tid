@@ -23,17 +23,23 @@ title: $:/plugins/BTC/TiddlyFlex/privates/navigation
 	<$action-navigate $to=<<nextTiddler>>/>
 </$navigator>
 \end
-\procedure tiddlyflex-cycle-columns-navigator()
+\define tiddlyflex-cycle-columns-navigator()
 <$action-setfield $tiddler="$:/columns" current-column=<<nextColumn>>/>
 <$set name="currentHistoryListTiddler" value={{{ [<historyList>get[current-tiddler]] }}}>
 	<%if [<storyList>contains<currentHistoryListTiddler>] %>
-		<$let nextTiddler={{{ [<historyList>get[current-tiddler]] }}} cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
+		<%if [list<storyList>] :filter[{$:/config/tiddlyflex/story-river/filter}match[yes]then<currentTiddler>search:$(searchFields)$:$(searchFlags)${$:/temp/search/input}else{$:/config/tiddlyflex/story-river/filter}!match[yes]then<currentTiddler>] +[match<currentHistoryListTiddler>] %>
+			<$let nextTiddler=<<currentHistoryListTiddler>> cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
+				<<tiddlyflex-cycle-columns-navigator-inner>>
+			</$let>
+		<% else %>
+			<$let nextTiddler={{{ [list<storyList>] :filter[{$:/config/tiddlyflex/story-river/filter}match[yes]then<currentTiddler>search:$(searchFields)$:$(searchFlags)${$:/temp/search/input}else{$:/config/tiddlyflex/story-river/filter}!match[yes]then<currentTiddler>] +[nth[1]] }}} cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
+				<<tiddlyflex-cycle-columns-navigator-inner>>
+			</$let>
+		<% endif %>
+	<% elseif [<storyList>!contains<currentHistoryListTiddler>] %>
+		<$let nextTiddler={{{ [list<storyList>] :filter[{$:/config/tiddlyflex/story-river/filter}match[yes]then<currentTiddler>search:$(searchFields)$:$(searchFlags)${$:/temp/search/input}else{$:/config/tiddlyflex/story-river/filter}!match[yes]then<currentTiddler>] +[nth[1]] }}} cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
 			<<tiddlyflex-cycle-columns-navigator-inner>>
 		</$let>
-	<% elseif [<storyList>!contains<currentHistoryListTiddler>] %>
-		<$let nextTiddler={{{ [list<storyList>nth[1]] }}} cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
-			<<tiddlyflex-cycle-columns-navigator-inner>>
-		</$set>
 	<% endif %>
 </$set>
 \end

@@ -3,6 +3,6 @@ tags: $:/tags/KeyboardShortcut
 key: ((column-down))
 
 \import $:/plugins/BTC/TiddlyFlex/privates/selectors $:/plugins/BTC/TiddlyFlex/privates/navigation
-<$let currentColumn={{{ [[$:/columns]get[current-column]] ~1 }}} columnCount={{{ [list[$:/columns]count[]] ~1 }}} nextColumn={{{ [list[$:/columns]before<currentColumn>] ~[<columnCount>] }}} storyList={{{ [[$:/StoryList-]addsuffix<nextColumn>] }}} historyList={{{ [[$:/HistoryList-]addsuffix<nextColumn>] }}}>
+<$let currentColumn={{{ [[$:/columns]get[current-column]] ~1 }}} columnCount={{{ [list[$:/columns]count[]] ~1 }}} nextColumn={{{ [list[$:/columns]before<currentColumn>] ~[<columnCount>] }}} storyList={{{ [[$:/StoryList-]addsuffix<nextColumn>] }}} historyList={{{ [[$:/HistoryList-]addsuffix<nextColumn>] }}} searchFields={{{ [[$:/config/tiddlyflex/story-river/filter/fields]get[text]!is[blank]!match[]] ~[[tags,text,title]] }}} searchFlags={{{ [[$:/config/tiddlyflex/story-river/filter/flags]get[text]!is[blank]!match[]] ~[[words]] }}}>
 	<<tiddlyflex-cycle-columns-navigator>>
 </$let>

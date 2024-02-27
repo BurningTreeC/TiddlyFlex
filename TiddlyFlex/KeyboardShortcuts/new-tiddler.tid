@@ -1,6 +1,7 @@
 title: $:/plugins/BTC/TiddlyFlex/KeyboardShortcuts/new-tiddler
 tags: $:/tags/KeyboardShortcut
 override: yes
+override-title: $:/core/ui/KeyboardShortcuts/new-tiddler
 key: ((new-tiddler))
 
 \import $:/plugins/BTC/TiddlyFlex/privates/navigation

@@ -8,6 +8,11 @@ code-body: yes
 	<$action-setfield $tiddler="$:/columns" current-column=<<column>>/>
 <% endif %>
 \end
+\define tiddlyflex-filtered-story-list()
+
+<$list filter="[list<tv-story-list>] :filter[{$:/config/tiddlyflex/story-river/filter}match[yes]then<currentTiddler>search:$(searchFields)$:$(searchFlags)${$:/temp/search/input}else{$:/config/tiddlyflex/story-river/filter}!match[yes]then<currentTiddler>]" history=<<tv-history-list>> template="$:/core/ui/StoryTiddlerTemplate" storyview="tiddlyflex"/>
+
+\end
 <div class={{{ [[tc-tiddlyflex-story-river-wrapper-inner ]addsuffix[tc-tiddlyflex-story-river-]addsuffix<column>] [{$:/columns!!current-column}match<column>then[tc-tiddlyflex-story-river-active]] [{$:/columns!!current-column}is[blank]then<column>match[1]then[tc-tiddlyflex-story-river-active]] :and[unique[]join[ ]] }}}>
 
 	<$navigator story={{{ [[$:/StoryList-]addsuffix<column>] }}} history={{{ [[$:/HistoryList-]addsuffix<column>] }}} openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromOutsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
@@ -40,7 +45,11 @@ code-body: yes
 
 					<section class="tc-tiddlyflex-story-river-inner">
 
-						<$list filter="[list<tv-story-list>] :filter[{$:/config/tiddlyflex/story-river/filter}match[yes]then<currentTiddler>search{$:/temp/search/input}else{$:/config/tiddlyflex/story-river/filter}!match[yes]then<currentTiddler>]" history=<<tv-history-list>> template="$:/core/ui/StoryTiddlerTemplate" storyview="tiddlyflex"/>
+						<$vars searchFields={{{ [[$:/config/tiddlyflex/story-river/filter/fields]get[text]!is[blank]!match[]] ~[[tags,text,title]] }}} searchFlags={{{ [[$:/config/tiddlyflex/story-river/filter/flags]get[text]!is[blank]!match[]] ~[[words]] }}}>
+
+							<<tiddlyflex-filtered-story-list>>
+
+						</$vars>
 
 						<%if [{$:/state/dragging}match[yes]] %>
 

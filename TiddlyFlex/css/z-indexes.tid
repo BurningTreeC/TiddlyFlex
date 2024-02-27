@@ -1,7 +1,7 @@
 title: $:/plugins/BTC/TiddlyFlex/styles/z-indexes
 tags: $:/tags/Stylesheet
 
-\define tiddlyflex-tiddler-z-indexes()
+\define tiddlyflex-tiddler-z-indexes-inner()
 
 <$list filter="[range<storyListCount>]">
 `.tc-tiddlyflex-story-river-`$(column)$ `.tc-tiddlyflex-story-river-inner > .tc-tiddler-view-frame:nth-child(100n+`<$text text=<<currentTiddler>>/>`) > .tc-tiddler-frame`,
@@ -13,12 +13,26 @@ z-index: `<$text text={{{ [<storyListCount>add[501]subtract<currentTiddler>] }}}
 
 \end
 
+\define tiddlyflex-tiddler-z-indexes()
+
+<$let storyListCount={{{ [list<storyList>] :filter[{$:/config/tiddlyflex/story-river/filter}match[yes]then<currentTiddler>search:$(searchFields)$:$(searchFlags)${$:/temp/search/input}else{$:/config/tiddlyflex/story-river/filter}!match[yes]then<currentTiddler>] +[count[]] }}}>
+
+	<<tiddlyflex-tiddler-z-indexes-inner>>
+
+</$let>
+
+\end
+
 <$list filter="[list[$:/columns]] ~1" variable="column">
 
-	<$let storyList={{{ [[$:/StoryList-]addsuffix<column>] }}} storyListCount={{{ [list<storyList>count[]] }}}>
+	<$set name="storyList" value={{{ [[$:/StoryList-]addsuffix<column>] }}}>
 
-		<<tiddlyflex-tiddler-z-indexes>>
+		<$vars searchFields={{{ [[$:/config/tiddlyflex/story-river/filter/fields]get[text]!is[blank]!match[]] ~[[tags,text,title]] }}} searchFlags={{{ [[$:/config/tiddlyflex/story-river/filter/flags]get[text]!is[blank]!match[]] ~[[words]] }}}>
 
-	</$let>
+			<<tiddlyflex-tiddler-z-indexes>>
+
+		</$vars>
+
+	</$set>
 
 </$list>
