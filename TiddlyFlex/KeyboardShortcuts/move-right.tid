@@ -22,7 +22,15 @@ key: ((move-right))
 		<%if [<nextHistoryList>get[current-tiddler]!match[]] %>
 			<$set name="nextStoryFocusedTiddler" value={{{ [<nextHistoryList>get[current-tiddler]] }}}>
 				<%if [<nextStoryList>contains<nextStoryFocusedTiddler>] %>
-					<$action-listops $tiddler=<<nextStoryList>> $subfilter="+[insertbefore<focusedTiddler>,<nextStoryFocusedTiddler>]"/>
+					<%if [{$:/config/tiddlyflex/story-river/filter}match[yes]] :and[list<nextStoryList>search{$:/temp/search/input}match<nextStoryFocusedTiddler>] %>
+						<$action-listops $tiddler=<<nextStoryList>> $subfilter="+[insertbefore<focusedTiddler>,<nextStoryFocusedTiddler>]"/>
+					<% elseif [{$:/config/tiddlyflex/story-river/filter}!match[yes]] %>
+						<$action-listops $tiddler=<<nextStoryList>> $subfilter="+[insertbefore<focusedTiddler>,<nextStoryFocusedTiddler>]"/>
+					<% else %>
+						<$set name="firstStoryTiddler" value={{{ [list<nextStoryList>nth[1]] }}}>
+							<$action-listops $tiddler=<<nextStoryList>> $subfilter="+[insertbefore<focusedTiddler>,<firstStoryTiddler>]"/>
+						</$set>
+					<% endif %>
 					<$action-setfield $tiddler=<<nextHistoryList>> current-tiddler=<<focusedTiddler>>/>
 				<% else %>
 					<<current-tiddler-is-empty-message>>

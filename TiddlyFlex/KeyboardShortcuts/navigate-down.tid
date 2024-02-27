@@ -3,14 +3,25 @@ tags: $:/tags/KeyboardShortcut
 key: ((navigate-down))
 
 \import $:/plugins/BTC/TiddlyFlex/privates/selectors $:/plugins/BTC/TiddlyFlex/privates/navigation
-\procedure actions()
-<$let focusedTiddler={{{ [<historyList>get[current-tiddler]] }}} nextTiddler={{{ [list<storyList>after<focusedTiddler>] ~[list<storyList>nth[1]] }}} cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
+\procedure actions-inner()
+<%if [<nextTiddler>!is[blank]!match[]] %>
 	<%if [<nextTiddler>is[draft]] %>
 		<<tiddlyflex-focus-draft-tiddler>>
 	<% else %>
 		<<tiddlyflex-focus-flexcontainer>>
 	<% endif %>
 	<$action-navigate $to=<<nextTiddler>>/>
-</$let>
+<% endif %>
+\end
+\procedure actions()
+<%if [{$:/config/tiddlyflex/story-river/filter}match[yes]] %>
+	<$let focusedTiddler={{{ [<historyList>get[current-tiddler]] }}} nextTiddler={{{ [list<storyList>earch{$:/temp/search/input}] +[after<focusedTiddler>] ~[list<storyList>search{$:/temp/search/input}nth[1]] }}} cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
+		<<actions-inner>>
+	<$let>
+<% else %>
+	<$let focusedTiddler={{{ [<historyList>get[current-tiddler]] }}} nextTiddler={{{ [list<storyList>after<focusedTiddler>] ~[list<storyList>nth[1]] }}} cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
+		<<actions-inner>>
+	</$let>
+<% endif %>
 \end
 <$macrocall $name="tiddlyflex-keyboard-navigator" actions=<<actions>>/>

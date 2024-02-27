@@ -4,7 +4,7 @@ key: ((move-up))
 
 \import $:/plugins/BTC/TiddlyFlex/privates/navigation
 \procedure actions()
-<$set name="previousTiddler" value={{{ [list<storyList>before<currentTiddler>] }}}>
+<$set name="previousTiddler" value={{{ [list<storyList>] :filter[{$:/config/tiddlyflex/story-river/filter}match[yes]then<currentTiddler>search{$:/temp/search/input}else<currentTiddler>] +[before<currentTiddler>] }}}>
 	<%if [<previousTiddler>!is[blank]!match[]] %>
 		<$action-listops $tiddler=<<storyList>> $subfilter="+[insertbefore:previousTiddler<currentTiddler>]"/>
 	<% endif %>

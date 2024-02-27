@@ -130,7 +130,13 @@ tags: $:/tags/Global
 <$vars prefix="[[" suffix="]]">
 	<%if [<actionTiddler>removeprefix<prefix>removesuffix<suffix>] %>
 		<$set name="actionTiddler" value={{{ [<actionTiddler>removeprefix<prefix>removesuffix<suffix>] }}}>
-			<$action-listops $tiddler=<<tv-story-list>> $subfilter="[<actionTiddler>]"/>
+			<%if [{$:/config/tiddlyflex/story-river/filter}match[yes]] %>
+				<$set name="firstStoryTiddler" value={{{ [list<tv-story-list>nth[1]] }}}>
+					<$action-listops $tiddler=<<nextStoryList>> $subfilter="+[insertbefore<actionTiddler>,<firstStoryTiddler>]"/>
+				</$set>
+			<% else %>
+				<$action-listops $tiddler=<<tv-story-list>> $subfilter="[<actionTiddler>]"/>
+			<% endif %>
 		</$set>
 	<% else %>
 		<$action-listops $tiddler=<<tv-story-list>> $subfilter="[<actionTiddler>]"/>
