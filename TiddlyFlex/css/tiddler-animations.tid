@@ -129,6 +129,10 @@ tags: $:/tags/Stylesheet
 
 					<<tiddlyflex-remove-tiddler-animation>>
 
+					.tc-tiddlyflex-story-river {
+						overflow-x: clip;
+					}
+
 				</$let>
 			<% endif %>
 		</$let>
@@ -142,6 +146,10 @@ tags: $:/tags/Stylesheet
 				<$let direction={{{ [<stateTiddler>get[direction]] }}} tiddlerHeight={{{ [<stateTiddler>get[height]] }}}>
 
 					<<tiddlyflex-add-tiddler-animation>>
+
+					.tc-tiddlyflex-story-river {
+						overflow-x: clip;
+					}
 
 				</$let>
 			<% endif %>
