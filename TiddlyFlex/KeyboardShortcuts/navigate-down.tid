@@ -5,6 +5,7 @@ key: ((navigate-down))
 \import $:/plugins/BTC/TiddlyFlex/privates/selectors $:/plugins/BTC/TiddlyFlex/privates/navigation
 \procedure actions-inner()
 <%if [<nextTiddler>!is[blank]!match[]] %>
+	<$action-log navigating="true"/>
 	<%if [<nextTiddler>is[draft]] %>
 		<<tiddlyflex-focus-draft-tiddler>>
 	<% else %>
@@ -15,11 +16,21 @@ key: ((navigate-down))
 \end
 \procedure actions()
 <%if [{$:/config/tiddlyflex/story-river/filter}match[yes]] %>
-	<$let focusedTiddler={{{ [<historyList>get[current-tiddler]] }}} nextTiddler={{{ [list<storyList>earch{$:/temp/search/input}] +[after<focusedTiddler>] ~[list<storyList>search{$:/temp/search/input}nth[1]] }}} cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
-		<<actions-inner>>
-	<$let>
+	<$set name="focusedTiddler" value={{{ [<historyList>get[current-tiddler]] }}}>
+		<%if [list<storyList>search{$:/temp/search/input}match<focusedTiddler>] %>
+			<$let nextTiddler={{{ [list<storyList>search{$:/temp/search/input}after<focusedTiddler>] ~[list<storyList>search{$:/temp/search/input}nth[1]] }}} cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
+				<<actions-inner>>
+			</$let>
+		<% else %>
+			<$let nextTiddler={{{ [list<storyList>search{$:/temp/search/input}nth[1]] }}} cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
+				<<actions-inner>>
+			</$let>
+		<% endif %>
+	</$set>
 <% else %>
+	<$action-log filtered="false"/>
 	<$let focusedTiddler={{{ [<historyList>get[current-tiddler]] }}} nextTiddler={{{ [list<storyList>after<focusedTiddler>] ~[list<storyList>nth[1]] }}} cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
+		<$action-log performing-actions="true"/>
 		<<actions-inner>>
 	</$let>
 <% endif %>

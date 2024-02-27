@@ -15,9 +15,17 @@ key: ((navigate-up))
 \end
 \procedure actions()
 <%if [{$:/config/tiddlyflex/story-river/filter}match[yes]] %>
-	<$let focusedTiddler={{{ [<historyList>get[current-tiddler]] }}} nextTiddler={{{ [list<storyList>search{$:/temp/search/input}before<focusedTiddler>] ~[list<storyList>search{$:/temp/search/input}last[]] }}} cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
-		<<actions-inner>>
-	</$let>
+	<$set name="focusedTiddler" value={{{ [<historyList>get[current-tiddler]] }}}>
+		<%if [list<storyList>search{$:/temp/search/input}match<focusedTiddler>] %>
+			<$let nextTiddler={{{ [list<storyList>search{$:/temp/search/input}before<focusedTiddler>] ~[list<storyList>search{$:/temp/search/input}last[]] }}} cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
+				<<actions-inner>>
+			</$let>
+		<% else %>
+			<$let nextTiddler={{{ [list<storyList>search{$:/temp/search/input}last[]] }}} cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
+				<<actions-inner>>
+			</$let>
+		<% endif %>
+	</$set>
 <% else %>
 	<$let focusedTiddler={{{ [<historyList>get[current-tiddler]] }}} nextTiddler={{{ [list<storyList>before<focusedTiddler>] ~[list<storyList>last[]] }}} cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
 		<<actions-inner>>

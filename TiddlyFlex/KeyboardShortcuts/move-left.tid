@@ -17,7 +17,7 @@ key: ((move-left))
 		<%if [<previousHistoryList>get[current-tiddler]!match[]] %>
 			<$set name="previousStoryFocusedTiddler" value={{{ [<previousHistoryList>get[current-tiddler]] }}}>
 				<%if [<previousStoryList>contains<previousStoryFocusedTiddler>] %>
-					<%if [{$:/config/tiddlyflex/story-river/filter}match[yes]] :and[list<previousStoryList>search{$:/temp/search/input}match<previousStoryFocusedTiddler>] %>
+					<%if [list<previousStoryList>search{$:/temp/search/input}match<previousStoryFocusedTiddler>then{$:/config/tiddlyflex/story-river/filter}match[yes] %>
 						<$action-listops $tiddler=<<previousStoryList>> $subfilter="+[insertbefore<focusedTiddler>,<previousStoryFocusedTiddler>]"/>
 					<% elseif [{$:/config/tiddlyflex/story-river/filter}!match[yes]] %>
 						<$action-listops $tiddler=<<previousStoryList>> $subfilter="+[insertbefore<focusedTiddler>,<previousStoryFocusedTiddler>]"/>

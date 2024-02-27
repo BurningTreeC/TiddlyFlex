@@ -69,7 +69,6 @@ tags: $:/tags/Global
 <% endif %>
 \end
 \procedure tiddlyflex-cancel-draft-tiddler-actions-draft-of-not-is-missing()
-<$action-log hello="yes"/>
 <$list filter="[list[$:/columns]!match<column>]" variable="column">
 	<$set name="storyList" value={{{ [[$:/StoryList-]addsuffix<column>!match[$:/StoryList-]] ~$:/StoryList-1 }}}>
 		<%if [<storyList>contains<currentTiddler>] %>
@@ -86,7 +85,6 @@ tags: $:/tags/Global
 <$action-sendmessage $message="tm-cancel-tiddler"/>
 \end
 \procedure tiddlyflex-cancel-draft-tiddler-actions()
-<$action-log doing-my-stuff="true"/>
 <%if [<currentTiddler>get[draft.of]!is[shadow]is[missing]] %>
 	<$list filter="[list[$:/columns]!match<column>]" variable="column">
 		<$set name="storyList" value={{{ [[$:/StoryList-]addsuffix<column>!match[$:/StoryList-]] ~$:/StoryList-1 }}}>
