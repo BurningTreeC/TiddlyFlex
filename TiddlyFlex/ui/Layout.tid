@@ -6,6 +6,7 @@ code-body: yes
 
 \whitespace trim
 \import [subfilter{$:/core/config/GlobalImportFilter}]
+\define tiddlyflex-exclude-columns() [list[$:/columns]addprefix[$:/StoryList-]] :map:flat[list<currentTiddler>search:$(searchFields)$:$(searchFlags)${$:/temp/search/input}then[]else<currentTiddler>removeprefix[$:/StoryList-]]
 <$vars
 	tv-config-toolbar-icons={{$:/config/Toolbar/Icons}}
 	tv-config-toolbar-text={{$:/config/Toolbar/Text}}
@@ -40,27 +41,29 @@ code-body: yes
 			<main class="tc-tiddlyflex-main">
 				<div class="tc-tiddlyflex-story-river-container">
 					<div class="tc-tiddlyflex-story-river-container-inner">
-						<$list filter="[list[$:/columns]] ~1" variable="column">	
-							<$set name="transclusion" value=<<column>>>
-								<div class="tc-tiddlyflex-story-river-wrapper">
-									<div class="tc-tiddlyflex-story-river-header">
-										<$set name="aboveStoryHeaderTag" value={{{ [[$:/tags/AboveStoryHeader-]addsuffix<column>] }}}>
-											<$list filter="[all[shadows+tiddlers]tag<aboveStoryHeaderTag>!is[draft]]" variable="listItem" storyview="pop">
-												<$transclude tiddler=<<listItem>>/>
-											</$list>
-										</$set>
+						<$let searchFields={{{ [[$:/config/tiddlyflex/story-river/filter/fields]get[text]!is[blank]!match[]] ~[[tags,text,title]] }}} searchFlags={{{ [[$:/config/tiddlyflex/story-river/filter/flags]get[text]!is[blank]!match[]] ~[[words]] }}} excludeColumnsSubfilter=<<tiddlyflex-exclude-columns>>>
+							<$list filter="[{$:/config/tiddlyflex/story-river/filter}match[yes]] :then[list[$:/columns]] :except[subfilter<excludeColumnsSubfilter>] :else[{$:/config/tiddlyflex/story-river/filter}!match[yes]list[$:/columns]]" variable="column">	
+								<$set name="transclusion" value=<<column>>>
+									<div class="tc-tiddlyflex-story-river-wrapper">
+										<div class="tc-tiddlyflex-story-river-header">
+											<$set name="aboveStoryHeaderTag" value={{{ [[$:/tags/AboveStoryHeader-]addsuffix<column>] }}}>
+												<$list filter="[all[shadows+tiddlers]tag<aboveStoryHeaderTag>!is[draft]]" variable="listItem" storyview="pop">
+													<$transclude tiddler=<<listItem>>/>
+												</$list>
+											</$set>
+										</div>
+										<$transclude tiddler="$:/plugins/BTC/TiddlyFlex/ui/Templates/story"/>
+										<div class="tc-tiddlyflex-story-river-footer">
+											<$set name="belowStoryFooterTag" value={{{ [[$:/tags/BelowStoryFooter-]addsuffix<column>] }}}>
+												<$list filter="[all[shadows+tiddlers]tag<belowStoryFooterTag>!is[draft]]" variable="listItem" storyview="pop">
+													<$transclude tiddler=<<listItem>>/>
+												</$list>
+											</$set>
+										</div>
 									</div>
-									<$transclude tiddler="$:/plugins/BTC/TiddlyFlex/ui/Templates/story"/>
-									<div class="tc-tiddlyflex-story-river-footer">
-										<$set name="belowStoryFooterTag" value={{{ [[$:/tags/BelowStoryFooter-]addsuffix<column>] }}}>
-											<$list filter="[all[shadows+tiddlers]tag<belowStoryFooterTag>!is[draft]]" variable="listItem" storyview="pop">
-												<$transclude tiddler=<<listItem>>/>
-											</$list>
-										</$set>
-									</div>
-								</div>
-							</$set>
-						</$list>
+								</$set>
+							</$list>
+						</$let>
 					</div>
 				</div>
 				<div class="tc-tiddlyflex-sidebar">
