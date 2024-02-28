@@ -7,6 +7,18 @@ tags: $:/tags/Stylesheet
 	line-height: 2em;
 }
 
+.tc-tiddlyflex-top-toolbar .tc-sidebar-lists.tc-sidebar-search {
+	line-height: {{$:/themes/tiddlywiki/vanilla/metrics/lineheight}};
+}
+
+.tc-tiddlyflex-top-toolbar .tc-sidebar-lists.tc-sidebar-search .tc-block-dropdown {
+	color: <<colour muted-foreground>>;
+}
+
+.tc-tiddlyflex-top-toolbar .tc-sidebar-lists.tc-sidebar-search .tc-search > .tc-reveal {
+	font-size: 0.75rem;
+}
+
 .tc-tiddlyflex-top-toolbar p {
 	margin: 0;
 }
@@ -29,6 +41,9 @@ tags: $:/tags/Stylesheet
 
 .tc-tiddlyflex-top-toolbar-right .tc-btn-invisible svg {
 	fill: <<colour muted-foreground>>;
+	font-size: 1rem;
+	height: 1rem;
+	width: 1rem;
 }
 
 .tc-tiddlyflex-top-toolbar-right .tc-btn-invisible:hover svg, .tc-tiddlyflex-top-toolbar-right .tc-btn-invisible.tc-selected svg {

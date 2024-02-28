@@ -57,10 +57,6 @@ tags: $:/tags/Stylesheet
 		transition: background {{$:/config/AnimationDuration}}ms 0s;
 	}
 
-	.tc-tiddlyflex-top-toolbar {
-		font-size: 1.5em;
-	}
-
 }
 
 @media (max-width: 767.98px) {
