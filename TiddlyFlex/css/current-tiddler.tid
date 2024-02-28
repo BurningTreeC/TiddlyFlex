@@ -14,7 +14,7 @@ tags: $:/tags/Stylesheet
 \rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
 
 .tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner >  [data-tiddler-title="$(cssEscapedTitle)$"]:not(.tc-navigating) > .tc-tiddler-frame {
-	border: 1px solid <<colour muted-foreground>>;
+	border: 1px solid <<colour tiddlyflex-current-tiddler-muted>>;
 }
 
 \end

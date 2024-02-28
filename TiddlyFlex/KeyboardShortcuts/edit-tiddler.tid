@@ -4,8 +4,12 @@ key: ((edit-tiddler))
 
 \import $:/plugins/BTC/TiddlyFlex/privates/navigation
 \define actions()
-<%if [<currentTiddler>!is[draft]] %>
-	<$action-sendmessage $message="tm-edit-tiddler" $param=<<currentTiddler>>/>
+<%if [list<storyList>] :filter[{$:/config/tiddlyflex/story-river/filter}match[yes]then<currentTiddler>search:$(searchFields)$:$(searchFlags)${$:/temp/search/input}else{$:/config/tiddlyflex/story-river/filter}!match[yes]then<currentTiddler>] +[match<currentTiddler>] %>
+	<%if [<currentTiddler>!is[draft]] %>
+		<$action-sendmessage $message="tm-edit-tiddler" $param=<<currentTiddler>>/>
+	<% endif %>
 <% endif %>
 \end
-<$macrocall $name="tiddlyflex-keyboard-navigator" actions=<<actions>>/>
+<$vars searchFields={{{ [[$:/config/tiddlyflex/story-river/filter/fields]get[text]!is[blank]!match[]] ~[[tags,text,title]] }}} searchFlags={{{ [[$:/config/tiddlyflex/story-river/filter/flags]get[text]!is[blank]!match[]] ~[[words]] }}}>
+	<$macrocall $name="tiddlyflex-keyboard-navigator" actions=<<actions>>/>
+</$vars>
