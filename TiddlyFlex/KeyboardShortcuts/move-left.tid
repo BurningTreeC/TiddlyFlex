@@ -11,7 +11,7 @@ key: ((move-left))
 <$let scrollTiddler={{{ [subfilter<tdff.tiddlyflex-story-river-filter>after<focusedTiddler>] ~[subfilter<tdff.tiddlyflex-story-river-filter>before<focusedTiddler>] }}}>
 	<%if [<focusedTiddler>!is[blank]then<tv-story-list>!match[$:/StoryList-1]] %>
 		<$action-setfield $tiddler={{{ [[$:/state/tiddlyflex/removing/]addsuffix<focusedTiddler>] }}} direction="left" column=<<currentColumn>>/>
-		<$action-setfield $tiddler={{{ [[$:/state/tiddlyflex/adding/]addsuffix<focusedTiddler>] }}} direction="right" column={{{ [<currentColumn>subtract[1]] }}}/>
+		<$action-setfield $tiddler={{{ [[$:/state/tiddlyflex/adding/]addsuffix<focusedTiddler>] }}} direction="right" column={{{ [subfilter<tdff.tiddlyflex-enlist-columns>before<currentColumn>] }}}/>
 		<$action-setfield $tiddler=<<tv-history-list>> current-tiddler={{{ [subfilter<tdff.tiddlyflex-story-river-filter>after<focusedTiddler>] ~[subfilter<tdff.tiddlyflex-story-river-filter>before<focusedTiddler>] }}}/>
 		<$action-listops $tiddler=<<tv-story-list>> $subfilter="-[<focusedTiddler>]"/>
 		<%if [<previousHistoryList>get[current-tiddler]!match[]] %>

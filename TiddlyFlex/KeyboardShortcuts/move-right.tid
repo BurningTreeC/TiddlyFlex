@@ -15,7 +15,7 @@ key: ((move-right))
 			<$action-setfield $tiddler={{{ [[$:/state/tiddlyflex/removing/]addsuffix<focusedTiddler>] }}} direction="right" column=<<currentColumn>>/>
 		<% else %>
 			<$action-setfield $tiddler={{{ [[$:/state/tiddlyflex/removing/]addsuffix<focusedTiddler>] }}} direction="right" column=<<currentColumn>>/>
-			<$action-setfield $tiddler={{{ [[$:/state/tiddlyflex/adding/]addsuffix<focusedTiddler>] }}} direction="left" column={{{ [<currentColumn>add[1]] }}}/>
+			<$action-setfield $tiddler={{{ [[$:/state/tiddlyflex/adding/]addsuffix<focusedTiddler>] }}} direction="left" column={{{ [subfilter<tdff.tiddlyflex-enlist-columns>after<currentColumn>] }}}/>
 		<% endif %>
 		<$action-setfield $tiddler=<<tv-history-list>> current-tiddler={{{ [subfilter<tdff.tiddlyflex-story-river-filter>after<focusedTiddler>] ~[subfilter<tdff.tiddlyflex-story-river-filter>before<focusedTiddler>] }}}/>
 		<$action-listops $tiddler=<<tv-story-list>> $subfilter="-[<focusedTiddler>]"/>
