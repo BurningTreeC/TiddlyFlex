@@ -1,0 +1,13 @@
+title: $:/plugins/BTC/TiddlyFlex/ui/Toolbars/PluginReloadWarning
+
+\define lingo-base() $:/language/
+
+<div class="tc-plugin-reload-warning">
+
+<$set name="tv-config-toolbar-class" value="">
+
+<<lingo PluginReloadWarning>><$button set="$:/temp/HidePluginWarning" setTo="yes" class="tc-btn-invisible tc-small-gap-left">{{$:/core/images/close-button}}</$button>
+
+</$set>
+
+</div>

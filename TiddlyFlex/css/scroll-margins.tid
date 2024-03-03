@@ -4,7 +4,7 @@ tags: $:/tags/Stylesheet
 \define tiddlyflex-scroll-margin-top-story-river-padding()
 \rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
 
-.tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(cssEscapedTitle)$"].tc-tiddler-view-frame, .tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(cssEscapedTitle)$"].tc-tiddler-edit-frame {
+.tc-tiddlyflex-story-river-$(tiddlyFlexColumn)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(cssEscapedTitle)$"].tc-tiddler-view-frame, .tc-tiddlyflex-story-river-$(tiddlyFlexColumn)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(cssEscapedTitle)$"].tc-tiddler-edit-frame {
 	scroll-margin-top: {{$:/config/tiddlyflex/story-river/padding}};
 	scroll-margin-left: {{$:/config/tiddlyflex/story-river/padding}};
 }
@@ -14,18 +14,18 @@ tags: $:/tags/Stylesheet
 \define tiddlyflex-scroll-margin-top()
 \rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
 
-.tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(cssEscapedTitle)$"].tc-tiddler-view-frame, .tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(cssEscapedTitle)$"].tc-tiddler-edit-frame {
+.tc-tiddlyflex-story-river-$(tiddlyFlexColumn)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(cssEscapedTitle)$"].tc-tiddler-view-frame, .tc-tiddlyflex-story-river-$(tiddlyFlexColumn)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(cssEscapedTitle)$"].tc-tiddler-edit-frame {
 	scroll-margin-top: {{{ [{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}compare:number:lteq{$:/config/tiddlyflex/story-river/padding}] ~[{$:/config/tiddlyflex/story-river/padding}] }}};
 	scroll-margin-left: {{$:/config/tiddlyflex/story-river/padding}};
 }
 
 \end
 
-<$list filter="[list[$:/columns]] ~1" variable="column">
+<$list filter="[subfilter<tdff.tiddlyflex-enlist-columns>]" variable="tiddlyFlexColumn">
 
-	<$set name="storyList" value={{{ [[$:/StoryList-]addsuffix<column>] }}}>
+	<$set name="tv-story-list" value={{{ [[$:/StoryList-]addsuffix<tiddlyFlexColumn>] }}}>
 
-		<$list filter="[list<storyList>nth[1]]" variable="tiddler">
+		<$list filter="[subfilter<tdff.tiddlyflex-story-river-filter>] +[nth[1]]" variable="tiddler">
 
 			<$set name="cssEscapedTitle" value={{{ [<tiddler>escapecss[]] }}}>
 
@@ -35,7 +35,7 @@ tags: $:/tags/Stylesheet
 
 		</$list>
 
-		<$list filter="[list<storyList>] -[list<storyList>nth[1]]" variable="tiddler">
+		<$list filter="[subfilter<tdff.tiddlyflex-story-river-filter>] -[subfilter<tdff.tiddlyflex-story-river-filter>nth[1]]" variable="tiddler">
 
 			<$set name="cssEscapedTitle" value={{{ [<tiddler>escapecss[]] }}}>
 

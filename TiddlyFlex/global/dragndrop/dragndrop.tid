@@ -3,14 +3,14 @@ tags: $:/tags/Global
 
 \procedure tiddlyflex-top-dragenter-actions()
 <%if [[$:/state/dragging]has[dragenter-count]] %>
- 	<$action-setfield $tiddler="$:/state/dragging" starting-next-tiddler="" copying="" target=<<currentTiddler>> margin="top" nth={{{ [list<tv-story-list>allbefore<currentTiddler>count[]] }}} river=<<column>> next-tiddler="" from-index={{{ [list<tv-story-list>allbefore<currentTiddler>count[]] }}} from-story=<<tv-story-list>> dragenter-count={{{ [[$:/state/dragging]get[dragenter-count]add[1]] }}}/>
+ 	<$action-setfield $tiddler="$:/state/dragging" starting-next-tiddler="" copying="" target=<<currentTiddler>> margin="top" nth={{{ [list<tv-story-list>allbefore<currentTiddler>count[]] }}} river=<<tiddlyFlexColumn>> next-tiddler="" from-index={{{ [list<tv-story-list>allbefore<currentTiddler>count[]] }}} from-story=<<tv-story-list>> dragenter-count={{{ [[$:/state/dragging]get[dragenter-count]add[1]] }}}/>
 <% else %>
 	<$action-setfield $tiddler="$:/state/dragging" dragenter-count="1"/>
 <% endif %>
 \end
 \procedure tiddlyflex-bottom-dragenter-actions()
 <%if [[$:/state/dragging]has[dragenter-count]] %>
-	<$action-setfield $tiddler="$:/state/dragging" starting-next-tiddler="" copying="" target=<<currentTiddler>> margin="bottom" nth={{{ [list<tv-story-list>allbefore<currentTiddler>count[]add[1]] }}} river=<<column>> next-tiddler="" from-index={{{ [list<tv-story-list>allbefore<currentTiddler>count[]add[1]] }}} from-story=<<tv-story-list>> dragenter-count={{{ [[$:/state/dragging]get[dragenter-count]add[1]] }}}/>
+	<$action-setfield $tiddler="$:/state/dragging" starting-next-tiddler="" copying="" target=<<currentTiddler>> margin="bottom" nth={{{ [list<tv-story-list>allbefore<currentTiddler>count[]add[1]] }}} river=<<tiddlyFlexColumn>> next-tiddler="" from-index={{{ [list<tv-story-list>allbefore<currentTiddler>count[]add[1]] }}} from-story=<<tv-story-list>> dragenter-count={{{ [[$:/state/dragging]get[dragenter-count]add[1]] }}}/>
 <% else %>
 	<$action-setfield $tiddler="$:/state/dragging" dragenter-count="1"/>
 <% endif %>
@@ -87,7 +87,7 @@ tags: $:/tags/Global
 	nth={{{ [list<tv-story-list>allbefore<currentTiddler>count[]] }}}
 	height=<<tv-selectednode-height>>
 	width=<<tv-selectednode-width>>
-	start-river=<<column>>
+	start-river=<<tiddlyFlexColumn>>
 	starting-next-tiddler={{{ [list<tv-story-list>after<currentTiddler>] }}}
 	starting-from-index={{{ [list<tv-story-list>allbefore<currentTiddler>count[]] }}}
 	starting-from-story=<<tv-story-list>>
@@ -117,6 +117,7 @@ tags: $:/tags/Global
 			<$action-listops $tiddler=<<fromStoryList>> $subfilter="[<actionTiddler>]"/>
 		<% endif %>
 		<$action-deletetiddler $tiddler="$:/state/drag-handled"/>
+		<$action-deletetiddler $tiddler="$:/state/dragging"/>
 	</$let>
 <% else %>
 	<$action-deletetiddler $tiddler="$:/state/drag-handled"/>
@@ -127,7 +128,7 @@ tags: $:/tags/Global
 <$vars prefix="[[" suffix="]]">
 	<%if [<actionTiddler>removeprefix<prefix>removesuffix<suffix>] %>
 		<$set name="actionTiddler" value={{{ [<actionTiddler>removeprefix<prefix>removesuffix<suffix>] }}}>
-			<%if [{$:/config/tiddlyflex/story-river/filter}match[yes]] %>
+			<%if [{$:/config/tiddlyflex/story-river/filter}match[yes]] +[subfilter<tdff.tiddlyflex-story-river-filter>is[blank]] %>
 				<$set name="firstStoryTiddler" value={{{ [list<tv-story-list>nth[1]] }}}>
 					<$action-listops $tiddler=<<tv-story-list>> $subfilter="+[insertbefore<actionTiddler>,<firstStoryTiddler>]"/>
 				</$set>
@@ -136,7 +137,7 @@ tags: $:/tags/Global
 			<% endif %>
 		</$set>
 	<% else %>
-		<%if [{$:/config/tiddlyflex/story-river/filter}match[yes]] %>
+		<%if [{$:/config/tiddlyflex/story-river/filter}match[yes]] +[subfilter<tdff.tiddlyflex-story-river-filter>is[blank]] %>
 			<$set name="firstStoryTiddler" value={{{ [list<tv-story-list>nth[1]] }}}>
 				<$action-listops $tiddler=<<tv-story-list>> $subfilter="+[insertbefore<actionTiddler>,<firstStoryTiddler>]"/>
 			</$set>

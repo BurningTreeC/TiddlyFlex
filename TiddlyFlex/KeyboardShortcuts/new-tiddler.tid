@@ -4,7 +4,7 @@ override: yes
 override-title: $:/core/ui/KeyboardShortcuts/new-tiddler
 key: ((new-tiddler))
 
-\import $:/plugins/BTC/TiddlyFlex/privates/navigation
+\import $:/plugins/BTC/TiddlyFlex/privates/navigation $:/plugins/BTC/TiddlyFlex/globals/layout/functions
 \procedure actions()
 {{$:/core/ui/Actions/new-tiddler}}
 \end
@@ -12,6 +12,6 @@ key: ((new-tiddler))
 	<$macrocall $name="tiddlyflex-simple-keyboard-navigator" actions=<<actions>>/>
 <% else %>
 	<$navigator story="$:/StoryList" history="$:/HistoryList" openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromOutsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
-		{{$:/core/ui/Actions/new-tiddler}}
+		<<actions>>
 	</$navigator>
 <% endif %>

@@ -31,12 +31,18 @@ tags: $:/tags/Stylesheet
 	flex-grow: 1;
 }
 
+.tc-tiddlyflex-top-toolbar-left {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
 .tc-tiddlyflex-top-toolbar-left > div:first-of-type {
 	margin-left: {{$:/config/tiddlyflex/story-river/padding}};
 }
 
 .tc-tiddlyflex-top-toolbar-right button {
 	margin-right: 0.5em;
+	vertical-align: bottom;
 }
 
 .tc-tiddlyflex-top-toolbar-right .tc-btn-invisible svg {

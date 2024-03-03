@@ -2,7 +2,7 @@ title: $:/plugins/BTC/TiddlyFlex/KeyboardShortcuts/column-down
 tags: $:/tags/KeyboardShortcut
 key: ((column-down))
 
-\import $:/plugins/BTC/TiddlyFlex/privates/selectors $:/plugins/BTC/TiddlyFlex/privates/navigation
-<$let currentColumn={{{ [[$:/columns]get[current-column]] ~1 }}} columnCount={{{ [list[$:/columns]count[]] ~1 }}} nextColumn={{{ [list[$:/columns]before<currentColumn>] ~[<columnCount>] }}} storyList={{{ [[$:/StoryList-]addsuffix<nextColumn>] }}} historyList={{{ [[$:/HistoryList-]addsuffix<nextColumn>] }}} searchFields={{{ [[$:/config/tiddlyflex/story-river/filter/fields]get[text]!is[blank]!match[]] ~[[tags,text,title]] }}} searchFlags={{{ [[$:/config/tiddlyflex/story-river/filter/flags]get[text]!is[blank]!match[]] ~[[words]] }}}>
+\import $:/plugins/BTC/TiddlyFlex/privates/selectors $:/plugins/BTC/TiddlyFlex/privates/navigation $:/plugins/BTC/TiddlyFlex/globals/layout/functions
+<$let currentColumn={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[[$:/columns]get[current-column]] ~1 }}} columnCount={{{ [subfilter<tdff.tiddlyflex-enlist-columns>last[]] ~[subfilter<tdff.tiddlyflex-enlist-columns>first[]] }}} nextColumn={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] +[before<currentColumn>] ~[<columnCount>] }}} tv-story-list={{{ [[$:/StoryList-]addsuffix<nextColumn>] }}} tv-history-list={{{ [[$:/HistoryList-]addsuffix<nextColumn>] }}}>
 	<<tiddlyflex-cycle-columns-navigator>>
 </$let>

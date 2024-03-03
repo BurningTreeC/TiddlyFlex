@@ -1,5 +1,5 @@
 /*\
-title: $:/core/modules/storyviews/classic.js
+title: $:/plugins/BTC/TiddlyFlex/modules/storyviews/tiddlyflex.js
 type: application/javascript
 module-type: storyview
 
@@ -135,6 +135,6 @@ ClassicStoryView.prototype.remove = function(widget) {
 	}
 };
 
-exports.classic = ClassicStoryView;
+exports.tiddlyflex = ClassicStoryView;
 
 })();

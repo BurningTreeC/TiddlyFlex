@@ -4,8 +4,8 @@ tags: $:/tags/Stylesheet
 \define tiddlyflex-tiddler-z-indexes-inner()
 
 <$list filter="[range<storyListCount>]">
-`.tc-tiddlyflex-story-river-`$(column)$ `.tc-tiddlyflex-story-river-inner > .tc-tiddler-view-frame:nth-child(100n+`<$text text=<<currentTiddler>>/>`) > .tc-tiddler-frame`,
-`.tc-tiddlyflex-story-river-`$(column)$ `.tc-tiddlyflex-story-river-inner > .tc-tiddler-edit-frame:nth-child(100n+`<$text text=<<currentTiddler>>/>`) > .tc-tiddler-frame {
+`.tc-tiddlyflex-story-river-`$(tiddlyFlexColumn)$ `.tc-tiddlyflex-story-river-inner > .tc-tiddler-view-frame:nth-child(100n+`<$text text=<<currentTiddler>>/>`) > .tc-tiddler-frame`,
+`.tc-tiddlyflex-story-river-`$(tiddlyFlexColumn)$ `.tc-tiddlyflex-story-river-inner > .tc-tiddler-edit-frame:nth-child(100n+`<$text text=<<currentTiddler>>/>`) > .tc-tiddler-frame {
 z-index: `<$text text={{{ [<storyListCount>add[501]subtract<currentTiddler>] }}}/>`;
 }
 `
@@ -15,23 +15,19 @@ z-index: `<$text text={{{ [<storyListCount>add[501]subtract<currentTiddler>] }}}
 
 \define tiddlyflex-tiddler-z-indexes()
 
-<$let storyListCount={{{ [list<storyList>] :filter[{$:/config/tiddlyflex/story-river/filter}match[yes]then<currentTiddler>search:$(searchFields)$:$(searchFlags)${$:/temp/search/input}else{$:/config/tiddlyflex/story-river/filter}!match[yes]then<currentTiddler>] +[count[]] }}}>
+<$set name="storyListCount" value={{{ [subfilter<tdff.tiddlyflex-story-river-filter>] +[count[]] }}}>
 
 	<<tiddlyflex-tiddler-z-indexes-inner>>
 
-</$let>
+</$set>
 
 \end
 
-<$list filter="[list[$:/columns]] ~1" variable="column">
+<$list filter="[subfilter<tdff.tiddlyflex-enlist-columns>]" variable="tiddlyFlexColumn">
 
-	<$set name="storyList" value={{{ [[$:/StoryList-]addsuffix<column>] }}}>
+	<$set name="tv-story-list" value={{{ [[$:/StoryList-]addsuffix<tiddlyFlexColumn>] }}}>
 
-		<$vars searchFields={{{ [[$:/config/tiddlyflex/story-river/filter/fields]get[text]!is[blank]!match[]] ~[[tags,text,title]] }}} searchFlags={{{ [[$:/config/tiddlyflex/story-river/filter/flags]get[text]!is[blank]!match[]] ~[[words]] }}}>
-
-			<<tiddlyflex-tiddler-z-indexes>>
-
-		</$vars>
+		<<tiddlyflex-tiddler-z-indexes>>
 
 	</$set>
 

@@ -2,14 +2,12 @@ title: $:/plugins/BTC/TiddlyFlex/KeyboardShortcuts/move-down
 tags: $:/tags/KeyboardShortcut
 key: ((move-down))
 
-\import $:/plugins/BTC/TiddlyFlex/privates/navigation
+\import $:/plugins/BTC/TiddlyFlex/privates/navigation $:/plugins/BTC/TiddlyFlex/globals/layout/functions
 \procedure actions()
-<$set name="nextTiddler" value={{{ [list<storyList>] :filter[{$:/config/tiddlyflex/story-river/filter}match[yes]then<currentTiddler>search:$(searchFields)$:$(searchFlags)${$:/temp/search/input}else{$:/config/tiddlyflex/story-river/filter}!match[yes]then<currentTiddler>] +[after<currentTiddler>] }}}>
+<$set name="nextTiddler" value={{{ [subfilter<tdff.tiddlyflex-story-river-filter>] +[after<currentTiddler>] }}}>
 	<%if [<nextTiddler>!is[blank]!match[]] %>
-		<$action-listops $tiddler=<<storyList>> $subfilter="+[insertbefore:currentTiddler<nextTiddler>]"/>
+		<$action-listops $tiddler=<<tv-story-list>> $subfilter="+[insertbefore:currentTiddler<nextTiddler>]"/>
 	<% endif %>
 </$set>
 \end
-<$vars searchFields={{{ [[$:/config/tiddlyflex/story-river/filter/fields]get[text]!is[blank]!match[]] ~[[tags,text,title]] }}} searchFlags={{{ [[$:/config/tiddlyflex/story-river/filter/flags]get[text]!is[blank]!match[]] ~[[words]] }}}>
-	<$macrocall $name="tiddlyflex-keyboard-navigator" actions=<<actions>>/>
-</$vars>
+<$macrocall $name="tiddlyflex-keyboard-navigator" actions=<<actions>>/>

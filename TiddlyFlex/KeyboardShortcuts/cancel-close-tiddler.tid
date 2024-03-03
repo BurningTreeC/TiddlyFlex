@@ -2,15 +2,15 @@ title: $:/plugins/BTC/TiddlyFlex/KeyboardShortcuts/cancel-close-tiddler
 tags: $:/tags/KeyboardShortcut
 key: ((cancel-close-tiddler))
 
-\import $:/plugins/BTC/TiddlyFlex/privates/selectors $:/plugins/BTC/TiddlyFlex/privates/navigation
+\import $:/plugins/BTC/TiddlyFlex/privates/selectors $:/plugins/BTC/TiddlyFlex/privates/navigation $:/plugins/BTC/TiddlyFlex/globals/layout/functions
 \procedure tiddlyflex-tiddler-is-draft-actions-draft-of-not-is-missing()
-<$list filter="[list[$:/columns]!match{$:/columns!!current-column}]" variable="column">
-	<$set name="storyList" value={{{ [[$:/StoryList-]addsuffix<column>!match[$:/StoryList-]] ~[[$:/StoryList-1]] }}}>
-		<%if [<storyList>contains<tiddler>] %>
-			<$set name="index" value={{{ [list<storyList>allbefore<tiddler>add[1]] }}}>
-				<$let nextTiddler={{{ [list<storyList>zth<index>] }}} viewTiddler={{{ [<tiddler>get[draft.of]] }}}>
-					<$action-listops $tiddler=<<storyList>> $subfilter="+[insertbefore<viewTiddler>,<nextTiddler>]"/>
-					<$action-listops $tiddler=<<storyList>> $subfilter="-[<tiddler>]"/>
+<$list filter="[list[$:/columns]!match{$:/columns!!current-column}]" variable="tiddlyFlexColumn">
+	<$set name="tv-story-list" value={{{ [[$:/StoryList-]addsuffix<tiddlyFlexColumn>!match[$:/StoryList-]] ~[[$:/StoryList-1]] }}}>
+		<%if [<tv-story-list>contains<tiddler>] %>
+			<$set name="index" value={{{ [list<tv-story-list>allbefore<tiddler>add[1]] }}}>
+				<$let nextTiddler={{{ [list<tv-story-list>zth<index>] }}} viewTiddler={{{ [<tiddler>get[draft.of]] }}}>
+					<$action-listops $tiddler=<<tv-story-list>> $subfilter="+[insertbefore<viewTiddler>,<nextTiddler>]"/>
+					<$action-listops $tiddler=<<tv-story-list>> $subfilter="-[<tiddler>]"/>
 				</$let>
 			</$set>
 		<% endif %>
@@ -19,19 +19,19 @@ key: ((cancel-close-tiddler))
 \end
 \procedure tiddlyflex-tiddler-is-draft-actions()
 <% if [<tiddler>get[draft.of]!is[shadow]is[missing]] %>
-	<$list filter="[list[$:/columns]!match{$:/columns!!current-column}]" variable="column">
-		<$set name="storyList" value={{{ [[$:/StoryList-]addsuffix<column>!match[$:/StoryList-]] ~[[$:/StoryList-1]] }}}>
-			<%if [<storyList>contains<tiddler>] %>
-				<$action-listops $tiddler=<<storyList>> $subfilter="-[<tiddler>]"/>
+	<$list filter="[list[$:/columns]!match{$:/columns!!current-column}]" variable="tiddlyFlexColumn">
+		<$set name="tv-story-list" value={{{ [[$:/StoryList-]addsuffix<tiddlyFlexColumn>!match[$:/StoryList-]] ~[[$:/StoryList-1]] }}}>
+			<%if [<tv-story-list>contains<tiddler>] %>
+				<$action-listops $tiddler=<<tv-story-list>> $subfilter="-[<tiddler>]"/>
 			<% endif %>
 		</$set>
 	</$list>
 <% else %>
 	<<tiddlyflex-tiddler-is-draft-actions-draft-of-not-is-missing>>
 <% endif %>
-<$set name="scrollTiddler" value={{{ [list<storyList>after<tiddler>] ~[list<storyList>before<tiddler>] }}}>
+<$set name="scrollTiddler" value={{{ [subfilter<tdff.tiddlyflex-story-river-filter>after<tiddler>] ~[subfilter<tdff.tiddlyflex-story-river-filter>before<tiddler>] }}}>
 	<%if [<tiddler>get[draft.of]!is[shadow]is[missing]] %>
-		<$action-setfield $tiddler=<<historyList>> current-tiddler=<<scrollTiddler>>/>
+		<$action-setfield $tiddler=<<tv-history-list>> current-tiddler=<<scrollTiddler>>/>
 		<%if [<scrollTiddler>is[draft]] %>
 			<$set name="cssEscapedTitle" value={{{ [<scrollTiddler>escapecss[]] }}}>
 				<<tiddlyflex-focus-draft-tiddler>>
@@ -44,10 +44,10 @@ key: ((cancel-close-tiddler))
 </$set>
 \end
 \define actions()
-<$set name="tiddler" value={{{ [<historyList>get[current-tiddler]] }}}>
+<$set name="tiddler" value={{{ [<tv-history-list>get[current-tiddler]] }}}>
 	<%if [<tiddler>!is[draft]] %>
-		<$let scrollTiddler={{{ [list<storyList>] :filter[{$:/config/tiddlyflex/story-river/filter}match[yes]then<currentTiddler>search:$(searchFields)$:$(searchFlags)${$:/temp/search/input}else{$:/config/tiddlyflex/story-river/filter}!match[yes]then<currentTiddler>] +[after<tiddler>] ~[before<tiddler>] }}}>
-			<$action-setfield $tiddler=<<historyList>> current-tiddler=<<scrollTiddler>>/>
+		<$let scrollTiddler={{{ [subfilter<tdff.tiddlyflex-story-river-filter>] +[after<tiddler>] ~[before<tiddler>] }}}>
+			<$action-setfield $tiddler=<<tv-history-list>> current-tiddler=<<scrollTiddler>>/>
 			<$action-sendmessage $message="tm-close-tiddler" $param=<<tiddler>>/>
 			<%if [<scrollTiddler>is[draft]] %>
 				<$set name="cssEscapedTitle" value={{{ [<scrollTiddler>escapecss[]] }}}>
@@ -62,6 +62,4 @@ key: ((cancel-close-tiddler))
 	<% endif %>
 </$set>
 \end
-<$vars searchFields={{{ [[$:/config/tiddlyflex/story-river/filter/fields]get[text]!is[blank]!match[]] ~[[tags,text,title]] }}} searchFlags={{{ [[$:/config/tiddlyflex/story-river/filter/flags]get[text]!is[blank]!match[]] ~[[words]] }}}>
-	<$macrocall $name="tiddlyflex-keyboard-navigator" actions=<<actions>>/>
-</$vars>
+<$macrocall $name="tiddlyflex-keyboard-navigator" actions=<<actions>>/>

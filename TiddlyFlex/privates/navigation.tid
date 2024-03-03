@@ -2,14 +2,14 @@ title: $:/plugins/BTC/TiddlyFlex/privates/navigation
 
 \procedure tiddlyflex-focus-flexcontainer() <$action-sendmessage $message="tm-focus-selector" $param=".tc-tiddlyflex-container" preventScroll="true"/>
 \procedure tiddlyflex-keyboard-navigator(actions)
-<$let currentColumn={{$:/columns!!current-column}} storyList={{{ [[$:/StoryList-]addsuffix<currentColumn>!match[$:/StoryList-]] ~[[$:/StoryList-1]] }}} historyList={{{ [[$:/HistoryList-]addsuffix<currentColumn>!match[$:/HistoryList-]] ~[[$:/HistoryList-1]] }}} currentTiddler={{{ [<historyList>get[current-tiddler]] }}}>
-	<$navigator story=<<storyList>> history=<<historyList>> openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromOutsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
+<$let currentColumn={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-enlist-columns>first[]] }}} tv-story-list={{{ [[$:/StoryList-]addsuffix<currentColumn>!match[$:/StoryList-]] ~[[$:/StoryList-1]] }}} tv-history-list={{{ [[$:/HistoryList-]addsuffix<currentColumn>!match[$:/HistoryList-]] ~[[$:/HistoryList-1]] }}} currentTiddler={{{ [<tv-history-list>get[current-tiddler]] }}}>
+	<$navigator story=<<tv-story-list>> history=<<tv-history-list>> openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromOutsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
 		<<actions>>
 	</$navigator>
 </$let>
 \end
 \procedure tiddlyflex-simple-keyboard-navigator()
-<$navigator story={{{ [[$:/StoryList-]addsuffix{$:/columns!!current-column}!match[$:/StoryList-]] ~$:/StoryList-1 }}} history={{{ [[$:/HistoryList-]addsuffix{$:/columns!!current-column}!match[$:/HistoryList-]] ~$:/HistoryList-1 }}} openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromOutsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
+<$navigator story={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-enlist-columns>first[]] :map[addprefix[$:/StoryList-]] }}} history={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-enlist-columns>first[]] :map[addprefix[$:/HistoryList-]] }}} openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromOutsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
 	<<actions>>
 </$navigator>
 \end
@@ -19,42 +19,42 @@ title: $:/plugins/BTC/TiddlyFlex/privates/navigation
 <% else %>
 	<<tiddlyflex-focus-flexcontainer>>
 <% endif %>
-<$navigator story=<<storyList>> history=<<historyList>> openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromOutsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
+<$navigator story=<<tv-story-list>> history=<<tv-history-list>> openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromOutsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
 	<$action-navigate $to=<<nextTiddler>>/>
 </$navigator>
 \end
 \define tiddlyflex-cycle-columns-navigator()
 <$action-setfield $tiddler="$:/columns" current-column=<<nextColumn>>/>
 <$set name="currentHistoryListTiddler" value={{{ [<historyList>get[current-tiddler]] }}}>
-	<%if [<storyList>contains<currentHistoryListTiddler>] %>
-		<%if [list<storyList>] :filter[{$:/config/tiddlyflex/story-river/filter}match[yes]then<currentTiddler>search:$(searchFields)$:$(searchFlags)${$:/temp/search/input}else{$:/config/tiddlyflex/story-river/filter}!match[yes]then<currentTiddler>] +[match<currentHistoryListTiddler>] %>
+	<%if [<tv-story-list>contains<currentHistoryListTiddler>] %>
+		<%if [subfilter<tdff.tiddlyflex-story-river-filter>] +[match<currentHistoryListTiddler>] %>
 			<$let nextTiddler=<<currentHistoryListTiddler>> cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
 				<<tiddlyflex-cycle-columns-navigator-inner>>
 			</$let>
 		<% else %>
-			<$let nextTiddler={{{ [list<storyList>] :filter[{$:/config/tiddlyflex/story-river/filter}match[yes]then<currentTiddler>search:$(searchFields)$:$(searchFlags)${$:/temp/search/input}else{$:/config/tiddlyflex/story-river/filter}!match[yes]then<currentTiddler>] +[nth[1]] }}} cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
+			<$let nextTiddler={{{ [subfilter<tdff.tiddlyflex-story-river-filter>] +[nth[1]] }}} cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
 				<<tiddlyflex-cycle-columns-navigator-inner>>
 			</$let>
 		<% endif %>
-	<% elseif [<storyList>!contains<currentHistoryListTiddler>] %>
-		<$let nextTiddler={{{ [list<storyList>] :filter[{$:/config/tiddlyflex/story-river/filter}match[yes]then<currentTiddler>search:$(searchFields)$:$(searchFlags)${$:/temp/search/input}else{$:/config/tiddlyflex/story-river/filter}!match[yes]then<currentTiddler>] +[nth[1]] }}} cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
+	<% elseif [<tv-story-list>!contains<currentHistoryListTiddler>] %>
+		<$let nextTiddler={{{ [subfilter<tdff.tiddlyflex-story-river-filter>] +[nth[1]] }}} cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
 			<<tiddlyflex-cycle-columns-navigator-inner>>
 		</$let>
 	<% endif %>
 </$set>
 \end
 \procedure tiddlyflex-multi-column-keyboard-navigator()
-<$let currentColumn={{$:/columns!!current-column}} 
-	storyList={{{ [[$:/StoryList-]addsuffix<currentColumn>!match[$:/StoryList-]] ~$:/StoryList-1 }}}
-	historyList={{{ [[$:/HistoryList-]addsuffix<currentColumn>!match[$:/HistoryList-]] ~$:/HistoryList-1 }}}
-	focusedTiddler={{{ [<historyList>get[current-tiddler]] }}}
+<$let currentColumn={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-enlist-columns>first[]] }}} 
+	tv-story-list={{{ [[$:/StoryList-]addsuffix<currentColumn>!match[$:/StoryList-]] ~$:/StoryList-1 }}}
+	tv-history-list={{{ [[$:/HistoryList-]addsuffix<currentColumn>!match[$:/HistoryList-]] ~$:/HistoryList-1 }}}
+	focusedTiddler={{{ [<tv-history-list>get[current-tiddler]] }}}
 	nextStoryCounter={{{ [<currentColumn>add[1]] }}}
-	nextStoryList={{{ [<storyList>!match[$:/StoryList]removesuffix<currentColumn>addsuffix<nextStoryCounter>] ~[[$:/StoryList-2]] }}}
-	nextHistoryList={{{ [<historyList>!match[$:/HistoryList]removesuffix<currentColumn>addsuffix<nextStoryCounter>] ~[[$:/HistoryList-2]] }}}
+	nextStoryList={{{ [<tv-story-list>!match[$:/StoryList]removesuffix<currentColumn>addsuffix<nextStoryCounter>] ~[[$:/StoryList-2]] }}}
+	nextHistoryList={{{ [<tv-history-list>!match[$:/HistoryList]removesuffix<currentColumn>addsuffix<nextStoryCounter>] ~[[$:/HistoryList-2]] }}}
 	firstNextStoryTiddler={{{ [list<nextStoryList>first[]] }}}
 	previousStoryCounter={{{ [<currentColumn>subtract[1]] }}}
-	previousStoryList={{{ [<storyList>!match[$:/StoryList-]removesuffix<currentColumn>addsuffix<previousStoryCounter>] ~$:/StoryList-1 }}}
-	previousHistoryList={{{ [<historyList>!match[$:/HistoryList-]removesuffix<currentColumn>addsuffix<previousStoryCounter>] ~[[$:/HistoryList]] }}}
+	previousStoryList={{{ [<tv-story-list>!match[$:/StoryList-]removesuffix<currentColumn>addsuffix<previousStoryCounter>] ~$:/StoryList-1 }}}
+	previousHistoryList={{{ [<tv-history-list>!match[$:/HistoryList-]removesuffix<currentColumn>addsuffix<previousStoryCounter>] ~[[$:/HistoryList]] }}}
 	firstPreviousStoryTiddler={{{ [list<previousStoryList>first[]] }}}
 >
 	<<actions>>

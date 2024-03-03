@@ -2,14 +2,12 @@ title: $:/plugins/BTC/TiddlyFlex/KeyboardShortcuts/edit-tiddler
 tags: $:/tags/KeyboardShortcut
 key: ((edit-tiddler))
 
-\import $:/plugins/BTC/TiddlyFlex/privates/navigation
+\import $:/plugins/BTC/TiddlyFlex/privates/navigation $:/plugins/BTC/TiddlyFlex/globals/layout/functions
 \define actions()
-<%if [list<storyList>] :filter[{$:/config/tiddlyflex/story-river/filter}match[yes]then<currentTiddler>search:$(searchFields)$:$(searchFlags)${$:/temp/search/input}else{$:/config/tiddlyflex/story-river/filter}!match[yes]then<currentTiddler>] +[match<currentTiddler>] %>
+<%if [subfilter<tdff.tiddlyflex-story-river-filter>] +[match<currentTiddler>] %>
 	<%if [<currentTiddler>!is[draft]] %>
 		<$action-sendmessage $message="tm-edit-tiddler" $param=<<currentTiddler>>/>
 	<% endif %>
 <% endif %>
 \end
-<$vars searchFields={{{ [[$:/config/tiddlyflex/story-river/filter/fields]get[text]!is[blank]!match[]] ~[[tags,text,title]] }}} searchFlags={{{ [[$:/config/tiddlyflex/story-river/filter/flags]get[text]!is[blank]!match[]] ~[[words]] }}}>
-	<$macrocall $name="tiddlyflex-keyboard-navigator" actions=<<actions>>/>
-</$vars>
+<$macrocall $name="tiddlyflex-keyboard-navigator" actions=<<actions>>/>

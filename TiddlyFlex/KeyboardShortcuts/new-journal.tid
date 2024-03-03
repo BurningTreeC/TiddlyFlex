@@ -3,7 +3,7 @@ tags: $:/tags/KeyboardShortcut
 override: yes
 key: ((new-journal))
 
-\import $:/plugins/BTC/TiddlyFlex/privates/navigation
+\import $:/plugins/BTC/TiddlyFlex/privates/navigation $:/plugins/BTC/TiddlyFlex/globals/layout/functions
 \procedure actions()
 {{$:/core/ui/Actions/new-journal}}
 \end
@@ -11,6 +11,6 @@ key: ((new-journal))
 	<$macrocall $name="tiddlyflex-simple-keyboard-navigator" actions=<<actions>>/>
 <% else %>
 	<$navigator story="$:/StoryList" history="$:/HistoryList" openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromOutsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
-		{{$:/core/ui/Actions/new-journal}}
+		<<actions>>
 	</$navigator>
 <% endif %>

@@ -2,51 +2,53 @@ title: $:/plugins/BTC/TiddlyFlex/globals/navigation
 tags: $:/tags/Global
 
 \define tiddlyflex-navigate-story-river-actions-selector()
-.tc-tiddlyflex-story-river-$(column)$ [data-tiddler-title="$(navigateToCSSEscaped)$"]
+.tc-tiddlyflex-story-river-$(tiddlyFlexColumn)$ [data-tiddler-title="$(navigateToCSSEscaped)$"]
 \end
-\function tiddlyflex-suppress-navigation() [<modifier>match[ctrl]then[true]] [<modifier>match[meta]then[true]] +[match[true]] +[limit[1]]
+\function tiddlyflex-suppress-navigation() [<modifier>match[ctrl]then[true]] [<modifier>match[meta]then[true]] +[match[true]] ~false +[limit[1]]
 \function edit-missing-tiddler() [{$:/config/tiddlyflex/navigation/edit-missing-tiddlers}match[yes]then<event-navigateTo>!is[shadow]is[missing]]
 \procedure tiddlyflex-navigate-story-river-actions-navigate()
-<$action-sendmessage $message="tm-navigate" navigateTo=<<event-navigateTo>> navigateFromTitle=<<event-navigateFromTitle>> navigateSuppressNavigation={{{ [function[tiddlyflex-suppress-navigation]] }}}/>
+<$action-sendmessage $message="tm-navigate" navigateTo=<<event-navigateTo>> navigateSuppressNavigation={{{ [function[tiddlyflex-supress-navigation]] }}} navigateFromTitle={{{ [<event-navigateFromTitle>!is[blank]!match[]] ~[<tiddlyFlexColumn>addprefix[$:/HistoryList-]get[current-tiddler]] }}}/>
 \end
 \procedure tiddlyflex-navigate-story-river-actions-inner-inner()
-<$let storyList={{{ [[$:/StoryList-]addsuffix<column>] }}} historyList={{{ [[$:/HistoryList-]addsuffix<column>] }}}>
-	<%if [[$:/columns]!contains<column>] %>
-		<$action-listops $tiddler="$:/columns" $subfilter="[<column>]"/>
+<$let tv-story-list={{{ [[$:/StoryList-]addsuffix<tiddlyFlexColumn>] }}} tv-history-list={{{ [[$:/HistoryList-]addsuffix<tiddlyFlexColumn>] }}}>
+	<%if [[$:/columns]!contains<tiddlyFlexColumn>] %>
+		<$action-listops $tiddler="$:/columns" $subfilter="[<tiddlyFlexColumn>]"/>
 	<% endif %>
-	<$navigator story=<<storyList>> history=<<historyList>> openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromOutsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
+	<$navigator story=<<tv-story-list>> history=<<tv-history-list>> openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromOutsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
 		<<tiddlyflex-navigate-story-river-actions-navigate>>
 		<%if [function[edit-missing-tiddler]] %>
-			<$action-sendmessage $message="tm-edit-tiddler" $param=<<event-navigateTo>> suppressNavigation={{{ [function[tiddlyflex-suppress-navigation]] }}}/>
+			<$action-sendmessage $message="tm-edit-tiddler" $param=<<event-navigateTo>> $names={{{ [enlist<list-event>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] [enlist<list-event-paramObject>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}} $values={{{ [enlist<list-event>addprefix[event-]getvariable[]addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] [enlist<list-event-paramObject>addprefix[event-paramObject-]getvariable[]addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}}/>
 		<% endif %>
 	</$navigator>
 </$let>
 \end
 \procedure tiddlyflex-navigate-story-river-actions-inner()
 <%if [<modifier>match[shift]] %>
-	<$set name="column" value={{{ [function[tiddlyflex-current-column]add[1]] }}}>
+	<$set name="tiddlyFlexColumn" value={{{ [<tiddlyFlexColumn>add[1]] }}}>
 		<<tiddlyflex-navigate-story-river-actions-inner-inner>>
 	</$set>
 <% elseif [<modifier>match[alt]] %>
-	<$set name="column" value={{{ [function[tiddlyflex-current-column]!match[1]subtract[1]] ~1 }}}>
+	<$set name="tiddlyFlexColumn" value={{{ [<tiddlyFlexColumn>!match[1]subtract[1]] ~1 }}}>
 		<<tiddlyflex-navigate-story-river-actions-inner-inner>>
 	</$set>
 <% endif %>
 \end
 \procedure tiddlyflex-navigate-story-river-actions()
 \function tiddlyflex-no-shift-alt() [<modifier>!match[shift]then<modifier>!match[alt]]
-<%if [list[$:/columns]] ~1 +[addprefix[$:/StoryList-]] +[enlist-input[]] +[contains<event-navigateTo>] %>
+<%if [subfilter<tdff.tiddlyflex-enlist-columns>] +[addprefix[$:/StoryList-]] +[enlist-input[]] +[contains<event-navigateTo>] %>
 	<%if [function[tiddlyflex-no-shift-alt]] %>
-		<$list filter="[list[$:/columns]] ~1" variable="column">
-			<$let storyList={{{ [[$:/StoryList-]addsuffix<column>] }}} historyList={{{ [[$:/HistoryList-]addsuffix<column>] }}} navigateToCSSEscaped={{{ [<event-navigateTo>escapecss[]] }}}>
-				<%if [<storyList>contains<event-navigateTo>] %>
+		<$list filter="[subfilter<tdff.tiddlyflex-enlist-columns>]" variable="tiddlyFlexColumn">
+			<$let tv-story-list={{{ [[$:/StoryList-]addsuffix<tiddlyFlexColumn>] }}} tv-history-list={{{ [[$:/HistoryList-]addsuffix<tiddlyFlexColumn>] }}} navigateToCSSEscaped={{{ [<event-navigateTo>escapecss[]] }}}>
+				<%if [<tv-story-list>contains<event-navigateTo>] %>
 					<%if [<modifier>!match[ctrl]then<modifier>!match[meta]] %>
 						<$action-sendmessage $message="tm-scroll" selector=<<tiddlyflex-navigate-story-river-actions-selector>>/>
 					<% endif %>
 					<%if [function[edit-missing-tiddler]] %>
-						<$navigator story=<<storyList>> history=<<historyList>> openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromOutsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
-							<<tiddlyflex-navigate-story-river-actions-navigate>>
-							<$action-sendmessage $message="tm-edit-tiddler" $param=<<event-navigateTo>> suppressNavigation={{{ [function[tiddlyflex-suppress-navigation]] }}}/>
+						<$navigator story=<<tv-story-list>> history=<<tv-history-list>> openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromOutsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
+							<$navigator story={{{ [<tiddlyFlexColumn>addprefix[$:/StoryList-]] }}} history={{{ [<tiddlyFlexColumn>addprefix[$:/HistoryList-]] }}} openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromOutsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
+								<<tiddlyflex-navigate-story-river-actions-navigate>>
+								<$action-sendmessage $message="tm-edit-tiddler" $param=<<event-navigateTo>> $names={{{ [enlist<list-event>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] [enlist<list-event-paramObject>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}} $values={{{ [enlist<list-event>addprefix[event-]getvariable[]addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] [enlist<list-event-paramObject>addprefix[event-paramObject-]getvariable[]addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}}/>
+							</$navigator>
 						</$navigator>
 					<% endif %>
 				<% endif %>
@@ -58,10 +60,14 @@ tags: $:/tags/Global
 <% else %>
 	<%if [function[tiddlyflex-no-shift-alt]] %>
 		<%if [function[edit-missing-tiddler]] %>
-			<<tiddlyflex-navigate-story-river-actions-navigate>>
-			<$action-sendmessage $message="tm-edit-tiddler" $param=<<event-navigateTo>> suppressNavigation={{{ [function[tiddlyflex-suppress-navigation]] }}}/>
+			<$navigator story={{{ [<tiddlyFlexColumn>addprefix[$:/StoryList-]] }}} history={{{ [<tiddlyFlexColumn>addprefix[$:/HistoryList-]] }}} openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromOutsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
+				<<tiddlyflex-navigate-story-river-actions-navigate>>
+				<$action-sendmessage $message="tm-edit-tiddler" $param=<<event-navigateTo>> $names={{{ [enlist<list-event>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] [enlist<list-event-paramObject>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}} $values={{{ [enlist<list-event>addprefix[event-]getvariable[]addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] [enlist<list-event-paramObject>addprefix[event-paramObject-]getvariable[]addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}}/>
+			</$navigator>
 		<% else %>
-			<<tiddlyflex-navigate-story-river-actions-navigate>>
+			<$navigator story={{{ [<tiddlyFlexColumn>addprefix[$:/StoryList-]] }}} history={{{ [<tiddlyFlexColumn>addprefix[$:/HistoryList-]] }}} openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromOutsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
+				<<tiddlyflex-navigate-story-river-actions-navigate>>
+			</$navigator>
 		<% endif %>
 	<% else %>
 		<<tiddlyflex-navigate-story-river-actions-inner>>
@@ -69,34 +75,36 @@ tags: $:/tags/Global
 <% endif %>
 \end
 \procedure tiddlyflex-cancel-draft-tiddler-actions-draft-of-not-is-missing()
-<$list filter="[list[$:/columns]!match<column>]" variable="column">
-	<$set name="storyList" value={{{ [[$:/StoryList-]addsuffix<column>!match[$:/StoryList-]] ~$:/StoryList-1 }}}>
-		<%if [<storyList>contains<currentTiddler>] %>
-			<$set name="index" value={{{ [list<storyList>allbefore<currentTiddler>add[1]] }}}>
-				<$let nextTiddler={{{ [list<storyList>zth<index>] }}} viewTiddler={{{ [<currentTiddler>get[draft.of]] }}}>
-					<$action-listops $tiddler=<<storyList>> $subfilter="+[insertbefore<viewTiddler>,<nextTiddler>]"/>
-					<$action-listops $tiddler=<<storyList>> $subfilter="-[<currentTiddler>]"/>
+<$list filter="[subfilter<tdff.tiddlyflex-enlist-columns>!match<tiddlyFlexColumn>]" variable="tiddlyFlexColumn">
+	<$set name="tv-story-list" value={{{ [[$:/StoryList-]addsuffix<tiddlyFlexColumn>!match[$:/StoryList-]] ~$:/StoryList-1 }}}>
+		<%if [<tv-story-list>contains<currentTiddler>] %>
+			<$set name="index" value={{{ [subfilter<tdff.tiddlyflex-story-river-filter>] +[allbefore<currentTiddler>add[1]] }}}>
+				<$let nextTiddler={{{ [<tdff.tiddlyflex-story-river-filter>] +[zth<index>] }}} viewTiddler={{{ [<currentTiddler>get[draft.of]] }}}>
+					<$action-listops $tiddler=<<tv-story-list>> $subfilter="+[insertbefore<viewTiddler>,<nextTiddler>]"/>
+					<$action-listops $tiddler=<<tv-story-list>> $subfilter="-[<currentTiddler>]"/>
 				</$let>
 			</$set>
 		<% endif %>
 	</$set>
 </$list>
 <<delete-edittemplate-state-tiddlers>>
-<$action-sendmessage $message="tm-cancel-tiddler"/>
+<$navigator story={{{ [<tiddlyFlexColumn>addprefix[$:/StoryList-]] }}} history={{{ [<tiddlyFlexColumn>addprefix[$:/HistoryList-]] }}} openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromOutsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
+	<$action-sendmessage $message="tm-cancel-tiddler" $names={{{ [enlist<list-event>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] [enlist<list-event-paramObject>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}} $values={{{ [enlist<list-event>addprefix[event-]getvariable[]addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] [enlist<list-event-paramObject>addprefix[event-paramObject-]getvariable[]addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}}/>/>
+</$navigator>
 \end
 \procedure tiddlyflex-cancel-draft-tiddler-actions()
 <%if [<currentTiddler>get[draft.of]!is[shadow]is[missing]] %>
-	<$list filter="[list[$:/columns]!match<column>]" variable="column">
-		<$set name="storyList" value={{{ [[$:/StoryList-]addsuffix<column>!match[$:/StoryList-]] ~$:/StoryList-1 }}}>
-			<$list filter="[<storyList>contains<currentTiddler>]" variable="ignore">
-				<$action-listops $tiddler=<<storyList>> $subfilter="-[<currentTiddler>]"/>
+	<$list filter="[subfilter<tdff.tiddlyflex-enlist-columns>!match<tiddlyFlexColumn>]" variable="tiddlyFlexColumn">
+		<$set name="tv-story-list" value={{{ [[$:/StoryList-]addsuffix<tiddlyFlexColumn>!match[$:/StoryList-]] ~$:/StoryList-1 }}}>
+			<$list filter="[<tv-story-list>contains<currentTiddler>]" variable="ignore">
+				<$action-listops $tiddler=<<tv-story-list>> $subfilter="-[<currentTiddler>]"/>
 			</$list>
 		</$set>
 	</$list>
 	<<delete-edittemplate-state-tiddlers>>
-	<$let scrollTiddler={{{ [list<tv-story-list>after<currentTiddler>] ~[list<tv-story-list>before<currentTiddler>] }}}>
+	<$let scrollTiddler={{{ [<tdff.tiddlyflex-story-river-filter>] +[after<currentTiddler>] ~[<tdff.tiddlyflex-story-river-filter>before<currentTiddler>] }}}>
 		<$action-setfield $tiddler=<<tv-history-list>> current-tiddler=<<scrollTiddler>>/>
-		<$action-sendmessage $message="tm-cancel-tiddler"/>
+		<$action-sendmessage $message="tm-cancel-tiddler" $names={{{ [enlist<list-event>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] [enlist<list-event-paramObject>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}} $values={{{ [enlist<list-event>addprefix[event-]getvariable[]addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] [enlist<list-event-paramObject>addprefix[event-paramObject-]getvariable[]addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}}/>/>
 	</$let>
 <% else %>
 	<<tiddlyflex-cancel-draft-tiddler-actions-draft-of-not-is-missing>>
@@ -104,19 +112,19 @@ tags: $:/tags/Global
 \end
 \procedure tiddlyflex-delete-draft-tiddler-actions()
 <$let deleteTiddlerViewMode={{{ [<currentTiddler>get[draft.of]] }}} deleteTiddlerEditMode=<<currentTiddler>>>
-	<$list filter="[list[$:/columns]!match<column>]" variable="column">
-		<$set name="storyList" value={{{ [[$:/StoryList-]addsuffix<column>!match[$:/StoryList-1]] ~[[$:/StoryList]] }}}>
-			<%if [<storyList>contains<deleteTiddlerViewMode>] %>
-				<$action-listops $tiddler=<<storyList>> $subfilter="-[<deleteTiddlerViewMode>]"/>
-			<% elseif [<storyList>contains<deleteTiddlerEditMode>] %>
-				<$action-listops $tiddler=<<storyList>> $subfilter="-[<deleteTiddlerEditMode>]"/>
+	<$list filter="[subfilter<tdff.tiddlyflex-enlist-columns>!match<tiddlyFlexColumn>]" variable="tiddlyFlexColumn">
+		<$set name="tv-story-list" value={{{ [[$:/StoryList-]addsuffix<tiddlyFlexColumn>!match[$:/StoryList-1]] ~[[$:/StoryList]] }}}>
+			<%if [<tv-story-list>contains<deleteTiddlerViewMode>] %>
+				<$action-listops $tiddler=<<tv-story-list>> $subfilter="-[<deleteTiddlerViewMode>]"/>
+			<% elseif [<tv-story-list>contains<deleteTiddlerEditMode>] %>
+				<$action-listops $tiddler=<<tv-story-list>> $subfilter="-[<deleteTiddlerEditMode>]"/>
 			<% endif %>
 		</$set>
 	</$list>
 </$let>
 <<delete-edittemplate-state-tiddlers>>
-<$let scrollTiddler={{{ [list<tv-story-list>after<currentTiddler>] ~[list<tv-story-list>before<currentTiddler>] }}}>
+<$let scrollTiddler={{{ [<tdff.tiddlyflex-story-river-filter>] +[after<currentTiddler>] ~[<tdff.tiddlyflex-story-river-filter>before<currentTiddler>] }}}>
 	<$action-setfield $tiddler=<<tv-history-list>> current-tiddler=<<scrollTiddler>>/>
-	<$action-sendmessage $message="tm-delete-tiddler"/>
+	<$action-sendmessage $message="tm-delete-tiddler" $names={{{ [enlist<list-event>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] [enlist<list-event-paramObject>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}} $values={{{ [enlist<list-event>addprefix[event-]getvariable[]addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] [enlist<list-event-paramObject>addprefix[event-paramObject-]getvariable[]addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}}/>/>
 </$let>
 \end
