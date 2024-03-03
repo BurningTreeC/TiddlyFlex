@@ -4,7 +4,7 @@ code-body: yes
 \whitespace trim
 \function tiddlyflex-current-column() [<tiddlyFlexColumn>]
 \procedure tiddlyflex-activate-column-actions()
-<%if [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-enlist-columns>first[]] +[!match<tiddlyFlexColumn>] %>
+<%if [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-current-column-filtered>] +[!match<tiddlyFlexColumn>] %>
 	<$action-setfield $tiddler="$:/columns" current-column=<<tiddlyFlexColumn>>/>
 <% endif %>
 \end
@@ -13,7 +13,7 @@ code-body: yes
 <$list filter=<<tdff.tiddlyflex-story-river-filter>> history=<<tv-history-list>> template="$:/core/ui/StoryTiddlerTemplate" storyview="tiddlyflex" emptyMessage={{{ [list<tv-story-list>limit[1]then[]else{$(emptyMessageTiddler)$}] }}}/>
 
 \end
-<div class={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-enlist-columns>first[]] +[match<tiddlyFlexColumn>then[tc-tiddlyflex-story-river-active]] [[tc-tiddlyflex-story-river-wrapper-inner]] [[tc-tiddlyflex-story-river-]addsuffix<tiddlyFlexColumn>] :and[unique[]join[ ]] }}}>
+<div class={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-current-column-filtered>] +[match<tiddlyFlexColumn>then[tc-tiddlyflex-story-river-active]] [[tc-tiddlyflex-story-river-wrapper-inner]] [[tc-tiddlyflex-story-river-]addsuffix<tiddlyFlexColumn>] :and[unique[]join[ ]] }}}>
 
 	<$dropzone enable=<<tv-enable-drag-and-drop>> class={{{ [<tiddlyFlexColumn>!is[blank]addprefix[tc-tiddlyflex-dropzone-]] ~tc-tiddlyflex-dropzone-1 }}} importTitle={{{ [[$:/Import-]addsuffix<tiddlyFlexColumn>] }}}>
 

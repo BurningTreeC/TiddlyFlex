@@ -7,7 +7,7 @@ tags: $:/tags/Global
 </$navigator>
 \end
 \procedure tiddlyflex-tm-message-navigator-outside(actions)
-<$navigator story={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-enlist-columns>first[]] :map[addprefix[$:/StoryList-]] }}} history={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-enlist-columns>first[]] :map[addprefix[$:/HistoryList-]] }}} openLinkFromInsideRiver=<<openLinkFromInsideRiver>> openLinkFromOutsideRiver=<<openLinkFromOutsideRiver>> relinkOnRename=<<relinkOnRename>>>
+<$navigator story={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-current-column-filtered>] :map[addprefix[$:/StoryList-]] }}} history={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-current-column-filtered>] :map[addprefix[$:/HistoryList-]] }}} openLinkFromInsideRiver=<<openLinkFromInsideRiver>> openLinkFromOutsideRiver=<<openLinkFromOutsideRiver>> relinkOnRename=<<relinkOnRename>>>
 	<<actions>>
 </$navigator>
 \end
@@ -136,7 +136,7 @@ tags: $:/tags/Global
 \end
 \procedure tiddlyflex-tm-navigate-actions-outside()
 \procedure actions() <<tiddlyflex-navigate-story-river-actions>>
-<$set name="tiddlyFlexColumn" value={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-enlist-columns>first[]] }}}>
+<$set name="tiddlyFlexColumn" value={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-current-column-filtered>] }}}>
 	<$macrocall $name="tiddlyflex-tm-message-navigator-outside" actions=<<actions>>/>
 </$set>
 \end

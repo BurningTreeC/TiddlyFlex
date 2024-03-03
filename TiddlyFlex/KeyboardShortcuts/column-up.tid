@@ -3,6 +3,6 @@ tags: $:/tags/KeyboardShortcut
 key: ((column-up))
 
 \import $:/plugins/BTC/TiddlyFlex/privates/selectors $:/plugins/BTC/TiddlyFlex/privates/navigation $:/plugins/BTC/TiddlyFlex/globals/layout/functions
-<$let currentColumn={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[[$:/columns]get[current-column]] ~[subfilter<tdff.tiddlyflex-enlist-columns>first[]] ~1 }}} nextColumn={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] +[after<currentColumn>] ~[subfilter<tdff.tiddlyflex-enlist-columns>first[]] ~1 }}} tv-story-list={{{ [[$:/StoryList-]addsuffix<nextColumn>] }}} tv-history-list={{{ [[$:/HistoryList-]addsuffix<nextColumn>] }}}>
+<$let currentColumn={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[[$:/columns]get[current-column]] ~[subfilter<tdff.tiddlyflex-current-column-filtered>] ~1 }}} nextColumn={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] +[after<currentColumn>] ~[subfilter<tdff.tiddlyflex-enlist-columns>first[]] ~1 }}} tv-story-list={{{ [[$:/StoryList-]addsuffix<nextColumn>] }}} tv-history-list={{{ [[$:/HistoryList-]addsuffix<nextColumn>] }}}>
 	<<tiddlyflex-cycle-columns-navigator>>
 </$let>

@@ -19,7 +19,7 @@ tags: $:/tags/Stylesheet
 
 \end
 
-<$let currentColumn={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-enlist-columns>first[]] }}} historyList={{{ [[$:/HistoryList-]addsuffix<currentColumn>!match[$:/HistoryList-]] ~[[$:/HistoryList-1]] }}}>
+<$let currentColumn={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-current-column-filtered>] }}} historyList={{{ [[$:/HistoryList-]addsuffix<currentColumn>!match[$:/HistoryList-]] ~[[$:/HistoryList-1]] }}}>
 
 	<$set name="cssEscapedTitle" value={{{ [<historyList>get[current-tiddler]escapecss[]] }}}>
 

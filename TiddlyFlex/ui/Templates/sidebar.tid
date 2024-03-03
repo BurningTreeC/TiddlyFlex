@@ -5,7 +5,7 @@ code-body: yes
 \define config-title()
 $:/config/SideBarSegments/Visibility/$(listItem)$
 \end
-\function tiddlyflex-current-column() [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-enlist-columns>first[]]
+\function tiddlyflex-current-column() [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-current-column-filtered>]
 <div class="tc-tiddlyflex-sidebar-scrollable">
 
 	<$messagecatcher
