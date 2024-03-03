@@ -48,11 +48,11 @@ title: $:/plugins/BTC/TiddlyFlex/privates/navigation
 	tv-story-list={{{ [[$:/StoryList-]addsuffix<currentColumn>!match[$:/StoryList-]] ~$:/StoryList-1 }}}
 	tv-history-list={{{ [[$:/HistoryList-]addsuffix<currentColumn>!match[$:/HistoryList-]] ~$:/HistoryList-1 }}}
 	focusedTiddler={{{ [<tv-history-list>get[current-tiddler]] }}}
-	nextStoryCounter={{{ [<currentColumn>add[1]] }}}
+	nextStoryCounter={{{ [subfilter<tdff.tiddlyflex-enlist-columns>after<currentColumn>] }}}
 	nextStoryList={{{ [<tv-story-list>!match[$:/StoryList]removesuffix<currentColumn>addsuffix<nextStoryCounter>] ~[[$:/StoryList-2]] }}}
 	nextHistoryList={{{ [<tv-history-list>!match[$:/HistoryList]removesuffix<currentColumn>addsuffix<nextStoryCounter>] ~[[$:/HistoryList-2]] }}}
 	firstNextStoryTiddler={{{ [list<nextStoryList>first[]] }}}
-	previousStoryCounter={{{ [<currentColumn>subtract[1]] }}}
+	previousStoryCounter={{{ [subfilter<tdff.tiddlyflex-enlist-columns>before<currentColumn>] }}}
 	previousStoryList={{{ [<tv-story-list>!match[$:/StoryList-]removesuffix<currentColumn>addsuffix<previousStoryCounter>] ~$:/StoryList-1 }}}
 	previousHistoryList={{{ [<tv-history-list>!match[$:/HistoryList-]removesuffix<currentColumn>addsuffix<previousStoryCounter>] ~[[$:/HistoryList]] }}}
 	firstPreviousStoryTiddler={{{ [list<previousStoryList>first[]] }}}
