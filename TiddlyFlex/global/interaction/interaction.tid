@@ -21,7 +21,7 @@ tags: $:/tags/Global
 	<$action-log values-event=<<values-event>>/>
 	<$action-log names-event-paramObject=<<names-event-paramObject>>/>
 	<$action-log values-event-paramObject=<<values-event-paramObject>>/>
-	<$action-sendmessage $message=<<message>> $param={{{ [<event-param>!is[blank]!match[]] ~[<event-tiddlerTitle>] }}} $names={{{ [enlist<names-event>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] [enlist<names-event-paramObject>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}} $values={{{ [enlist<values-event>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] [enlist<values-event-paramObject>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}}/>
+	<$action-sendmessage $message=<<message>> $param={{{ [<event-param>!is[blank]!match[]] ~[enlist<exclude>!match[tiddlerTitle]then<event-tiddlerTitle>] }}} $names={{{ [enlist<names-event>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] [enlist<names-event-paramObject>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}} $values={{{ [enlist<values-event>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] [enlist<values-event-paramObject>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}}/>
 </$let>
 \end
 
