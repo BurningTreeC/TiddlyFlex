@@ -18,11 +18,11 @@ exports.after = ["startup"];
 exports.synchronous = true;
 
 // Default story and history lists
-var DEFAULT_STORY_TITLE = $tw.wiki.getTiddlerText("$:/layout") === "$:/plugins/BTC/TiddlyFlex/ui/Layout" ? "$:/StoryList-1" : "$:/StoryList";
-var DEFAULT_HISTORY_TITLE = $tw.wiki.getTiddlerText("$:/layout") === "$:/plugins/BTC/TiddlyFlex/ui/Layout" ? "$:/HistoryList-1" : "$:/HistoryList";
+var DEFAULT_STORY_TITLE = "$:/StoryList";
+var DEFAULT_HISTORY_TITLE = "$:/HistoryList";
 
 // Default tiddlers
-var DEFAULT_TIDDLERS_TITLE = $tw.wiki.getTiddlerText("$:/layout") === "$:/plugins/BTC/TiddlyFlex/ui/Layout" ? "$:/DefaultTiddlers-1" : "$:/DefaultTiddlers";
+var DEFAULT_TIDDLERS_TITLE = "$:/DefaultTiddlers";
 
 // Config
 var CONFIG_UPDATE_ADDRESS_BAR = "$:/config/Navigation/UpdateAddressBar"; // Can be "no", "permalink", "permaview"
@@ -42,7 +42,7 @@ exports.startup = function() {
 	if($tw.browser) {
 		// Set up location hash update
 		$tw.wiki.addEventListener("change",function(changes) {
-			if($tw.utils.hop(changes,DEFAULT_STORY_TITLE) || $tw.utils.hop(changes,DEFAULT_HISTORY_TITLE)) {
+			if($tw.utils.hop(changes,$tw.wiki.getTiddlerText("$:/layout") === "$:/plugins/BTC/TiddlyFlex/ui/Layout" ? "$:/StoryList-1" : DEFAULT_STORY_TITLE) || $tw.utils.hop(changes,$tw.wiki.getTiddlerText("$:/layout") === "$:/plugins/BTC/TiddlyFlex/ui/Layout" ? "$:/HistoryList-1" : DEFAULT_HISTORY_TITLE)) {
 				updateLocationHash({
 					updateAddressBar: $tw.wiki.getTiddlerText(CONFIG_UPDATE_ADDRESS_BAR,"permaview").trim(),
 					updateHistory: $tw.wiki.getTiddlerText(CONFIG_UPDATE_HISTORY,"no").trim()
@@ -82,7 +82,7 @@ exports.startup = function() {
 				storyList = $tw.wiki.filterTiddlers(storyFilter);
 			//invoke any hooks that might change the default story list
 			storyList = $tw.hooks.invokeHook("th-opening-default-tiddlers-list",storyList);
-			$tw.wiki.addTiddler({title: DEFAULT_STORY_TITLE, text: "", list: storyList},$tw.wiki.getModificationFields());
+			$tw.wiki.addTiddler({title: $tw.wiki.getTiddlerText("$:/layout") === "$:/plugins/BTC/TiddlyFlex/ui/Layout" ? "$:/StoryList-1" : DEFAULT_STORY_TITLE, text: "", list: storyList},$tw.wiki.getModificationFields());
 			if(storyList[0]) {
 				$tw.wiki.addToHistory(storyList[0]);
 			}
@@ -131,7 +131,7 @@ function openStartupTiddlers(options) {
 	// If the story wasn't specified use the current tiddlers or a blank story
 	if(storyFilter === null) {
 		if(options.defaultToCurrentStory) {
-			var currStoryList = $tw.wiki.getTiddlerList(DEFAULT_STORY_TITLE);
+			var currStoryList = $tw.wiki.getTiddlerList($tw.wiki.getTiddlerText("$:/layout") === "$:/plugins/BTC/TiddlyFlex/ui/Layout" ? "$:/StoryList-1" : DEFAULT_STORY_TITLE);
 			storyFilter = $tw.utils.stringifyList(currStoryList);
 		} else {
 			if(target && target !== "") {
@@ -150,12 +150,12 @@ function openStartupTiddlers(options) {
 		storyList.unshift(target);
 	}
 	// Save the story list
-	$tw.wiki.addTiddler({title: DEFAULT_STORY_TITLE, text: "", list: storyList},$tw.wiki.getModificationFields());
+	$tw.wiki.addTiddler({title: $tw.wiki.getTiddlerText("$:/layout") === "$:/plugins/BTC/TiddlyFlex/ui/Layout" ? "$:/StoryList-1" : DEFAULT_STORY_TITLE, text: "", list: storyList},$tw.wiki.getModificationFields());
 	// Update history
 	var story = new $tw.Story({
 		wiki: $tw.wiki,
-		storyTitle: DEFAULT_STORY_TITLE,
-		historyTitle: DEFAULT_HISTORY_TITLE
+		storyTitle: $tw.wiki.getTiddlerText("$:/layout") === "$:/plugins/BTC/TiddlyFlex/ui/Layout" ? "$:/StoryList-1" : DEFAULT_STORY_TITLE,
+		historyTitle: $tw.wiki.getTiddlerText("$:/layout") === "$:/plugins/BTC/TiddlyFlex/ui/Layout" ? "$:/HistoryList-1" : DEFAULT_HISTORY_TITLE
 	});
 	if(!options.disableHistory) {
 		// If a target tiddler was specified add it to the history stack
@@ -180,8 +180,8 @@ options.targetTiddler: optional title of target tiddler for permalink
 */
 function updateLocationHash(options) {
 	// Get the story and the history stack
-	var storyList = $tw.wiki.getTiddlerList(DEFAULT_STORY_TITLE),
-		historyList = $tw.wiki.getTiddlerData(DEFAULT_HISTORY_TITLE,[]),
+	var storyList = $tw.wiki.getTiddlerList($tw.wiki.getTiddlerText("$:/layout") === "$:/plugins/BTC/TiddlyFlex/ui/Layout" ? "$:/StoryList-1" : DEFAULT_STORY_TITLE),
+		historyList = $tw.wiki.getTiddlerData($tw.wiki.getTiddlerText("$:/layout") === "$:/plugins/BTC/TiddlyFlex/ui/Layout" ? "$:/HistoryList-1" : DEFAULT_HISTORY_TITLE,[]),
 		targetTiddler = "";
 	if(options.targetTiddler) {
 		targetTiddler = options.targetTiddler;
