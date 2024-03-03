@@ -199,8 +199,6 @@ Error message and password prompt
 
 <li>Keyboard Shortcuts</li>
 
-<li>New Tiddler</li>
-
 <li>Some Settings</li>
 
 <li>Star me on GitHub</li>
@@ -252,7 +250,7 @@ Error message and password prompt
 ,
 {"title":"$:/StoryList-1","text":"","list":"About Drag&Drop [[Ceci n’est pas une pipe.]]","revision":"1","bag":"default"}
 ,
-{"title":"$:/StoryList-2","created":"20240223125619775","list":"[[New Tiddler]] [[Filter the story lists]] [[Star me on GitHub]] [[Keyboard Shortcuts]] [[Tiddler Links]] [[Some Settings]] [[Headers & Footers]]","modified":"20240303185431594","type":"text/vnd.tiddlywiki","revision":"0","bag":"default"}
+{"title":"$:/StoryList-2","created":"20240223125619775","list":"[[Filter the story lists]] [[Star me on GitHub]] [[Keyboard Shortcuts]] [[Tiddler Links]] [[Some Settings]] [[Headers & Footers]]","modified":"20240303185431594","type":"text/vnd.tiddlywiki","revision":"0","bag":"default"}
 ,
 {"title":"$:/tags/TopRightBar","created":"20240223145232477","list":"[[Less columns!]] [[More columns!]] $:/core/ui/TopBar/menu","modified":"20240223145232477","type":"text/vnd.tiddlywiki","revision":"0","bag":"default"}
 ,
@@ -281,8 +279,6 @@ Error message and password prompt
 {"title":"Inspector","created":"20240225111034586","modified":"20240228034430308","tags":"Inspector $:/tags/SideBar","type":"text/vnd.tiddlywiki","text":"!!! Inspect the various Layout elements and functionalities\n\n\u003Chr>\n\n!!! Show the droppable widgets during the Drag&Drop process\n\n\u003C$button>\n\u003C%if [{$:/state/show-dragndrop-elements}match[yes]] %>\nHide\n\u003C$action-setfield $tiddler=\"$:/state/show-dragndrop-elements\" text=\"no\"/>\n\u003C% else %>\nShow\n\u003C$action-setfield $tiddler=\"$:/state/show-dragndrop-elements\" text=\"yes\"/>\n\u003C% endif %>\n\u003C/$button>\n\n\u003Chr>\n\n!!! See the tiddler title that's stored in the `current-tiddler` field of the current History List ({{{ [[$:/HistoryList-]addsuffix{$:/columns!!current-column}] }}}): \n\n!!! {{{ [[$:/HistoryList-]addsuffix{$:/columns!!current-column}get[current-tiddler]] }}}\n\n\u003Chr>\n\n!!! See the information stored in the tiddler $:/state/dragging while dragging a tiddler\n\n\u003C$list filter=\"[[$:/state/dragging]fields[]]\" variable=\"field\">\n\n\u003C$text text=\u003C\u003Cfield>>/>: \u003C$text text={{{ [[$:/state/dragging]get\u003Cfield>] }}}/>\n\n\u003C/$list>","revision":"0","bag":"default"}
 ,
 {"title":"Keyboard Shortcuts","created":"20240224173400990","modified":"20240225052003921","tags":"KeyboardShortcuts Functionality","type":"text/vnd.tiddlywiki","text":"\\define get-shortcut() (($(name)$))\n\u003C$list filter=\"[[$:/plugins/BTC/TiddlyFlex]plugintiddlers[]tag[$:/tags/KeyboardShortcut]]\" variable=\"keyboardShortcutTiddler\">\n\u003C$set name=\"name\" value={{{ [\u003CkeyboardShortcutTiddler>split[/]last[]] }}}>\n\u003C$wikify name=\"text\" text={{{ [[$:/config/ShortcutInfo/]addsuffix\u003Cname>get[text]] }}}>\n\u003C$text text=\u003C\u003Ctext>>/>: \u003C$macrocall $name=\"displayshortcuts\" $output=\"text/html\" shortcuts=\u003C\u003Cget-shortcut>> prefix=\"\u003Ckbd>\" separator=\"\u003C/kbd> \u003Ckbd>\" suffix=\"\u003C/kbd>\"/>\u003Cbr>\n\u003C/$wikify>\n\u003C/$set>\n\u003C/$list>","revision":"0","bag":"default"}
-,
-{"title":"New Tiddler","created":"20240303191822772","modified":"20240303194114063","tags":"","type":"text/vnd.tiddlywiki","text":"{{{ [subfilter\u003Ctdff.tiddlyflex-current-column-filtered>] }}}","revision":"0","bag":"default"}
 ,
 {"title":"Some Settings","created":"20240224140639804","modified":"20240228041130994","tags":"Configuration","type":"text/vnd.tiddlywiki","text":"~AnimationDuration for the Drag&Drop animations (in ms): \u003C$edit-text tag=\"input\" tiddler=\"$:/config/tiddlyflex/dragndrop/AnimationDuration\"/>\n\nSidebar Width: \u003C$edit-text tag=\"input\" tiddler=\"$:/config/tiddlyflex/sidebar/width\"/>\n\nMargin Bottom of Tiddlers: \u003C$edit-text tag=\"input\" tiddler=\"$:/config/tiddlyflex/story-river/tiddler/margin-bottom\"/>\n\nPadding of the Story Rivers: \u003C$edit-text tag=\"input\" tiddler=\"$:/config/tiddlyflex/story-river/padding\"/>\n\nRemove the top Toolbar: \u003C$checkbox tiddler=\"$:/plugins/BTC/TiddlyFlex/ui/Toolbars/TopToolbar\" tag=\"$:/tags/TopToolbar\"/>\n\nEnable that tiddlers in the Story River get filtered by the search input: \u003C$checkbox tiddler=\"$:/config/tiddlyflex/story-river/filter\" field=\"text\" checked=\"yes\" unchecked=\"no\"/>","revision":"0","bag":"default"}
 ,
