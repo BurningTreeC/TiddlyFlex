@@ -1,4 +1,5 @@
 title: $:/plugins/BTC/TiddlyFlex/ui/Templates/ViewTemplate
+code-body: yes
 
 \whitespace trim
 \define folded-state()
