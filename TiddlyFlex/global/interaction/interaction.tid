@@ -11,8 +11,8 @@ tags: $:/tags/Global
 	<<actions>>
 </$navigator>
 \end
-\procedure tiddlyflex-tm-message-actions(message)
-<$action-sendmessage $message=<<message>> $names={{{ [enlist<list-event>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] [enlist<list-event-paramObject>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}} $values={{{ [enlist<list-event>addprefix[event-]getvariable[]addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] [enlist<list-event-paramObject>addprefix[event-paramObject-]getvariable[]addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}}/>
+\procedure tiddlyflex-tm-message-actions(message,exclude)
+<$action-sendmessage $message=<<message>> $names={{{ [enlist<list-event>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] [enlist<list-event-paramObject>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] -[<exclude>] +[join[ ]] }}} $values={{{ [enlist<list-event>addprefix[event-]getvariable[]addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] [enlist<list-event-paramObject>addprefix[event-paramObject-]getvariable[]addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}}/>
 \end
 
 \procedure tiddlyflex-tm-cancel-tiddler-actions()
@@ -64,7 +64,7 @@ tags: $:/tags/Global
 <$macrocall $name="tiddlyflex-tm-message-navigator" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-new-tiddler-actions()
-\procedure actions() <<tiddlyflex-tm-message-actions tm-new-tiddler>>
+\procedure actions() <<tiddlyflex-tm-message-actions tm-new-tiddler tiddlerTitle>>
 <$macrocall $name="tiddlyflex-tm-message-navigator" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-perform-import-actions()
@@ -131,7 +131,7 @@ tags: $:/tags/Global
 <$macrocall $name="tiddlyflex-tm-message-navigator-outside" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-new-tiddler-actions-outside()
-\procedure actions() <<tiddlyflex-tm-message-actions tm-new-tiddler>>
+\procedure actions() <<tiddlyflex-tm-message-actions tm-new-tiddler tiddlerTitle>>
 <$macrocall $name="tiddlyflex-tm-message-navigator-outside" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-perform-import-actions-outside()
