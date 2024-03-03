@@ -28,16 +28,16 @@ title: $:/plugins/BTC/TiddlyFlex/privates/navigation
 <$set name="currentHistoryListTiddler" value={{{ [<historyList>get[current-tiddler]] }}}>
 	<%if [<tv-story-list>contains<currentHistoryListTiddler>] %>
 		<%if [subfilter<tdff.tiddlyflex-story-river-filter>] +[match<currentHistoryListTiddler>] %>
-			<$let nextTiddler=<<currentHistoryListTiddler>> cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
+			<$let currentColumn=<<nextColumn>> nextTiddler=<<currentHistoryListTiddler>> cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
 				<<tiddlyflex-cycle-columns-navigator-inner>>
 			</$let>
 		<% else %>
-			<$let nextTiddler={{{ [subfilter<tdff.tiddlyflex-story-river-filter>] +[nth[1]] }}} cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
+			<$let currentColumn=<<nextColumn>> nextTiddler={{{ [subfilter<tdff.tiddlyflex-story-river-filter>] +[nth[1]] }}} cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
 				<<tiddlyflex-cycle-columns-navigator-inner>>
 			</$let>
 		<% endif %>
 	<% elseif [<tv-story-list>!contains<currentHistoryListTiddler>] %>
-		<$let nextTiddler={{{ [subfilter<tdff.tiddlyflex-story-river-filter>] +[nth[1]] }}} cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
+		<$let currentColumn=<<nextColumn>> nextTiddler={{{ [subfilter<tdff.tiddlyflex-story-river-filter>] +[nth[1]] }}} cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
 			<<tiddlyflex-cycle-columns-navigator-inner>>
 		</$let>
 	<% endif %>
