@@ -1,14 +1,28 @@
 title: $:/plugins/BTC/TiddlyFlex/styles/misc
 tags: $:/tags/Stylesheet
 
-.tc-tiddlyflex-sidebar .tc-sidebar-header {
-	transition: none;
-}
+<%if [{$:/layout}match[$:/plugins/BTC/TiddlyFlex/ui/Layout]] %>
 
-.tc-tiddlyflex-top-toolbar .tc-show-sidebar-btn svg.tc-image-chevron-left, .tc-tiddlyflex-top-toolbar .tc-hide-sidebar-btn svg.tc-image-chevron-right {
-	transform: none;
-}
+	.tc-tiddlyflex-sidebar .tc-sidebar-header {
+		transition: none;
+	}
 
-.tc-modal-wrapper {
-	z-index: 999;
-}
+	.tc-tiddlyflex-top-toolbar .tc-show-sidebar-btn svg.tc-image-chevron-left, .tc-tiddlyflex-top-toolbar .tc-hide-sidebar-btn svg.tc-image-chevron-right {
+		transform: none;
+	}
+
+	.tc-modal-wrapper {
+		z-index: 999;
+	}
+
+	.tc-plugin-reload-warning {
+		position: relative;
+		padding-top: 15px;
+		padding-bottom: 15px;
+	}
+
+	.tc-plugin-reload-warning p {
+		margin: 0;
+	}
+
+<% endif %>
