@@ -23,7 +23,7 @@ $button$
 </$droppable>
 \end
 
-<$let currentColumn={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[[$:/columns]get[current-column]] ~[subfilter<tdff.tiddlyflex-enlist-columns>first[]] ~1 }}} tv-story-list={{{ [[$:/StoryList-]addsuffix<currentColumn>] }}} tv-history-list={{{ [[$:/HistoryList-]addsuffix<currentColumn>] }}}>
+\procedure tiddlyflex-sidebar-tab-open()
 <div class="tc-sidebar-tab-open">
 <$list filter="[list<tv-story-list>]" history=<<tv-history-list>> storyview="pop">
 <div class="tc-sidebar-tab-open-item">
@@ -36,4 +36,12 @@ $button$
 </div>
 </$tiddler>
 </div>
-</$let>
+\end
+
+<%if [{$:/layout}match[$:/plugins/BTC/TiddlyFlex/ui/Layout]] %>
+	<$let currentColumn={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[[$:/columns]get[current-column]] ~[subfilter<tdff.tiddlyflex-enlist-columns>first[]] ~1 }}} tv-story-list={{{ [[$:/StoryList-]addsuffix<currentColumn>] }}} tv-history-list={{{ [[$:/HistoryList-]addsuffix<currentColumn>] }}}>
+		<<tiddlyflex-sidebar-tab-open>>
+	</$let>
+<% else %>
+	<<tiddlyflex-sidebar-tab-open>>
+<% endif %>
