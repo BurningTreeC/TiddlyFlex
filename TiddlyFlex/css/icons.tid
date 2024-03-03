@@ -1,0 +1,21 @@
+title: $:/plugins/BTC/TiddlyFlex/styles/icons
+tags: $:/tags/Stylesheet
+
+svg.lucide.lucide-layout-dashboard {
+	stroke: <<colour foreground>>;
+	stroke-width: 3;
+}
+
+.tc-tiddlyflex-top-toolbar-right svg.lucide {
+	stroke: <<colour muted-foreground>>;
+	fill: none;
+}
+
+.tc-tiddlyflex-top-toolbar-right .tc-selected svg.lucide, .tc-tiddlyflex-top-toolbar-right .tc-btn-invisible:hover svg.lucide {
+	stroke: <<colour foreground>>;
+	fill: none;
+}
+
+.tc-tiddlyflex-top-toolbar-right .tc-selected svg.lucide.lucide-grip {
+	stroke: <<colour primary>>;
+}

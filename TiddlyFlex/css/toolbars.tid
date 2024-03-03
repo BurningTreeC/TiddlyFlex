@@ -45,14 +45,14 @@ tags: $:/tags/Stylesheet
 	vertical-align: bottom;
 }
 
-.tc-tiddlyflex-top-toolbar-right .tc-btn-invisible svg {
+.tc-tiddlyflex-top-toolbar-right .tc-btn-invisible svg:not(.lucide) {
 	fill: <<colour muted-foreground>>;
 	font-size: 1rem;
 	height: 1rem;
 	width: 1rem;
 }
 
-.tc-tiddlyflex-top-toolbar-right .tc-btn-invisible:hover svg, .tc-tiddlyflex-top-toolbar-right .tc-btn-invisible.tc-selected svg {
+.tc-tiddlyflex-top-toolbar-right .tc-btn-invisible:hover svg:not(.lucide), .tc-tiddlyflex-top-toolbar-right .tc-btn-invisible.tc-selected svg:not(.lucide) {
 	fill: <<colour foreground>>;
 }
 
@@ -60,18 +60,4 @@ tags: $:/tags/Stylesheet
 	-webkit-filter: drop-shadow(0px -1px 2px rgba(0,0,0,0.25));
 	-moz-filter: drop-shadow(0px -1px 2px rgba(0,0,0,0.25));
 	filter: drop-shadow(0px -1px 2px rgba(0,0,0,0.25));
-}
-
-.tc-tiddlyflex-top-toolbar-right svg.lucide {
-	stroke: <<colour muted-foreground>>;
-	fill: none;
-}
-
-.tc-tiddlyflex-top-toolbar-right .tc-selected svg.lucide, .tc-tiddlyflex-top-toolbar-right .tc-btn-invisible:hover svg.lucide {
-	stroke: <<colour foreground>>;
-	fill: none;
-}
-
-.tc-tiddlyflex-top-toolbar-right .tc-selected svg.lucide.lucide-grip {
-	stroke: <<colour primary>>;
 }
