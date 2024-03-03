@@ -44,7 +44,8 @@ title: $:/plugins/BTC/TiddlyFlex/privates/navigation
 </$set>
 \end
 \procedure tiddlyflex-multi-column-keyboard-navigator()
-<$let currentColumn={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-enlist-columns>first[]] }}} 
+<$let
+	currentColumn={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-enlist-columns>first[]] }}} 
 	tv-story-list={{{ [[$:/StoryList-]addsuffix<currentColumn>!match[$:/StoryList-]] ~$:/StoryList-1 }}}
 	tv-history-list={{{ [[$:/HistoryList-]addsuffix<currentColumn>!match[$:/HistoryList-]] ~$:/HistoryList-1 }}}
 	focusedTiddler={{{ [<tv-history-list>get[current-tiddler]] }}}
