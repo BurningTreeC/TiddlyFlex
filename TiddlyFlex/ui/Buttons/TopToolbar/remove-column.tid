@@ -2,6 +2,7 @@ title: $:/plugins/BTC/TiddlyFlex/ui/Buttons/TopToolbar/remove-column
 tags: $:/tags/TopRightBar
 list-before: $:/plugins/BTC/TiddlyFlex/ui/Buttons/TopToolbar/add-column
 
+\whitespace trim
 \procedure remove-column-actions()
 <$set name="columnCount" value={{{ [list[$:/columns]count[]] }}}>
 	<$list filter="[[$:/columns]get[current-column]match<columnCount>]">
@@ -12,9 +13,10 @@ list-before: $:/plugins/BTC/TiddlyFlex/ui/Buttons/TopToolbar/add-column
 	</$list>
 </$set>
 \end
-\whitespace trim
-<$let columns={{{ [list[$:/columns]count[]] ~1 }}}>
-	<$button class="tc-btn-invisible" actions=<<remove-column-actions>>>
-		{{$:/core/images/minus-button}}
-	</$button>
-</$let>
+<%if [function[tiddlyflex-layout]] %>
+	<$let columns={{{ [list[$:/columns]count[]] ~1 }}}>
+		<$button class="tc-btn-invisible" actions=<<remove-column-actions>>>
+			{{$:/core/images/minus-button}}
+		</$button>
+	</$let>
+<% endif %>

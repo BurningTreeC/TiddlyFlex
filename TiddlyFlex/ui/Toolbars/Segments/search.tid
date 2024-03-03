@@ -1,4 +1,7 @@
 title: $:/plugins/BTC/TiddlyFlex/ui/Toolbars/Segments/search
 tags: $:/tags/TopLeftBar
 
-{{$:/core/ui/SideBarSegments/search}}
+\whitespace trim
+<%if [function[tiddlyflex-layout]] %>
+	{{$:/core/ui/SideBarSegments/search}}
+<% endif %>
