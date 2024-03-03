@@ -35,6 +35,13 @@
 				"title": "$:/core/modules/keyboard.js",
 				"module-type": "global"
 			}
+		},{
+			"file": "modules/startup/story.js",
+			"fields": {
+				"type": "application/javascript",
+				"title": "$:/core/modules/startup/story.js",
+				"module-type": "startup"
+			}
 		}
 	]
 }
