@@ -132,6 +132,10 @@ tags: $:/tags/Global
 				<$set name="firstStoryTiddler" value={{{ [list<tv-story-list>nth[1]] }}}>
 					<$action-listops $tiddler=<<tv-story-list>> $subfilter="+[insertbefore<actionTiddler>,<firstStoryTiddler>]"/>
 				</$set>
+			<% elseif [{$:/config/tiddlyflex/story-river/filter}match[yes]] %>
+				<$let lastShownTiddler={{{ [subfilter<tdff.tiddlyflex-story-river-filter>] +[last[]] }}} insertBeforeTiddler={{{ [list<tv-story-list>after<lastShownTiddler>] }}}>
+					<$action-listops $tiddler=<<tv-story-list>> $subfilter="+[insertbefore<actionTiddler>,<insertBeforeTiddler>]"/>
+				</$let>
 			<% else %>
 				<$action-listops $tiddler=<<tv-story-list>> $subfilter="[<actionTiddler>]"/>
 			<% endif %>
@@ -141,6 +145,10 @@ tags: $:/tags/Global
 			<$set name="firstStoryTiddler" value={{{ [list<tv-story-list>nth[1]] }}}>
 				<$action-listops $tiddler=<<tv-story-list>> $subfilter="+[insertbefore<actionTiddler>,<firstStoryTiddler>]"/>
 			</$set>
+		<% elseif [{$:/config/tiddlyflex/story-river/filter}match[yes]] %>
+			<$let lastShownTiddler={{{ [subfilter<tdff.tiddlyflex-story-river-filter>] +[last[]] }}} insertBeforeTiddler={{{ [list<tv-story-list>after<lastShownTiddler>] }}}>
+				<$action-listops $tiddler=<<tv-story-list>> $subfilter="+[insertbefore<actionTiddler>,<insertBeforeTiddler>]"/>
+			</$let>
 		<% else %>
 			<$action-listops $tiddler=<<tv-story-list>> $subfilter="[<actionTiddler>]"/>
 		<% endif %>
