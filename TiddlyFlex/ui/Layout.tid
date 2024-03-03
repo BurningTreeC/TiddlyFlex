@@ -8,28 +8,54 @@ code-body: yes
 \whitespace trim
 \import [subfilter{$:/core/config/GlobalImportFilter}]
 \procedure tiddlyflex-hide-sidebar-actions() <$action-setfield $tiddler="$:/state/sidebar" text="no"/>
-\procedure tdfp-tiddlyflex-story-river()
+\procedure tiddlyflex-layout-story()
+<div class="tc-tiddlyflex-story-river-wrapper">
+	<div class="tc-tiddlyflex-story-river-header">
+		<$set name="aboveStoryHeaderTag" value={{{ [[$:/tags/AboveStoryHeader-]addsuffix<tiddlyFlexColumn>] }}}>
+			<$list filter="[all[shadows+tiddlers]tag<aboveStoryHeaderTag>!is[draft]]" variable="listItem" storyview="pop">
+				<$transclude tiddler=<<listItem>>/>
+			</$list>
+		</$set>
+	</div>
+	<$transclude tiddler="$:/plugins/BTC/TiddlyFlex/ui/Templates/story"/>
+	<div class="tc-tiddlyflex-story-river-footer">
+		<$set name="belowStoryFooterTag" value={{{ [[$:/tags/BelowStoryFooter-]addsuffix<tiddlyFlexColumn>] }}}>
+			<$list filter="[all[shadows+tiddlers]tag<belowStoryFooterTag>!is[draft]]" variable="listItem" storyview="pop">
+				<$transclude tiddler=<<listItem>>/>
+			</$list>
+		</$set>
+	</div>
+</div>
+\end
+\procedure tiddlyflex-layout-story-rivers()
 <$list filter=<<tdff.tiddlyflex-enlist-columns>> variable="tiddlyFlexColumn">
 	<$set name="transclusion" value=<<tiddlyFlexColumn>>>
-		<div class="tc-tiddlyflex-story-river-wrapper">
-			<div class="tc-tiddlyflex-story-river-header">
-				<$set name="aboveStoryHeaderTag" value={{{ [[$:/tags/AboveStoryHeader-]addsuffix<tiddlyFlexColumn>] }}}>
-					<$list filter="[all[shadows+tiddlers]tag<aboveStoryHeaderTag>!is[draft]]" variable="listItem" storyview="pop">
-						<$transclude tiddler=<<listItem>>/>
-					</$list>
-				</$set>
-			</div>
-			<$transclude tiddler="$:/plugins/BTC/TiddlyFlex/ui/Templates/story"/>
-			<div class="tc-tiddlyflex-story-river-footer">
-				<$set name="belowStoryFooterTag" value={{{ [[$:/tags/BelowStoryFooter-]addsuffix<tiddlyFlexColumn>] }}}>
-					<$list filter="[all[shadows+tiddlers]tag<belowStoryFooterTag>!is[draft]]" variable="listItem" storyview="pop">
-						<$transclude tiddler=<<listItem>>/>
-					</$list>
-				</$set>
-			</div>
-		</div>
+		<$vars tv-story-list={{{ [[$:/StoryList-]addsuffix<tiddlyFlexColumn>] }}} tv-history-list={{{ [[$:/HistoryList-]addsuffix<tiddlyFlexColumn>] }}} openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromOutsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
+			<$macrocall $name="tiddlyflex-message-catcher" tiddlyflex-layout-inner=<<tiddlyflex-layout-story>>/>
+		</$vars>
 	</$set>
 </$list>
+\end
+\procedure tiddlyflex-layout-header()
+<div class="tc-tiddlyflex-header">
+	<$list filter="[{$:/status/RequireReloadDueToPluginChange}match[yes]then{$:/temp/HidePluginWarning}!match[yes]then[$:/plugins/BTC/TiddlyFlex/ui/Toolbars/PluginReloadWarning]] [all[shadows+tiddlers]tag[$:/tags/TopToolbar]!is[draft]]" variable="listItem" storyview="pop">
+		<$transclude tiddler=<<listItem>>/>
+	</$list>
+</div>
+\end
+\procedure tiddlyflex-layout-leftbar()
+<div class="tc-tiddlyflex-leftbar">
+	<$list filter="[all[shadows+tiddlers]tag[$:/tags/LeftToolbar]!is[draft]]" variable="listItem" storyview="pop">
+		<$transclude tiddler=<<listItem>>/>
+	</$list>
+</div>
+\end
+\procedure tiddlyflex-layout-footer()
+<div class="tc-tiddlyflex-footer">
+	<$list filter="[all[shadows+tiddlers]tag[$:/tags/BottomToolbar]!is[draft]]" variable="listItem" storyview="pop">
+		<$transclude tiddler=<<listItem>>/>
+	</$list>
+</div>
 \end
 <$vars
 	tv-config-toolbar-icons={{$:/config/Toolbar/Icons}}
@@ -43,91 +69,24 @@ code-body: yes
 		<$eventcatcher selector=".tc-tiddlyflex-sidebar-shown" $click=<<tiddlyflex-hide-sidebar-actions>> class="tc-tiddlyflex-sidebar-shown-eventcatcher">
 			<div class={{{ [{$:/state/sidebar}!match[no]then[tc-tiddlyflex-sidebar-hide tc-btn-invisible tc-tiddlyflex-sidebar-shown]] [{$:/state/sidebar}match[no]then[tc-tiddlyflex-sidebar-hide tc-btn-invisible tc-tiddlyflex-sidebar-hidden]] }}}/>
 		</$eventcatcher>
-		<$messagecatcher
-			$tm-cancel-tiddler=<<tiddlyflex-tm-cancel-tiddler-actions-outside>>
-			$tm-close-all-tiddlers=<<tiddlyflex-tm-close-all-tiddlers-actions-outside>>
-			$tm-close-other-tiddlers=<<tiddlyflex-tm-close-other-tiddlers-actions-outside>>
-			$tm-close-tiddler=<<tiddlyflex-tm-close-tiddler-actions-outside>>
-			$tm-delete-tiddler=<<tiddlyflex-tm-delete-tiddler-actions-outside>>
-			$tm-edit-tiddler=<<tiddlyflex-tm-edit-tiddler-actions-outside>>
-			$tm-fold-all-tiddlers=<<tiddlyflex-tm-fold-all-tiddlers-actions-outside>>
-			$tm-fold-other-tiddlers=<<tiddlyflex-tm-fold-other-tiddlers-actions-outside>>
-			$tm-fold-tiddler=<<tiddlyflex-tm-fold-tiddler-actions-outside>>
-			$tm-home=<<tiddlyflex-tm-home-actions-outside>>
-			$tm-navigate=<<tiddlyflex-tm-navigate-actions-outside>>
-			$tm-new-tiddler=<<tiddlyflex-tm-new-tiddler-actions-outside>>
-			$tm-perform-import=<<tiddlyflex-tm-perform-import-actions-outside>>
-			$tm-save-tiddler=<<tiddlyflex-tm-save-tiddler-actions-outside>>
-			$tm-unfold-all-tiddlers=<<tiddlyflex-tm-unfold-all-tiddlers-actions-outside>>>
-			<div class="tc-tiddlyflex-header">
-				<$list filter="[{$:/status/RequireReloadDueToPluginChange}match[yes]then{$:/temp/HidePluginWarning}!match[yes]then[$:/plugins/BTC/TiddlyFlex/ui/Toolbars/PluginReloadWarning]] [all[shadows+tiddlers]tag[$:/tags/TopToolbar]!is[draft]]" variable="listItem" storyview="pop">
-					<$transclude tiddler=<<listItem>>/>
-				</$list>
-			</div>
-		</$messagecatcher>
+		<$macrocall $name="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner=<<tiddlyflex-layout-header>>/>
 		<div class="tc-tiddlyflex-main-wrapper">
-			<$set name="excludeColumnsSubfilter" value=<<tiddlyflex-exclude-columns>>>
-				<$messagecatcher
-					$tm-cancel-tiddler=<<tiddlyflex-tm-cancel-tiddler-actions-outside>>
-					$tm-close-all-tiddlers=<<tiddlyflex-tm-close-all-tiddlers-actions-outside>>
-					$tm-close-other-tiddlers=<<tiddlyflex-tm-close-other-tiddlers-actions-outside>>
-					$tm-close-tiddler=<<tiddlyflex-tm-close-tiddler-actions-outside>>
-					$tm-delete-tiddler=<<tiddlyflex-tm-delete-tiddler-actions-outside>>
-					$tm-edit-tiddler=<<tiddlyflex-tm-edit-tiddler-actions-outside>>
-					$tm-fold-all-tiddlers=<<tiddlyflex-tm-fold-all-tiddlers-actions-outside>>
-					$tm-fold-other-tiddlers=<<tiddlyflex-tm-fold-other-tiddlers-actions-outside>>
-					$tm-fold-tiddler=<<tiddlyflex-tm-fold-tiddler-actions-outside>>
-					$tm-home=<<tiddlyflex-tm-home-actions-outside>>
-					$tm-navigate=<<tiddlyflex-tm-navigate-actions-outside>>
-					$tm-new-tiddler=<<tiddlyflex-tm-new-tiddler-actions-outside>>
-					$tm-perform-import=<<tiddlyflex-tm-perform-import-actions-outside>>
-					$tm-save-tiddler=<<tiddlyflex-tm-save-tiddler-actions-outside>>
-					$tm-unfold-all-tiddlers=<<tiddlyflex-tm-unfold-all-tiddlers-actions-outside>>>
-					<div class="tc-tiddlyflex-leftbar">
-						<$list filter="[all[shadows+tiddlers]tag[$:/tags/LeftToolbar]!is[draft]]" variable="listItem" storyview="pop">
-							<$transclude tiddler=<<listItem>>/>
-						</$list>
-					</div>
-				</$messagecatcher>
-			</$set>
+			<$macrocall $name="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner=<<tiddlyflex-layout-leftbar>>/>
 			<main class="tc-tiddlyflex-main">
 				<div class="tc-tiddlyflex-story-river-container">
 					<div class="tc-tiddlyflex-story-river-container-inner">
-						<<tdfp-tiddlyflex-story-river>>
+						<<tiddlyflex-layout-story-rivers>>
 					</div>
 				</div>
 				<div class="tc-tiddlyflex-sidebar">
 					<div class="tc-tiddlyflex-sidebar-container">
 						<div class="tc-tiddlyflex-sidebar-container-inner">
-							<$set name="excludeColumnsSubfilter" value=<<tiddlyflex-exclude-columns>>>
-								{{$:/plugins/BTC/TiddlyFlex/ui/Templates/sidebar}}
-							</$set>
+							{{$:/plugins/BTC/TiddlyFlex/ui/Templates/sidebar}}
 						</div>
 					</div>
 				</div>
 			</main>
 		</div>
-		<$messagecatcher
-			$tm-cancel-tiddler=<<tiddlyflex-tm-cancel-tiddler-actions-outside>>
-			$tm-close-all-tiddlers=<<tiddlyflex-tm-close-all-tiddlers-actions-outside>>
-			$tm-close-other-tiddlers=<<tiddlyflex-tm-close-other-tiddlers-actions-outside>>
-			$tm-close-tiddler=<<tiddlyflex-tm-close-tiddler-actions-outside>>
-			$tm-delete-tiddler=<<tiddlyflex-tm-delete-tiddler-actions-outside>>
-			$tm-edit-tiddler=<<tiddlyflex-tm-edit-tiddler-actions-outside>>
-			$tm-fold-all-tiddlers=<<tiddlyflex-tm-fold-all-tiddlers-actions-outside>>
-			$tm-fold-other-tiddlers=<<tiddlyflex-tm-fold-other-tiddlers-actions-outside>>
-			$tm-fold-tiddler=<<tiddlyflex-tm-fold-tiddler-actions-outside>>
-			$tm-home=<<tiddlyflex-tm-home-actions-outside>>
-			$tm-navigate=<<tiddlyflex-tm-navigate-actions-outside>>
-			$tm-new-tiddler=<<tiddlyflex-tm-new-tiddler-actions-outside>>
-			$tm-perform-import=<<tiddlyflex-tm-perform-import-actions-outside>>
-			$tm-save-tiddler=<<tiddlyflex-tm-save-tiddler-actions-outside>>
-			$tm-unfold-all-tiddlers=<<tiddlyflex-tm-unfold-all-tiddlers-actions-outside>>>
-			<div class="tc-tiddlyflex-footer">
-				<$list filter="[all[shadows+tiddlers]tag[$:/tags/BottomToolbar]!is[draft]]" variable="listItem" storyview="pop">
-					<$transclude tiddler=<<listItem>>/>
-				</$list>
-			</div>
-		</$messagecatcher>
+		<$macrocall $name="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner=<<tiddlyflex-layout-footer>>/>
 	</div>
 </$vars>

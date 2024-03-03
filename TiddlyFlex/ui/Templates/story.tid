@@ -15,89 +15,62 @@ code-body: yes
 \end
 <div class={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-enlist-columns>first[]] +[match<tiddlyFlexColumn>then[tc-tiddlyflex-story-river-active]] [[tc-tiddlyflex-story-river-wrapper-inner]] [[tc-tiddlyflex-story-river-]addsuffix<tiddlyFlexColumn>] :and[unique[]join[ ]] }}}>
 
-	<$vars tv-story-list={{{ [[$:/StoryList-]addsuffix<tiddlyFlexColumn>] }}} tv-history-list={{{ [[$:/HistoryList-]addsuffix<tiddlyFlexColumn>] }}} openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromOutsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
+	<$dropzone enable=<<tv-enable-drag-and-drop>> class={{{ [<tiddlyFlexColumn>!is[blank]addprefix[tc-tiddlyflex-dropzone-]] ~tc-tiddlyflex-dropzone-1 }}} importTitle={{{ [[$:/Import-]addsuffix<tiddlyFlexColumn>] }}}>
 
-		<$messagecatcher $tm-import-tiddlers=<<tiddlyflex-tm-import-tiddlers-actions>>>
+		<$eventcatcher selector=".tc-tiddlyflex-activate-column" $click=<<tiddlyflex-activate-column-actions>> class="tc-tiddlyflex-active-column-wrapper">
 
-			<$dropzone enable=<<tv-enable-drag-and-drop>> class={{{ [<tiddlyFlexColumn>!is[blank]addprefix[tc-tiddlyflex-dropzone-]] ~tc-tiddlyflex-dropzone-1 }}} importTitle={{{ [[$:/Import-]addsuffix<tiddlyFlexColumn>] }}}>
+			<a class="tc-btn-invisible tc-tiddlyflex-activate-column"/>
 
-				<$eventcatcher selector=".tc-tiddlyflex-activate-column" $click=<<tiddlyflex-activate-column-actions>> class="tc-tiddlyflex-active-column-wrapper">
+		</$eventcatcher>
 
-					<a class="tc-btn-invisible tc-tiddlyflex-activate-column"/>
+		<section class="tc-tiddlyflex-story-river" role="main">
 
-				</$eventcatcher>
+			<section class="story-backdrop">
 
-				<section class="tc-tiddlyflex-story-river" role="main">
+				<$set name="aboveStoryTag" value={{{ [[$:/tags/AboveStory-]addsuffix<tiddlyFlexColumn>] }}}>
 
-					<$messagecatcher
-						$tm-cancel-tiddler=<<tiddlyflex-tm-cancel-tiddler-actions>>
-						$tm-close-all-tiddlers=<<tiddlyflex-tm-close-all-tiddlers-actions>>
-						$tm-close-other-tiddlers=<<tiddlyflex-tm-close-other-tiddlers-actions>>
-						$tm-close-tiddler=<<tiddlyflex-tm-close-tiddler-actions>>
-						$tm-delete-tiddler=<<tiddlyflex-tm-delete-tiddler-actions>>
-						$tm-edit-tiddler=<<tiddlyflex-tm-edit-tiddler-actions>>
-						$tm-fold-all-tiddlers=<<tiddlyflex-tm-fold-all-tiddlers-actions>>
-						$tm-fold-other-tiddlers=<<tiddlyflex-tm-fold-other-tiddlers-actions>>
-						$tm-fold-tiddler=<<tiddlyflex-tm-fold-tiddler-actions>>
-						$tm-home=<<tiddlyflex-tm-home-actions>>
-						$tm-navigate=<<tiddlyflex-tm-navigate-actions>>
-						$tm-new-tiddler=<<tiddlyflex-tm-new-tiddler-actions>>
-						$tm-perform-import=<<tiddlyflex-tm-perform-import-actions>>
-						$tm-save-tiddler=<<tiddlyflex-tm-save-tiddler-actions>>
-						$tm-unfold-all-tiddlers=<<tiddlyflex-tm-unfold-all-tiddlers-actions>>>
+					<$list filter="[all[shadows+tiddlers]tag<aboveStoryTag>!is[draft]]">
 
-						<section class="story-backdrop">
+						<$transclude/>
 
-							<$set name="aboveStoryTag" value={{{ [[$:/tags/AboveStory-]addsuffix<tiddlyFlexColumn>] }}}>
+					</$list>
 
-								<$list filter="[all[shadows+tiddlers]tag<aboveStoryTag>!is[draft]]">
+				</$set>
 
-									<$transclude/>
+			</section>
 
-								</$list>
+			<section class="tc-tiddlyflex-story-river-inner">
 
-							</$set>
+				<$set name="emptyMessageTiddler" value={{{ [[$:/config/EmptyStoryMessage-]addsuffix<tiddlyFlexColumn>] }}}>
 
-						</section>
+					<<tiddlyflex-filtered-story-list>>
 
-						<section class="tc-tiddlyflex-story-river-inner">
+				</$set>
 
-							<$set name="emptyMessageTiddler" value={{{ [[$:/config/EmptyStoryMessage-]addsuffix<tiddlyFlexColumn>] }}}>
+				<%if [{$:/state/dragging}match[yes]] %>
 
-								<<tiddlyflex-filtered-story-list>>
+					<$droppable class="tc-tiddlyflex-below-story-river-droppable" actions=<<tiddlyflex-story-droppable-drop-actions>> dragenteractions=<<tiddlyflex-story-droppable-dragenter-actions>>/>
 
-							</$set>
+				<% endif %>
 
-							<%if [{$:/state/dragging}match[yes]] %>
+			</section>
 
-								<$droppable class="tc-tiddlyflex-below-story-river-droppable" actions=<<tiddlyflex-story-droppable-drop-actions>> dragenteractions=<<tiddlyflex-story-droppable-dragenter-actions>>/>
+			<section class="story-frontdrop">
 
-							<% endif %>
+				<$set name="belowStoryTag" value={{{ [[$:/tags/BelowStory-]addsuffix<tiddlyFlexColumn>] }}}>
 
-						</section>
+					<$list filter="[all[shadows+tiddlers]tag<belowStoryTag>!is[draft]]">
 
-						<section class="story-frontdrop">
+						<$transclude/>
 
-							<$set name="belowStoryTag" value={{{ [[$:/tags/BelowStory-]addsuffix<tiddlyFlexColumn>] }}}>
+					</$list>
 
-								<$list filter="[all[shadows+tiddlers]tag<belowStoryTag>!is[draft]]">
+				</$set>
 
-									<$transclude/>
+			</section>
 
-								</$list>
+		</section>
 
-							</$set>
-
-						</section>
-
-					</$messagecatcher>
-
-				</section>
-
-			</$dropzone>
-
-		</$messagecatcher>
-
-	</$vars>
+	</$dropzone>
 
 </div>

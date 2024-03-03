@@ -8,7 +8,8 @@ $:/config/SideBarSegments/Visibility/$(listItem)$
 \function tiddlyflex-current-column() [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-enlist-columns>first[]]
 <div class="tc-tiddlyflex-sidebar-scrollable">
 
-	<$messagecatcher $tm-cancel-tiddler=<<tiddlyflex-tm-cancel-tiddler-actions-outside>>
+	<$messagecatcher
+		$tm-cancel-tiddler=<<tiddlyflex-tm-cancel-tiddler-actions-outside>>
 		$tm-close-all-tiddlers=<<tiddlyflex-tm-close-all-tiddlers-actions-outside>>
 		$tm-close-other-tiddlers=<<tiddlyflex-tm-close-other-tiddlers-actions-outside>>
 		$tm-close-tiddler=<<tiddlyflex-tm-close-tiddler-actions-outside>>
@@ -18,6 +19,7 @@ $:/config/SideBarSegments/Visibility/$(listItem)$
 		$tm-fold-other-tiddlers=<<tiddlyflex-tm-fold-other-tiddlers-actions-outside>>
 		$tm-fold-tiddler=<<tiddlyflex-tm-fold-tiddler-actions-outside>>
 		$tm-home=<<tiddlyflex-tm-home-actions-outside>>
+		$tm-import-tiddlers=<<tiddlyflex-tm-import-tiddlers-actions-outside>>
 		$tm-navigate=<<tiddlyflex-tm-navigate-actions-outside>>
 		$tm-new-tiddler=<<tiddlyflex-tm-new-tiddler-actions-outside>>
 		$tm-perform-import=<<tiddlyflex-tm-perform-import-actions-outside>>
