@@ -4,7 +4,7 @@ list-before: $:/plugins/BTC/TiddlyFlex/ui/Buttons/TopToolbar/remove-column
 
 \whitespace trim
 <$button class={{{ tc-btn-invisible [{$:/config/tiddlyflex/story-river/tiddler/drag-enabled}match[yes]then[tc-selected]] +[join[ ]] }}}>
-	{{$:/plugins/BTC/TiddlyFlex/icons/feather}}
+	{{$:/plugins/BTC/TiddlyFlex/icons/drag-grip}}
 	<%if [{$:/config/tiddlyflex/story-river/tiddler/drag-enabled}match[no]] %>
 		<$action-setfield $tiddler="$:/config/tiddlyflex/story-river/tiddler/drag-enabled" text="yes"/>
 	<% else %>

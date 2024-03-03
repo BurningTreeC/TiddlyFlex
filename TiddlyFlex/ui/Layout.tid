@@ -2,6 +2,7 @@ title: $:/plugins/BTC/TiddlyFlex/ui/Layout
 tags: $:/tags/Layout
 description: A Flexbox Layout
 name: ~TiddlyFlex
+icon: $:/plugins/BTC/TiddlyFlex/icons/layout
 code-body: yes
 
 \whitespace trim
