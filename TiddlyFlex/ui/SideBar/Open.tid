@@ -1,4 +1,5 @@
 title: $:/core/ui/SideBar/Open
+tags: $:/tags/SideBar
 caption: {{$:/language/SideBar/Open/Caption}}
 
 \whitespace trim
