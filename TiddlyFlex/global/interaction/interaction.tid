@@ -17,6 +17,10 @@ tags: $:/tags/Global
 	names-event-paramObject={{{ [enlist<list-event-paramObject>] -[enlist<exclude>] :map:flat[addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}}
 	values-event={{{ [enlist<list-event>] -[enlist<exclude>] :map:flat[addprefix[event-]getvariable[]addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}}
 	values-event-paramObject={{{ [enlist<list-event-paramObject>] -[enlist<exclude>] :map:flat[addprefix[event-paramObject-]getvariable[]addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}}>
+	<!--<$action-log names-event=<<names-event>>/>
+	<$action-log values-event=<<values-event>>/>
+	<$action-log names-event-paramObject=<<names-event-paramObject>>/>
+	<$action-log values-event-paramObject=<<values-event-paramObject>>/>-->
 	<$action-sendmessage $message=<<message>> $param=<<event-param>> $names={{{ [enlist<names-event>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] [enlist<names-event-paramObject>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}} $values={{{ [enlist<values-event>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] [enlist<values-event-paramObject>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}}/>
 </$let>
 \end
@@ -78,7 +82,7 @@ tags: $:/tags/Global
 <$macrocall $name="tiddlyflex-tm-message-navigator" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-save-tiddler-actions()
-\procedure actions() <<tiddlyflex-tm-message-actions tm-save-tiddler "param">
+\procedure actions() <<tiddlyflex-tm-message-actions tm-save-tiddler "param">>
 <$macrocall $name="tiddlyflex-tm-message-navigator" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-unfold-all-tiddlers-actions()
