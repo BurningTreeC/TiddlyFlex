@@ -38,7 +38,7 @@ $button$
 </div>
 \end
 
-<%if [{$:/layout}match[$:/plugins/BTC/TiddlyFlex/ui/Layout]] %>
+<%if [function[tiddlyflex-layout]] %>
 	<$let currentColumn={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[[$:/columns]get[current-column]] ~[subfilter<tdff.tiddlyflex-enlist-columns>first[]] ~1 }}} tv-story-list={{{ [[$:/StoryList-]addsuffix<currentColumn>] }}} tv-history-list={{{ [[$:/HistoryList-]addsuffix<currentColumn>] }}}>
 		<<tiddlyflex-sidebar-tab-open>>
 	</$let>
