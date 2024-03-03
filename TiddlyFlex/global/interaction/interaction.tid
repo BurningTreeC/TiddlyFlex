@@ -12,43 +12,49 @@ tags: $:/tags/Global
 </$navigator>
 \end
 \procedure tiddlyflex-tm-message-actions(message,exclude)
-<$action-sendmessage $message=<<message>> $names={{{ [enlist<list-event>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] [enlist<list-event-paramObject>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] -[<exclude>] +[join[ ]] }}} $values={{{ [enlist<list-event>addprefix[event-]getvariable[]addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] [enlist<list-event-paramObject>addprefix[event-paramObject-]getvariable[]addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}}/>
+<$let
+	names-event={{{ [enlist<list-event>] -[enlist<exclude>] :map:flat[addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}}
+	names-event-paramObject={{{ [enlist<list-event-paramObject>] -[enlist<exclude>] :map:flat[addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}}
+	values-event={{{ [enlist<list-event>] -[enlist<exclude>] :map:flat[addprefix[event-]getvariable[]addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}}
+	values-event-paramObject={{{ [enlist<list-event-paramObject>] -[enlist<exclude>] :map:flat[addprefix[event-paramObject-]getvariable[]addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}}>
+	<$action-sendmessage $message=<<message>> $param=<<event-param>> $names={{{ [enlist<names-event>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] [enlist<names-event-paramObject>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}} $values={{{ [enlist<values-event>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] [enlist<values-event-paramObject>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}}/>
+</$let>
 \end
 
 \procedure tiddlyflex-tm-cancel-tiddler-actions()
-\procedure actions() <<tiddlyflex-tm-message-actions tm-cancel-tiddler>>
+\procedure actions() <<tiddlyflex-tm-message-actions tm-cancel-tiddler "param">>
 <$macrocall $name="tiddlyflex-tm-message-navigator" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-close-all-tiddlers-actions()
-\procedure actions() <<tiddlyflex-tm-message-actions tm-close-all-tiddlers>>
+\procedure actions() <<tiddlyflex-tm-message-actions tm-close-all-tiddlers "param">>
 <$macrocall $name="tiddlyflex-tm-message-navigator" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-close-other-tiddlers-actions()
-\procedure actions() <<tiddlyflex-tm-message-actions tm-close-other-tiddlers>>
+\procedure actions() <<tiddlyflex-tm-message-actions tm-close-other-tiddlers "param">>
 <$macrocall $name="tiddlyflex-tm-message-navigator" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-close-tiddler-actions()
-\procedure actions() <<tiddlyflex-tm-message-actions tm-close-tiddler>>
+\procedure actions() <<tiddlyflex-tm-message-actions tm-close-tiddler "param">>
 <$macrocall $name="tiddlyflex-tm-message-navigator" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-delete-tiddler-actions()
-\procedure actions() <<tiddlyflex-tm-message-actions tm-delete-tiddler>>
+\procedure actions() <<tiddlyflex-tm-message-actions tm-delete-tiddler "param">>
 <$macrocall $name="tiddlyflex-tm-message-navigator" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-edit-tiddler-actions()
-\procedure actions() <<tiddlyflex-tm-message-actions tm-edit-tiddler>>
+\procedure actions() <<tiddlyflex-tm-message-actions tm-edit-tiddler "param">>
 <$macrocall $name="tiddlyflex-tm-message-navigator" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-fold-all-tiddlers-actions()
-\procedure actions() <<tiddlyflex-tm-message-actions tm-fold-all-tiddlers>>
+\procedure actions() <<tiddlyflex-tm-message-actions tm-fold-all-tiddlers "param">>
 <$macrocall $name="tiddlyflex-tm-message-navigator" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-fold-other-tiddlers-actions()
-\procedure actions() <<tiddlyflex-tm-message-actions tm-fold-other-tiddlers>>
+\procedure actions() <<tiddlyflex-tm-message-actions tm-fold-other-tiddlers "param">>
 <$macrocall $name="tiddlyflex-tm-message-navigator" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-fold-tiddler-actions()
-\procedure actions() <<tiddlyflex-tm-message-actions tm-fold-tiddler>>
+\procedure actions() <<tiddlyflex-tm-message-actions tm-fold-tiddler "param">>
 <$macrocall $name="tiddlyflex-tm-message-navigator" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-home-actions()
@@ -60,60 +66,60 @@ tags: $:/tags/Global
 <$macrocall $name="tiddlyflex-tm-message-navigator" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-import-tiddlers-actions()
-\procedure actions() <<tiddlyflex-tm-message-actions tm-import-tiddlers>>
+\procedure actions() <<tiddlyflex-tm-message-actions tm-import-tiddlers "param">>
 <$macrocall $name="tiddlyflex-tm-message-navigator" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-new-tiddler-actions()
-\procedure actions() <<tiddlyflex-tm-message-actions tm-new-tiddler tiddlerTitle>>
+\procedure actions() <<tiddlyflex-tm-message-actions tm-new-tiddler "tiddlerTitle type param">>
 <$macrocall $name="tiddlyflex-tm-message-navigator" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-perform-import-actions()
-\procedure actions() <<tiddlyflex-tm-message-actions tm-perform-import>>
+\procedure actions() <<tiddlyflex-tm-message-actions tm-perform-import "param">>
 <$macrocall $name="tiddlyflex-tm-message-navigator" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-save-tiddler-actions()
-\procedure actions() <<tiddlyflex-tm-message-actions tm-save-tiddler>>
+\procedure actions() <<tiddlyflex-tm-message-actions tm-save-tiddler "param">
 <$macrocall $name="tiddlyflex-tm-message-navigator" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-unfold-all-tiddlers-actions()
-\procedure actions() <<tiddlyflex-tm-message-actions tm-unfold-all-tiddlers>>
+\procedure actions() <<tiddlyflex-tm-message-actions tm-unfold-all-tiddlers "param">>
 <$macrocall $name="tiddlyflex-tm-message-navigator" actions=<<actions>>/>
 \end
 
 \procedure tiddlyflex-tm-cancel-tiddler-actions-outside()
-\procedure actions() <<tiddlyflex-tm-message-actions tm-cancel-tiddler>>
+\procedure actions() <<tiddlyflex-tm-message-actions tm-cancel-tiddler "param">>
 <$macrocall $name="tiddlyflex-tm-message-navigator-outside" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-close-all-tiddlers-actions-outside()
-\procedure actions() <<tiddlyflex-tm-message-actions tm-close-all-tiddlers>>
+\procedure actions() <<tiddlyflex-tm-message-actions tm-close-all-tiddlers "param">>
 <$macrocall $name="tiddlyflex-tm-message-navigator-outside" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-close-other-tiddlers-actions-outside()
-\procedure actions() <<tiddlyflex-tm-message-actions tm-close-other-tiddlers>>
+\procedure actions() <<tiddlyflex-tm-message-actions tm-close-other-tiddlers "param">>
 <$macrocall $name="tiddlyflex-tm-message-navigator-outside" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-close-tiddler-actions-outside()
-\procedure actions() <<tiddlyflex-tm-message-actions tm-close-tiddler>>
+\procedure actions() <<tiddlyflex-tm-message-actions tm-close-tiddler "param">>
 <$macrocall $name="tiddlyflex-tm-message-navigator-outside" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-delete-tiddler-actions-outside()
-\procedure actions() <<tiddlyflex-tm-message-actions tm-delete-tiddler>>
+\procedure actions() <<tiddlyflex-tm-message-actions tm-delete-tiddler "param">>
 <$macrocall $name="tiddlyflex-tm-message-navigator-outside" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-edit-tiddler-actions-outside()
-\procedure actions() <<tiddlyflex-tm-message-actions tm-edit-tiddler>>
+\procedure actions() <<tiddlyflex-tm-message-actions tm-edit-tiddler "param">>
 <$macrocall $name="tiddlyflex-tm-message-navigator-outside" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-fold-all-tiddlers-actions-outside()
-\procedure actions() <<tiddlyflex-tm-message-actions tm-fold-all-tiddlers>>
+\procedure actions() <<tiddlyflex-tm-message-actions tm-fold-all-tiddlers "param">>
 <$macrocall $name="tiddlyflex-tm-message-navigator-outside" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-fold-other-tiddlers-actions-outside()
-\procedure actions() <<tiddlyflex-tm-message-actions tm-fold-other-tiddlers>>
+\procedure actions() <<tiddlyflex-tm-message-actions tm-fold-other-tiddlers "param">>
 <$macrocall $name="tiddlyflex-tm-message-navigator-outside" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-fold-tiddler-actions-outside()
-\procedure actions() <<tiddlyflex-tm-message-actions tm-fold-tiddler>>
+\procedure actions() <<tiddlyflex-tm-message-actions tm-fold-tiddler "param">>
 <$macrocall $name="tiddlyflex-tm-message-navigator-outside" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-home-actions-outside()
@@ -127,22 +133,22 @@ tags: $:/tags/Global
 </$set>
 \end
 \procedure tiddlyflex-tm-import-tiddlers-actions-outside()
-\procedure actions() <<tiddlyflex-tm-message-actions tm-import-tiddlers>>
+\procedure actions() <<tiddlyflex-tm-message-actions tm-import-tiddlers "param">>
 <$macrocall $name="tiddlyflex-tm-message-navigator-outside" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-new-tiddler-actions-outside()
-\procedure actions() <<tiddlyflex-tm-message-actions tm-new-tiddler tiddlerTitle>>
+\procedure actions() <<tiddlyflex-tm-message-actions tm-new-tiddler "tiddlerTitle type param">>
 <$macrocall $name="tiddlyflex-tm-message-navigator-outside" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-perform-import-actions-outside()
-\procedure actions() <<tiddlyflex-tm-message-actions tm-perform-import>>
+\procedure actions() <<tiddlyflex-tm-message-actions tm-perform-import "param">>
 <$macrocall $name="tiddlyflex-tm-message-navigator-outside" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-save-tiddler-actions-outside()
-\procedure actions() <<tiddlyflex-tm-message-actions tm-save-tiddler>>
+\procedure actions() <<tiddlyflex-tm-message-actions tm-save-tiddler "param">>
 <$macrocall $name="tiddlyflex-tm-message-navigator-outside" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-unfold-all-tiddlers-actions-outside()
-\procedure actions() <<tiddlyflex-tm-message-actions tm-unfold-all-tiddlers>>
+\procedure actions() <<tiddlyflex-tm-message-actions tm-unfold-all-tiddlers "param">>
 <$macrocall $name="tiddlyflex-tm-message-navigator-outside" actions=<<actions>>/>
 \end
