@@ -8,7 +8,7 @@ key: ((new-tiddler))
 \procedure actions()
 {{$:/core/ui/Actions/new-tiddler}}
 \end
-<%if [{$:/layout}match[$:/plugins/BTC/TiddlyFlex/ui/Layout]] %>
+<%if [function[tiddlyflex-layout]] %>
 	<$macrocall $name="tiddlyflex-simple-keyboard-navigator" actions=<<actions>>/>
 <% else %>
 	<$navigator story="$:/StoryList" history="$:/HistoryList" openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromOutsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
