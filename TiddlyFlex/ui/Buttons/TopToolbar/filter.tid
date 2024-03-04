@@ -9,6 +9,9 @@ list-before:
 			<$action-deletetiddler $tiddler="$:/state/tiddlyflex/story-river/filter"/>
 		<% else %>
 			<$action-setfield $tiddler="$:/state/tiddlyflex/story-river/filter" text="yes"/>
+			<%if [{$:/temp/search/input}is[blank]match[]then[yes]] %>
+				<$action-sendmessage $message="tm-focus-selector" $param=".tc-search input"/>
+			<% endif %>
 		<% endif %>
 		{{$:/plugins/BTC/TiddlyFlex/icons/filter}}
 	</$button>
