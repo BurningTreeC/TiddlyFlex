@@ -2,7 +2,7 @@ title: $:/plugins/BTC/TiddlyFlex/KeyboardShortcuts/dragging
 tags: $:/tags/KeyboardShortcut
 key: ((dragging))
 
-<%if [{$:/state/tiddlyflex/story-river/tiddler/drag-enabled}match[no]] %>
+<%if [{$:/state/tiddlyflex/story-river/tiddler/drag-enabled}!match[yes]] %>
 	<$action-setfield $tiddler="$:/state/tiddlyflex/story-river/tiddler/drag-enabled" text="yes"/>
 <% else %>
 	<$action-deletetiddler $tiddler="$:/state/tiddlyflex/story-river/tiddler/drag-enabled"/>
