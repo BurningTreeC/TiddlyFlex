@@ -157,3 +157,7 @@ tags: $:/tags/Stylesheet
 	</$list>
 
 <% endif %>
+
+.tc-tiddlyflex-adding {
+	visibility: hidden;
+}
