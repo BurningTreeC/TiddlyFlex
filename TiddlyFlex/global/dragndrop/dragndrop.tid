@@ -128,7 +128,7 @@ tags: $:/tags/Global
 <$vars prefix="[[" suffix="]]">
 	<%if [<actionTiddler>removeprefix<prefix>removesuffix<suffix>] %>
 		<$set name="actionTiddler" value={{{ [<actionTiddler>removeprefix<prefix>removesuffix<suffix>] }}}>
-			<%if [{$:/state/tiddlyflex/story-river/filter}match[yes]] +[subfilter<tdff.tiddlyflex-story-river-filter>then[]else[yes]] %>
+			<%if [{$:/state/tiddlyflex/story-river/filter}match[yes]] +[subfilter<tdff.tiddlyflex-story-river-filter>then[no]else[yes]!match[no]] %>
 				<$set name="firstStoryTiddler" value={{{ [list<tv-story-list>nth[1]] }}}>
 					<$action-listops $tiddler=<<tv-story-list>> $subfilter="+[insertbefore<actionTiddler>,<firstStoryTiddler>]"/>
 				</$set>
@@ -141,7 +141,7 @@ tags: $:/tags/Global
 			<% endif %>
 		</$set>
 	<% else %>
-		<%if [{$:/state/tiddlyflex/story-river/filter}match[yes]] +[subfilter<tdff.tiddlyflex-story-river-filter>then[]else[yes]] %>
+		<%if [{$:/state/tiddlyflex/story-river/filter}match[yes]subfilter<tdff.tiddlyflex-story-river-filter>then[no]else[yes]!match[no]] %>
 			<$set name="firstStoryTiddler" value={{{ [list<tv-story-list>nth[1]] }}}>
 				<$action-listops $tiddler=<<tv-story-list>> $subfilter="+[insertbefore<actionTiddler>,<firstStoryTiddler>]"/>
 			</$set>
