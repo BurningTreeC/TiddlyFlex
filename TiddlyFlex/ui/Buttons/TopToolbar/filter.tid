@@ -4,11 +4,11 @@ list-before:
 
 \whitespace trim
 <%if [function[tiddlyflex-layout]] %>
-	<$button class={{{ [{$:/config/tiddlyflex/story-river/filter}match[yes]then[tc-selected]] tc-btn-invisible +[join[ ]] }}}>
-		<%if [{$:/config/tiddlyflex/story-river/filter}match[yes]] %>
-			<$action-deletetiddler $tiddler="$:/config/tiddlyflex/story-river/filter"/>
+	<$button class={{{ [{$:/state/tiddlyflex/story-river/filter}match[yes]then[tc-selected]] tc-btn-invisible +[join[ ]] }}}>
+		<%if [{$:/state/tiddlyflex/story-river/filter}match[yes]] %>
+			<$action-deletetiddler $tiddler="$:/state/tiddlyflex/story-river/filter"/>
 		<% else %>
-			<$action-setfield $tiddler="$:/config/tiddlyflex/story-river/filter" text="yes"/>
+			<$action-setfield $tiddler="$:/state/tiddlyflex/story-river/filter" text="yes"/>
 		<% endif %>
 		{{$:/plugins/BTC/TiddlyFlex/icons/filter}}
 	</$button>

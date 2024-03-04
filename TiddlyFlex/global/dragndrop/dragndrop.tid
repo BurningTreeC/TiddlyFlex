@@ -128,11 +128,11 @@ tags: $:/tags/Global
 <$vars prefix="[[" suffix="]]">
 	<%if [<actionTiddler>removeprefix<prefix>removesuffix<suffix>] %>
 		<$set name="actionTiddler" value={{{ [<actionTiddler>removeprefix<prefix>removesuffix<suffix>] }}}>
-			<%if [{$:/config/tiddlyflex/story-river/filter}match[yes]] +[subfilter<tdff.tiddlyflex-story-river-filter>is[blank]] %>
+			<%if [{$:/state/tiddlyflex/story-river/filter}match[yes]] +[subfilter<tdff.tiddlyflex-story-river-filter>is[blank]] %>
 				<$set name="firstStoryTiddler" value={{{ [list<tv-story-list>nth[1]] }}}>
 					<$action-listops $tiddler=<<tv-story-list>> $subfilter="+[insertbefore<actionTiddler>,<firstStoryTiddler>]"/>
 				</$set>
-			<% elseif [{$:/config/tiddlyflex/story-river/filter}match[yes]] %>
+			<% elseif [{$:/state/tiddlyflex/story-river/filter}match[yes]] %>
 				<$let lastShownTiddler={{{ [subfilter<tdff.tiddlyflex-story-river-filter>] +[last[]] }}} insertBeforeTiddler={{{ [list<tv-story-list>after<lastShownTiddler>] }}}>
 					<$action-listops $tiddler=<<tv-story-list>> $subfilter="+[insertbefore<actionTiddler>,<insertBeforeTiddler>]"/>
 				</$let>
@@ -141,11 +141,11 @@ tags: $:/tags/Global
 			<% endif %>
 		</$set>
 	<% else %>
-		<%if [{$:/config/tiddlyflex/story-river/filter}match[yes]] +[subfilter<tdff.tiddlyflex-story-river-filter>is[blank]] %>
+		<%if [{$:/state/tiddlyflex/story-river/filter}match[yes]] +[subfilter<tdff.tiddlyflex-story-river-filter>is[blank]] %>
 			<$set name="firstStoryTiddler" value={{{ [list<tv-story-list>nth[1]] }}}>
 				<$action-listops $tiddler=<<tv-story-list>> $subfilter="+[insertbefore<actionTiddler>,<firstStoryTiddler>]"/>
 			</$set>
-		<% elseif [{$:/config/tiddlyflex/story-river/filter}match[yes]] %>
+		<% elseif [{$:/state/tiddlyflex/story-river/filter}match[yes]] %>
 			<$let lastShownTiddler={{{ [subfilter<tdff.tiddlyflex-story-river-filter>] +[last[]] }}} insertBeforeTiddler={{{ [list<tv-story-list>after<lastShownTiddler>] }}}>
 				<$action-listops $tiddler=<<tv-story-list>> $subfilter="+[insertbefore<actionTiddler>,<insertBeforeTiddler>]"/>
 			</$let>

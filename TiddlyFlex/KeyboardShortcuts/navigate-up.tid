@@ -14,7 +14,7 @@ key: ((navigate-up))
 <% endif %>
 \end
 \define actions()
-<%if [{$:/config/tiddlyflex/story-river/filter}match[yes]] %>
+<%if [{$:/state/tiddlyflex/story-river/filter}match[yes]] %>
 	<$set name="focusedTiddler" value={{{ [<tv-history-list>get[current-tiddler]] }}}>
 		<%if [subfilter<tdff.tiddlyflex-story-river-filter>match<focusedTiddler>] %>
 			<$let nextTiddler={{{ [subfilter<tdff.tiddlyflex-story-river-filter>before<focusedTiddler>] ~[subfilter<tdff.tiddlyflex-story-river-filter>last[]] }}} cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>

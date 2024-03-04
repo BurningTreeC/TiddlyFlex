@@ -206,7 +206,7 @@ tags: $:/tags/Stylesheet
 
 <% endif %>
 
-<%if [{$:/config/tiddlyflex/story-river/tiddler/drag-enabled}!match[no]] %>
+<%if [{$:/state/tiddlyflex/story-river/tiddler/drag-enabled}!match[no]] %>
 
 	.tc-tiddler-frame img, .tc-tiddler-frame a:not(.tc-tiddlylink):not(.tc-tiddlylink-external) {
 		-webkit-user-drag: none;
