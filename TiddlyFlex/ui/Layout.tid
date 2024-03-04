@@ -9,6 +9,7 @@ code-body: yes
 \import [subfilter{$:/core/config/GlobalImportFilter}]
 \procedure tiddlyflex-hide-sidebar-actions() <$action-setfield $tiddler="$:/state/sidebar" text="no"/>
 \procedure tiddlyflex-layout-story()
+\whitespace trim
 <div class="tc-tiddlyflex-story-river-wrapper">
 	<div class="tc-tiddlyflex-story-river-header">
 		<$set name="aboveStoryHeaderTag" value={{{ [[$:/tags/AboveStoryHeader-]addsuffix<tiddlyFlexColumn>] }}}>
@@ -28,6 +29,7 @@ code-body: yes
 </div>
 \end
 \procedure tiddlyflex-layout-story-rivers()
+\whitespace trim
 <$list filter=<<tdff.tiddlyflex-enlist-columns>> variable="tiddlyFlexColumn">
 	<$set name="transclusion" value=<<tiddlyFlexColumn>>>
 		<$vars tv-story-list={{{ [[$:/StoryList-]addsuffix<tiddlyFlexColumn>] }}} tv-history-list={{{ [[$:/HistoryList-]addsuffix<tiddlyFlexColumn>] }}} openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromOutsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
@@ -37,6 +39,7 @@ code-body: yes
 </$list>
 \end
 \procedure tiddlyflex-layout-header()
+\whitespace trim
 <div class="tc-tiddlyflex-header">
 	<$list filter="[{$:/status/RequireReloadDueToPluginChange}match[yes]then{$:/temp/HidePluginWarning}!match[yes]then[$:/plugins/BTC/TiddlyFlex/ui/Toolbars/PluginReloadWarning]] [all[shadows+tiddlers]tag[$:/tags/TopToolbar]!is[draft]]" variable="listItem" storyview="pop">
 		<$transclude tiddler=<<listItem>>/>
@@ -44,6 +47,7 @@ code-body: yes
 </div>
 \end
 \procedure tiddlyflex-layout-leftbar()
+\whitespace trim
 <div class="tc-tiddlyflex-leftbar">
 	<$list filter="[all[shadows+tiddlers]tag[$:/tags/LeftToolbar]!is[draft]]" variable="listItem" storyview="pop">
 		<$transclude tiddler=<<listItem>>/>
@@ -51,6 +55,7 @@ code-body: yes
 </div>
 \end
 \procedure tiddlyflex-layout-footer()
+\whitespace trim
 <div class="tc-tiddlyflex-footer">
 	<$list filter="[all[shadows+tiddlers]tag[$:/tags/BottomToolbar]!is[draft]]" variable="listItem" storyview="pop">
 		<$transclude tiddler=<<listItem>>/>
