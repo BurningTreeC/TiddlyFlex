@@ -27,8 +27,19 @@ tags: $:/tags/Stylesheet
 	flex-shrink: 1;
 	flex-basis: 100%;
 	max-height: 100%;
+	max-width: 100vw;
 	position: relative;
+	-webkit-transition: max-width {{$:/config/AnimationDuration}}ms;
+	transition: max-width {{$:/config/AnimationDuration}}ms;
 }
+
+<% if [{$:/state/sidebar}match[no]] %>
+
+	.tc-tiddlyflex-main {
+		max-width: calc(100vw + ((100vw / 100) * {{{ [{$:/config/tiddlyflex/sidebar/width}removesuffix[%]] }}}));
+	}
+
+<% endif %>
 
 @media (min-width: 992px) {
 
@@ -74,16 +85,18 @@ tags: $:/tags/Stylesheet
 	flex-grow: 1;
 	flex-shrink: 0;
 	flex-basis: calc(100% - {{$:/config/tiddlyflex/sidebar/width}});
-	-webkit-transition: flex-basis {{$:/config/AnimationDuration}}ms;
-	transition: flex-basis {{$:/config/AnimationDuration}}ms;
+	-webkit-transition: flex-basis {{$:/config/AnimationDuration}}ms, max-width {{$:/config/AnimationDuration}}ms;
+	transition: flex-basis {{$:/config/AnimationDuration}}ms, max-width {{$:/config/AnimationDuration}}ms;
 	overflow: hidden;
 	max-height: 100%;
+	max-width: calc(100vw - ((100vw / 100) * {{{ [{$:/config/tiddlyflex/sidebar/width}removesuffix[%]] }}}));
 }
 
 <% if [{$:/state/sidebar}match[no]] %>
 
 .tc-tiddlyflex-story-river-container {
 	flex-basis: 100%;
+	max-width: 100vw;
 }
 
 <% endif %>
