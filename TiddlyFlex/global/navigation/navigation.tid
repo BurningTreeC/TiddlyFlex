@@ -7,7 +7,21 @@ tags: $:/tags/Global
 \function tiddlyflex-suppress-navigation() [<modifier>match[ctrl]then[true]] [<modifier>match[meta]then[true]] +[match[true]] ~false +[limit[1]]
 \function edit-missing-tiddler() [{$:/config/tiddlyflex/navigation/edit-missing-tiddlers}match[yes]then<event-navigateTo>!is[shadow]is[missing]]
 \procedure tiddlyflex-navigate-story-river-actions-navigate()
-<$action-sendmessage $message="tm-navigate" navigateTo=<<event-navigateTo>> navigateSuppressNavigation={{{ [function[tiddlyflex-supress-navigation]] }}} navigateFromTitle={{{ [<currentColumn>match<tiddlyFlexColumn>then<event-navigateFromTitle>!is[blank]!match[]] ~[<tiddlyFlexColumn>addprefix[$:/HistoryList-]get[current-tiddler]] }}}/>
+<$action-log navigate-to=<<event-navigateTo>>/>
+<$action-sendmessage
+	$message="tm-navigate"
+	$navigateTo=<<event-navigateTo>>
+	$navigateFromTitle={{{ [<currentColumn>match<tiddlyFlexColumn>then<event-navigateFromTitle>!is[blank]!match[]] ~[<tiddlyFlexColumn>addprefix[$:/HistoryList-]get[current-tiddler]] }}}
+	$navigateFromClientRect=<<event-navigateFromClientRect>>
+	$navigateFromClientTop=<<event-navigateFromClientTop>>
+	$navigateFromClientLeft=<<event-navigateFromClientLeft>>
+	$navigateFromClientWidth=<<event-navigateFromClientWidth>>
+	$navigateFromClientRight=<<event-navigateFromClientRight>>
+	$navigateFromClientBottom=<<event-navigateFromClientBottom>>
+	$navigateFromClientHeight=<<event-navigateFromClientHeight>>
+	$navigateSuppressNavigation={{{ [function[tiddlyflex-supress-navigation]] }}}
+	$names="[<list-event-paramObject>enlist-input[]]"
+	$values="[<list-event-paramObject>enlist-input[]] :map:flat[addprefix[event-paramObject-]getvariable[]]"/>
 \end
 \procedure tiddlyflex-navigate-story-river-actions-inner-inner()
 <$let tv-story-list={{{ [[$:/StoryList-]addsuffix<tiddlyFlexColumn>] }}} tv-history-list={{{ [[$:/HistoryList-]addsuffix<tiddlyFlexColumn>] }}}>
@@ -17,7 +31,12 @@ tags: $:/tags/Global
 	<$navigator story=<<tv-story-list>> history=<<tv-history-list>> openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromOutsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
 		<<tiddlyflex-navigate-story-river-actions-navigate>>
 		<%if [function[edit-missing-tiddler]] %>
-			<$action-sendmessage $message="tm-edit-tiddler" $param=<<event-navigateTo>> $names={{{ [enlist<list-event>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] [enlist<list-event-paramObject>addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}} $values={{{ [enlist<list-event>addprefix[event-]getvariable[]addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] [enlist<list-event-paramObject>addprefix[event-paramObject-]getvariable[]addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}}/>
+			<$action-sendmessage
+				$message="tm-edit-tiddler"
+				$param=<<event-navigateTo>>
+				$tiddlerTitle=<<event-tiddlerTitle>>
+				$names="[<list-event-paramObject>enlist-input[]]"
+				$values="[<list-event-paramObject>enlist-input[]] :map:flat[addprefix[event-paramObject-]getvariable[]]"/>
 		<% endif %>
 	</$navigator>
 </$let>

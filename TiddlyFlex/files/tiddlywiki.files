@@ -1,11 +1,11 @@
 {
 	"tiddlers": [
 		{
-			"file": "modules/widgets/subclasses/navigator.js",
+			"file": "modules/startup/tiddlyflex-hooks.js",
 			"fields": {
 				"type": "application/javascript",
-				"title": "$:/plugins/BTC/TiddlyFlex/modules/widgets/subclasses/navigator.js",
-				"module-type": "widget-subclass"
+				"title": "$:/plugins/BTC/TiddlyFlex/modules/startup/tiddlyflex-hooks.js",
+				"module-type": "startup"
 			}
 		},{
 			"file": "modules/widgets/subclasses/droppable.js",

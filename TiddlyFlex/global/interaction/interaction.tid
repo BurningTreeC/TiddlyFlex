@@ -12,21 +12,21 @@ tags: $:/tags/Global
 </$navigator>
 \end
 \procedure tiddlyflex-tm-message-actions(message,exclude)
-<$let
-	names-event={{{ [enlist<list-event>] -[enlist<exclude>] :map:flat[addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}}
-	names-event-paramObject={{{ [enlist<list-event-paramObject>] :map:flat[addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}}
-	values-event={{{ [enlist<list-event>] -[enlist<exclude>] :map:flat[addprefix[event-]getvariable[]addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}}
-	values-event-paramObject={{{ [enlist<list-event-paramObject>] :map:flat[addprefix[event-paramObject-]getvariable[]addprefix<tiddlyFlexPrefix>addprefix<tiddlyFlexPrefix>addsuffix<tiddlyFlexSuffix>addsuffix<tiddlyFlexSuffix>] +[join[ ]] }}}>
-	<!--<$action-log names-event=<<names-event>>/>
-	<$action-log values-event=<<values-event>>/>
-	<$action-log names-event-paramObject=<<names-event-paramObject>>/>
-	<$action-log values-event-paramObject=<<values-event-paramObject>>/>-->
-	<%if [enlist<exclude>match[tiddlerTitle]] %>
-		<$action-sendmessage $message=<<message>> $param={{{ [<event-param>!is[blank]!match[]] ~[[]] }}} $names={{{ [<names-event>] [<names-event-paramObject>] +[join[ ]] }}} $values={{{ [<values-event>] [<values-event-paramObject>] +[join[ ]] }}}/>
-	<% else %>
-		<$action-sendmessage $message=<<message>> $param={{{ [<event-param>!is[blank]!match[]] ~[<event-tiddlerTitle>!is[blank]!match[]] }}} $names={{{ [<names-event>] [<names-event-paramObject>] +[join[ ]] }}} $values={{{ [<values-event>] [<values-event-paramObject>] +[join[ ]] }}}/>
-	<% endif %>
-</$let>
+<$action-sendmessage
+	$message=<<event-type>>
+	$param={{{ [<event-param>!is[blank]!match[]] ~[<event-tiddlerTitle>] }}}
+	$navigateTo=<<event-navigateTo>>
+	$navigateFromTitle=<<event-navigateFromTitle>>
+	$navigateFromClientRect=<<event-navigateFromClientRect>>
+	$navigateFromClientTop=<<event-navigateFromClientTop>>
+	$navigateFromClientLeft=<<event-navigateFromClientLeft>>
+	$navigateFromClientWidth=<<event-navigateFromClientWidth>>
+	$navigateFromClientRight=<<event-navigateFromClientRight>>
+	$navigateFromClientBottom=<<event-navigateFromClientBottom>>
+	$navigateFromClientHeight=<<event-navigateFromClientHeight>>
+	$navigateSuppressNavigation=<<event-navigateSuppressNavigation>>
+	$names="[<list-event-paramObject>enlist-input[]]"
+	$values="[<list-event-paramObject>enlist-input[]] :map:flat[addprefix[event-paramObject-]getvariable[]]"/>
 \end
 
 \procedure tiddlyflex-tm-cancel-tiddler-actions()
