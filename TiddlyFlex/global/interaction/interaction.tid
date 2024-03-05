@@ -2,31 +2,33 @@ title: $:/plugins/BTC/TiddlyFlex/globals/interaction
 tags: $:/tags/Global
 
 \procedure tiddlyflex-tm-message-navigator(actions)
-<$navigator story=<<tv-story-list>> history=<<tv-history-list>> openLinkFromInsideRiver=<<openLinkFromInsideRiver>> openLinkFromOutsideRiver=<<openLinkFromOutsideRiver>> relinkOnRename=<<relinkOnRename>>>
+<$navigator story=<<tv-story-list>> history=<<tv-history-list>> openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
 	<<actions>>
 </$navigator>
 \end
 \procedure tiddlyflex-tm-message-navigator-outside(actions)
-<$navigator story={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-current-column-filtered>] :map[addprefix[$:/StoryList-]] }}} history={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-current-column-filtered>] :map[addprefix[$:/HistoryList-]] }}} openLinkFromInsideRiver=<<openLinkFromInsideRiver>> openLinkFromOutsideRiver=<<openLinkFromOutsideRiver>> relinkOnRename=<<relinkOnRename>>>
+<$navigator story={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-current-column-filtered>] :map[addprefix[$:/StoryList-]] }}} history={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-current-column-filtered>] :map[addprefix[$:/HistoryList-]] }}} openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
 	<<actions>>
 </$navigator>
 \end
 \procedure tiddlyflex-tm-message-actions(message,exclude)
-<$action-sendmessage
-	$message=<<event-type>>
-	$param={{{ [<event-param>!is[blank]!match[]] ~[<event-tiddlerTitle>] }}}
-	$navigateTo=<<event-navigateTo>>
-	$navigateFromTitle=<<event-navigateFromTitle>>
-	$navigateFromClientRect=<<event-navigateFromClientRect>>
-	$navigateFromClientTop=<<event-navigateFromClientTop>>
-	$navigateFromClientLeft=<<event-navigateFromClientLeft>>
-	$navigateFromClientWidth=<<event-navigateFromClientWidth>>
-	$navigateFromClientRight=<<event-navigateFromClientRight>>
-	$navigateFromClientBottom=<<event-navigateFromClientBottom>>
-	$navigateFromClientHeight=<<event-navigateFromClientHeight>>
-	$navigateSuppressNavigation=<<event-navigateSuppressNavigation>>
-	$names="[<list-event-paramObject>enlist-input[]]"
-	$values="[<list-event-paramObject>enlist-input[]] :map:flat[addprefix[event-paramObject-]getvariable[]]"/>
+<$set name="storyTiddler" value=<<event-navigateFromTitle>>>
+	<$action-sendmessage
+		$message=<<event-type>>
+		$param={{{ [<event-param>!is[blank]!match[]] ~[<event-type>!match[tm-new-tiddler]then<event-tiddlerTitle>] }}}
+		$navigateTo=<<event-navigateTo>>
+		$navigateFromTitle=<<event-navigateFromTitle>>
+		$navigateFromClientRect=<<event-navigateFromClientRect>>
+		$navigateFromClientTop=<<event-navigateFromClientTop>>
+		$navigateFromClientLeft=<<event-navigateFromClientLeft>>
+		$navigateFromClientWidth=<<event-navigateFromClientWidth>>
+		$navigateFromClientRight=<<event-navigateFromClientRight>>
+		$navigateFromClientBottom=<<event-navigateFromClientBottom>>
+		$navigateFromClientHeight=<<event-navigateFromClientHeight>>
+		$navigateSuppressNavigation=<<event-navigateSuppressNavigation>>
+		$names="[<list-event-paramObject>enlist-input[]]"
+		$values="[<list-event-paramObject>enlist-input[]] :map:flat[addprefix[event-paramObject-]getvariable[]]"/>
+</$set>
 \end
 
 \procedure tiddlyflex-tm-cancel-tiddler-actions()

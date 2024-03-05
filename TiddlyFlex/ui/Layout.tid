@@ -32,7 +32,7 @@ code-body: yes
 \whitespace trim
 <$list filter=<<tdff.tiddlyflex-enlist-columns>> variable="tiddlyFlexColumn">
 	<$set name="transclusion" value=<<tiddlyFlexColumn>>>
-		<$vars tv-story-list={{{ [[$:/StoryList-]addsuffix<tiddlyFlexColumn>] }}} tv-history-list={{{ [[$:/HistoryList-]addsuffix<tiddlyFlexColumn>] }}} openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromOutsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
+		<$vars tv-story-list={{{ [[$:/StoryList-]addsuffix<tiddlyFlexColumn>] }}} tv-history-list={{{ [[$:/HistoryList-]addsuffix<tiddlyFlexColumn>] }}} openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
 			<$macrocall $name="tiddlyflex-message-catcher" tiddlyflex-layout-inner=<<tiddlyflex-layout-story>>/>
 		</$vars>
 	</$set>

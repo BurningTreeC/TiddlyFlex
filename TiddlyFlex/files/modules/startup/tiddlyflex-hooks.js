@@ -20,7 +20,11 @@ exports.synchronous = true;
 
 exports.startup = function() {
 	$tw.hooks.addHook("th-navigating",function(event) { 
-		if(event.event && event.event.navigateTo) {
+		if(!event.navigateTo && event.event && event.event.navigateTo) {
+			console.log(event);
+			if(event.navigateFromTitle && !event.event.navigateFromTitle) {
+				event.event.navigateFromTitle = event.navigateFromTitle;
+			}
 			return event.event;
 		} else {
 			return event;
