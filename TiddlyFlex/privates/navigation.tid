@@ -45,17 +45,18 @@ title: $:/plugins/BTC/TiddlyFlex/privates/navigation
 \end
 \procedure tiddlyflex-multi-column-keyboard-navigator()
 <$let
-	currentColumn={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-current-column-filtered>] }}} 
+	currentColumn={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-current-column-filtered>] }}}
+	lastColumn={{{ [subfilter<tdff.tiddlyflex-enlist-columns>last[]] }}}
 	tv-story-list={{{ [[$:/StoryList-]addsuffix<currentColumn>!match[$:/StoryList-]] ~$:/StoryList-1 }}}
 	tv-history-list={{{ [[$:/HistoryList-]addsuffix<currentColumn>!match[$:/HistoryList-]] ~$:/HistoryList-1 }}}
 	focusedTiddler={{{ [<tv-history-list>get[current-tiddler]] }}}
 	nextStoryCounter={{{ [subfilter<tdff.tiddlyflex-enlist-columns>after<currentColumn>] }}}
-	nextStoryList={{{ [<tv-story-list>!match[$:/StoryList]removesuffix<currentColumn>addsuffix<nextStoryCounter>] ~[[$:/StoryList-2]] }}}
-	nextHistoryList={{{ [<tv-history-list>!match[$:/HistoryList]removesuffix<currentColumn>addsuffix<nextStoryCounter>] ~[[$:/HistoryList-2]] }}}
+	nextStoryList={{{ [<tv-story-list>removesuffix<currentColumn>addsuffix<nextStoryCounter>] }}}
+	nextHistoryList={{{ [<tv-history-list>removesuffix<currentColumn>addsuffix<nextStoryCounter>] }}}
 	firstNextStoryTiddler={{{ [list<nextStoryList>first[]] }}}
 	previousStoryCounter={{{ [subfilter<tdff.tiddlyflex-enlist-columns>before<currentColumn>] }}}
-	previousStoryList={{{ [<tv-story-list>!match[$:/StoryList-]removesuffix<currentColumn>addsuffix<previousStoryCounter>] ~$:/StoryList-1 }}}
-	previousHistoryList={{{ [<tv-history-list>!match[$:/HistoryList-]removesuffix<currentColumn>addsuffix<previousStoryCounter>] ~[[$:/HistoryList]] }}}
+	previousStoryList={{{ [<tv-story-list>removesuffix<currentColumn>addsuffix<previousStoryCounter>] }}}
+	previousHistoryList={{{ [<tv-history-list>removesuffix<currentColumn>addsuffix<previousStoryCounter>] }}}
 	firstPreviousStoryTiddler={{{ [list<previousStoryList>first[]] }}}
 >
 	<<actions>>

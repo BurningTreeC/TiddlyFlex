@@ -8,8 +8,8 @@ key: ((move-left))
 <$action-setfield $tiddler=<<previousHistoryList>> current-tiddler=<<focusedTiddler>>/>
 \end
 \define actions()
-<$let scrollTiddler={{{ [subfilter<tdff.tiddlyflex-story-river-filter>after<focusedTiddler>] ~[subfilter<tdff.tiddlyflex-story-river-filter>before<focusedTiddler>] }}}>
-	<%if [<focusedTiddler>!is[blank]then<tv-story-list>!match[$:/StoryList-1]] %>
+<%if [<focusedTiddler>!is[blank]then<tv-story-list>!match[$:/StoryList-1]] %>
+	<$let scrollTiddler={{{ [subfilter<tdff.tiddlyflex-story-river-filter>after<focusedTiddler>] ~[subfilter<tdff.tiddlyflex-story-river-filter>before<focusedTiddler>] }}}>
 		<$action-setfield $tiddler={{{ [[$:/state/tiddlyflex/removing/]addsuffix<focusedTiddler>] }}} direction="left" column=<<currentColumn>>/>
 		<$action-setfield $tiddler={{{ [[$:/state/tiddlyflex/adding/]addsuffix<focusedTiddler>] }}} direction="right" column={{{ [subfilter<tdff.tiddlyflex-enlist-columns>before<currentColumn>] }}}/>
 		<$action-setfield $tiddler=<<tv-history-list>> current-tiddler={{{ [subfilter<tdff.tiddlyflex-story-river-filter>after<focusedTiddler>] ~[subfilter<tdff.tiddlyflex-story-river-filter>before<focusedTiddler>] }}}/>
@@ -51,7 +51,7 @@ key: ((move-left))
 		<$let currentColumn=<<previousStoryCounter>> cssEscapedTitle={{{ [<focusedTiddler>escapecss[]] }}}>
 			<<tiddlyflex-scroll-to-tiddler>>
 		</$let>
-	<% endif %>
-</$let>
+	</$let>
+<% endif %>
 \end
 <$macrocall $name="tiddlyflex-multi-column-keyboard-navigator" actions=<<actions>>/>

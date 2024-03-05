@@ -8,15 +8,10 @@ key: ((move-right))
 <$action-setfield $tiddler=<<nextHistoryList>> current-tiddler=<<focusedTiddler>>/>
 \end
 \define actions()
-<$let scrollTiddler={{{ [subfilter<tdff.tiddlyflex-story-river-filter>after<focusedTiddler>] ~[subfilter<tdff.tiddlyflex-story-river-filter>before<focusedTiddler>] }}}>
-	<%if [<focusedTiddler>!is[blank]] %>
-		<%if [[$:/columns]!contains<nextStoryCounter>] %>
-			<$action-listops $tiddler="$:/columns" $subfilter="[<nextStoryCounter>]"/>
-			<$action-setfield $tiddler={{{ [[$:/state/tiddlyflex/removing/]addsuffix<focusedTiddler>] }}} direction="right" column=<<currentColumn>>/>
-		<% else %>
-			<$action-setfield $tiddler={{{ [[$:/state/tiddlyflex/removing/]addsuffix<focusedTiddler>] }}} direction="right" column=<<currentColumn>>/>
-			<$action-setfield $tiddler={{{ [[$:/state/tiddlyflex/adding/]addsuffix<focusedTiddler>] }}} direction="left" column={{{ [subfilter<tdff.tiddlyflex-enlist-columns>after<currentColumn>] }}}/>
-		<% endif %>
+<%if [<focusedTiddler>!is[blank]then<currentColumn>!match<lastColumn>] %>
+	<$let scrollTiddler={{{ [subfilter<tdff.tiddlyflex-story-river-filter>after<focusedTiddler>] ~[subfilter<tdff.tiddlyflex-story-river-filter>before<focusedTiddler>] }}}>
+		<$action-setfield $tiddler={{{ [[$:/state/tiddlyflex/removing/]addsuffix<focusedTiddler>] }}} direction="right" column=<<currentColumn>>/>
+		<$action-setfield $tiddler={{{ [[$:/state/tiddlyflex/adding/]addsuffix<focusedTiddler>] }}} direction="left" column={{{ [subfilter<tdff.tiddlyflex-enlist-columns>after<currentColumn>] }}}/>
 		<$action-setfield $tiddler=<<tv-history-list>> current-tiddler={{{ [subfilter<tdff.tiddlyflex-story-river-filter>after<focusedTiddler>] ~[subfilter<tdff.tiddlyflex-story-river-filter>before<focusedTiddler>] }}}/>
 		<$action-listops $tiddler=<<tv-story-list>> $subfilter="-[<focusedTiddler>]"/>
 		<%if [<nextHistoryList>get[current-tiddler]!match[]] %>
@@ -56,7 +51,7 @@ key: ((move-right))
 				<% endif %>
 			</$let>
 		<% endif %>
-	<% endif %>
-</$let>
+	</$let>
+<% endif %>
 \end
 <$macrocall $name="tiddlyflex-multi-column-keyboard-navigator" actions=<<actions>>/>
