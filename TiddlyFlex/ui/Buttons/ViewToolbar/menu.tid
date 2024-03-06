@@ -1,0 +1,36 @@
+title: $:/plugins/BTC/TiddlyFlex/ui/Buttons/ViewToolbar/menu
+tags: $:/tags/ViewToolbar
+
+\whitespace trim
+<$button popup=<<qualify "$:/state/popup/tiddlyflex/menu">> tooltip={{$:/language/Buttons/More/Hint}} aria-label={{$:/language/Buttons/More/Caption}} class={{{ [<tv-config-toolbar-class>] tc-tiddlyflex-shown-when-narrow +[join[ ]] }}} selectedClass="tc-selected">
+{{$:/core/images/menu-button}}
+</$button>
+<$reveal state=<<qualify "$:/state/popup/tiddlyflex/menu">> type="popup" position="belowleft" animate="yes">
+
+<div class="tc-drop-down">
+
+<$set name="tv-config-toolbar-icons" value="yes">
+
+<$set name="tv-config-toolbar-text" value="yes">
+
+<$set name="tv-config-toolbar-class" value="tc-btn-invisible">
+
+<$list filter="[all[shadows+tiddlers]tag[$:/tags/ViewToolbar]!is[draft]] -[[$:/core/ui/Buttons/more-tiddler-actions]] -[[$:/plugins/BTC/TiddlyFlex/ui/Buttons/ViewToolbar/menu]]" variable="listItem">
+
+<$set name="tv-config-toolbar-class" filter="[<tv-config-toolbar-class>] [<listItem>encodeuricomponent[]addprefix[tc-btn-]]">
+
+<$transclude tiddler=<<listItem>> mode="inline"/>
+
+</$set>
+
+</$list>
+
+</$set>
+
+</$set>
+
+</$set>
+
+</div>
+
+</$reveal>

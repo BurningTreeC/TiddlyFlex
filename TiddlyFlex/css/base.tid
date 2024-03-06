@@ -94,10 +94,10 @@ tags: $:/tags/Stylesheet
 
 <% if [{$:/state/sidebar}match[no]] %>
 
-.tc-tiddlyflex-story-river-container {
-	flex-basis: 100%;
-	max-width: 100vw;
-}
+	.tc-tiddlyflex-story-river-container {
+		flex-basis: 100%;
+		max-width: 100vw;
+	}
 
 <% endif %>
 

@@ -1,0 +1,34 @@
+title: $:/plugins/BTC/TiddlyFlex/styles/menu
+tags: $:/tags/Stylesheet
+
+@media (min-width:992px) {
+
+	.tc-tiddlyflex-shown-when-narrow {
+		display: none;
+	}
+
+	<$list filter="[{$:/state/sidebar}match[no]] :then[subfilter<tdff.tiddlyflex-enlist-columns>count[]compare:number:gteq{$:/config/tiddlyflex/story-river/tiddler/controls-breakpoint}] :else[subfilter<tdff.tiddlyflex-enlist-columns>count[]compare:number:gteq{$:/config/tiddlyflex/story-river/tiddler/controls-breakpoint-sidebar}]" variable="column">
+
+		.tc-tiddlyflex-column-<<column>> .tc-tiddler-controls >  button:not(.tc-tiddlyflex-shown-when-narrow) {
+			display: none;
+		}
+
+		.tc-tiddlyflex-column-<<column>> .tc-tiddler-controls .tc-tiddlyflex-shown-when-narrow {
+			display: block;
+		}
+
+	</$list>
+
+}
+
+@media (max-width: 991.98px) {
+
+	.tc-tiddler-controls >  button:not(.tc-tiddlyflex-shown-when-narrow) {
+		display: none;
+	}
+
+	.tc-tiddler-controls .tc-tiddlyflex-shown-when-narrow {
+		display: block;
+	}
+
+}
