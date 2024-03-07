@@ -38,6 +38,9 @@ code-body: yes
 	</$set>
 </$list>
 \end
+\procedure tiddlyflex-layout-sidebar()
+<$transclude tiddler="$:/plugins/BTC/TiddlyFlex/ui/Templates/sidebar"/>
+\end
 \procedure tiddlyflex-layout-header()
 \whitespace trim
 <div class="tc-tiddlyflex-header">
@@ -86,7 +89,7 @@ code-body: yes
 				<div class="tc-tiddlyflex-sidebar">
 					<div class="tc-tiddlyflex-sidebar-container">
 						<div class="tc-tiddlyflex-sidebar-container-inner">
-							{{$:/plugins/BTC/TiddlyFlex/ui/Templates/sidebar}}
+							<$macrocall $name="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner=<<tiddlyflex-layout-sidebar>>/>
 						</div>
 					</div>
 				</div>

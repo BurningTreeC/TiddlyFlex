@@ -5,45 +5,25 @@ code-body: yes
 \define config-title()
 $:/config/SideBarSegments/Visibility/$(listItem)$
 \end
-\function tiddlyflex-current-column() [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-current-column-filtered>]
+
 <div class="tc-tiddlyflex-sidebar-scrollable">
 
-	<$messagecatcher
-		$tm-cancel-tiddler=<<tiddlyflex-tm-cancel-tiddler-actions-outside>>
-		$tm-close-all-tiddlers=<<tiddlyflex-tm-close-all-tiddlers-actions-outside>>
-		$tm-close-other-tiddlers=<<tiddlyflex-tm-close-other-tiddlers-actions-outside>>
-		$tm-close-tiddler=<<tiddlyflex-tm-close-tiddler-actions-outside>>
-		$tm-delete-tiddler=<<tiddlyflex-tm-delete-tiddler-actions-outside>>
-		$tm-edit-tiddler=<<tiddlyflex-tm-edit-tiddler-actions-outside>>
-		$tm-fold-all-tiddlers=<<tiddlyflex-tm-fold-all-tiddlers-actions-outside>>
-		$tm-fold-other-tiddlers=<<tiddlyflex-tm-fold-other-tiddlers-actions-outside>>
-		$tm-fold-tiddler=<<tiddlyflex-tm-fold-tiddler-actions-outside>>
-		$tm-home=<<tiddlyflex-tm-home-actions-outside>>
-		$tm-import-tiddlers=<<tiddlyflex-tm-import-tiddlers-actions-outside>>
-		$tm-navigate=<<tiddlyflex-tm-navigate-actions-outside>>
-		$tm-new-tiddler=<<tiddlyflex-tm-new-tiddler-actions-outside>>
-		$tm-perform-import=<<tiddlyflex-tm-perform-import-actions-outside>>
-		$tm-save-tiddler=<<tiddlyflex-tm-save-tiddler-actions-outside>>
-		$tm-unfold-all-tiddlers=<<tiddlyflex-tm-unfold-all-tiddlers-actions-outside>>>
+	<div class="tc-sidebar-header">
 
-		<div class="tc-sidebar-header">
+		<$reveal state="$:/state/sidebar" type="match" text="yes" default="yes" animate="yes">
 
-			<$reveal state="$:/state/sidebar" type="match" text="yes" default="yes" animate="yes">
+			<$list filter="[all[shadows+tiddlers]tag[$:/tags/SideBarSegment]!has[draft.of]]" variable="listItem">
 
-				<$list filter="[all[shadows+tiddlers]tag[$:/tags/SideBarSegment]!has[draft.of]]" variable="listItem">
+				<$reveal type="nomatch" state=<<config-title>> text="hide"  tag="div">
 
-					<$reveal type="nomatch" state=<<config-title>> text="hide"  tag="div">
+					<$transclude tiddler=<<listItem>> mode="block"/>
 
-						<$transclude tiddler=<<listItem>> mode="block"/>
+				</$reveal>
 
-					</$reveal>
+			</$list>
 
-				</$list>
+		</$reveal>
 
-			</$reveal>
-
-		</div>
-
-	</$messagecatcher>
+	</div>
 
 </div>

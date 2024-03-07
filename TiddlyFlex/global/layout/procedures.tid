@@ -2,6 +2,7 @@ title: $:/plugins/BTC/TiddlyFlex/globals/layout/procedures
 tags: $:/tags/Global
 
 \procedure tiddlyflex-message-catcher(tiddlyflex-layout-inner)
+\function tiddlyflex-current-column() [<tiddlyFlexColumn>]
 <$messagecatcher
 	$tm-cancel-tiddler=<<tiddlyflex-tm-cancel-tiddler-actions>>
 	$tm-close-all-tiddlers=<<tiddlyflex-tm-close-all-tiddlers-actions>>
@@ -23,6 +24,7 @@ tags: $:/tags/Global
 </$messagecatcher>
 \end
 \procedure tiddlyflex-message-catcher-outside(tiddlyflex-layout-inner)
+\function tiddlyflex-current-column() [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-current-column-filtered>]
 <$messagecatcher
 	$tm-cancel-tiddler=<<tiddlyflex-tm-cancel-tiddler-actions-outside>>
 	$tm-close-all-tiddlers=<<tiddlyflex-tm-close-all-tiddlers-actions-outside>>

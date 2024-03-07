@@ -2,7 +2,6 @@ title: $:/plugins/BTC/TiddlyFlex/ui/Templates/story
 code-body: yes
 
 \whitespace trim
-\function tiddlyflex-current-column() [<tiddlyFlexColumn>]
 \procedure tiddlyflex-activate-column-actions()
 <%if [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-current-column-filtered>] +[!match<tiddlyFlexColumn>] %>
 	<$action-setfield $tiddler="$:/columns" current-column=<<tiddlyFlexColumn>>/>
