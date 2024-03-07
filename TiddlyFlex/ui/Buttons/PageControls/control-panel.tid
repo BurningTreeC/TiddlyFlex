@@ -15,9 +15,16 @@ description: {{$:/language/Buttons/ControlPanel/Hint}}
 </$list>
 </$button>
 \end
-
-<%if [subfilter<tdff.tiddlyflex-enlist-columns>] +[addprefix[$:/StoryList-]] +[enlist-input[]] +[contains[$:/ControlPanel]] %>
-	<<control-panel-button "tc-selected">>
+<%if [function[tiddlyflex-layout]] %>
+	<%if [subfilter<tdff.tiddlyflex-enlist-columns>] +[addprefix[$:/StoryList-]] +[enlist-input[]] +[contains[$:/ControlPanel]] %>
+		<<control-panel-button "tc-selected">>
+	<% else %>
+		<<control-panel-button>>
+	<% endif %>
 <% else %>
-	<<control-panel-button>>
+	<%if [<tv-story-list>contains[$:/ControlPanel]] %>
+		<<control-panel-button "tc-selected">>
+	<% else %>
+		<<control-panel-button>>
+	<% endif %>
 <% endif %>
