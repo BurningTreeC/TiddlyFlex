@@ -71,7 +71,7 @@ code-body: yes
 	storyviewTitle={{$:/view}}
 	languageTitle={{{ [{$:/language}get[name]] }}}>
 	<div class={{{ [all[shadows+tiddlers]tag[$:/tags/ClassFilters/PageTemplate/TiddlyFlex]!is[draft]] :map:flat[subfilter{!!text}] tc-page-container tc-tiddlyflex-container [[tc-page-view-]addsuffix<storyviewTitle>] [[tc-language-]addsuffix<languageTitle>] [{$:/state/sidebar}match[yes]then[tc-sidebar-shown]] :and[unique[]join[ ]] }}} tabindex="0">
-		<$eventcatcher selector=".tc-tiddlyflex-sidebar-shown" $click=<<tiddlyflex-hide-sidebar-actions>> class="tc-tiddlyflex-sidebar-shown-eventcatcher">
+		<$eventcatcher selector=".tc-tiddlyflex-sidebar-shown" matchSelector=".tc-tiddlyflex-sidebar-shown" $click=<<tiddlyflex-hide-sidebar-actions>> class="tc-tiddlyflex-sidebar-shown-eventcatcher">
 			<div class={{{ [{$:/state/sidebar}!match[no]then[tc-tiddlyflex-sidebar-hide tc-btn-invisible tc-tiddlyflex-sidebar-shown]] [{$:/state/sidebar}match[no]then[tc-tiddlyflex-sidebar-hide tc-btn-invisible tc-tiddlyflex-sidebar-hidden]] }}}/>
 		</$eventcatcher>
 		<$macrocall $name="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner=<<tiddlyflex-layout-header>>/>
