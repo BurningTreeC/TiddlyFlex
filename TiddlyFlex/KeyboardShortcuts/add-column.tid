@@ -2,9 +2,12 @@ title: $:/plugins/BTC/TiddlyFlex/KeyboardShortcuts/add-column
 tags: $:/tags/KeyboardShortcut
 key: ((add-column))
 
-<$let columns={{{ [list[$:/columns]count[]!match[0]] ~1 }}} nextColumn={{{ [<columns>add[1]] }}}>
-	<%if [list[$:/columns]count[]match[0]] %>
-		<$action-listops $tiddler="$:/columns" $subfilter="1"/>
-	<% endif %>
-	<$action-listops $tiddler="$:/columns" $subfilter="[<nextColumn>]"/>
-</$let>
+\import $:/plugins/BTC/TiddlyFlex/globals/layout/functions
+<%if [function[tiddlyflex-layout]] %>
+	<$let columns={{{ [list[$:/columns]count[]!match[0]] ~1 }}} nextColumn={{{ [<columns>add[1]] }}}>
+		<%if [list[$:/columns]count[]match[0]] %>
+			<$action-listops $tiddler="$:/columns" $subfilter="1"/>
+		<% endif %>
+		<$action-listops $tiddler="$:/columns" $subfilter="[<nextColumn>]"/>
+	</$let>
+<% endif %>

@@ -54,4 +54,6 @@ key: ((move-left))
 	</$let>
 <% endif %>
 \end
-<$macrocall $name="tiddlyflex-multi-column-keyboard-navigator" actions=<<actions>>/>
+<%if [function[tiddlyflex-layout]] %>
+	<$macrocall $name="tiddlyflex-multi-column-keyboard-navigator" actions=<<actions>>/>
+<% endif %>

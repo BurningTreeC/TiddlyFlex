@@ -2,6 +2,7 @@ title: $:/plugins/BTC/TiddlyFlex/KeyboardShortcuts/remove-column
 tags: $:/tags/KeyboardShortcut
 key: ((remove-column))
 
+\import $:/plugins/BTC/TiddlyFlex/globals/layout/functions
 \procedure remove-column-actions()
 <$set name="columnCount" value={{{ [list[$:/columns]count[]] }}}>
 	<$list filter="[[$:/columns]get[current-column]match<columnCount>]">
@@ -12,7 +13,8 @@ key: ((remove-column))
 	</$list>
 </$set>
 \end
-\whitespace trim
-<$let columns={{{ [list[$:/columns]count[]] ~1 }}}>
-	<<remove-column-actions>>
-</$let>
+<%if [function[tiddlyflex-layout]] %>
+	<$let columns={{{ [list[$:/columns]count[]] ~1 }}}>
+		<<remove-column-actions>>
+	</$let>
+<% endif %>
