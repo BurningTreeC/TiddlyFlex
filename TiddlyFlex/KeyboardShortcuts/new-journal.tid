@@ -1,7 +1,5 @@
-title: $:/plugins/BTC/TiddlyFlex/KeyboardShortcuts/new-journal
+title: $:/core/ui/KeyboardShortcuts/new-journal
 tags: $:/tags/KeyboardShortcut
-override: yes
-override-title: $:/core/ui/KeyboardShortcuts/new-journal
 key: ((new-journal))
 
 \import $:/plugins/BTC/TiddlyFlex/privates/navigation $:/plugins/BTC/TiddlyFlex/globals/layout/functions

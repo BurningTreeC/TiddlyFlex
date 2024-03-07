@@ -93,6 +93,16 @@ code-body: yes
 						</div>
 					</div>
 				</div>
+				<%if [{$:/config/tiddlyflex/sidebar/resizer}match[yes]] %>
+					<$eventcatcher tag="div" class="tc-tiddlyflex-pointerdown-eventcatcher" selector=".tc-tiddlyflex-sidebar-resizer" matchSelector=".tc-tiddlyflex-sidebar-resizer" $pointerdown=<<tiddlyflex-sidebar-resizer-pointerdown-actions>> $pointerup=<<tiddlyflex-sidebar-resizer-pointerup-actions>>>
+						<%if [{$:/state/sidebar/resizing}match[yes]] %>
+							<$eventcatcher tag="div" selector=".tc-tiddlyflex-pointermove" matchSelector=".tc-tiddlyflex-pointermove" class="tc-tiddlyflex-pointermove-eventcatcher" $pointerup=<<tiddlyflex-sidebar-resizer-pointerup-actions>> $pointermove=<<tiddlyflex-sidebar-resizer-pointermove-actions>> $pointerleave=<<tiddlyflex-sidebar-resizer-pointerup-actions>> $pointerout=<<tiddlyflex-sidebar-resizer-pointerup-actions>>>
+								<div class="tc-tiddlyflex-pointermove"/>
+							</$eventcatcher>
+						<% endif %>
+						<div class="tc-tiddlyflex-sidebar-resizer"/>
+					</$eventcatcher>
+				<% endif %>
 			</main>
 		</div>
 		<$macrocall $name="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner=<<tiddlyflex-layout-footer>>/>

@@ -29,13 +29,6 @@
 				"module-type": "storyview"
 			}
 		},{
-			"file": "modules/keyboard.js",
-			"fields": {
-				"type": "application/javascript",
-				"title": "$:/core/modules/keyboard.js",
-				"module-type": "global"
-			}
-		},{
 			"file": "modules/startup/story.js",
 			"fields": {
 				"type": "application/javascript",
