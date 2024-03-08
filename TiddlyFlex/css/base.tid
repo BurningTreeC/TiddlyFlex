@@ -36,7 +36,7 @@ tags: $:/tags/Stylesheet
 <% if [{$:/state/sidebar}match[no]] %>
 
 	.tc-tiddlyflex-main {
-		max-width: calc(100vw + ((100vw / 100) * {{{ [{$:/config/tiddlyflex/sidebar/width}removesuffix[%]] }}}));
+		max-width: calc(100vw + ((100vw / 100) * {{{ [{$:/config/tiddlyflex/sidebar/width}removesuffix[%]] ~[{$:/config/tiddlyflex/sidebar/width}removesuffix[px]] }}}));
 	}
 
 <% endif %>
@@ -84,13 +84,22 @@ tags: $:/tags/Stylesheet
 	align-items: stretch;
 	flex-grow: 1;
 	flex-shrink: 0;
-	flex-basis: calc(100% - {{$:/config/tiddlyflex/sidebar/width}});
-	-webkit-transition: flex-basis {{$:/config/AnimationDuration}}ms, max-width {{$:/config/AnimationDuration}}ms;
-	transition: flex-basis {{$:/config/AnimationDuration}}ms, max-width {{$:/config/AnimationDuration}}ms;
+	flex-basis: 100%;
 	overflow: hidden;
 	max-height: 100%;
-	max-width: calc(100vw - ((100vw / 100) * {{{ [{$:/config/tiddlyflex/sidebar/width}removesuffix[%]] ~[{$:/config/tiddlyflex/sidebar/width}removesuffix[px]] }}}));
+	max-width: 100%;
+	-webkit-transition: max-width {{$:/config/AnimationDuration}}ms;
+	transition: flex-basis {{$:/config/AnimationDuration}}ms, max-width {{$:/config/AnimationDuration}}ms;
 }
+
+<%if [{$:/state/sidebar}!match[no]] %>
+
+	.tc-tiddlyflex-story-river-container {
+		flex-basis: calc(100% - {{$:/config/tiddlyflex/sidebar/width}});
+		max-width: calc(100% - {{$:/config/tiddlyflex/sidebar/width}});
+	}
+
+<% endif %>
 
 <%if [[$:/state/sidebar/resizing]!is[missing]] %>
 
@@ -104,16 +113,7 @@ tags: $:/tags/Stylesheet
 <%if [[$:/state/sidebar/posx]!is[missing]then{$:/state/sidebar}!match[no]] %>
 
 	.tc-tiddlyflex-story-river-container {
-		flex-basis: min(calc({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px)),calc(100% - {{$:/config/tiddlyflex/sidebar/width}}));
-	}
-
-<% endif %>
-
-<% if [{$:/state/sidebar}match[no]] %>
-
-	.tc-tiddlyflex-story-river-container {
-		flex-basis: 100%;
-		max-width: 100vw;
+		flex-basis: max(calc({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px)),0px);
 	}
 
 <% endif %>
@@ -200,6 +200,7 @@ tags: $:/tags/Stylesheet
 	flex-shrink: 0;
 	max-height: 100%;
 	z-index: 998;
+	-webkit-box-shadow: 0px 0px 5px 0px <<colour tiddlyflex-box-shadow>>;
 	box-shadow: 0px 0px 5px 0px <<colour tiddlyflex-box-shadow>>;
 }
 
@@ -223,6 +224,7 @@ tags: $:/tags/Stylesheet
 <%if [{$:/state/sidebar}match[no]] %>
 
 	.tc-tiddlyflex-sidebar {
+		-webkit-box-shadow: 0px 0px 0px 0px transparent;
 		box-shadow: 0px 0px 0px 0px transparent;
 	}
 
