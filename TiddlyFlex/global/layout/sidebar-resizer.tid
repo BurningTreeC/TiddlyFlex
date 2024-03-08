@@ -5,7 +5,7 @@ tags: $:/tags/Global
 <%if [[$:/state/sidebar/resizing]is[missing]then<event-mousebutton>match[left]] %>
 	<$action-log filter=<<tdff.tiddlyflex-enlist-columns>>/>
 	<$action-setfield $tiddler="$:/state/sidebar/resizing" text="yes"/>
-	<$action-setfield $tiddler="$:/state/sidebar/posx" drag-diff=<<event-fromselected-posx>> selectednode-width=<<tv-selectednode-width>> text=<<event-fromcatcher-posx>> column-count={{{ [subfilter<tdff.tiddlyflex-enlist-columns>count[]] }}}/>
+	<$action-setfield $tiddler="$:/state/sidebar/posx" drag-diff=<<event-fromselected-posx>> selectednode-width=<<tv-selectednode-width>> widgetnode-width=<<tv-widgetnode-width>> text=<<event-fromcatcher-posx>> column-count={{{ [subfilter<tdff.tiddlyflex-enlist-columns>count[]] }}}/>
 <% endif %>
 \end
 \procedure tiddlyflex-sidebar-resizer-pointerup-actions()

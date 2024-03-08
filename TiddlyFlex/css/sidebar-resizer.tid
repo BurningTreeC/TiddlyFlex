@@ -75,13 +75,13 @@ tags: $:/tags/Stylesheet
 			<%if [[$:/state/sidebar/resizing]!is[missing]] %>
 
 				.tc-tiddlyflex-sidebar-resizer {
-					left: max(min(calc(100% - {{$:/config/tiddlyflex/sidebar/width}} - 39px),calc({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px) - 39px)),calc(({{{ [subfilter<tdff.tiddlyflex-enlist-columns>count[]] }}} * {{$:/config/tiddlyflex/story-river/min-width}}) + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px) - 39px));
+					left: max(min(calc(100% - {{$:/config/tiddlyflex/sidebar/width}} - 39px),calc({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px) - 39px)),calc(({{{ [subfilter<tdff.tiddlyflex-enlist-columns>count[]] }}} * {{$:/config/tiddlyflex/story-river/min-width}}) - 39px));
 				}
 
 			<% else %>
 
 				.tc-tiddlyflex-sidebar-resizer {
-					left: max(min(calc(100% - {{$:/config/tiddlyflex/sidebar/width}} - 39px),calc({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px) - 39px)),calc(({{$:/state/sidebar/posx!!column-count}} * {{$:/config/tiddlyflex/story-river/min-width}}) + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px) - 39px));
+					left: max(min(calc(100% - {{$:/config/tiddlyflex/sidebar/width}} - 39px),calc({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px) - 39px)),calc(({{$:/state/sidebar/posx!!column-count}} * {{$:/config/tiddlyflex/story-river/min-width}}) - 39px));
 				}
 
 			<% endif %>
