@@ -47,7 +47,7 @@ tags: $:/tags/Stylesheet
 			width: 52px;
 			border-radius: 26px 26px 0 0;
 			transform: rotate(-90deg);
-			background-color: <<colour muted-foreground>>;
+			background-color: <<colour tiddlyflex-sidebar-resizer>>;
 			z-index: 1002;
 			transition: left {{$:/config/AnimationDuration}}ms, visibility {{$:/config/AnimationDuration}}ms;
 			visibility: hidden;
