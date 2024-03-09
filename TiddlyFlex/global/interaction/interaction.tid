@@ -36,7 +36,6 @@ tags: $:/tags/Global
 <$action-log message="tm-cancel-tiddler"/>
 <%if [function[tiddlyflex-fullscreen]!is[blank]] %>
 	<$vars from={{{ [<event-param>!is[blank]] ~[<event-tiddlerTitle>] }}} to={{{ [<event-param>!is[blank]get[draft.of]] ~[<event-tiddlerTitle>get[draft.of]]  }}}>
-		<$action-log from=<<from>> to=<<to>>/>
 		<$action-sendmessage $message="tm-rename-tiddler" from={{{ [[$:/state/tiddlyflex/story-river/fullscreen/]addsuffix<from>] }}} to={{{ [[$:/state/tiddlyflex/story-river/fullscreen/]addsuffix<to>] }}}/>
 	</$vars>
 <% endif %>
@@ -52,10 +51,16 @@ tags: $:/tags/Global
 \end
 \procedure tiddlyflex-tm-close-tiddler-actions()
 \procedure actions() <<tiddlyflex-tm-message-actions tm-close-tiddler "param">>
+<%if [function[tiddlyflex-fullscreen]!is[blank]] %>
+	<$action-deletetiddler $tiddler={{{ [<event-param>!is[blank]addprefix[$:/state/tiddlyflex/story-river/fullscreen/]] ~[<event-tiddlerTitle>addprefix[$:/state/tiddlyflex/story-river/fullscreen/]] }}}/>
+<% endif %>
 <$macrocall $name="tiddlyflex-tm-message-navigator" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-delete-tiddler-actions()
 \procedure actions() <<tiddlyflex-tm-message-actions tm-delete-tiddler "param">>
+<%if [function[tiddlyflex-fullscreen]!is[blank]] %>
+	<$action-deletetiddler $filter="[all[tiddlers]prefix[$:/state/tiddlyflex/story-river/fullscreen/]]"/>
+<% endif %>
 <$macrocall $name="tiddlyflex-tm-message-navigator" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-edit-tiddler-actions()
@@ -85,6 +90,9 @@ tags: $:/tags/Global
 \end
 \procedure tiddlyflex-tm-navigate-actions()
 \procedure actions() <<tiddlyflex-navigate-story-river-actions>>
+<%if [function[tiddlyflex-fullscreen]!is[blank]] %>
+	<$action-deletetiddler $filter="[all[tiddlers]prefix[$:/state/tiddlyflex/story-river/fullscreen/]]"/>
+<% endif %>
 <$macrocall $name="tiddlyflex-tm-message-navigator" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-import-tiddlers-actions()
@@ -101,6 +109,11 @@ tags: $:/tags/Global
 \end
 \procedure tiddlyflex-tm-save-tiddler-actions()
 \procedure actions() <<tiddlyflex-tm-message-actions tm-save-tiddler "param">>
+<%if [function[tiddlyflex-fullscreen]!is[blank]] %>
+	<$vars from={{{ [<event-param>!is[blank]] ~[<event-tiddlerTitle>] }}} to={{{ [<event-param>!is[blank]get[draft.title]] ~[<event-tiddlerTitle>get[draft.title]]  }}}>
+		<$action-sendmessage $message="tm-rename-tiddler" from={{{ [[$:/state/tiddlyflex/story-river/fullscreen/]addsuffix<from>] }}} to={{{ [[$:/state/tiddlyflex/story-river/fullscreen/]addsuffix<to>] }}}/>
+	</$vars>	
+<% endif %>
 <$macrocall $name="tiddlyflex-tm-message-navigator" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-unfold-all-tiddlers-actions()
