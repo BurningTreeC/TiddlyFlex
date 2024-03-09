@@ -82,6 +82,7 @@ DraggableWidget.prototype.makeDraggable = function(domNode) {
 	} else if(this.dragStartListenerReference && this.dragEndListenerReference) {
 		domNode.removeEventListener("dragstart",this.dragStartListenerReference,false);
 		domNode.removeEventListener("dragend",this.dragEndListenerReference,false);
+		domNode.removeAttribute("draggable");
 	}
 };
 

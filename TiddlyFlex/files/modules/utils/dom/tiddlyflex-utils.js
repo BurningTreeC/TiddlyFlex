@@ -28,10 +28,8 @@ exports.makeTiddlyFlexDraggable = function(options) {
 		domNode = options.domNode,
 		removeEventHandler = options.remove;
 	// Make the dom node draggable (not necessary for anchor tags)
-	if(!removeEventHandler && !options.selector && ((domNode.tagName || "").toLowerCase() !== "a")) {
+	if(!options.selector && ((domNode.tagName || "").toLowerCase() !== "a")) {
 		domNode.setAttribute("draggable","true");
-	} else if(removeEventHandler) {
-		domNode.removeAttribute("draggable");
 	}
 	var dragStartHandlerFunction = function(event) {
 		if(event.dataTransfer === undefined) {
@@ -149,15 +147,13 @@ exports.makeTiddlyFlexDraggable = function(options) {
 		return false;
 	};
 
-	if(removeEventHandler === false) {
-		// Add event handlers
-		options.widget.dragStartListenerReference = dragStartHandlerFunction;
-		options.widget.dragEndListenerReference = dragEndHandlerFunction;
-		$tw.utils.addEventListeners(domNode,[
-			{name: "dragstart", handlerFunction: dragStartHandlerFunction},
-			{name: "dragend", handlerFunction: dragEndHandlerFunction}
-		]);
-	}
+	// Add event handlers
+	options.widget.dragStartListenerReference = dragStartHandlerFunction;
+	options.widget.dragEndListenerReference = dragEndHandlerFunction;
+	$tw.utils.addEventListeners(domNode,[
+		{name: "dragstart", handlerFunction: dragStartHandlerFunction},
+		{name: "dragend", handlerFunction: dragEndHandlerFunction}
+	]);
 };
 
 })();
