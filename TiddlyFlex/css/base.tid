@@ -238,13 +238,13 @@ tags: $:/tags/Stylesheet
 	<%if [[$:/state/sidebar/resizing]!is[missing]] %>
 
 		.tc-tiddlyflex-sidebar {
-			width: min(max(calc(100% - ({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px))),{{$:/config/tiddlyflex/sidebar/width}}),calc(100% - ({{{ [subfilter<tdff.tiddlyflex-enlist-columns>count[]] }}} * {{$:/config/tiddlyflex/story-river/min-width}})));
+			width: max(min(max(calc(100% - ({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px))),{{$:/config/tiddlyflex/sidebar/width}}),calc(100% - ({{{ [subfilter<tdff.tiddlyflex-enlist-columns>count[]] }}} * {{$:/config/tiddlyflex/story-river/min-width}}))),{{$:/config/tiddlyflex/sidebar/width}});
 		}
 
 	<% else %>
 
 		.tc-tiddlyflex-sidebar {
-			width: min(max(calc(100% - ({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px))),{{$:/config/tiddlyflex/sidebar/width}}),calc(100% - ({{$:/state/sidebar/posx!!column-count}} * {{$:/config/tiddlyflex/story-river/min-width}})));
+			width: max(min(max(calc(100% - ({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px))),{{$:/config/tiddlyflex/sidebar/width}}),calc(100% - ({{$:/state/sidebar/posx!!column-count}} * {{$:/config/tiddlyflex/story-river/min-width}}))),{{$:/config/tiddlyflex/sidebar/width}});
 		}
 
 	<% endif %>

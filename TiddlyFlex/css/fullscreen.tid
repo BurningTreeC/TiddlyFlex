@@ -22,6 +22,15 @@ tags: $:/tags/Stylesheet
 
 \end
 
+\define tiddlyflex-inherit-overflow-columns()
+\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
+
+.tc-tiddlyflex-story-river-wrapper-inner.tc-tiddlyflex-story-river-$(column)$ {
+	overflow-y: hidden;
+}
+
+\end
+
 <%if [function[tiddlyflex-layout]] %>
 
 	<$list filter="[all[tiddlers]prefix[$:/state/tiddlyflex/story-river/fullscreen/]]" variable="fullScreenTiddler">
@@ -39,6 +48,14 @@ tags: $:/tags/Stylesheet
 			</$let>
 
 		</$vars>
+
+		@media (max-width: 991.98px) {
+
+			.tc-tiddlyflex-story-river-container-inner {
+				overflow: hidden;
+			}
+
+		}
 
 		<$list filter="[subfilter<tdff.tiddlyflex-enlist-columns>]" variable="column">
 
