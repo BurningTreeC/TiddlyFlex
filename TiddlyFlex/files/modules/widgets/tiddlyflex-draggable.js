@@ -103,7 +103,7 @@ DraggableWidget.prototype.execute = function() {
 };
 
 
-DraggableWidget.prototype.assignDomNodeClasses = function() {
+DraggableWidget.prototype.updateDomNodeClasses = function() {
 	var domNodeClasses = this.domNodes[0].className.split(" "),
 		oldClasses = this.draggableClasses.split(" ");
 	this.draggableClasses = this.getAttribute("class");
@@ -116,7 +116,7 @@ DraggableWidget.prototype.assignDomNodeClasses = function() {
 	});
 	//Add new classes from updated class attribute.
 	$tw.utils.pushTop(domNodeClasses,this.draggableClasses);
-	this.domNodes[0].setAttribute("class",domNodeClasses.join(" "))
+	this.domNodes[0].setAttribute("class",domNodeClasses.join(" "));
 }
 
 /*
@@ -128,9 +128,6 @@ DraggableWidget.prototype.refresh = function(changedTiddlers) {
 		this.refreshSelf();
 		return true;
 	} else {
-		if(changedAttributes["class"]) {
-			this.assignDomNodeClasses();
-		}
 		if(changedAttributes["enable"]) {
 			this.dragEnable = this.getAttribute("enable","yes") === "yes";
 			this.makeDraggable(this.domNodes[0]);
@@ -139,6 +136,9 @@ DraggableWidget.prototype.refresh = function(changedTiddlers) {
 			} else if(!this.dragEnable && this.domNodes[0].classList.contains("tc-draggable")) {
 				this.domNodes[0].classList.remove("tc-draggable");
 			}
+		}
+		if(changedAttributes["class"]) {
+			this.updateDomNodeClasses();
 		}
 		this.assignAttributes(this.domNodes[0],{
 			changedAttributes: changedAttributes,
