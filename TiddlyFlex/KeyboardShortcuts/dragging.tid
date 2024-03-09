@@ -4,7 +4,6 @@ key: ((dragging))
 
 \import $:/plugins/BTC/TiddlyFlex/globals/layout/functions
 <%if [function[tiddlyflex-layout]] %>
-	<$action-log tiddlyflex-fullscreen={{{ [function[tiddlyflex-fullscreen]] }}}/>
 	<%if [function[tiddlyflex-fullscreen]is[blank]] %>
 		<%if [{$:/state/tiddlyflex/story-river/tiddler/drag-enabled}!match[yes]] %>
 			<$action-setfield $tiddler="$:/state/tiddlyflex/story-river/tiddler/drag-enabled" text="yes"/>
