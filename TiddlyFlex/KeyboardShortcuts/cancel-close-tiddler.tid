@@ -28,6 +28,9 @@ key: ((cancel-close-tiddler))
 	</$list>
 <% else %>
 	<<tiddlyflex-tiddler-is-draft-actions-draft-of-not-is-missing>>
+	<$set name="toTiddler" value={{{ [<tiddler>get[draft.of]] }}}>
+		<$action-sendmessage $message="tm-rename-tiddler" from={{{ [[$:/state/tiddlyflex/story-river/fullscreen/]addsuffix<tiddler>] }}} to={{{ [[$:/state/tiddlyflex/story-river/fullscreen/]addsuffix<toTiddler>] }}}/>
+	</$set>
 <% endif %>
 <$set name="scrollTiddler" value={{{ [subfilter<tdff.tiddlyflex-story-river-filter>after<tiddler>] ~[subfilter<tdff.tiddlyflex-story-river-filter>before<tiddler>] }}}>
 	<%if [<tiddler>get[draft.of]!is[shadow]is[missing]] %>
@@ -44,7 +47,7 @@ key: ((cancel-close-tiddler))
 </$set>
 \end
 \define actions()
-<$set name="tiddler" value={{{ [<tv-history-list>get[current-tiddler]] }}}>
+<$set name="tiddler" value=<<currentTiddler>>>
 	<%if [<tiddler>!is[draft]] %>
 		<$let scrollTiddler={{{ [subfilter<tdff.tiddlyflex-story-river-filter>] +[after<tiddler>] ~[before<tiddler>] }}}>
 			<$action-setfield $tiddler=<<tv-history-list>> current-tiddler=<<scrollTiddler>>/>
@@ -57,8 +60,10 @@ key: ((cancel-close-tiddler))
 				<<tiddlyflex-focus-flexcontainer>>
 			<% endif %>
 		</$let>
+		<$action-deletetiddler $tiddler={{{ [[$:/state/tiddlyflex/story-river/fullscreen/]addsuffix<tiddler>] }}}/>
 	<% else %>
 		<<tiddlyflex-tiddler-is-draft-actions>>
+		<$action-deletetiddler $tiddler={{{ [[$:/state/tiddlyflex/story-river/fullscreen/]addsuffix<tiddler>] }}}/>
 	<% endif %>
 </$set>
 \end

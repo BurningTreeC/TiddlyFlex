@@ -7,6 +7,9 @@ key: ((new-journal))
 {{$:/core/ui/Actions/new-journal}}
 \end
 <%if [function[tiddlyflex-layout]] %>
+	<%if [all[tiddlers]prefix[$:/state/tiddlyflex/story-river/fullscreen/]limit[1]] %>
+		<$action-deletetiddler $filter="[all[tiddlers]prefix[$:/state/tiddlyflex/story-river/fullscreen/]]"/>
+	<% endif %>
 	<$macrocall $name="tiddlyflex-simple-keyboard-navigator" actions=<<actions>>/>
 <% else %>
 	<$navigator story="$:/StoryList" history="$:/HistoryList" openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromOutsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>

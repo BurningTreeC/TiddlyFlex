@@ -7,6 +7,9 @@ key: ((edit-tiddler))
 <%if [subfilter<tdff.tiddlyflex-story-river-filter>] +[match<currentTiddler>] %>
 	<%if [<currentTiddler>!is[draft]] %>
 		<$action-sendmessage $message="tm-edit-tiddler" $param=<<currentTiddler>>/>
+		<%if [[$:/state/tiddlyflex/story-river/fullscreen/]addsuffix<currentTiddler>!is[missing]] %>
+			<$action-sendmessage $message="tm-rename-tiddler" from={{{ [[$:/state/tiddlyflex/story-river/fullscreen/]addsuffix<currentTiddler>] }}} to={{{ [[$:/state/tiddlyflex/story-river/fullscreen/Draft of ']addsuffix<currentTiddler>addsuffix[']] }}}/>
+		<% endif %>
 	<% endif %>
 <% endif %>
 \end

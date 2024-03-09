@@ -41,7 +41,7 @@ ClassicStoryView.prototype.navigateTo = function(historyInfo) {
 ClassicStoryView.prototype.insert = function(widget) {
 	var duration = $tw.utils.getAnimationDuration(),
 		tiddlerTitle = widget.parseTreeNode.itemTitle;
-	if(duration && !widget.wiki.tiddlerExists("$:/state/dragging") && !widget.wiki.tiddlerExists("$:/state/tiddlyflex/adding/" + tiddlerTitle)) {
+	if(duration && !widget.wiki.tiddlerExists("$:/state/dragging") && !widget.wiki.tiddlerExists("$:/state/tiddlyflex/adding/" + tiddlerTitle) && !widget.wiki.tiddlerExists("$:/state/tiddlyflex/story-river/fullscreen/" + tiddlerTitle)) {
 		var targetElement = widget.findFirstDomNode();
 		// Abandon if the list entry isn't a DOM element (it might be a text node)
 		if(!targetElement || targetElement.nodeType === Node.TEXT_NODE) {
@@ -88,7 +88,7 @@ ClassicStoryView.prototype.insert = function(widget) {
 ClassicStoryView.prototype.remove = function(widget) {
 	var duration = $tw.utils.getAnimationDuration(),
 		tiddlerTitle = widget.parseTreeNode.itemTitle;
-	if(duration && !widget.wiki.tiddlerExists("$:/state/dragging") && !widget.wiki.tiddlerExists("$:/state/tiddlyflex/removing/" + tiddlerTitle)) {
+	if(duration && !widget.wiki.tiddlerExists("$:/state/dragging") && !widget.wiki.tiddlerExists("$:/state/tiddlyflex/removing/" + tiddlerTitle) && !widget.wiki.tiddlerExists("$:/state/tiddlyflex/story-river/fullscreen/" + tiddlerTitle)) {
 		var targetElement = widget.findFirstDomNode(),
 			removeElement = function() {
 				widget.removeChildDomNodes();

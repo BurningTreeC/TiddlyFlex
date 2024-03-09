@@ -55,5 +55,7 @@ key: ((move-right))
 <% endif %>
 \end
 <%if [function[tiddlyflex-layout]] %>
-	<$macrocall $name="tiddlyflex-multi-column-keyboard-navigator" actions=<<actions>>/>
+	<%if [function[tiddlyflex-fullscreen]is[blank]] %>
+		<$macrocall $name="tiddlyflex-multi-column-keyboard-navigator" actions=<<actions>>/>
+	<% endif %>
 <% endif %>

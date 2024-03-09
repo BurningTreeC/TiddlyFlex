@@ -33,5 +33,7 @@ key: ((navigate-up))
 <% endif %>
 \end
 <%if [function[tiddlyflex-layout]] %>
-	<$macrocall $name="tiddlyflex-keyboard-navigator" actions=<<actions>>/>
+	<%if [function[tiddlyflex-fullscreen]is[blank]] %>
+		<$macrocall $name="tiddlyflex-keyboard-navigator" actions=<<actions>>/>
+	<% endif %>
 <% endif %>

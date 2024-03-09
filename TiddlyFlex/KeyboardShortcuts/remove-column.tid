@@ -14,7 +14,9 @@ key: ((remove-column))
 </$set>
 \end
 <%if [function[tiddlyflex-layout]] %>
-	<$let columns={{{ [list[$:/columns]count[]] ~1 }}}>
-		<<remove-column-actions>>
-	</$let>
+	<%if [function[tiddlyflex-fullscreen]is[blank]] %>
+		<$let columns={{{ [list[$:/columns]count[]] ~1 }}}>
+			<<remove-column-actions>>
+		</$let>
+	<% endif %>
 <% endif %>
