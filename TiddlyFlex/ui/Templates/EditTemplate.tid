@@ -34,7 +34,7 @@ code-body: yes
 	role="region"
 	aria-label={{$:/language/EditTemplate/Caption}}>
 	<$fieldmangler>
-		<$draggable enable={{{ [{$:/state/tiddlyflex/story-river/tiddler/drag-enabled}match[yes]then[$:/state/story-river/full-screen/]addsuffix<currentTiddler>is[missing]then[yes]] ~[[no]] }}} tiddler=<<currentTiddler>> startactions=<<tiddlyflex-drag-start-actions>> endactions=<<tiddlyflex-drag-end-actions>> class="tc-tiddler-frame">
+		<$tiddlyflex-draggable enable={{{ [{$:/state/tiddlyflex/story-river/tiddler/drag-enabled}match[yes]then[$:/state/story-river/full-screen/]addsuffix<currentTiddler>is[missing]then[yes]] ~[[no]] }}} tiddler=<<currentTiddler>> startactions=<<tiddlyflex-drag-start-actions>> endactions=<<tiddlyflex-drag-end-actions>> class="tc-tiddler-frame">
 			<$vars
 				storyTiddler=<<currentTiddler>>
 				newTagNameTiddler=<<qualify "$:/temp/NewTagName">>
@@ -58,6 +58,6 @@ code-body: yes
 				<$droppable class="tc-tiddlyflex-droppable-top-half" actions=<<tiddlyflex-top-drop-actions>> dragenteractions=<<tiddlyflex-top-dragenter-actions>>/>
 				<$droppable class="tc-tiddlyflex-droppable-bottom-half" actions=<<tiddlyflex-bottom-drop-actions>> dragenteractions=<<tiddlyflex-bottom-dragenter-actions>>/>
 			<% endif %>
-		</$draggable>
+		</$tiddlyflex-draggable>
 	</$fieldmangler>
 </div>

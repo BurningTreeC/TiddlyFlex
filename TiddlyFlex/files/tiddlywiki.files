@@ -35,6 +35,20 @@
 				"title": "$:/core/modules/startup/story.js",
 				"module-type": "startup"
 			}
+		},{
+			"file": "modules/utils/dom/tiddlyflex-utils.js",
+			"fields": {
+				"type": "application/javascript",
+				"title": "$:/plugins/BTC/TiddlyFlex/modules/utils/dom/tiddlyflex-utils.js",
+				"module-type": "utils"
+			}
+		},{
+			"file": "modules/widgets/tiddlyflex-draggable.js",
+			"fields": {
+				"type": "application/javascript",
+				"title": "$:/plugins/BTC/TiddlyFlex/modules/widgets/tiddlyflex-draggable.js",
+				"module-type": "widget"
+			}
 		}
 	]
 }
