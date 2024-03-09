@@ -21,7 +21,7 @@ tags: $:/tags/Stylesheet
 
 	<%if [[$:/state/sidebar/posx]!is[missing]] %>
 
-		<$vars sidebarWidthPixels={{{ [{$:/config/tiddlyflex/sidebar/width}removesuffix[px]] }}} sidebarWidthPercentage={{{ [{$:/config/tiddlyflex/sidebar/width}removesuffix[%]] }}} drag-diff={{$:/state/sidebar/posx!!drag-diff}} selectedNodeWidth={{$:/state/sidebar/posx!!selectedNodeWidth}} containerWidth={{$:/state/sidebar/posx!!widgetnode-width}} columnCount={{{ [subfilter<tdff.tiddlyflex-enlist-columns>count[]] }}}>
+		<$vars sidebarWidthPixels={{{ [{$:/config/tiddlyflex/sidebar/width}removesuffix[px]] }}} sidebarWidthPercentage={{{ [{$:/config/tiddlyflex/sidebar/width}removesuffix[%]] }}} drag-diff={{$:/state/sidebar/posx!!drag-diff}} selectedNodeWidth={{$:/state/sidebar/posx!!selectedNodeWidth}} containerWidth={{$:/state/sidebar/posx!!widgetnode-width}} columnCount={{{ [subfilter<tdff.tiddlyflex-enlist-columns>count[]] }}} minStoryWidth={{{ [{$:/config/tiddlyflex/story-river/min-width}removesuffix[px]] }}}>
 
 			<%if [<sidebarWidthPixels>!is[blank]!match[]] %>
 
@@ -45,7 +45,7 @@ tags: $:/tags/Stylesheet
 
 				<$set name="sidebarWidthPercentage" value={{{ [<containerWidth>divide[100]multiply<sidebarWidthPercentage>] }}}>
 
-					<$let sidebarResizerWidth={{{ [<selectedNodeWidth>divide[2]] }}} gripDiff={{{ [<sidebarResizerWidth>subtract<drag-diff>] }}} sidebarWidth={{{ [<containerWidth>subtract{$:/state/sidebar/posx}add<gripDiff>] }}} storyContainerWidth={{{ [<containerWidth>subtract<sidebarWidth>] }}} singleColumnWidth={{{ [<storyContainerWidth>divide<columnCount>] }}} originalStoryContainerWidth={{{ [<containerWidth>subtract<sidebarWidthPercentage>] }}} originalSingleColumnWidth={{{ [<originalStoryContainerWidth>divide<columnCount>] }}} narrowWidthWhenSidebarShown={{{ [<originalStoryContainerWidth>divide{$:/config/tiddlyflex/story-river/tiddler/controls-breakpoint-sidebar}] }}}>
+					<$let originalStoryContainerWidth={{{ [<containerWidth>subtract<sidebarWidthPercentage>] }}} originalSingleColumnWidth={{{ [<originalStoryContainerWidth>divide<columnCount>] }}} sidebarResizerWidth={{{ [<selectedNodeWidth>divide[2]] }}} gripDiff={{{ [<sidebarResizerWidth>subtract<drag-diff>] }}} sidebarWidth={{{ [<containerWidth>subtract{$:/state/sidebar/posx}add<gripDiff>] }}} storyContainerWidth={{{ [<containerWidth>subtract<sidebarWidth>] }}} singleColumnWidth={{{ [<storyContainerWidth>divide<columnCount>] +[compare:number:gt<minStoryWidth>] ~[<minStoryWidth>] }}} narrowWidthWhenSidebarShown={{{ [<originalStoryContainerWidth>divide{$:/config/tiddlyflex/story-river/tiddler/controls-breakpoint-sidebar}] }}}>
 
 						<%if [<singleColumnWidth>compare:number:lteq<narrowWidthWhenSidebarShown>] %>
 
