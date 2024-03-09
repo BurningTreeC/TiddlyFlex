@@ -7,6 +7,7 @@ column-up: Select the next column at the right
 dragging: Toggle dragging on or off
 edit-tiddler: Edit the current tiddler
 filter-river: Filter the story river by the search input
+fullscreen: Toggle fullscreen view of the current tiddler
 move-down: Move the current tiddler down
 move-left: Move the current tiddler to the left
 move-right: Move the current tiddler to the right

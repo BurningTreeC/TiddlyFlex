@@ -1,0 +1,17 @@
+title: $:/plugins/BTC/TiddlyFlex/KeyboardShortcuts/fullscreen
+tags: $:/tags/KeyboardShortcut
+key: ((fullscreen))
+
+\import $:/plugins/BTC/TiddlyFlex/privates/navigation $:/plugins/BTC/TiddlyFlex/globals/layout/functions
+\define actions()
+<%if [subfilter<tdff.tiddlyflex-story-river-filter>] +[match<currentTiddler>] %>
+	<%if [[$:/state/tiddlyflex/story-river/fullscreen/]addsuffix<currentTiddler>!is[missing]] %>
+		<$action-deletetiddler $tiddler={{{ [[$:/state/tiddlyflex/story-river/fullscreen/]addsuffix<currentTiddler>] }}}/>
+	<% else %>
+		<$action-setfield $tiddler={{{ [[$:/state/tiddlyflex/story-river/fullscreen/]addsuffix<currentTiddler>] }}} text="yes" column=<<currentColumn>>/>
+	<% endif %>
+<% endif %>
+\end
+<%if [function[tiddlyflex-layout]] %>
+	<$macrocall $name="tiddlyflex-keyboard-navigator" actions=<<actions>>/>
+<% endif %>
