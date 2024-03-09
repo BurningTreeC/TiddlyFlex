@@ -29,8 +29,8 @@ tags: $:/tags/Stylesheet
 	max-height: 100%;
 	max-width: 100vw;
 	position: relative;
-	-webkit-transition: max-width {{$:/config/AnimationDuration}}ms;
-	transition: max-width {{$:/config/AnimationDuration}}ms;
+	-webkit-transition: max-width {{$:/config/AnimationDuration}}ms linear;
+	transition: max-width {{$:/config/AnimationDuration}}ms linear;
 }
 
 <% if [{$:/state/sidebar}match[no]] %>
@@ -88,8 +88,8 @@ tags: $:/tags/Stylesheet
 	overflow: hidden;
 	max-height: 100%;
 	max-width: 100%;
-	-webkit-transition: max-width {{$:/config/AnimationDuration}}ms;
-	transition: flex-basis {{$:/config/AnimationDuration}}ms, max-width {{$:/config/AnimationDuration}}ms;
+	-webkit-transition: flex-basis {{$:/config/AnimationDuration}}ms linear, max-width {{$:/config/AnimationDuration}}ms linear;
+	transition: flex-basis {{$:/config/AnimationDuration}}ms linear, max-width {{$:/config/AnimationDuration}}ms linear;
 }
 
 <%if [{$:/state/sidebar}!match[no]] %>
@@ -115,13 +115,13 @@ tags: $:/tags/Stylesheet
 	<%if [[$:/state/sidebar/resizing]!is[missing]] %>
 
 		.tc-tiddlyflex-story-river-container {
-			flex-basis: max(calc({{$:/state/sidebar/posx}}px - (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px)),calc({{{ [subfilter<tdff.tiddlyflex-enlist-columns>count[]] }}} * {{$:/config/tiddlyflex/story-river/min-width}}));
+			flex-basis: min(max(calc({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px)),calc({{{ [subfilter<tdff.tiddlyflex-enlist-columns>count[]] }}} * {{$:/config/tiddlyflex/story-river/min-width}})),calc(100% - (100% - ({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px)))));
 		}
 
 	<% else %>
 
 		.tc-tiddlyflex-story-river-container {
-			flex-basis: max(calc({{$:/state/sidebar/posx}}px - (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px)),calc({{$:/state/sidebar/posx!!column-count}} * {{$:/config/tiddlyflex/story-river/min-width}}));
+			flex-basis: min(max(calc({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px)),calc({{$:/state/sidebar/posx!!column-count}} * {{$:/config/tiddlyflex/story-river/min-width}})),calc(100% - (100% - ({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px)))));
 		}
 
 	<% endif %>
@@ -227,7 +227,8 @@ tags: $:/tags/Stylesheet
 
 	.tc-tiddlyflex-sidebar {
 		width: {{$:/config/tiddlyflex/sidebar/width}};
-		transition: box-shadow {{$:/config/AnimationDuration}}ms;
+		-webkit-transition: box-shadow {{$:/config/AnimationDuration}}ms linear;
+		transition: box-shadow {{$:/config/AnimationDuration}}ms linear;
 	}
 
 }

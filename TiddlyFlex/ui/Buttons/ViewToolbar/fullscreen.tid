@@ -1,0 +1,36 @@
+title: $:/plugins/BTC/TiddlyFlex/ui/Buttons/fullscreen
+tags: $:/tags/ViewToolbar $:/tags/EditToolbar
+
+\define get-button-class(class)
+btc-fullscreen-button $(tv-config-toolbar-class)$ tc-toolbar-icon $class$
+\end
+\define get-fullscreen-tooltip(onoff)
+fullscreen $onoff$ - [$(fullScreenShortcut)$]
+\end
+
+\whitespace trim
+<$vars fullScreenShortcut=<<displayshortcuts ((fullscreen))>> state={{{ [[$:/state/tiddlyflex/story-river/fullscreen/]addsuffix<currentTiddler>] }}}>
+	<%if [<state>!is[missing]get[text]!match[yes]] ~[<state>is[missing]] %>
+		<$button class=<<get-button-class>> tooltip=<<get-fullscreen-tooltip "on">>>
+			<$action-setfield $tiddler=<<state>> text="yes" column=<<tiddlyFlexColumn>>/>
+			<%if [<tv-config-toolbar-icons>match[yes]] %>
+				{{$:/core/images/full-screen-button}}
+			<% endif %>
+			<%if [<tv-config-toolbar-text>match[yes]] %>
+				<span class="tc-btn-text"><$text text="fullscreen"/></span>
+			<% endif %>
+		</$button>
+	<% elseif [<state>get[text]match[yes]] %>
+		<$button class=<<get-button-class "tc-selected">> tooltip=<<get-fullscreen-tooltip "off">>>
+			<$list filter="[all[tiddlers]prefix[$:/state/tiddlyflex/story-river/fullscreen/]]" variable="fullScreenTiddler">
+				<$action-deletetiddler $tiddler=<<fullScreenTiddler>>/>
+			</$list>
+			<%if [<tv-config-toolbar-icons>match[yes]] %>
+				{{$:/core/images/full-screen-button}}
+			<% endif %>
+			<%if [<tv-config-toolbar-text>match[yes]] %>
+				<span class="tc-btn-text"><$text text="fullscreen"/></span>
+			<% endif %>
+		</$button>
+	<% endif %>
+</$vars>

@@ -49,7 +49,7 @@ tags: $:/tags/Stylesheet
 			transform: rotate(-90deg);
 			background-color: <<colour tiddlyflex-sidebar-resizer>>;
 			z-index: 1002;
-			transition: left {{$:/config/AnimationDuration}}ms, visibility {{$:/config/AnimationDuration}}ms;
+			transition: left {{$:/config/AnimationDuration}}ms linear, visibility {{$:/config/AnimationDuration}}ms linear;
 			visibility: hidden;
 		}
 

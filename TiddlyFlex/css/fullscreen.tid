@@ -1,0 +1,51 @@
+title: $:/plugins/BTC/TiddlyFlex/styles/fullscreen
+tags: $:/tags/Stylesheet
+
+\define tiddlyflex-view-tiddler-full-screen()
+\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
+
+.tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"] {
+	position: fixed;
+	left: 0;
+	top: 0;
+	height: 100vh;
+	width: 100vw;
+	z-index: 1004;
+}
+
+.tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"] > .tc-tiddler-frame {
+	min-height: 100%;
+	height: 100%;
+	overflow-y: scroll;
+	scroll-behavior: smooth;
+}
+
+\end
+
+<%if [function[tiddlyflex-layout]] %>
+
+	<$list filter="[all[tiddlers]prefix[$:/state/tiddlyflex/story-river/fullscreen/]]" variable="fullScreenTiddler">
+
+		.tc-tiddlyflex-story-river-wrapper-inner {
+			z-index: initial;
+		}
+
+		<$vars column={{{ [<fullScreenTiddler>get[column]] }}} fullScreenTiddler={{{ [<fullScreenTiddler>removeprefix[$:/state/tiddlyflex/story-river/fullscreen/]] }}}>
+
+			<$let tiddlerTitle=<<fullScreenTiddler>> tiddlerTitleCSSEscaped={{{ [<tiddlerTitle>escapecss[]] }}}>
+
+				<<tiddlyflex-view-tiddler-full-screen>>
+
+			</$let>
+
+		</$vars>
+
+		<$list filter="[subfilter<tdff.tiddlyflex-enlist-columns>]" variable="column">
+
+			<<tiddlyflex-inherit-overflow-columns>>
+
+		</$list>
+
+	</$list>
+
+<% endif %>
