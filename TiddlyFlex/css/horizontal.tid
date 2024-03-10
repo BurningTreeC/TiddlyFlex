@@ -1,0 +1,43 @@
+title: $:/plugins/BTC/TiddlyFlex/styles/horizontal
+tags: $:/tags/Stylesheet
+
+<%if [{$:/config/tiddlyflex/story-river/horizontal}match[yes]] %>
+
+	@media (min-width: 992px) {
+
+		<<tiddlyflex-css-horizontal-view>>
+
+		.tc-tiddlyflex-main {
+			overflow-x: clip;
+		}
+
+		.tc-tiddlyflex-sidebar {
+			position: absolute;
+			z-index: 998;
+		}
+
+		.tc-tiddlyflex-leftbar {
+			display: block;
+		}
+
+		.tc-tiddlyflex-sidebar-shown-eventcatcher {
+			display: none;
+		}
+
+		.tc-tiddlyflex-story-river-container {
+			flex-basis: 100%;
+			max-width: 100%;
+		}
+
+		.tc-tiddlyflex-story-river-container-inner, .tc-tiddlyflex-story-river-wrapper {
+			flex-basis: 100%;
+			width: 100%;
+		}
+
+		.tc-tiddlyflex-story-river-container-inner {
+			z-index: 600;
+		}
+
+	}
+
+<% endif %>

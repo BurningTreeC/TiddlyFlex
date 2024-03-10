@@ -3,58 +3,10 @@ tags: $:/tags/Stylesheet
 
 @media (max-width: 991.98px) {
 
-	.tc-tiddlyflex-main-wrapper {
-		overflow-x: auto;
-	}
-
-	.tc-tiddlyflex-main {
-		overflow-x: hidden;
-	}
+	<<tiddlyflex-css-horizontal-view>>
 
 	.tc-tiddlyflex-sidebar {
-		position: fixed;
-		top:0;
-		right: 0;
-		bottom: 0;
 		width: 90%;
-		z-index: 1001;
-		background-color: <<colour page-background>>;
-		transform: translate3d(0,0,0);
-		-webkit-transition: transform {{$:/config/AnimationDuration}}ms;
-		transition: transform {{$:/config/AnimationDuration}}ms, box-shadow {{$:/config/AnimationDuration}}ms;
-	}
-
-	<%if [{$:/state/sidebar}match[no]] %>
-
-		.tc-tiddlyflex-sidebar {
-			transform: translate3d(100%,0,0);
-		}
-
-	<% endif %>
-
-	.tc-tiddlyflex-leftbar {
-		display: none;
-	}
-
-	.tc-tiddlyflex-story-river-container-inner {
-		overflow-x: auto;
-		width: 100vw;
-		scroll-behavior: smooth;
-		scroll-snap-type: x mandatory;
-	}
-
-	.tc-tiddlyflex-story-river-wrapper {
-		width: 100vw;
-		flex-basis: 100vw;
-		scroll-snap-align: start;
-		overflow: hidden;
-	}
-
-	.tc-tiddlyflex-sidebar-hide.tc-tiddlyflex-sidebar-shown {
-		visibility: visible;
-		background: rgba(0,0,0,.6);
-		-webkit-transition: background {{$:/config/AnimationDuration}}ms 0s;
-		transition: background {{$:/config/AnimationDuration}}ms 0s;
 	}
 
 }

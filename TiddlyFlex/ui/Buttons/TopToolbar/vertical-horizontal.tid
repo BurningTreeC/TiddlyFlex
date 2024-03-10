@@ -1,0 +1,16 @@
+title: $:/plugins/BTC/TiddlyFlex/ui/Buttons/TopToolbar/vertical-horizontal
+tags: $:/tags/TopRightBar
+list-before:
+
+\whitespace trim
+<%if [function[tiddlyflex-layout]] %>
+	<$button class="tc-btn-invisible">
+		<%if [{$:/config/tiddlyflex/story-river/horizontal}match[yes]] %>
+			<$action-deletetiddler $tiddler="$:/config/tiddlyflex/story-river/horizontal"/>
+			{{$:/plugins/BTC/TiddlyFlex/icons/horizontal}}
+		<% else %>
+			<$action-setfield $tiddler="$:/config/tiddlyflex/story-river/horizontal" text="yes"/>
+			{{$:/plugins/BTC/TiddlyFlex/icons/vertical}}
+		<% endif %>
+	</$button>
+<% endif %>
