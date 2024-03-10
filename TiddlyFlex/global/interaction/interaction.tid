@@ -101,6 +101,9 @@ tags: $:/tags/Global
 \end
 \procedure tiddlyflex-tm-new-tiddler-actions()
 \procedure actions() <<tiddlyflex-tm-message-actions tm-new-tiddler "tiddlerTitle type param">>
+<%if [function[tiddlyflex-fullscreen]!is[blank]] %>
+	<$action-deletetiddler $filter="[all[tiddlers]prefix[$:/state/tiddlyflex/story-river/fullscreen/]]"/>
+<% endif %>
 <$macrocall $name="tiddlyflex-tm-message-navigator" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-perform-import-actions()
