@@ -4,11 +4,13 @@ list-before:
 
 \whitespace trim
 <%if [function[tiddlyflex-layout]] %>
-	<$button class="tc-btn-invisible">
+	<$button class="tc-btn-invisible tc-tiddlyflex-vertical-horizontal-btn">
 		<%if [{$:/config/tiddlyflex/story-river/horizontal}match[yes]] %>
 			<$action-deletetiddler $tiddler="$:/config/tiddlyflex/story-river/horizontal"/>
+			<$action-setfield $tiddler="$:/state/tiddlyflex/story-river/horizontal/changed" text="yes"/>
 			{{$:/plugins/BTC/TiddlyFlex/icons/horizontal}}
 		<% else %>
+			<$action-deletetiddler $tiddler="$:/state/tiddlyflex/story-river/horizontal/changed"/>
 			<$action-setfield $tiddler="$:/config/tiddlyflex/story-river/horizontal" text="yes"/>
 			{{$:/plugins/BTC/TiddlyFlex/icons/vertical}}
 		<% endif %>

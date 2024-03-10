@@ -1,0 +1,13 @@
+title: $:/core/ui/KeyboardShortcuts/toggle-sidebar
+tags: $:/tags/KeyboardShortcut
+key: ((toggle-sidebar))
+
+\whitespace trim
+<%if [[$:/state/tiddlyflex/story-river/horizontal/changed]!is[missing]] %>
+	<$action-deletetiddler $tiddler="$:/state/tiddlyflex/story-river/horizontal/changed"/>
+<% endif %>
+<%if [[$:/state/sidebar]is[missing]] [{$:/state/sidebar}match[yes]] %>
+	<$action-setfield $tiddler="$:/state/sidebar" text="no"/>
+<% else %>
+	<$action-setfield $tiddler="$:/state/sidebar" text="yes"/>
+<% endif %>

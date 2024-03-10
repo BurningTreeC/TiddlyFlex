@@ -9,6 +9,8 @@ tags: $:/tags/Stylesheet
 
 		.tc-tiddlyflex-main {
 			overflow-x: clip;
+			-webkit-transition: none;
+			transition: none;
 		}
 
 		.tc-tiddlyflex-sidebar {
@@ -27,6 +29,8 @@ tags: $:/tags/Stylesheet
 		.tc-tiddlyflex-story-river-container {
 			flex-basis: 100%;
 			max-width: 100%;
+			-webkit-transition: none;
+			transition: none;
 		}
 
 		.tc-tiddlyflex-story-river-container-inner, .tc-tiddlyflex-story-river-wrapper {
