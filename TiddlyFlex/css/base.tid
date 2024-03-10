@@ -110,7 +110,7 @@ tags: $:/tags/Stylesheet
 
 <% endif %>
 
-<%if [[$:/state/sidebar/posx]!is[missing]] %>
+<%if [{$:/config/tiddlyflex/sidebar/resizer}match[yes]then[$:/state/sidebar/posx]!is[missing]] %>
 
 	<%if [[$:/state/sidebar/resizing]!is[missing]] %>
 
@@ -233,7 +233,7 @@ tags: $:/tags/Stylesheet
 
 }
 
-<%if [[$:/state/sidebar/posx]!is[missing]] %>
+<%if [{$:/config/tiddlyflex/sidebar/resizer}match[yes]then[$:/state/sidebar/posx]!is[missing]] %>
 
 	<%if [[$:/state/sidebar/resizing]!is[missing]] %>
 
