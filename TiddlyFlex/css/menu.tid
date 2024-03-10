@@ -21,35 +21,17 @@ tags: $:/tags/Stylesheet
 
 	<%if [[$:/state/sidebar/posx]!is[missing]] %>
 
-		<$vars sidebarWidthPixels={{{ [{$:/config/tiddlyflex/sidebar/width}removesuffix[px]] }}} sidebarWidthPercentage={{{ [{$:/config/tiddlyflex/sidebar/width}removesuffix[%]] }}} drag-diff={{$:/state/sidebar/posx!!drag-diff}} selectedNodeWidth={{$:/state/sidebar/posx!!selectedNodeWidth}} containerWidth={{$:/state/sidebar/posx!!widgetnode-width}} columnCount={{{ [subfilter<tdff.tiddlyflex-enlist-columns>count[]] }}} minStoryWidth={{{ [{$:/config/tiddlyflex/story-river/min-width}removesuffix[px]] }}}>
+		<$vars sidebarWidthPixels={{{ [{$:/config/tiddlyflex/sidebar/width}removesuffix[px]] }}} sidebarWidthPercentage={{{ [{$:/config/tiddlyflex/sidebar/width}removesuffix[%]] }}} drag-diff={{$:/state/sidebar/posx!!drag-diff}} selectednodeWidth={{$:/state/sidebar/posx!!selectednode-width}} containerWidth={{$:/state/sidebar/posx!!widgetnode-width}} columnCount={{{ [subfilter<tdff.tiddlyflex-enlist-columns>count[]] }}} minStoryWidth={{{ [{$:/config/tiddlyflex/story-river/min-width}removesuffix[px]] }}} leftbarWidth={{$:/state/sidebar/posx!!leftbar-width}}>
 
 			<%if [<sidebarWidthPixels>!is[blank]!match[]] %>
 
-				<$let originalStoryContainerWidth={{{ [<containerWidth>subtract<sidebarWidthPixels>] }}} originalSingleColumnWidth={{{ [<originalStoryContainerWidth>divide<columnCount>] }}} sidebarResizerWidth={{{ [<selectedNodeWidth>divide[2]] }}} gripDiff={{{ [<sidebarResizerWidth>subtract<drag-diff>] }}} sidebarWidth={{{ [<containerWidth>subtract{$:/state/sidebar/posx}add<gripDiff>] }}} storyContainerWidth={{{ [<containerWidth>subtract<sidebarWidth>] }}} singleColumnWidth={{{ [<storyContainerWidth>divide<columnCount>] +[compare:number:gt<minStoryWidth>] ~[<minStoryWidth>] }}} narrowWidthWhenSidebarShown={{{ [<originalStoryContainerWidth>divide{$:/config/tiddlyflex/story-river/tiddler/controls-breakpoint-sidebar}] }}}>
+				<$let viewportWidth={{$:/state/DynaView/ViewportDimensions/Width}} containerWidth={{{ [<viewportWidth>!is[blank]subtract<leftbarWidth>] ~[<containerWidth>] }}}>
 
-					<%if [<singleColumnWidth>compare:number:lteq<narrowWidthWhenSidebarShown>] %>
-
-						.tc-tiddler-controls >  button:not(.tc-tiddlyflex-shown-when-narrow) {
-							display: none;
-						}
-
-						.tc-tiddler-controls .tc-tiddlyflex-shown-when-narrow {
-							display: block;
-						}
-
-					<% endif %>
-
-				</$let>
-
-			<% elseif [<sidebarWidthPercentage>!is[blank]!match[]] %>
-
-				<$set name="sidebarWidthPercentage" value={{{ [<containerWidth>divide[100]multiply<sidebarWidthPercentage>] }}}>
-
-					<$let originalStoryContainerWidth={{{ [<containerWidth>subtract<sidebarWidthPercentage>] }}} originalSingleColumnWidth={{{ [<originalStoryContainerWidth>divide<columnCount>] }}} sidebarResizerWidth={{{ [<selectedNodeWidth>divide[2]] }}} gripDiff={{{ [<sidebarResizerWidth>subtract<drag-diff>] }}} sidebarWidth={{{ [<containerWidth>subtract{$:/state/sidebar/posx}add<gripDiff>] }}} storyContainerWidth={{{ [<containerWidth>subtract<sidebarWidth>] }}} singleColumnWidth={{{ [<storyContainerWidth>divide<columnCount>] +[compare:number:gt<minStoryWidth>] ~[<minStoryWidth>] }}} narrowWidthWhenSidebarShown={{{ [<originalStoryContainerWidth>divide{$:/config/tiddlyflex/story-river/tiddler/controls-breakpoint-sidebar}] }}}>
+					<$let originalStoryContainerWidth={{{ [<containerWidth>subtract<sidebarWidthPixels>] }}} originalSingleColumnWidth={{{ [<originalStoryContainerWidth>divide<columnCount>] }}} sidebarResizerWidth={{{ [<selectednodeWidth>divide[2]] }}} gripDiff={{{ [<sidebarResizerWidth>subtract<drag-diff>] }}} minStoryContainerWidth={{{ [<minStoryWidth>multiply<columnCount>] }}} sidebarWidthMax={{{ [<containerWidth>subtract<minStoryContainerWidth>] }}} sidebarWidth={{{ [<containerWidth>subtract{$:/state/sidebar/posx}add<gripDiff>compare:number:lteq<sidebarWidthPixels>then<sidebarWidthPixels>] ~[<containerWidth>subtract{$:/state/sidebar/posx}add<gripDiff>compare:number:gteq<sidebarWidthMax>then<sidebarWidthMax>] ~[<containerWidth>subtract{$:/state/sidebar/posx}add<gripDiff>] }}} maxStoryContainerWidth={{{ [<containerWidth>subtract<sidebarWidthPixels>] }}} storyContainerWidth={{{ [<containerWidth>subtract<sidebarWidth>compare:number:gteq<minStoryContainerWidth>] ~[<minStoryContainerWidth>] }}} singleColumnWidth={{{ [<storyContainerWidth>divide<columnCount>compare:number:gt<minStoryWidth>] ~[<minStoryWidth>] }}} narrowWidthWhenSidebarShown={{{ [<originalStoryContainerWidth>divide{$:/config/tiddlyflex/story-river/tiddler/controls-breakpoint-sidebar}compare:number:gteq<minStoryWidth>] ~[<minStoryWidth>multiply{$:/config/tiddlyflex/story-river/tiddler/controls-breakpoint-sidebar}divide<columnCount>] }}}>
 
 						<%if [<singleColumnWidth>compare:number:lteq<narrowWidthWhenSidebarShown>] %>
 
-							.tc-tiddler-controls >  button:not(.tc-tiddlyflex-shown-when-narrow) {
+							.tc-tiddler-controls > button:not(.tc-tiddlyflex-shown-when-narrow) {
 								display: none;
 							}
 
@@ -61,7 +43,33 @@ tags: $:/tags/Stylesheet
 
 					</$let>
 
-				</$set>
+				</$let>
+
+			<% elseif [<sidebarWidthPercentage>!is[blank]!match[]] %>
+
+				<$let viewportWidth={{$:/state/DynaView/ViewportDimensions/Width}} containerWidth={{{ [<viewportWidth>!is[blank]subtract<leftbarWidth>] ~[<containerWidth>] }}}>
+
+					<$set name="sidebarWidthPercentage" value={{{ [<containerWidth>divide[100]multiply<sidebarWidthPercentage>] }}}>
+
+						<$let originalStoryContainerWidth={{{ [<containerWidth>subtract<sidebarWidthPercentage>] }}} originalSingleColumnWidth={{{ [<originalStoryContainerWidth>divide<columnCount>] }}} sidebarResizerWidth={{{ [<selectednodeWidth>divide[2]] }}} gripDiff={{{ [<sidebarResizerWidth>subtract<drag-diff>] }}} minStoryContainerWidth={{{ [<minStoryWidth>multiply<columnCount>] }}} sidebarWidthMax={{{ [<containerWidth>subtract<minStoryContainerWidth>] }}} sidebarWidth={{{ [<containerWidth>subtract{$:/state/sidebar/posx}add<gripDiff>compare:number:lteq<sidebarWidthPercentage>then<sidebarWidthPercentage>] ~[<containerWidth>subtract{$:/state/sidebar/posx}add<gripDiff>compare:number:gteq<sidebarWidthMax>then<sidebarWidthMax>] ~[<containerWidth>subtract{$:/state/sidebar/posx}add<gripDiff>] }}} maxStoryContainerWidth={{{ [<containerWidth>subtract<sidebarWidthPercentage>] }}} storyContainerWidth={{{ [<containerWidth>subtract<sidebarWidth>compare:number:gteq<minStoryContainerWidth>] ~[<minStoryContainerWidth>] }}} singleColumnWidth={{{ [<storyContainerWidth>divide<columnCount>compare:number:gt<minStoryWidth>] ~[<minStoryWidth>] }}} narrowWidthWhenSidebarShown={{{ [<originalStoryContainerWidth>divide{$:/config/tiddlyflex/story-river/tiddler/controls-breakpoint-sidebar}compare:number:gteq<minStoryWidth>] ~[<minStoryWidth>multiply{$:/config/tiddlyflex/story-river/tiddler/controls-breakpoint-sidebar}divide<columnCount>] }}}>
+
+							<%if [<singleColumnWidth>compare:number:lteq<narrowWidthWhenSidebarShown>] %>
+
+								.tc-tiddler-controls > button:not(.tc-tiddlyflex-shown-when-narrow) {
+									display: none;
+								}
+
+								.tc-tiddler-controls .tc-tiddlyflex-shown-when-narrow {
+									display: block;
+								}
+
+							<% endif %>
+
+						</$let>
+
+					</$set>
+
+				</$let>
 
 			<% endif %>
 
