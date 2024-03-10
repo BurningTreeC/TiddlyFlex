@@ -25,7 +25,7 @@ title: $:/plugins/BTC/TiddlyFlex/privates/navigation
 \end
 \define tiddlyflex-cycle-columns-navigator()
 <$action-setfield $tiddler="$:/columns" current-column=<<nextColumn>>/>
-<$set name="currentHistoryListTiddler" value={{{ [<historyList>get[current-tiddler]] }}}>
+<$set name="currentHistoryListTiddler" value={{{ [<tv-history-list>get[current-tiddler]] }}}>
 	<%if [<tv-story-list>contains<currentHistoryListTiddler>] %>
 		<%if [subfilter<tdff.tiddlyflex-story-river-filter>] +[match<currentHistoryListTiddler>] %>
 			<$let currentColumn=<<nextColumn>> nextTiddler=<<currentHistoryListTiddler>> cssEscapedTitle={{{ [<nextTiddler>escapecss[]] }}}>
