@@ -3,7 +3,7 @@ tags: $:/tags/Global
 
 \define tiddlyflex-get-overwrite-message()
 The ensemble "$(ensembleTitle)$" already exists.
-<hr>
+
 Do you want to overwrite it?
 \end
 \procedure tiddlyflex-save-ensemble-actions-inner(ensembleTitle)
