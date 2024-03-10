@@ -195,7 +195,6 @@ Do you want to overwrite it?
 		<$set name="topbarsList" value={{{ [<ensembleTiddler>get[top-toolbar-tiddler]] }}}>
 			<$list filter="[enlist<topbarsList>]" variable="topbarTiddler">
 				<%if [<topbarTiddler>!tag[$:/tags/TopToolbar]] %>
-					<$action-log tiddler-not-has-tag=<<topbarTiddler>>/>
 					<$fieldmangler tiddler=<<topbarTiddler>>>
 						<$action-sendmessage $message="tm-add-tag" $param="$:/tags/TopToolbar"/>
 					</$fieldmangler>

@@ -1,11 +1,10 @@
 title: $:/core/ui/TopBar/menu
 tags: $:/tags/TopRightBar
 
-\define actions(setTo)
+\define actions()
 <%if [[$:/state/tiddlyflex/story-river/horizontal/changed]!is[missing]] %>
 	<$action-deletetiddler $tiddler="$:/state/tiddlyflex/story-river/horizontal/changed"/>
 <% endif %>
-<$action-log doing-it=<<setTo>>/>
 \end
 \whitespace trim
 <%if [[$:/state/sidebar]is[missing]] [{$:/state/sidebar}match[yes]] %>

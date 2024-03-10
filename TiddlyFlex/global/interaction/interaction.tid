@@ -33,7 +33,6 @@ tags: $:/tags/Global
 
 \procedure tiddlyflex-tm-cancel-tiddler-actions()
 \procedure actions() <<tiddlyflex-tm-message-actions tm-cancel-tiddler "param">>
-<$action-log message="tm-cancel-tiddler"/>
 <%if [function[tiddlyflex-fullscreen]!is[blank]] %>
 	<$vars from={{{ [<event-param>!is[blank]] ~[<event-tiddlerTitle>] }}} to={{{ [<event-param>!is[blank]get[draft.of]] ~[<event-tiddlerTitle>get[draft.of]]  }}}>
 		<$action-sendmessage $message="tm-rename-tiddler" from={{{ [[$:/state/tiddlyflex/story-river/fullscreen/]addsuffix<from>] }}} to={{{ [[$:/state/tiddlyflex/story-river/fullscreen/]addsuffix<to>] }}}/>
