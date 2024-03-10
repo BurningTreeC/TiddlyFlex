@@ -141,6 +141,7 @@ tags: $:/tags/Global
 		</$set>
 	</$list>
 	<<delete-edittemplate-state-tiddlers>>
+	<$action-deletetiddler $tiddler={{{ [[$:/state/tiddlyflex/story-river/fullscreen/]addsuffix<currentTiddler>] }}}/>
 	<$let scrollTiddler={{{ [<tdff.tiddlyflex-story-river-filter>] +[after<currentTiddler>] ~[<tdff.tiddlyflex-story-river-filter>before<currentTiddler>] }}}>
 		<$action-setfield $tiddler=<<tv-history-list>> current-tiddler=<<scrollTiddler>>/>
 		<$action-sendmessage
@@ -149,7 +150,6 @@ tags: $:/tags/Global
 			$names="[<list-event-paramObject>enlist-input[]]"
 			$values="[<list-event-paramObject>enlist-input[]] :map:flat[addprefix[event-paramObject-]getvariable[]]"/>
 	</$let>
-	<$action-deletetiddler $tiddler={{{ [[$:/state/tiddlyflex/story-river/fullscreen/]addsuffix<currentTiddler>] }}}/>
 <% else %>
 	<<tiddlyflex-cancel-draft-tiddler-actions-draft-of-not-is-missing>>
 <% endif %>
