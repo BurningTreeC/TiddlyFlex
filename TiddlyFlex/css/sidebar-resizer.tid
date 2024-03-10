@@ -88,6 +88,12 @@ tags: $:/tags/Stylesheet
 
 		<% endif %>
 
+	<% else %>
+
+		.tc-tiddlyflex-pointerdown-eventcatcher {
+			display: none;
+		}
+
 	<% endif %>
 
 }
