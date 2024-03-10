@@ -1,14 +1,26 @@
 title: $:/plugins/BTC/TiddlyFlex/globals/ensemble
 tags: $:/tags/Global
 
-\function tdff.tiddlyflex-ensemble-tiddler-not-contains-value-in-field() [[<ensembleTiddler>]addprefix[$(tiddlyFlexPrefix)$]substitute[]addsuffix[!contains:]] ${field}$ +[substitute[]] +[addsuffix[<value>]addsuffix[$(tiddlyFlexSuffix)$]substitute[]] +[join[]]
+\function tdff.tiddlyflex-ensemble-tiddler-not-contains-value-in-field() [[<ensembleTiddler>]addprefix[$(tiddlyFlexPrefix)$]substitute[]addsuffix[!contains:]] ${$(field)$}$ +[substitute[]] +[addsuffix[<value>]addsuffix[$(tiddlyFlexSuffix)$]substitute[]] +[join[]]
+
 \define tiddlyflex-get-ensemble-overwrite-message()
 The ensemble "$(ensembleTitle)$" already exists.
 
 Do you want to overwrite it?
 \end
+
+\procedure tiddlyflex-set-ensemble-configuration(tiddler,field:"text",value)
+<%if [<tiddler>get<field>!match<value>] %>
+	<$action-setfield $tiddler=<<tiddler>> $field=<<field>> $value=<<value>>/>
+	<%if [[$:/temp/tiddlyflex/ensemble/ensemble-changed]is[missing]] %>
+		<$action-setfield $tiddler="$:/temp/tiddlyflex/ensemble/ensemble-changed" text="yes"/>
+	<% endif %>
+<% endif %>
+\end
+
 \procedure tiddlyflex-save-ensemble-actions-inner(ensembleTitle)
 <$set name="ensembleTiddler" value={{{ [[$:/Ensemble/]addsuffix<ensembleTitle>] }}}>
+
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="layout" value={{$:/layout}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="view" value={{$:/view}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="sidebar-state" value={{$:/state/sidebar}}/>
@@ -62,7 +74,7 @@ Do you want to overwrite it?
 						<%if [[$:/temp/tiddlyflex/ensemble/ensemble-changed]is[missing]] %>
 							<$action-setfield $tiddler="$:/temp/tiddlyflex/ensemble/ensemble-changed" text="yes"/>
 						<% endif %>
-					<% endif >
+					<% endif %>
 				</$vars>
 			</$list>
 		</$set>
@@ -93,15 +105,6 @@ Do you want to overwrite it?
 	<% endif %>
 <% else %>
 	<<tiddlyflex-empty-ensemble-title-message>>
-<% endif %>
-\end
-
-\procedure tiddlyflex-set-ensemble-configuration(tiddler,field:"text",value)
-<%if [<tiddler>get<field>!match<value>] %>
-	<$action-setfield $tiddler=<<tiddler>> $field=<<field>> $value=<<value>>/>
-	<%if [[$:/temp/tiddlyflex/ensemble/ensemble-changed]is[missing]] %>
-		<$action-setfield $tiddler="$:/temp/tiddlyflex/ensemble/ensemble-changed" text="yes"/>
-	<% endif %>
 <% endif %>
 \end
 
