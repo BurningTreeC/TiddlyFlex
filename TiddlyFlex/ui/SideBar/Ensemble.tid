@@ -24,7 +24,7 @@ Optionally, provide a list of tiddlers that should get the tag <span class="tc-s
 
 <$let ensembleName={{{ [<ensembleTiddler>removeprefix[$:/Ensemble/]] }}}>
 
-<$text text=<<ensembleName>>/><$text text=" "/><$button actions=<<tiddlyflex-load-ensemble-actions>>>Load</$button><$text text=" "/><$button actions="""<$action-deletetiddler $tiddler=<<ensembleTiddler>>/>""">Delete</$button>
+<$text text=<<ensembleName>>/><$button class="tc-small-gap-left" actions=<<tiddlyflex-load-ensemble-actions>>>Load</$button><$button class="tc-small-gap-left" actions="""<$action-deletetiddler $tiddler=<<ensembleTiddler>>/>""">Delete</$button>
 
 </$let>
 

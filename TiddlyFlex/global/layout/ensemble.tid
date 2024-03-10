@@ -10,6 +10,7 @@ Do you want to overwrite it?
 \end
 
 \procedure tiddlyflex-set-ensemble-configuration(tiddler,field:"text",value)
+\whitespace trim
 <%if [<tiddler>get<field>!match<value>] ~[<tiddler>!has<field>] %>
 	<$action-setfield $tiddler=<<tiddler>> $field=<<field>> $value=<<value>>/>
 	<%if [[$:/temp/tiddlyflex/ensemble/ensemble-changed]is[missing]] %>
@@ -19,11 +20,11 @@ Do you want to overwrite it?
 \end
 
 \procedure tiddlyflex-save-ensemble-actions-inner(ensembleTitle)
+\whitespace trim
 <$set name="ensembleTiddler" value={{{ [[$:/Ensemble/]addsuffix<ensembleTitle>] }}}>
-
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="layout" value={{$:/layout}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="view" value={{$:/view}}/>
-	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="sidebar-state" value={{$:/state/sidebar}}/>
+	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="sidebar-state" value={{{ [{$:/state/sidebar}!is[blank]!match[]] ~yes }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="columns" value={{$:/columns!!list}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="current-column" value={{$:/columns!!current-column}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="follow-current-column" value={{{ [{$:/config/tiddlyflex/story-river/follow-current-column}match[yes]] ~no }}}/>
@@ -31,7 +32,6 @@ Do you want to overwrite it?
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="story-river-padding" value={{{ [[$:/config/tiddlyflex/story-river/padding]get[text]] ~[[]] }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="tiddler-margin-bottom" value={{{ [[$:/config/tiddlyflex/story-river/tiddler/margin-bottom]get[text]] ~[[]] }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="palette" value={{$:/palette}}/>
-
 	<$list filter="[list[$:/columns]]" variable="column">
 		<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field={{{ [[story-]addsuffix<column>] }}} value={{{ [[$:/StoryList-]addsuffix<column>get[list]] ~[[]] }}}/>
 	</$list>
@@ -87,16 +87,19 @@ Do you want to overwrite it?
 \end
 
 \procedure tiddlyflex-empty-ensemble-title-message()
+\whitespace trim
 <$action-sendmessage $message="tm-notify" $param="$:/plugins/BTC/tiddlyflex/ui/Notifications/Ensemble/EmptyNotification"/>
 \end
 
 \procedure tiddlyflex-overwrite-ensemble-message()
+\whitespace trim
 <$action-confirm $message=<<tiddlyflex-get-ensemble-overwrite-message>>>
 	<$macrocall $name="tiddlyflex-save-ensemble-actions-inner" ensembleTitle=<<ensembleTitle>>/>
 </$action-confirm>
 \end
 
 \procedure tiddlyflex-save-ensemble-actions(ensembleTitle)
+\whitespace trim
 <%if [<ensembleTitle>!is[blank]!match[]] %>
 	<%if [[$:/Ensemble/]addsuffix<ensembleTitle>is[missing]] %>
 		<$macrocall $name="tiddlyflex-save-ensemble-actions-inner" ensembleTitle=<<ensembleTitle>>/>
@@ -109,6 +112,7 @@ Do you want to overwrite it?
 \end
 
 \procedure tiddlyflex-load-ensemble-actions()
+\whitespace trim
 <%if [<ensembleTiddler>!is[missing]] %>
 	<$list filter="[all[tiddlers]prefix[$:/StoryList-]]" variable="storyListTiddler">
 		<$action-deletetiddler $tiddler=<<storyListTiddler>>/>
@@ -116,7 +120,6 @@ Do you want to overwrite it?
 	<$list filter="[all[tiddlers]prefix[$:/HistoryList-]]" variable="historyListTiddler">
 		<$action-deletetiddler $tiddler=<<historyListTiddler>>/>
 	</$list>
-
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/layout" value={{{ [<ensembleTiddler>get[layout]] }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/view" value={{{ [<ensembleTiddler>get[view]] }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/state/sidebar" value={{{ [<ensembleTiddler>get[sidebar-state]] }}}/>
@@ -127,7 +130,6 @@ Do you want to overwrite it?
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/config/tiddlyflex/story-river/tiddler/margin-bottom" value={{{ [<ensembleTiddler>get[tiddler-margin-bottom]] }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/config/tiddlyflex/story-river/follow-current-column" value={{{ [<ensembleTiddler>get[follow-current-column]] }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/palette" value={{{ [<ensembleTiddler>get[palette]] }}}/>
-
 	<%if [{$:/temp/tiddlyflex/ensemble/ensemble-changed}match[yes]] %>
 		<$list filter="[<ensembleTiddler>fields[]prefix[story-]]" variable="storyField">
 			<$let storyNumber={{{ [<storyField>removeprefix[story-]] }}} storyTitle={{{ [[$:/StoryList-]addsuffix<storyNumber>] }}}>
