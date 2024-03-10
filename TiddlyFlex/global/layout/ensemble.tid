@@ -20,7 +20,7 @@ Do you want to overwrite it?
 \end
 \procedure tiddlyflex-set-ensemble-configuration(tiddler,field:"text",value)
 \whitespace trim
-<%if [<tiddler>get<field>!match<value>] ~[<tiddler>!has<field>] ~[<tiddler>is[missing]] %>
+<%if [<tiddler>get<field>!match<value>] ~[<tiddler>!has<field>] ~[<tiddler>!is[shadow]is[missing]] %>
 	<<tiddlyflex-set-ensemble-configuration-inner>>
 <% endif %>
 \end
