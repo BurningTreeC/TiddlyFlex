@@ -1,0 +1,31 @@
+title: $:/plugins/BTC/TiddlyFlex/ui/SideBar/Ensemble
+caption: Ensemble
+tags: $:/tags/SideBar
+
+\whitespace trim
+
+!! Save Ensemble
+
+Give your ensemble a name:<br>
+<$edit-text tiddler="$:/temp/tiddlyflex/save-ensemble/story-title" default="" placeholder="Title" tag="input" class="tc-story-title tc-small-gap-right"/><$button class="tc-btn-invisible tc-greyed-out-button"><$action-deletefield $tiddler="$:/temp/tiddlyflex/save-ensemble/story-title" $field="text"/>{{$:/core/images/close-button}}</$button>
+
+Optionally, provide a list of tiddlers that should get the tag <span class="tc-small-gap-left tc-small-gap-right"><<tag-pill "$:/tags/Stylesheet">></span> when the Ensemble is loaded:<br>
+<$edit-text tiddler="$:/temp/tiddlyflex/save-ensemble/story-title" default="" field="stylesheets" placeholder="Stylesheets" tag="input" class="tc-small-gap-right"/><$button class="tc-btn-invisible tc-greyed-out-button"><$action-deletefield $tiddler="$:/temp/tiddlyflex/save-ensemble/story-title" $field="stylesheets"/>{{$:/core/images/close-button}}</$button>
+
+<$let ensembleTitle={{{ [[$:/temp/tiddlyflex/save-ensemble/story-title]get[text]] }}}>
+	<$button><$macrocall $name="tiddlyflex-save-ensemble-actions" ensembleTitle=<<ensembleTitle>>/>Save</$button>
+</$let>
+
+<hr class="simple">
+
+!! Load Ensemble
+
+<$list filter="[all[tiddlers+shadows]prefix[$:/Ensemble/]]" variable="ensembleTiddler" storyview="pop">
+
+<$let ensembleName={{{ [<ensembleTiddler>removeprefix[$:/Ensemble/]] }}}>
+
+<$text text=<<ensembleName>>/><$text text=" "/><$button actions=<<tiddlyflex-load-ensemble-actions>>>Load</$button><$text text=" "/><$button actions="""<$action-deletetiddler $tiddler=<<ensembleTiddler>>/>""">Delete</$button>
+
+</$let>
+
+</$list>
