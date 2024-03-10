@@ -15,3 +15,4 @@ move-up: Move the current tiddler up
 navigate-down: Navigate down to the next tiddler
 navigate-up: Navigate up to the next tiddler
 remove-column: Remove one column
+vertical-horizontal: Toggle between horizontal and vertical view
