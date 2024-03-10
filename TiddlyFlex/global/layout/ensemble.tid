@@ -20,7 +20,7 @@ Do you want to overwrite it?
 \end
 \procedure tiddlyflex-set-ensemble-configuration(tiddler,field:"text",value)
 \whitespace trim
-<%if [<tiddler>get<field>!match<value>] ~[<tiddler>!has<field>] ~[<tiddler>!is[shadow]is[missing]] %>
+<%if [<value>!is[blank]then<tiddler>get<field>!match<value>] ~[<value>!is[blank]then<tiddler>!has<field>] ~[<value>!is[blank]then<tiddler>!is[shadow]is[missing]] %>
 	<<tiddlyflex-set-ensemble-configuration-inner>>
 <% endif %>
 \end
@@ -30,11 +30,11 @@ Do you want to overwrite it?
 <$set name="ensembleTiddler" value={{{ [[$:/Ensemble/]addsuffix<ensembleTitle>] }}}>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="layout" value={{$:/layout}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="view" value={{$:/view}}/>
-	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="sidebar-state" value={{{ [{$:/state/sidebar}!is[blank]!match[]] ~yes }}}/>
+	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="sidebar-state" value={{$:/state/sidebar}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="columns" value={{$:/columns!!list}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="current-column" value={{$:/columns!!current-column}}/>
-	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="follow-current-column" value={{{ [{$:/config/tiddlyflex/story-river/follow-current-column}match[yes]] ~no }}}/>
-	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="show-edit-preview-per-tiddler" value={{{ [{$:/config/ShowEditPreview/PerTiddler}match[yes]] ~no }}}/>
+	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="follow-current-column" value={{{ [{$:/config/tiddlyflex/story-river/follow-current-column}match[no]] ~yes }}}/>
+	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="show-edit-preview-per-tiddler" value={{$:/config/ShowEditPreview/PerTiddler}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="story-river-padding" value={{{ [[$:/config/tiddlyflex/story-river/padding]get[text]] ~[[]] }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="tiddler-margin-bottom" value={{{ [[$:/config/tiddlyflex/story-river/tiddler/margin-bottom]get[text]] ~[[]] }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="palette" value={{$:/palette}}/>
@@ -195,6 +195,7 @@ Do you want to overwrite it?
 		<$set name="topbarsList" value={{{ [<ensembleTiddler>get[top-toolbar-tiddler]] }}}>
 			<$list filter="[enlist<topbarsList>]" variable="topbarTiddler">
 				<%if [<topbarTiddler>!tag[$:/tags/TopToolbar]] %>
+					<$action-log tiddler-not-has-tag=<<topbarTiddler>>/>
 					<$fieldmangler tiddler=<<topbarTiddler>>>
 						<$action-sendmessage $message="tm-add-tag" $param="$:/tags/TopToolbar"/>
 					</$fieldmangler>
@@ -256,6 +257,8 @@ Do you want to overwrite it?
 	<%if [[$:/temp/tiddlyflex/ensemble/ensemble-changed]!is[missing]get[text]match[yes]] %>
 		<$action-sendmessage $message="tm-auto-save-wiki"/>
 		<$action-deletetiddler $tiddler="$:/temp/tiddlyflex/ensemble/ensemble-changed"/>
+	<% else %>
+		<$action-sendmessage $message="tm-notify" $param="$:/plugins/BTC/tiddlyflex/ui/Notifications/Ensemble/MatchingEnsembleNotification"/>
 	<% endif %>
 <% endif %>
 \end
