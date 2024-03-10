@@ -25,7 +25,7 @@ tags: $:/tags/Stylesheet
 		margin: 0;
 	}
 
-	.tc-tiddlyflex-drafts-list {
+	.tc-drafts-list.tc-tiddlyflex-drafts-list {
 		z-index: 997;
 		position: absolute;
 		font-size: 0.8em;
