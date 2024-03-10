@@ -1,7 +1,7 @@
 title: $:/plugins/BTC/TiddlyFlex/globals/ensemble
 tags: $:/tags/Global
 
-\define tiddlyflex-get-overwrite-message()
+\define tiddlyflex-get-ensemble-overwrite-message()
 The ensemble "$(ensembleTitle)$" already exists.
 
 Do you want to overwrite it?
@@ -52,7 +52,7 @@ Do you want to overwrite it?
 \end
 
 \procedure tiddlyflex-overwrite-ensemble-message()
-<$action-confirm $message=<<tiddlyflex-get-overwrite-message>>>
+<$action-confirm $message=<<tiddlyflex-get-ensemble-overwrite-message>>>
 	<$macrocall $name="tiddlyflex-save-ensemble-actions-inner" ensembleTitle=<<ensembleTitle>>/>
 </$action-confirm>
 \end
