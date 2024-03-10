@@ -10,7 +10,7 @@ Do you want to overwrite it?
 \end
 
 \procedure tiddlyflex-set-ensemble-configuration(tiddler,field:"text",value)
-<%if [<tiddler>get<field>!match<value>] %>
+<%if [<tiddler>get<field>!match<value>] ~[<tiddler>!has<field>] %>
 	<$action-setfield $tiddler=<<tiddler>> $field=<<field>> $value=<<value>>/>
 	<%if [[$:/temp/tiddlyflex/ensemble/ensemble-changed]is[missing]] %>
 		<$action-setfield $tiddler="$:/temp/tiddlyflex/ensemble/ensemble-changed" text="yes"/>
