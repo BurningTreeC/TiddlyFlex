@@ -1,0 +1,10 @@
+title: $:/plugins/BTC/TiddlyFlex/ui/Templates/drafts
+
+\whitespace trim
+<$reveal state="$:/status/IsReadOnly" type="nomatch" text="yes" tag="div" class="tc-tiddlyflex-drafts-list">
+<$list filter="[is[draft]!sort[modified]] -[all[tiddlers]prefix[$:/StoryList-]get[list]enlist-input[]]">
+<$link>
+<span class="tc-small-gap-right">{{$:/core/images/edit-button}}</span><$text text=<<currentTiddler>>/>
+</$link>
+</$list>
+</$reveal>

@@ -25,4 +25,12 @@ tags: $:/tags/Stylesheet
 		margin: 0;
 	}
 
+	.tc-tiddlyflex-drafts-list {
+		z-index: 997;
+		position: absolute;
+		font-size: 0.8em;
+		left: 0;
+		bottom: 0;
+	}
+
 <% endif %>
