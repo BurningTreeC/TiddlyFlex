@@ -80,7 +80,6 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 
 DynaNodeWidget.prototype.checkVisibility = function() {
 	var self = this;
-	console.log("checking visibility");
 	var elements = this.domNode.querySelectorAll(".tc-dynanode-track-tiddler-when-visible");
 	var parentWidth = this.parentDomNode.offsetWidth,
 		parentHeight = this.parentDomNode.offsetHeight;
@@ -159,12 +158,16 @@ DynaNodeWidget.prototype.refresh = function(changedTiddlers) {
 			this.domNode.removeEventListener("scroll",this.onScroll,false);
 		}
 	}
-	if(changedTiddlers["$:/state/tiddlyflex/story-river/filter"] || ((this.wiki.getTiddlerText("$:/state/tiddlyflex/story-river/filter") === "yes") && changedTiddlers["$:/temp/search/input"]) || changedTiddlers["$:/StoryList-" + this.dynanodeColumn]) {
+	if(changedTiddlers["$:/state/sidebar"] || changedTiddlers["$:/state/tiddlyflex/story-river/filter"] || changedTiddlers["$:/StoryList-" + this.dynanodeColumn]) {
 		if(this.dynanodeEnable) {
 			this.checkVisibility();
 			setTimeout(function() {
 				self.checkVisibility();
 			},this.wiki.getTiddlerText("$:/config/AnimationDuration"));
+		}
+	} else if(((this.wiki.getTiddlerText("$:/state/tiddlyflex/story-river/filter") === "yes") && changedTiddlers["$:/temp/search/input"]) || changedTiddlers["$:/state/sidebar/posx"]) {
+		if(this.dynanodeEnable) {
+			this.checkVisibility();
 		}
 	}
 	return this.refreshChildren(changedTiddlers);
