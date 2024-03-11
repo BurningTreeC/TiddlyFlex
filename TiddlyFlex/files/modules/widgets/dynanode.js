@@ -154,6 +154,7 @@ DynaNodeWidget.prototype.refresh = function(changedTiddlers) {
 		this.dynanodeEnable = this.getAttribute("enable","no") === "yes";
 		if(this.dynanodeEnable) {
 			this.domNode.addEventListener("scroll",this.onScroll,false);
+			this.checkVisibility();
 		} else {
 			this.domNode.removeEventListener("scroll",this.onScroll,false);
 		}
