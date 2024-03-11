@@ -12,7 +12,7 @@ tags: $:/tags/Stylesheet
 
 <$list filter="[all[tiddlers]prefix[$:/state/tiddlyflex/dynanode/visibility/]]" variable="dynanodeStateTiddler">
 
-	<%if [<dynanodeStateTiddler>get[text]match[0]] %>
+	<%if [<dynanodeStateTiddler>get[text]match[0]] [<dynanodeStateTiddler>get[text]match[1]] %>
 
 		<$let dynanodeColumn={{{ [<dynanodeStateTiddler>get[column]] }}} dynanodeTiddler={{{ [<dynanodeStateTiddler>removeprefix[$:/state/tiddlyflex/dynanode/visibility/]] }}} dynanodeTiddlerCSSEscaped={{{ [<dynanodeTiddler>escapecss[]] }}}>
 

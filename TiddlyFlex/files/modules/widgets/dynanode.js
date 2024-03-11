@@ -75,6 +75,7 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 };
 
 DynaNodeWidget.prototype.checkVisibility = function() {
+	var self = this;
 	var elements = this.domNode.querySelectorAll(".tc-dynanode-track-tiddler-when-visible");
 	var parentWidth = this.parentDomNode.offsetWidth,
 		parentHeight = this.parentDomNode.offsetHeight;
@@ -108,7 +109,7 @@ DynaNodeWidget.prototype.checkVisibility = function() {
 				newValue = STATE_OUT_OF_VIEW;
 			}
 			if(newValue !== currValue) {
-				$tw.wiki.addTiddler(new $tw.Tiddler({title: title, text: newValue, column: element.getAttribute("data-dynanode-current-column")}));
+				$tw.wiki.addTiddler(new $tw.Tiddler({title: title, text: newValue, column: self.dynanodeColumn}));
 			}
 		}
 	});
@@ -120,6 +121,7 @@ Compute the internal state of the widget
 DynaNodeWidget.prototype.execute = function() {
 	var self = this;
 	this.elementTag = this.getAttribute("tag");
+	this.dynanodeColumn = this.getAttribute("column");
 	// Make child widgets
 	this.makeChildWidgets();
 };
@@ -139,11 +141,11 @@ DynaNodeWidget.prototype.refresh = function(changedTiddlers) {
 		changedAttributesCount = $tw.utils.count(changedAttributes);
 	if(changedAttributesCount === 1 && changedAttributes["class"]) {
 		this.assignDomNodeClasses();
-	} else if(changedAttributesCount > 0) {
+	} else if(changedAttributes.tag || changedAttributes.column) {
 		this.refreshSelf();
 		return true;
 	}
-	if(changedTiddlers["$:/state/tiddlyflex/story-river/filter"] || ((this.wiki.getTiddlerText("$:/state/tiddlyflex/story-river/filter") === "yes") && changedTiddlers["$:/temp/search/input"])) {
+	if(changedTiddlers["$:/state/tiddlyflex/story-river/filter"] || ((this.wiki.getTiddlerText("$:/state/tiddlyflex/story-river/filter") === "yes") && changedTiddlers["$:/temp/search/input"]) || changedTiddlers["$:/StoryList-" + this.dynanodeColumn]) {
 		this.checkVisibility();
 		setTimeout(function() {
 			self.checkVisibility();
