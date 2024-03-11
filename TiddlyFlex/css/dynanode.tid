@@ -10,7 +10,7 @@ tags: $:/tags/Stylesheet
 
 \end
 
-<%if [{$:/config/tiddlyflex/dynanode}match[yes]] %>
+<%if [{$:/config/tiddlyflex/story-river/dynanode}match[yes]] %>
 
 	<$list filter="[all[tiddlers]prefix[$:/state/tiddlyflex/dynanode/visibility/]]" variable="dynanodeStateTiddler">
 
