@@ -158,14 +158,14 @@ DynaNodeWidget.prototype.refresh = function(changedTiddlers) {
 			this.domNode.removeEventListener("scroll",this.onScroll,false);
 		}
 	}
-	if(changedTiddlers["$:/state/sidebar"] || changedTiddlers["$:/state/tiddlyflex/story-river/filter"] || changedTiddlers["$:/StoryList-" + this.dynanodeColumn]) {
+	if(((this.wiki.getTiddlerText("$:/state/tiddlyflex/story-river/filter") === "yes") && changedTiddlers["$:/temp/search/input"]) || changedTiddlers["$:/state/sidebar"] || changedTiddlers["$:/state/tiddlyflex/story-river/filter"] || changedTiddlers["$:/StoryList-" + this.dynanodeColumn]) {
 		if(this.dynanodeEnable) {
 			this.checkVisibility();
 			setTimeout(function() {
 				self.checkVisibility();
 			},this.wiki.getTiddlerText("$:/config/AnimationDuration"));
 		}
-	} else if(((this.wiki.getTiddlerText("$:/state/tiddlyflex/story-river/filter") === "yes") && changedTiddlers["$:/temp/search/input"]) || changedTiddlers["$:/state/sidebar/posx"]) {
+	} else if(changedTiddlers["$:/state/sidebar/posx"]) {
 		if(this.dynanodeEnable) {
 			this.checkVisibility();
 		}
