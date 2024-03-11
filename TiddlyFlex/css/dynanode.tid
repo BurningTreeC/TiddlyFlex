@@ -6,6 +6,7 @@ tags: $:/tags/Stylesheet
 
 .tc-tiddlyflex-story-river-$(dynanodeColumn)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(dynanodeTiddlerCSSEscaped)$"] .tc-tiddler-frame {
 	content-visibility: hidden;
+	height: {{{ [<dynanodeStateTiddler>get[height]] }}}px;
 }
 
 \end

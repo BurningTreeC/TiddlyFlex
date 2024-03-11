@@ -113,7 +113,7 @@ DynaNodeWidget.prototype.checkVisibility = function() {
 				newValue = STATE_OUT_OF_VIEW;
 			}
 			if(newValue !== currValue) {
-				$tw.wiki.addTiddler(new $tw.Tiddler({title: title, text: newValue, column: self.dynanodeColumn}));
+				$tw.wiki.addTiddler(new $tw.Tiddler({title: title, text: newValue, height: element.offsetHeight, column: self.dynanodeColumn}));
 			}
 		}
 	});
