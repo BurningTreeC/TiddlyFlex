@@ -4,8 +4,12 @@ tags: $:/tags/Stylesheet
 \define tiddlyflex-dynanode-tiddler-visibility-hidden()
 \rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
 
-.tc-tiddlyflex-story-river-$(dynanodeColumn)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(dynanodeTiddlerCSSEscaped)$"] .tc-tiddler-frame > * , .tc-tiddlyflex-story-river-$(dynanodeColumn)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(dynanodeTiddlerCSSEscaped)$"] .tc-tiddler-frame > * {
+.tc-tiddlyflex-story-river-$(dynanodeColumn)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(dynanodeTiddlerCSSEscaped)$"] .tc-tiddler-frame > * {
 	visibility: hidden;
+}
+
+.tc-tiddlyflex-story-river-$(dynanodeColumn)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(dynanodeTiddlerCSSEscaped)$"] .tc-tiddler-frame {
+	content-visibility: hidden;
 }
 
 \end
