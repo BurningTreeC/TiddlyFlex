@@ -13,7 +13,7 @@ Optionally, provide a list of tiddlers that should get the tag <span class="tc-s
 <$edit-text tiddler="$:/temp/tiddlyflex/save-ensemble/story-title" default="" field="stylesheets" placeholder="Stylesheets" tag="input" class="tc-small-gap-right"/><$button class="tc-btn-invisible tc-greyed-out-button"><$action-deletefield $tiddler="$:/temp/tiddlyflex/save-ensemble/story-title" $field="stylesheets"/>{{$:/core/images/close-button}}</$button>
 
 <$let ensembleTitle={{{ [[$:/temp/tiddlyflex/save-ensemble/story-title]get[text]] }}}>
-	<$button><$macrocall $name="tiddlyflex-save-ensemble-actions" ensembleTitle=<<ensembleTitle>>/>Save</$button>
+	<$button><$action-setfield $tiddler="$:/state/tiddlyflex/ensemble/ensemble-changed" text="no"/><$macrocall $name="tiddlyflex-save-ensemble-actions" ensembleTitle=<<ensembleTitle>>/>Save</$button>
 </$let>
 
 <hr class="simple">
@@ -24,7 +24,7 @@ Optionally, provide a list of tiddlers that should get the tag <span class="tc-s
 
 <$let ensembleName={{{ [<ensembleTiddler>removeprefix[$:/Ensemble/]] }}}>
 
-<$text text=<<ensembleName>>/><$button class="tc-small-gap-left" actions=<<tiddlyflex-load-ensemble-actions>>>Load</$button><$button class="tc-small-gap-left" actions="""<$action-deletetiddler $tiddler=<<ensembleTiddler>>/>""">Delete</$button>
+<$text text=<<ensembleName>>/><$button class="tc-small-gap-left"><$action-setfield $tiddler="$:/state/tiddlyflex/ensemble/ensemble-changed" text="no"/><<tiddlyflex-load-ensemble-actions>><<tiddlyflex-load-ensemble-actions-cleanup>>Load</$button><$button class="tc-small-gap-left" actions="""<$action-deletetiddler $tiddler=<<ensembleTiddler>>/>""">Delete</$button>
 
 </$let>
 

@@ -9,19 +9,10 @@ The ensemble "$(ensembleTitle)$" already exists.
 Do you want to overwrite it?
 \end
 
-\procedure tiddlyflex-set-ensemble-configuration-inner()
-<!--<$action-log should-set-tiddler=<<tiddler>>/>
-<$action-log should-set-field=<<field>>/>
-<$action-log should-set-value=<<value>>/>-->
-<$action-setfield $tiddler=<<tiddler>> $field=<<field>> $value=<<value>>/>
-<%if [[$:/temp/tiddlyflex/ensemble/ensemble-changed]is[missing]] %>
-	<$action-setfield $tiddler="$:/temp/tiddlyflex/ensemble/ensemble-changed" text="yes"/>
-<% endif %>
-\end
 \procedure tiddlyflex-set-ensemble-configuration(tiddler,field:"text",value)
 \whitespace trim
 <%if [<value>!is[blank]then<tiddler>get<field>!match<value>] ~[<value>!is[blank]then<tiddler>!has<field>] ~[<value>!is[blank]then<tiddler>!is[shadow]is[missing]] %>
-	<<tiddlyflex-set-ensemble-configuration-inner>>
+	<$action-setfield $tiddler=<<tiddler>> $field=<<field>> $value=<<value>>/>
 <% endif %>
 \end
 
@@ -44,17 +35,11 @@ Do you want to overwrite it?
 	<$list filter="[all[shadows+tiddlers]tag[$:/tags/TopToolbar]!is[draft]]" variable="topToolbarTiddler">
 		<%if [<ensembleTiddler>!contains:top-toolbar-tiddler<topToolbarTiddler>] %>
 			<$action-listops $tiddler=<<ensembleTiddler>> $field="top-toolbar-tiddler" $subfilter="[<topToolbarTiddler>]"/>
-			<%if [[$:/temp/tiddlyflex/ensemble/ensemble-changed]is[missing]] %>
-				<$action-setfield $tiddler="$:/temp/tiddlyflex/ensemble/ensemble-changed" text="yes"/>
-			<% endif %>
 		<% endif %>
 	</$list>
 	<$list filter="[all[shadows+tiddlers]tag[$:/tags/BottomToolbar]!is[draft]]" variable="bottomToolbarTiddler">
 		<%if [<ensembleTiddler>!contains:top-toolbar-tiddler<bottomToolbarTiddler>] %>
 			<$action-listops $tiddler=<<ensembleTiddler>> $field="bottom-toolbar-tiddler" $subfilter="[<bottomToolbarTiddler>]"/>
-			<%if [[$:/temp/tiddlyflex/ensemble/ensemble-changed]is[missing]] %>
-				<$action-setfield $tiddler="$:/temp/tiddlyflex/ensemble/ensemble-changed" text="yes"/>
-			<% endif %>
 		<% endif %>
 	</$list>
 	<$list filter="[tags[]prefix[$:/tags/AboveStoryHeader-]]" variable="aboveStoryHeaderTag">
@@ -63,9 +48,6 @@ Do you want to overwrite it?
 				<$vars field={{{ [[above-story-header-tiddler-]addsuffix<index>] }}} value=<<aboveStoryHeaderTiddler>>>
 					<%if [subfilter<tdff.tiddlyflex-ensemble-tiddler-not-contains-value-in-field>] %>
 						<$action-listops $tiddler=<<ensembleTiddler>> $field=<<field>> $subfilter="[<value>]"/>
-						<%if [[$:/temp/tiddlyflex/ensemble/ensemble-changed]is[missing]] %>
-							<$action-setfield $tiddler="$:/temp/tiddlyflex/ensemble/ensemble-changed" text="yes"/>
-						<% endif %>
 					<% endif %>
 				</$vars>
 			</$list>
@@ -77,18 +59,12 @@ Do you want to overwrite it?
 				<$vars field={{{ [[below-story-footer-tiddler-]addsuffix<index>] }}} value=<<belowStoryFooterTiddler>>>
 					<%if [subfilter<tdff.tiddlyflex-ensemble-tiddler-not-contains-value-in-field>] %>
 						<$action-listops $tiddler=<<ensembleTiddler>> $field=<<field>> $subfilter="[<value>]"/>
-						<%if [[$:/temp/tiddlyflex/ensemble/ensemble-changed]is[missing]] %>
-							<$action-setfield $tiddler="$:/temp/tiddlyflex/ensemble/ensemble-changed" text="yes"/>
-						<% endif %>
 					<% endif %>
 				</$vars>
 			</$list>
 		</$set>
 	</$list>
-	<%if [[$:/temp/tiddlyflex/ensemble/ensemble-changed]!is[missing]get[text]match[yes]] %>
-		<$action-sendmessage $message="tm-auto-save-wiki"/>
-		<$action-deletetiddler $tiddler="$:/temp/tiddlyflex/ensemble/ensemble-changed"/>
-	<% endif %>
+	<$action-sendmessage $message="tm-auto-save-wiki"/>
 </$set>
 \end
 
@@ -184,9 +160,6 @@ Do you want to overwrite it?
 					<$fieldmangler tiddler=<<stylesheetTiddler>>>
 						<$action-sendmessage $message="tm-add-tag" $param="$:/tags/Stylesheet"/>
 					</$fieldmangler>
-					<%if [[$:/temp/tiddlyflex/ensemble/ensemble-changed]is[missing]] %>
-						<$action-setfield $tiddler="$:/temp/tiddlyflex/ensemble/ensemble-changed" text="yes"/>
-					<% endif %>
 				<% endif %>
 			</$list>
 		</$set>
@@ -198,9 +171,6 @@ Do you want to overwrite it?
 					<$fieldmangler tiddler=<<topbarTiddler>>>
 						<$action-sendmessage $message="tm-add-tag" $param="$:/tags/TopToolbar"/>
 					</$fieldmangler>
-					<%if [[$:/temp/tiddlyflex/ensemble/ensemble-changed]is[missing]] %>
-						<$action-setfield $tiddler="$:/temp/tiddlyflex/ensemble/ensemble-changed" text="yes"/>
-					<% endif %>
 				<% endif %>
 			</$list>
 		</$set>
@@ -212,9 +182,6 @@ Do you want to overwrite it?
 					<$fieldmangler tiddler=<<bottombarTiddler>>>
 						<$action-sendmessage $message="tm-add-tag" $param="$:/tags/BottomToolbar"/>
 					</$fieldmangler>
-					<%if [[$:/temp/tiddlyflex/ensemble/ensemble-changed]is[missing]] %>
-						<$action-setfield $tiddler="$:/temp/tiddlyflex/ensemble/ensemble-changed" text="yes"/>
-					<% endif %>
 				<% endif %>
 			</$list>
 		</$set>
@@ -226,9 +193,6 @@ Do you want to overwrite it?
 					<$fieldmangler tiddler=<<aboveStoryHeaderTiddler>>>
 						<$action-sendmessage $message="tm-add-tag" $param=<<aboveStoryHeaderTag>>/>
 					</$fieldmangler>
-					<%if [[$:/temp/tiddlyflex/ensemble/ensemble-changed]is[missing]] %>
-						<$action-setfield $tiddler="$:/temp/tiddlyflex/ensemble/ensemble-changed" text="yes"/>
-					<% endif %>
 				<% endif %>
 			</$list>
 		</$let>
@@ -240,9 +204,6 @@ Do you want to overwrite it?
 					<$fieldmangler tiddler=<<belowStoryFooterTiddler>>>
 						<$action-sendmessage $message="tm-add-tag" $param=<<belowStoryFooterTag>>/>
 					</$fieldmangler>
-					<%if [[$:/temp/tiddlyflex/ensemble/ensemble-changed]is[missing]] %>
-						<$action-setfield $tiddler="$:/temp/tiddlyflex/ensemble/ensemble-changed" text="yes"/>
-					<% endif %>
 				<% endif %>
 			</$list>
 		</$let>
@@ -253,12 +214,6 @@ Do you want to overwrite it?
 		</$let>
 	</$list>
 	<$action-deletetiddler $filter="[all[tiddlers]prefix[$:/state/tiddlyflex/story-river/fullscreen/]]"/>
-	<%if [[$:/temp/tiddlyflex/ensemble/ensemble-changed]!is[missing]get[text]match[yes]] %>
-		<$action-sendmessage $message="tm-auto-save-wiki"/>
-		<$action-deletetiddler $tiddler="$:/temp/tiddlyflex/ensemble/ensemble-changed"/>
-	<% else %>
-		<$action-sendmessage $message="tm-notify" $param="$:/plugins/BTC/tiddlyflex/ui/Notifications/Ensemble/MatchingEnsembleNotification"/>
-	<% endif %>
 <% endif %>
 \end
 

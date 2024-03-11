@@ -3,11 +3,11 @@ tags: $:/tags/Stylesheet
 
 @media (min-width: 992px) {
 
-	<%if [{$:/config/tiddlyflex/story-river/horizontal}!match[yes]] %>
+	.tc-tiddlyflex-shown-when-narrow {
+		display: none;
+	}
 
-		.tc-tiddlyflex-shown-when-narrow {
-			display: none;
-		}
+	<%if [{$:/config/tiddlyflex/story-river/horizontal}!match[yes]] %>
 
 		<$list filter="[{$:/state/sidebar}match[no]] :then[subfilter<tdff.tiddlyflex-enlist-columns>count[]compare:number:gteq{$:/config/tiddlyflex/story-river/tiddler/controls-breakpoint}] :else[subfilter<tdff.tiddlyflex-enlist-columns>count[]compare:number:gteq{$:/config/tiddlyflex/story-river/tiddler/controls-breakpoint-sidebar}]" variable="column">
 
