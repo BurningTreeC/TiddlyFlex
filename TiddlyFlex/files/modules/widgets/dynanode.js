@@ -57,25 +57,30 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 		isWaitingForAnimationFrame = 0;
 	}
 
-	var onScroll = function(event) {
+	this.onScroll = function(event) {
 		if(!isWaitingForAnimationFrame) {
 			window.requestAnimationFrame(worker);
 		}
 		isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_SCROLL;
 	};
 
-	domNode.addEventListener("scroll",onScroll,false);
+	if(this.dynanodeEnable) {
+		domNode.addEventListener("scroll",this.onScroll,false);
+	}
 
 	// Insert element
 	parent.insertBefore(domNode,nextSibling);
 	this.renderChildren(domNode,null);
 	this.domNodes.push(domNode);
 
-	this.checkVisibility();
+	if(this.dynanodeEnable) {
+		this.checkVisibility();
+	}
 };
 
 DynaNodeWidget.prototype.checkVisibility = function() {
 	var self = this;
+	console.log("checking visibility");
 	var elements = this.domNode.querySelectorAll(".tc-dynanode-track-tiddler-when-visible");
 	var parentWidth = this.parentDomNode.offsetWidth,
 		parentHeight = this.parentDomNode.offsetHeight;
@@ -122,6 +127,7 @@ DynaNodeWidget.prototype.execute = function() {
 	var self = this;
 	this.elementTag = this.getAttribute("tag");
 	this.dynanodeColumn = this.getAttribute("column");
+	this.dynanodeEnable = this.getAttribute("enable","no") === "yes";
 	// Make child widgets
 	this.makeChildWidgets();
 };
@@ -144,12 +150,21 @@ DynaNodeWidget.prototype.refresh = function(changedTiddlers) {
 	} else if(changedAttributes.tag || changedAttributes.column) {
 		this.refreshSelf();
 		return true;
+	} else if(changedAttributes.enable) {
+		this.dynanodeEnable = this.getAttribute("enable","no") === "yes";
+		if(this.dynanodeEnable) {
+			this.domNode.addEventListener("scroll",this.onScroll,false);
+		} else {
+			this.domNode.removeEventListener("scroll",this.onScroll,false);
+		}
 	}
 	if(changedTiddlers["$:/state/tiddlyflex/story-river/filter"] || ((this.wiki.getTiddlerText("$:/state/tiddlyflex/story-river/filter") === "yes") && changedTiddlers["$:/temp/search/input"]) || changedTiddlers["$:/StoryList-" + this.dynanodeColumn]) {
-		this.checkVisibility();
-		setTimeout(function() {
-			self.checkVisibility();
-		},this.wiki.getTiddlerText("$:/config/AnimationDuration"));
+		if(this.dynanodeEnable) {
+			this.checkVisibility();
+			setTimeout(function() {
+				self.checkVisibility();
+			},this.wiki.getTiddlerText("$:/config/AnimationDuration"));
+		}
 	}
 	return this.refreshChildren(changedTiddlers);
 };
