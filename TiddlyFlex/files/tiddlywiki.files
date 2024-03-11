@@ -49,6 +49,13 @@
 				"title": "$:/plugins/BTC/TiddlyFlex/modules/widgets/tiddlyflex-draggable.js",
 				"module-type": "widget"
 			}
+		},{
+			"file": "modules/widgets/dynanode.js",
+			"fields": {
+				"type": "application/javascript",
+				"title": "$:/plugins/BTC/TiddlyFlex/modules/widgets/dynanode.js",
+				"module-type": "widget"
+			}
 		}
 	]
 }
