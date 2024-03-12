@@ -59,13 +59,30 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 
 	this.onScroll = function(event) {
 		if(!isWaitingForAnimationFrame) {
-			window.requestAnimationFrame(worker);
+			self.domNode.ownerDocument.defaultView.requestAnimationFrame(worker);
 		}
 		isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_SCROLL;
 	};
 
+	this.onResize = function(event) {
+		if(!isWaitingForAnimationFrame) {
+			self.domNode.ownerDocument.defaultView.requestAnimationFrame(worker);
+		}
+		isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_RESIZE;
+	};
+
+	this.resizeObserver = new ResizeObserver(function(entries) {
+		if(!isWaitingForAnimationFrame) {
+			console.log("resize");
+			self.domNode.ownerDocument.defaultView.requestAnimationFrame(worker);
+		}
+		isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_RESIZE;
+	});
+
 	if(this.dynanodeEnable) {
 		domNode.addEventListener("scroll",this.onScroll,false);
+		domNode.ownerDocument.defaultView.addEventListener("resize",this.onResize,false);
+		this.resizeObserver.observe(domNode);
 	}
 
 	// Insert element
@@ -80,10 +97,28 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 
 DynaNodeWidget.prototype.checkVisibility = function() {
 	var self = this;
+	console.log("checking visibility");
 	var elements = this.domNode.querySelectorAll(".tc-dynanode-track-tiddler-when-visible");
 	var parentWidth = this.parentDomNode.offsetWidth,
-		parentHeight = this.parentDomNode.offsetHeight;
-	var parentBounds = this.parentDomNode.getBoundingClientRect();
+		parentHeight = this.parentDomNode.offsetHeight,
+		parentBounds = this.parentDomNode.getBoundingClientRect();
+	var contentOverflower = this.domNode.querySelector(".tc-dynanode-content-overflower");
+	var saveOverflowerHeightTiddler = contentOverflower.getAttribute("data-dynanode-save-height-tiddler");
+	// Save the current height of the content-overflower
+	var currContentOverflowerHeight = $tw.wiki.getTiddlerText(saveOverflowerHeightTiddler),
+		newContentOverflowerHeight = currContentOverflowerHeight;
+	if(contentOverflower) {
+		newContentOverflowerHeight = contentOverflower.offsetHeight;
+		if(newContentOverflowerHeight !== currContentOverflowerHeight) {
+			$tw.wiki.addTiddler(new $tw.Tiddler({title: saveOverflowerHeightTiddler, text: newContentOverflowerHeight}));
+		}
+	}
+	var contentOverflowerDiff = 0,
+		contentOverflowerDiffPercentage = 0;
+	if(currContentOverflowerHeight && (currContentOverflowerHeight !== newContentOverflowerHeight)) {
+		contentOverflowerDiff = (currContentOverflowerHeight - newContentOverflowerHeight);
+		contentOverflowerDiffPercentage = (contentOverflowerDiff / currContentOverflowerHeight);
+	}
 	var parentRect = {
 		left: parentBounds.left,
 		right: parentBounds.left + parentWidth,
@@ -93,6 +128,7 @@ DynaNodeWidget.prototype.checkVisibility = function() {
 	$tw.utils.each(elements,function(element) {
 		// Calculate whether the element is visible
 		var elementRect = element.getBoundingClientRect(),
+			elementHeight = element.offsetHeight,
 			title = element.getAttribute("data-dynanode-track-tiddler");
 		if(title) {
 			var currValue = $tw.wiki.getTiddlerText(title),
@@ -113,7 +149,7 @@ DynaNodeWidget.prototype.checkVisibility = function() {
 				newValue = STATE_OUT_OF_VIEW;
 			}
 			if(newValue !== currValue) {
-				$tw.wiki.addTiddler(new $tw.Tiddler({title: title, text: newValue, height: element.offsetHeight, column: self.dynanodeColumn}));
+				$tw.wiki.addTiddler(new $tw.Tiddler({title: title, text: newValue, height: (element.offsetHeight + (contentOverflowerDiffPercentage * element.offsetHeight)), column: self.dynanodeColumn}));
 			}
 		}
 	});
@@ -153,21 +189,21 @@ DynaNodeWidget.prototype.refresh = function(changedTiddlers) {
 		this.dynanodeEnable = this.getAttribute("enable","no") === "yes";
 		if(this.dynanodeEnable) {
 			this.domNode.addEventListener("scroll",this.onScroll,false);
+			this.domNode.ownerDocument.defaultView.addEventListener("resize",this.onResize,false);
+			this.resizeObserver.observer(this.domNode);
 			this.checkVisibility();
 		} else {
 			this.domNode.removeEventListener("scroll",this.onScroll,false);
+			this.domNode.ownerDocument.defaultView.removeEventListener("resize",this.onResize,false);
+			this.resizeObserver.unobserve(this.domNode);
 		}
 	}
-	if(((this.wiki.getTiddlerText("$:/state/tiddlyflex/story-river/filter") === "yes") && changedTiddlers["$:/temp/search/input"]) || changedTiddlers["$:/state/sidebar"] || changedTiddlers["$:/state/tiddlyflex/story-river/filter"] || changedTiddlers["$:/StoryList-" + this.dynanodeColumn]) {
+	if(((this.wiki.getTiddlerText("$:/state/tiddlyflex/story-river/filter") === "yes") && changedTiddlers["$:/temp/search/input"]) || changedTiddlers["$:/state/tiddlyflex/story-river/filter"] || changedTiddlers["$:/StoryList-" + this.dynanodeColumn]) {
 		if(this.dynanodeEnable) {
 			this.checkVisibility();
 			setTimeout(function() {
 				self.checkVisibility();
 			},this.wiki.getTiddlerText("$:/config/AnimationDuration"));
-		}
-	} else if(changedTiddlers["$:/state/sidebar/posx"]) {
-		if(this.dynanodeEnable) {
-			this.checkVisibility();
 		}
 	}
 	return this.refreshChildren(changedTiddlers);

@@ -34,26 +34,28 @@ code-body: yes
 	role="region"
 	aria-label={{$:/language/EditTemplate/Caption}}>
 	<$fieldmangler>
-		<$tiddlyflex-draggable enable={{{ [{$:/state/tiddlyflex/story-river/tiddler/drag-enabled}match[yes]then[$:/state/tiddlyflex/story-river/fullscreen/]addsuffix<currentTiddler>is[missing]then[yes]] ~[[no]] }}} tiddler=<<currentTiddler>> startactions=<<tiddlyflex-drag-start-actions>> endactions=<<tiddlyflex-drag-end-actions>> class="tc-tiddler-frame tc-dynanode-track-tiddler-when-visible" data-dynanode-track-tiddler={{{ [[$:/state/tiddlyflex/dynanode/visibility/]addsuffix<currentTiddler>] }}} data-dynanode-current-column=<<tiddlyFlexColumn>>>
-			<$vars
-				storyTiddler=<<currentTiddler>>
-				newTagNameTiddler=<<qualify "$:/temp/NewTagName">>
-				newFieldNameTiddler=<<qualify "$:/temp/NewFieldName">>
-				newFieldValueTiddlerPrefix=<<qualify "$:/temp/NewFieldValue">>
-				newFieldNameInputTiddler=<<qualify "$:/temp/NewFieldName/input">>
-				newFieldNameSelectionTiddler=<<qualify "$:/temp/NewFieldName/selected-item">>
-				newTagNameInputTiddler=<<qualify "$:/temp/NewTagName/input">>
-				newTagNameSelectionTiddler=<<qualify "$:/temp/NewTagName/selected-item">>
-				typeInputTiddler=<<qualify "$:/temp/Type/input">>
-				typeSelectionTiddler=<<qualify "$:/temp/Type/selected-item">>>
-				<$keyboard key="((cancel-edit-tiddler))" actions=<<cancel-delete-tiddler-actions "cancel">> tag="div">
-					<$keyboard key="((save-tiddler))" actions=<<save-tiddler-actions>> tag="div">
-						<$list filter="[all[shadows+tiddlers]tag[$:/tags/EditTemplate]!is[draft]]" variable="listItem">
-							<$transclude tiddler=<<listItem>>/>
-						</$list>
+		<$tiddlyflex-draggable enable={{{ [{$:/state/tiddlyflex/story-river/tiddler/drag-enabled}match[yes]then[$:/state/tiddlyflex/story-river/fullscreen/]addsuffix<currentTiddler>is[missing]then[yes]] ~[[no]] }}} tiddler=<<currentTiddler>> startactions=<<tiddlyflex-drag-start-actions>> endactions=<<tiddlyflex-drag-end-actions>> class="tc-tiddler-frame tc-dynanode-track-tiddler-when-visible" data-dynanode-track-tiddler={{{ [[$:/state/tiddlyflex/dynanode/visibility/]addsuffix<currentTiddler>] }}} data-dynanode-current-column=<<tiddlyFlexColumn>> style.height={{{ [[{$:/config/tiddlyflex/story-river/dynanode}match[yes]then[$:/state/tiddlyflex/dynanode/visibility/]addsuffix<currentTiddler>] :map[get[text]!match[2]then<currentTiddler>get[height]addsuffix[px]] }}}>
+			<%if [{$:/config/tiddlyflex/story-river/dynanode}!match[yes]] [{$:/config/tiddlyflex/story-river/dynanode}match[yes]then[$:/state/tiddlyflex/dynanode/visibility/]addsuffix<currentTiddler>get[text]match[2]] [{$:/config/tiddlyflex/story-river/dynanode}match[yes]then[$:/state/tiddlyflex/dynanode/visibility/]addsuffix<currentTiddler>is[missing]] %>
+				<$vars
+					storyTiddler=<<currentTiddler>>
+					newTagNameTiddler=<<qualify "$:/temp/NewTagName">>
+					newFieldNameTiddler=<<qualify "$:/temp/NewFieldName">>
+					newFieldValueTiddlerPrefix=<<qualify "$:/temp/NewFieldValue">>
+					newFieldNameInputTiddler=<<qualify "$:/temp/NewFieldName/input">>
+					newFieldNameSelectionTiddler=<<qualify "$:/temp/NewFieldName/selected-item">>
+					newTagNameInputTiddler=<<qualify "$:/temp/NewTagName/input">>
+					newTagNameSelectionTiddler=<<qualify "$:/temp/NewTagName/selected-item">>
+					typeInputTiddler=<<qualify "$:/temp/Type/input">>
+					typeSelectionTiddler=<<qualify "$:/temp/Type/selected-item">>>
+					<$keyboard key="((cancel-edit-tiddler))" actions=<<cancel-delete-tiddler-actions "cancel">> tag="div">
+						<$keyboard key="((save-tiddler))" actions=<<save-tiddler-actions>> tag="div">
+							<$list filter="[all[shadows+tiddlers]tag[$:/tags/EditTemplate]!is[draft]]" variable="listItem">
+								<$transclude tiddler=<<listItem>>/>
+							</$list>
+						</$keyboard>
 					</$keyboard>
-				</$keyboard>
-			</$vars>
+				</$vars>
+			<% endif %>
 			<% if [{$:/state/dragging}match[yes]then{$:/state/tiddlyflex/story-river/tiddler/drag-enabled}match[yes]then[$:/state/story-river/full-screen/]addsuffix<currentTiddler>is[missing]] %>
 				<$droppable class="tc-tiddlyflex-droppable-top-half" actions=<<tiddlyflex-top-drop-actions>> dragenteractions=<<tiddlyflex-top-dragenter-actions>>/>
 				<$droppable class="tc-tiddlyflex-droppable-bottom-half" actions=<<tiddlyflex-bottom-drop-actions>> dragenteractions=<<tiddlyflex-bottom-dragenter-actions>>/>
