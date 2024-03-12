@@ -190,7 +190,7 @@ DynaNodeWidget.prototype.refresh = function(changedTiddlers) {
 		if(this.dynanodeEnable) {
 			this.domNode.addEventListener("scroll",this.onScroll,false);
 			this.domNode.ownerDocument.defaultView.addEventListener("resize",this.onResize,false);
-			this.resizeObserver.observer(this.domNode);
+			this.resizeObserver.observe(this.domNode);
 			this.checkVisibility();
 		} else {
 			this.domNode.removeEventListener("scroll",this.onScroll,false);
