@@ -22,7 +22,7 @@ code-body: yes
 
 		</$eventcatcher>
 
-		<section class="tc-tiddlyflex-story-river tc-dynanode-content-overflower" role="main" data-dynanode-save-height-tiddler={{{ [[$:/state/tiddlyflex/dynanode/height/story-river-]addsuffix<tiddlyFlexColumn>] }}}>
+		<section class="tc-tiddlyflex-story-river" role="main">
 
 			<section class="story-backdrop">
 

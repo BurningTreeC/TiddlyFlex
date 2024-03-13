@@ -37,7 +37,7 @@ Render this widget into the DOM
 */
 DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 	var self = this;
-	// Remember parent
+	// Remember domNode
 	this.parentDomNode = parent;
 	// Compute attributes and execute state
 	this.computeAttributes();
@@ -52,6 +52,8 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 	// Assign classes
 	this.assignDomNodeClasses();
 
+	this.isFirstRender = true;
+
 	function worker() {
 		self.checkVisibility();
 		isWaitingForAnimationFrame = 0;
@@ -65,24 +67,69 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 	};
 
 	this.onResize = function(event) {
-		if(!isWaitingForAnimationFrame) {
+		if(!isWaitingForAnimationFrame && !$tw.wiki.tiddlerExists("$:/state/dragging")) {
 			self.domNode.ownerDocument.defaultView.requestAnimationFrame(worker);
 		}
 		isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_RESIZE;
 	};
 
 	this.resizeObserver = new ResizeObserver(function(entries) {
-		if(!isWaitingForAnimationFrame) {
-			console.log("resize");
-			self.domNode.ownerDocument.defaultView.requestAnimationFrame(worker);
+		self.onResize();
+	});
+
+	this.reserveSpaceObserver = new ResizeObserver(function(entries) {
+		if(!self.isFirstRender) {
+			for(var i=0; i<entries.length; i++) {
+				var entry = entries[i];
+				self.reserveSpace(entry.target, entry.contentRect);
+			}
 		}
-		isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_RESIZE;
+	});
+
+	this.mutationObserver = new MutationObserver(function(mutations) {
+		var childListChanged = false;
+		var addedNodes = [],
+			removedNodes = [];
+		for(var i=0; i<mutations.length; i++) {
+			var mutation = mutations[i];
+			if(mutation.type === "childList") {
+				for(var j=0; j<mutation.addedNodes.length; j++) {
+					var addedNode = mutation.addedNodes[j];
+					if(addedNode.classList && addedNode.classList.contains("tc-dynanode-track-tiddler-when-visible")) {
+						childListChanged = true;
+						addedNodes.push(addedNode);
+					}
+				}
+				if(!childListChanged) {
+					for(var j=0; j<mutation.removedNodes.length; j++) {
+						var removedNode = mutation.removedNodes[j];
+						if(removedNode.classList && removedNode.classList.contains("tc-dynanode-track-tiddler-when-visible")) {
+							childListChanged = true;
+							removedNodes.push(removedNode);
+						}
+					}					
+				}
+			}
+		}
+		if(childListChanged) {
+			for(var k=0; k<addedNodes.length; k++) {
+				self.reserveSpaceObserver.observe(addedNodes[k]);
+			}
+			for(var l=0; l<removedNodes.length; l++) {
+				self.reserveSpaceObserver.unobserve(removedNodes[l]);
+			}
+			if(!isWaitingForAnimationFrame) {
+				self.domNode.ownerDocument.defaultView.requestAnimationFrame(worker);
+			}
+			isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_RESIZE;
+		}
 	});
 
 	if(this.dynanodeEnable) {
 		domNode.addEventListener("scroll",this.onScroll,false);
 		domNode.ownerDocument.defaultView.addEventListener("resize",this.onResize,false);
 		this.resizeObserver.observe(domNode);
+		this.mutationObserver.observe(domNode,{attributes: true, childList: true, subtree: true});
 	}
 
 	// Insert element
@@ -95,64 +142,90 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 	}
 };
 
-DynaNodeWidget.prototype.checkVisibility = function() {
+DynaNodeWidget.prototype.reserveSpace = function(element,rect = element.getBoundingClientRect()) {
 	var self = this;
-	console.log("checking visibility");
-	var elements = this.domNode.querySelectorAll(".tc-dynanode-track-tiddler-when-visible");
-	var parentWidth = this.parentDomNode.offsetWidth,
-		parentHeight = this.parentDomNode.offsetHeight,
-		parentBounds = this.parentDomNode.getBoundingClientRect();
-	var contentOverflower = this.domNode.querySelector(".tc-dynanode-content-overflower");
-	var saveOverflowerHeightTiddler = contentOverflower.getAttribute("data-dynanode-save-height-tiddler");
-	// Save the current height of the content-overflower
-	var currContentOverflowerHeight = $tw.wiki.getTiddlerText(saveOverflowerHeightTiddler),
-		newContentOverflowerHeight = currContentOverflowerHeight;
-	if(contentOverflower) {
-		newContentOverflowerHeight = contentOverflower.offsetHeight;
-		if(newContentOverflowerHeight !== currContentOverflowerHeight) {
-			$tw.wiki.addTiddler(new $tw.Tiddler({title: saveOverflowerHeightTiddler, text: newContentOverflowerHeight}));
+	var title = element.getAttribute("data-dynanode-track-tiddler");
+	if(title && !$tw.wiki.tiddlerExists("$:/state/dragging")) {
+		var tiddler = this.wiki.getTiddler(title);
+		var oldRect = {
+			left: tiddler.fields.left,
+			right: tiddler.fields.right,
+			top: tiddler.fields.top,
+			bottom: tiddler.fields.bottom,
+			width: tiddler.fields.width,
+			height: tiddler.fields.height
+		};
+		var newWidth = rect.width,
+			newHeight = rect.height;
+		if((newHeight !== 0) && ((oldRect.width !== newWidth) || (oldRect.height !== newHeight))) {
+			self.wiki.addTiddler(new $tw.Tiddler({title: title, text: tiddler.fields.text || "", left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom, width: newWidth, height: newHeight}));
+			$tw.utils.setStyle(element,[
+				{containIntrinsicSize: `${newWidth}px ${newHeight}px` },
+				{contentVisibility: "auto" }
+			]);
 		}
 	}
-	var contentOverflowerDiff = 0,
-		contentOverflowerDiffPercentage = 0;
-	if(currContentOverflowerHeight && (currContentOverflowerHeight !== newContentOverflowerHeight)) {
-		contentOverflowerDiff = (currContentOverflowerHeight - newContentOverflowerHeight);
-		contentOverflowerDiffPercentage = (contentOverflowerDiff / currContentOverflowerHeight);
-	}
-	var parentRect = {
-		left: parentBounds.left,
-		right: parentBounds.left + parentWidth,
-		top: parentBounds.top,
-		bottom: parentBounds.top + parentHeight
+};
+
+DynaNodeWidget.prototype.checkVisibility = function() {
+	var self = this;
+	var elements = this.domNode.querySelectorAll(".tc-dynanode-track-tiddler-when-visible");
+	var domNodeWidth = this.domNode.offsetWidth,
+		domNodeHeight = this.domNode.offsetHeight,
+		domNodeBounds = this.domNode.getBoundingClientRect();
+
+	var domNodeRect = {
+		left: domNodeBounds.left,
+		right: domNodeBounds.left + domNodeWidth,
+		top: domNodeBounds.top,
+		bottom: domNodeBounds.top + domNodeHeight
 	};
 	$tw.utils.each(elements,function(element) {
 		// Calculate whether the element is visible
 		var elementRect = element.getBoundingClientRect(),
-			elementHeight = element.offsetHeight,
 			title = element.getAttribute("data-dynanode-track-tiddler");
 		if(title) {
-			var currValue = $tw.wiki.getTiddlerText(title),
+			var currValue = self.wiki.getTiddlerText(title),
 				newValue = currValue;
 			// Within viewport
-			if(!(elementRect.left > parentRect.right || 
-								elementRect.right < parentRect.left || 
-								elementRect.top > parentRect.bottom ||
-								elementRect.bottom < parentRect.top)) {
+			if(!(elementRect.left > domNodeRect.right || 
+								elementRect.right < domNodeRect.left || 
+								elementRect.top > domNodeRect.bottom ||
+								elementRect.bottom < domNodeRect.top)) {
 				newValue = STATE_IN_VIEW;
 			// Near viewport
-			} else if(!(elementRect.left > (parentRect.right + parentWidth) || 
-								elementRect.right < (parentRect.left - parentWidth) || 
-								elementRect.top > (parentRect.bottom + parentHeight) ||
-								elementRect.bottom < (parentRect.top - parentHeight))) {
+			} else if(!(elementRect.left > (domNodeRect.right + domNodeWidth) || 
+								elementRect.right < (domNodeRect.left - domNodeWidth) || 
+								elementRect.top > (domNodeRect.bottom + domNodeHeight) ||
+								elementRect.bottom < (domNodeRect.top - domNodeHeight))) {
 				newValue = STATE_NEAR_VIEW;
 			} else {
 				newValue = STATE_OUT_OF_VIEW;
 			}
 			if(newValue !== currValue) {
-				$tw.wiki.addTiddler(new $tw.Tiddler({title: title, text: newValue, height: (element.offsetHeight + (contentOverflowerDiffPercentage * element.offsetHeight)), column: self.dynanodeColumn}));
+				if(newValue === STATE_IN_VIEW) {
+					$tw.utils.addClass(element,"tc-dynanode-visible");
+					$tw.utils.removeClass(element,"tc-dynanode-near");
+					$tw.utils.removeClass(element,"tc-dynanode-hidden");
+				}
+				if(newValue === STATE_NEAR_VIEW) {
+					$tw.utils.addClass(element,"tc-dynanode-near");
+					$tw.utils.removeClass(element,"tc-dynanode-visible");
+					$tw.utils.removeClass(element,"tc-dynanode-hidden");
+				}
+				if(newValue === STATE_OUT_OF_VIEW) {
+					$tw.utils.addClass(element,"tc-dynanode-hidden");
+					$tw.utils.removeClass(element,"tc-dynanode-visible");
+					$tw.utils.removeClass(element,"tc-dynanode-near");
+				}
+				self.wiki.addTiddler(new $tw.Tiddler({title: title, text: newValue, left: elementRect.left, right: elementRect.right, top: elementRect.top, bottom: elementRect.bottom, width: elementRect.width, height: elementRect.height}));
 			}
 		}
+		if(self.isFirstRender) {
+			self.reserveSpace(element,elementRect);
+		};
 	});
+	this.isFirstRender = false;
 };
 
 /*
@@ -191,19 +264,15 @@ DynaNodeWidget.prototype.refresh = function(changedTiddlers) {
 			this.domNode.addEventListener("scroll",this.onScroll,false);
 			this.domNode.ownerDocument.defaultView.addEventListener("resize",this.onResize,false);
 			this.resizeObserver.observe(this.domNode);
+			this.mutationObserver.observe(this.domNode,{attributes: true, childList: true, subtree: true});
 			this.checkVisibility();
 		} else {
 			this.domNode.removeEventListener("scroll",this.onScroll,false);
 			this.domNode.ownerDocument.defaultView.removeEventListener("resize",this.onResize,false);
 			this.resizeObserver.unobserve(this.domNode);
-		}
-	}
-	if(((this.wiki.getTiddlerText("$:/state/tiddlyflex/story-river/filter") === "yes") && changedTiddlers["$:/temp/search/input"]) || changedTiddlers["$:/state/tiddlyflex/story-river/filter"] || changedTiddlers["$:/StoryList-" + this.dynanodeColumn]) {
-		if(this.dynanodeEnable) {
-			this.checkVisibility();
-			setTimeout(function() {
-				self.checkVisibility();
-			},this.wiki.getTiddlerText("$:/config/AnimationDuration"));
+			this.resizeObserver.disconnect();
+			this.mutationObserver.disconnect();
+			this.reserveSpaceObserver.disconnect();
 		}
 	}
 	return this.refreshChildren(changedTiddlers);
