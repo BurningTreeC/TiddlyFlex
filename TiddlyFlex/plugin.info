@@ -4,7 +4,7 @@
 	"name": "TiddlyFlex",
 	"plugin-type": "plugin",
 	"author": "Simon Huber",
-	"version": "0.0.112",
+	"version": "0.0.113",
 	"core-version": ">=5.3.3",
 	"source": "https://github.com/BurningTreeC/TiddlyFlex",
 	"list": "readme license"

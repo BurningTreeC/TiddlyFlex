@@ -125,14 +125,12 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 		}
 		if(childListChanged) {
 			for(var k=0; k<addedNodes.length; k++) {
-				//self.intersectionObserver.observe(addedNodes[k]);
 				self.resizeObserver.observe(addedNodes[k]);
 			}
 			for(var l=0; l<removedNodes.length; l++) {
 				self.spaced.delete(removedNodes[l]);
 				self.stateMap.delete(removedNodes[l]);
 				self.resizeObserver.unobserve(removedNodes[l]);
-				//self.intersectionObserver.unobserve(addedNodes[k]);
 			}
 			if(!self.isWaitingForAnimationFrame && addedNodes.length) {
 				self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
