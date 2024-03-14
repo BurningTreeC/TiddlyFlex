@@ -16,8 +16,7 @@ var STATE_OUT_OF_VIEW = "0",
 	STATE_NEAR_VIEW = "1",
 	STATE_IN_VIEW = "2";
 
-var isWaitingForAnimationFrame = 0, // Bitmask:
-	ANIM_FRAME_CAUSED_BY_LOAD = 1, // Animation frame was requested because of page load
+var ANIM_FRAME_CAUSED_BY_LOAD = 1, // Animation frame was requested because of page load
 	ANIM_FRAME_CAUSED_BY_SCROLL = 2, // Animation frame was requested because of page scroll
 	ANIM_FRAME_CAUSED_BY_RESIZE = 4; // Animation frame was requested because of window resize
 
@@ -39,6 +38,7 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 	var self = this;
 	// Remember domNode
 	this.parentDomNode = parent;
+	this.isWaitingForAnimationFrame = 0; // Bitmask:
 	// Compute attributes and execute state
 	this.computeAttributes();
 	this.execute();
@@ -52,38 +52,50 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 	// Assign classes
 	this.assignDomNodeClasses();
 
-	this.isFirstRender = true;
+	this.spaced = new WeakMap();
+	this.stateMap = new WeakMap();
 
 	function worker() {
-		self.checkVisibility();
-		isWaitingForAnimationFrame = 0;
+		var elements = self.domNode.querySelectorAll(self.dynanodeSelector);
+		for(var i=0; i<elements.length; i++) {
+			self.reserveSpace(elements.length,i,elements[i]);
+		}
 	}
 
 	this.onScroll = function(event) {
-		if(!isWaitingForAnimationFrame) {
+		if(!self.isWaitingForAnimationFrame) {
 			self.domNode.ownerDocument.defaultView.requestAnimationFrame(worker);
 		}
-		isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_SCROLL;
+		self.isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_SCROLL;
 	};
 
 	this.onResize = function(event) {
-		if(!isWaitingForAnimationFrame && !$tw.wiki.tiddlerExists("$:/state/dragging")) {
+		if(!self.isWaitingForAnimationFrame) {
 			self.domNode.ownerDocument.defaultView.requestAnimationFrame(worker);
 		}
-		isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_RESIZE;
+		self.isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_RESIZE;
+	};
+
+	this.dynanodeWorker = function(entries) {
+		var length = entries.length;
+		for(var i=0; i<length; i++) {
+			var entry= entries[i];
+			var rect = entry.contentRect ? entry.contentRect : undefined;
+			var target = entry.target ? entry.target : entry;
+			self.reserveSpace(length,i,target,rect);
+		}
 	};
 
 	this.resizeObserver = new ResizeObserver(function(entries) {
-		self.onResize();
-	});
-
-	this.reserveSpaceObserver = new ResizeObserver(function(entries) {
-		if(!self.isFirstRender) {
-			for(var i=0; i<entries.length; i++) {
-				var entry = entries[i];
-				self.reserveSpace(entry.target, entry.contentRect);
-			}
+		if(self.isWaitingForAnimationFrame) {
+			return;
 		}
+		if(!self.isWaitingForAnimationFrame) {
+			self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
+				self.dynanodeWorker(entries);
+			});
+		}
+		self.isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_RESIZE;
 	});
 
 	this.mutationObserver = new MutationObserver(function(mutations) {
@@ -113,22 +125,28 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 		}
 		if(childListChanged) {
 			for(var k=0; k<addedNodes.length; k++) {
-				self.reserveSpaceObserver.observe(addedNodes[k]);
+				//self.intersectionObserver.observe(addedNodes[k]);
+				self.resizeObserver.observe(addedNodes[k]);
 			}
 			for(var l=0; l<removedNodes.length; l++) {
-				self.reserveSpaceObserver.unobserve(removedNodes[l]);
+				self.spaced.delete(removedNodes[l]);
+				self.stateMap.delete(removedNodes[l]);
+				self.resizeObserver.unobserve(removedNodes[l]);
+				//self.intersectionObserver.unobserve(addedNodes[k]);
 			}
-			if(!isWaitingForAnimationFrame) {
-				self.domNode.ownerDocument.defaultView.requestAnimationFrame(worker);
+			if(!self.isWaitingForAnimationFrame && addedNodes.length) {
+				self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
+					self.dynanodeWorker(addedNodes);
+				});
 			}
-			isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_RESIZE;
+			self.isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_LOAD;
 		}
 	});
 
 	if(this.dynanodeEnable) {
 		domNode.addEventListener("scroll",this.onScroll,false);
+		domNode.addEventListener("resize",this.onResize,false);
 		domNode.ownerDocument.defaultView.addEventListener("resize",this.onResize,false);
-		this.resizeObserver.observe(domNode);
 		this.mutationObserver.observe(domNode,{attributes: true, childList: true, subtree: true});
 	}
 
@@ -138,32 +156,45 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 	this.domNodes.push(domNode);
 
 	if(this.dynanodeEnable) {
-		this.checkVisibility();
+		this.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
+			self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
+				var elements = self.domNode.querySelectorAll(self.dynanodeSelector);
+				self.dynanodeWorker(elements);
+			});
+		});
+		self.isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_LOAD;
 	}
 };
 
-DynaNodeWidget.prototype.reserveSpace = function(element,rect = element.getBoundingClientRect()) {
-	var self = this;
-	var title = element.getAttribute("data-dynanode-track-tiddler");
-	if(title && !$tw.wiki.tiddlerExists("$:/state/dragging")) {
-		var tiddler = this.wiki.getTiddler(title);
-		var oldRect = {
-			left: tiddler.fields.left,
-			right: tiddler.fields.right,
-			top: tiddler.fields.top,
-			bottom: tiddler.fields.bottom,
-			width: tiddler.fields.width,
-			height: tiddler.fields.height
+DynaNodeWidget.prototype.eqIsh = function(a,b,fuzz = 2) {
+	return (Math.abs(a - b) <= fuzz);
+};
+
+DynaNodeWidget.prototype.rectNotEQ = function(a,b) {
+	return (!this.eqIsh(a.width, b.width) ||
+			!this.eqIsh(a.height, b.height));
+};
+
+DynaNodeWidget.prototype.reserveSpace = function(length,i,element,rect) {
+	if(rect === undefined) {
+		var bounds = element.getBoundingClientRect(),
+			width = bounds.width,
+			height = bounds.height;
+		var computedStyle = this.domNode.ownerDocument.defaultView.getComputedStyle(element);
+		rect = {
+			width: width - (parseFloat(computedStyle.paddingLeft) + parseFloat(computedStyle.paddingRight) + parseFloat(computedStyle.borderLeftWidth) + parseFloat(computedStyle.borderRightWidth)),
+			height: height - (parseFloat(computedStyle.paddingTop) + parseFloat(computedStyle.paddingBottom) + parseFloat(computedStyle.borderTopWidth) + parseFloat(computedStyle.borderBottomWidth))
 		};
-		var newWidth = rect.width,
-			newHeight = rect.height;
-		if((newHeight !== 0) && ((oldRect.width !== newWidth) || (oldRect.height !== newHeight))) {
-			self.wiki.addTiddler(new $tw.Tiddler({title: title, text: tiddler.fields.text || "", left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom, width: newWidth, height: newHeight}));
-			$tw.utils.setStyle(element,[
-				{containIntrinsicSize: `${newWidth}px ${newHeight}px` },
-				{contentVisibility: "auto" }
-			]);
-		}
+	}
+	var old = this.spaced.get(element);
+	if(!old || this.rectNotEQ(old,rect)) {
+		this.spaced.set(element,rect);
+		$tw.utils.setStyle(element,[
+			{containIntrinsicSize: `${rect.width}px ${rect.height}px` }
+		]);
+	}
+	if(i === (length - 1)) {
+		this.checkVisibility();
 	}
 };
 
@@ -180,12 +211,13 @@ DynaNodeWidget.prototype.checkVisibility = function() {
 		top: domNodeBounds.top,
 		bottom: domNodeBounds.top + domNodeHeight
 	};
-	$tw.utils.each(elements,function(element) {
+	for(var i=0; i<elements.length; i++) {
+		var element = elements[i];
 		// Calculate whether the element is visible
 		var elementRect = element.getBoundingClientRect(),
 			title = element.getAttribute("data-dynanode-track-tiddler");
 		if(title) {
-			var currValue = self.wiki.getTiddlerText(title),
+			var currValue = self.stateMap.get(element),//self.wiki.getTiddlerText(title),
 				newValue = currValue;
 			// Within viewport
 			if(!(elementRect.left > domNodeRect.right || 
@@ -203,29 +235,38 @@ DynaNodeWidget.prototype.checkVisibility = function() {
 				newValue = STATE_OUT_OF_VIEW;
 			}
 			if(newValue !== currValue) {
+				self.stateMap.set(element,newValue);
 				if(newValue === STATE_IN_VIEW) {
 					$tw.utils.addClass(element,"tc-dynanode-visible");
 					$tw.utils.removeClass(element,"tc-dynanode-near");
 					$tw.utils.removeClass(element,"tc-dynanode-hidden");
+					$tw.utils.setStyle(element,[
+						{ contentVisibility: null }
+					]);
 				}
 				if(newValue === STATE_NEAR_VIEW) {
 					$tw.utils.addClass(element,"tc-dynanode-near");
 					$tw.utils.removeClass(element,"tc-dynanode-visible");
 					$tw.utils.removeClass(element,"tc-dynanode-hidden");
+					$tw.utils.setStyle(element,[
+						{ contentVisibility: "auto" }
+					]);
 				}
 				if(newValue === STATE_OUT_OF_VIEW) {
 					$tw.utils.addClass(element,"tc-dynanode-hidden");
 					$tw.utils.removeClass(element,"tc-dynanode-visible");
 					$tw.utils.removeClass(element,"tc-dynanode-near");
+					$tw.utils.setStyle(element,[
+						{ contentVisibility: "auto" }
+					]);
 				}
-				self.wiki.addTiddler(new $tw.Tiddler({title: title, text: newValue, left: elementRect.left, right: elementRect.right, top: elementRect.top, bottom: elementRect.bottom, width: elementRect.width, height: elementRect.height}));
+				self.wiki.addTiddler(new $tw.Tiddler({title: title, text: newValue}));
 			}
 		}
-		if(self.isFirstRender) {
-			self.reserveSpace(element,elementRect);
-		};
-	});
-	this.isFirstRender = false;
+		if(i === (elements.length - 1)) {
+			self.isWaitingForAnimationFrame = 0;
+		}
+	}
 };
 
 /*
@@ -234,8 +275,8 @@ Compute the internal state of the widget
 DynaNodeWidget.prototype.execute = function() {
 	var self = this;
 	this.elementTag = this.getAttribute("tag");
-	this.dynanodeColumn = this.getAttribute("column");
 	this.dynanodeEnable = this.getAttribute("enable","no") === "yes";
+	this.dynanodeSelector = this.getAttribute("selector",".tc-dynanode-track-tiddler-when-visible");
 	// Make child widgets
 	this.makeChildWidgets();
 };
@@ -255,24 +296,29 @@ DynaNodeWidget.prototype.refresh = function(changedTiddlers) {
 		changedAttributesCount = $tw.utils.count(changedAttributes);
 	if(changedAttributesCount === 1 && changedAttributes["class"]) {
 		this.assignDomNodeClasses();
-	} else if(changedAttributes.tag || changedAttributes.column) {
+	} else if(changedAttributes.tag || changedAttributes.selector) {
 		this.refreshSelf();
 		return true;
 	} else if(changedAttributes.enable) {
 		this.dynanodeEnable = this.getAttribute("enable","no") === "yes";
 		if(this.dynanodeEnable) {
 			this.domNode.addEventListener("scroll",this.onScroll,false);
+			this.domNode.addEventListener("resize",this.onResize,false);
 			this.domNode.ownerDocument.defaultView.addEventListener("resize",this.onResize,false);
-			this.resizeObserver.observe(this.domNode);
 			this.mutationObserver.observe(this.domNode,{attributes: true, childList: true, subtree: true});
-			this.checkVisibility();
+			this.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
+				self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
+					var elements = self.domNode.querySelectorAll(self.dynanodeSelector);
+					self.dynanodeWorker(elements);
+				});
+			});
+			self.isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_LOAD;
 		} else {
 			this.domNode.removeEventListener("scroll",this.onScroll,false);
+			this.domNode.removeEventListener("resize",this.onResize,false);
 			this.domNode.ownerDocument.defaultView.removeEventListener("resize",this.onResize,false);
-			this.resizeObserver.unobserve(this.domNode);
 			this.resizeObserver.disconnect();
 			this.mutationObserver.disconnect();
-			this.reserveSpaceObserver.disconnect();
 		}
 	}
 	return this.refreshChildren(changedTiddlers);

@@ -1,0 +1,6 @@
+title: $:/plugins/BTC/TiddlyFlex/styles/dynanode
+tags: $:/tags/Stylesheet
+
+.tc-dynanode-track-tiddler-when-visible {
+	transition: content-visibility {{$:/config/AnimationDuration}}ms;
+}
