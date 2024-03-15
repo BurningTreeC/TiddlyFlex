@@ -98,9 +98,9 @@ code-body: yes
 					</$eventcatcher>
 				<% endif %>
 				<div class="tc-tiddlyflex-story-river-container">
-					<div class="tc-tiddlyflex-story-river-container-inner">
+					<$dynanode tag="div" class="tc-tiddlyflex-story-river-container-inner" selector=".tc-tiddlyflex-story-river-wrapper" enable={{{ [{$:/config/tiddlyflex/story-river/dynanode}match[yes]] }}}>
 						<<tiddlyflex-layout-story-rivers>>
-					</div>
+					</$dynanode>
 					<<tiddlyflex-layout-drafts>>
 				</div>
 				<div class="tc-tiddlyflex-sidebar">

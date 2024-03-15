@@ -1,6 +1,10 @@
 title: $:/plugins/BTC/TiddlyFlex/styles/dynanode
 tags: $:/tags/Stylesheet
 
-.tc-dynanode-track-tiddler-when-visible {
-	transition: content-visibility {{$:/config/AnimationDuration}}ms;
-}
+<%if [function[tiddlyflex-layout]then{$:/config/tiddlyflex/story-river/dynanode}match[yes]] %>
+
+	.tc-dynanode-track-tiddler-when-visible {
+		transition: content-visibility {{$:/config/AnimationDuration}}ms;
+	}
+
+<% endif %>

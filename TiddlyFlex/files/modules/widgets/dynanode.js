@@ -51,7 +51,10 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 	this.domNode = domNode;
 	// Assign classes
 	this.assignDomNodeClasses();
-
+	this.assignAttributes(domNode,{
+		sourcePrefix: "data-",
+		destPrefix: "data-"
+	});
 	this.spaced = new WeakMap();
 	this.stateMap = new WeakMap();
 
@@ -107,7 +110,7 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 			if(mutation.type === "childList") {
 				for(var j=0; j<mutation.addedNodes.length; j++) {
 					var addedNode = mutation.addedNodes[j];
-					if(addedNode.classList && addedNode.classList.contains("tc-dynanode-track-tiddler-when-visible")) {
+					if((addedNode.matches || addedNode.msMatchesSelector) && $tw.utils.domMatchesSelector(addedNode,self.dynanodeSelector)) {
 						childListChanged = true;
 						addedNodes.push(addedNode);
 					}
@@ -115,7 +118,7 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 				if(!childListChanged) {
 					for(var j=0; j<mutation.removedNodes.length; j++) {
 						var removedNode = mutation.removedNodes[j];
-						if(removedNode.classList && removedNode.classList.contains("tc-dynanode-track-tiddler-when-visible")) {
+						if((removedNode.matches || removedNode.msMatchesSelector) && $tw.utils.domMatchesSelector(removedNode,self.dynanodeSelector)) {
 							childListChanged = true;
 							removedNodes.push(removedNode);
 						}
@@ -128,9 +131,9 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 				self.resizeObserver.observe(addedNodes[k]);
 			}
 			for(var l=0; l<removedNodes.length; l++) {
+				self.resizeObserver.unobserve(removedNodes[l]);
 				self.spaced.delete(removedNodes[l]);
 				self.stateMap.delete(removedNodes[l]);
-				self.resizeObserver.unobserve(removedNodes[l]);
 			}
 			if(!self.isWaitingForAnimationFrame && addedNodes.length) {
 				self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
@@ -198,7 +201,7 @@ DynaNodeWidget.prototype.reserveSpace = function(length,i,element,rect) {
 
 DynaNodeWidget.prototype.checkVisibility = function() {
 	var self = this;
-	var elements = this.domNode.querySelectorAll(".tc-dynanode-track-tiddler-when-visible");
+	var elements = this.domNode.querySelectorAll(this.dynanodeSelector);
 	var domNodeWidth = this.domNode.offsetWidth,
 		domNodeHeight = this.domNode.offsetHeight,
 		domNodeBounds = this.domNode.getBoundingClientRect();
@@ -212,53 +215,49 @@ DynaNodeWidget.prototype.checkVisibility = function() {
 	for(var i=0; i<elements.length; i++) {
 		var element = elements[i];
 		// Calculate whether the element is visible
-		var elementRect = element.getBoundingClientRect(),
-			title = element.getAttribute("data-dynanode-track-tiddler");
-		if(title) {
-			var currValue = self.stateMap.get(element),//self.wiki.getTiddlerText(title),
-				newValue = currValue;
-			// Within viewport
-			if(!(elementRect.left > domNodeRect.right || 
-								elementRect.right < domNodeRect.left || 
-								elementRect.top > domNodeRect.bottom ||
-								elementRect.bottom < domNodeRect.top)) {
-				newValue = STATE_IN_VIEW;
-			// Near viewport
-			} else if(!(elementRect.left > (domNodeRect.right + domNodeWidth) || 
-								elementRect.right < (domNodeRect.left - domNodeWidth) || 
-								elementRect.top > (domNodeRect.bottom + domNodeHeight) ||
-								elementRect.bottom < (domNodeRect.top - domNodeHeight))) {
-				newValue = STATE_NEAR_VIEW;
-			} else {
-				newValue = STATE_OUT_OF_VIEW;
+		var elementRect = element.getBoundingClientRect();
+		var currValue = self.stateMap.get(element),//self.wiki.getTiddlerText(title),
+			newValue = currValue;
+		// Within viewport
+		if(!(elementRect.left > domNodeRect.right || 
+							elementRect.right < domNodeRect.left || 
+							elementRect.top > domNodeRect.bottom ||
+							elementRect.bottom < domNodeRect.top)) {
+			newValue = STATE_IN_VIEW;
+		// Near viewport
+		} else if(!(elementRect.left > (domNodeRect.right + domNodeWidth) || 
+							elementRect.right < (domNodeRect.left - domNodeWidth) || 
+							elementRect.top > (domNodeRect.bottom + domNodeHeight) ||
+							elementRect.bottom < (domNodeRect.top - domNodeHeight))) {
+			newValue = STATE_NEAR_VIEW;
+		} else {
+			newValue = STATE_OUT_OF_VIEW;
+		}
+		if(newValue !== currValue) {
+			self.stateMap.set(element,newValue);
+			if(newValue === STATE_IN_VIEW) {
+				$tw.utils.addClass(element,"tc-dynanode-visible");
+				$tw.utils.removeClass(element,"tc-dynanode-near");
+				$tw.utils.removeClass(element,"tc-dynanode-hidden");
+				$tw.utils.setStyle(element,[
+					{ contentVisibility: null }
+				]);
 			}
-			if(newValue !== currValue) {
-				self.stateMap.set(element,newValue);
-				if(newValue === STATE_IN_VIEW) {
-					$tw.utils.addClass(element,"tc-dynanode-visible");
-					$tw.utils.removeClass(element,"tc-dynanode-near");
-					$tw.utils.removeClass(element,"tc-dynanode-hidden");
-					$tw.utils.setStyle(element,[
-						{ contentVisibility: null }
-					]);
-				}
-				if(newValue === STATE_NEAR_VIEW) {
-					$tw.utils.addClass(element,"tc-dynanode-near");
-					$tw.utils.removeClass(element,"tc-dynanode-visible");
-					$tw.utils.removeClass(element,"tc-dynanode-hidden");
-					$tw.utils.setStyle(element,[
-						{ contentVisibility: "auto" }
-					]);
-				}
-				if(newValue === STATE_OUT_OF_VIEW) {
-					$tw.utils.addClass(element,"tc-dynanode-hidden");
-					$tw.utils.removeClass(element,"tc-dynanode-visible");
-					$tw.utils.removeClass(element,"tc-dynanode-near");
-					$tw.utils.setStyle(element,[
-						{ contentVisibility: "auto" }
-					]);
-				}
-				self.wiki.addTiddler(new $tw.Tiddler({title: title, text: newValue}));
+			if(newValue === STATE_NEAR_VIEW) {
+				$tw.utils.addClass(element,"tc-dynanode-near");
+				$tw.utils.removeClass(element,"tc-dynanode-visible");
+				$tw.utils.removeClass(element,"tc-dynanode-hidden");
+				$tw.utils.setStyle(element,[
+					{ contentVisibility: "auto" }
+				]);
+			}
+			if(newValue === STATE_OUT_OF_VIEW) {
+				$tw.utils.addClass(element,"tc-dynanode-hidden");
+				$tw.utils.removeClass(element,"tc-dynanode-visible");
+				$tw.utils.removeClass(element,"tc-dynanode-near");
+				$tw.utils.setStyle(element,[
+					{ contentVisibility: "auto" }
+				]);
 			}
 		}
 		if(i === (elements.length - 1)) {
@@ -318,6 +317,12 @@ DynaNodeWidget.prototype.refresh = function(changedTiddlers) {
 			this.resizeObserver.disconnect();
 			this.mutationObserver.disconnect();
 		}
+	} else {
+		this.assignAttributes(this.domNode,{
+			changedAttributes: changedAttributes,
+			sourcePrefix: "data-",
+			destPrefix: "data-"
+		});
 	}
 	return this.refreshChildren(changedTiddlers);
 };

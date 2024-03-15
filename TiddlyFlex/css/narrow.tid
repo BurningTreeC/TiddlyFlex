@@ -9,10 +9,6 @@ tags: $:/tags/Stylesheet
 		width: 90%;
 	}
 
-	.tc-tiddlyflex-top-toolbar button.tc-tiddlyflex-vertical-horizontal-btn {
-		display: none;
-	}
-
 }
 
 @media (max-width: 767.98px) {

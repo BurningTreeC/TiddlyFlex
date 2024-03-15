@@ -116,7 +116,7 @@ tags: $:/tags/Stylesheet
 
 <% endif %>
 
-<%if [[$:/state/sidebar/resizing]!is[missing]] [{$:/state/tiddlyflex/story-river/horizontal/changed}match[yes]] %>
+<%if [[$:/state/sidebar/resizing]!is[missing]] %>
 
 	.tc-tiddlyflex-story-river-container {
 		-webkit-transition: none;

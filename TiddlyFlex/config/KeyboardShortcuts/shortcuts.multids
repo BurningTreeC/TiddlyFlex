@@ -15,4 +15,3 @@ move-up: alt-shift-Up
 navigate-down: alt-Down
 navigate-up: alt-Up
 remove-column: ctrl-alt-M
-vertical-horizontal: alt-shift-H
