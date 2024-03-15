@@ -247,17 +247,21 @@ DynaNodeWidget.prototype.checkVisibility = function() {
 				$tw.utils.addClass(element,"tc-dynanode-near");
 				$tw.utils.removeClass(element,"tc-dynanode-visible");
 				$tw.utils.removeClass(element,"tc-dynanode-hidden");
-				$tw.utils.setStyle(element,[
-					{ contentVisibility: "auto" }
-				]);
+				if(element.style["content-visibility"] !== "auto") {
+					$tw.utils.setStyle(element,[
+						{ contentVisibility: "auto" }
+					]);
+				}
 			}
 			if(newValue === STATE_OUT_OF_VIEW) {
 				$tw.utils.addClass(element,"tc-dynanode-hidden");
 				$tw.utils.removeClass(element,"tc-dynanode-visible");
 				$tw.utils.removeClass(element,"tc-dynanode-near");
-				$tw.utils.setStyle(element,[
-					{ contentVisibility: "auto" }
-				]);
+				if(element.style["content-visibility"] !== "auto") {
+					$tw.utils.setStyle(element,[
+						{ contentVisibility: "auto" }
+					]);
+				}
 			}
 		}
 		if(i === (elements.length - 1)) {
