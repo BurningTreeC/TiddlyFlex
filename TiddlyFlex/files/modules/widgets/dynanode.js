@@ -337,7 +337,7 @@ DynaNodeWidget.prototype.refresh = function(changedTiddlers) {
 			destPrefix: "data-"
 		});
 	}
-	if(changedAttribute.hide) {
+	if(changedAttributes.hide) {
 		this.dynanodeHide = this.getAttribute("hide","no") === "yes";
 	}
 	return this.refreshChildren(changedTiddlers);
