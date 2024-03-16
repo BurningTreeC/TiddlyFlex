@@ -15,11 +15,11 @@
 				"module-type": "widget-subclass"
 			}
 		},{
-			"file": "modules/widgets/subclasses/widget.js",
+			"file": "modules/startup/widget.js",
 			"fields": {
 				"type": "application/javascript",
-				"title": "$:/plugins/BTC/TiddlyFlex/modules/widgets/subclasses/widget.js",
-				"module-type": "widget-subclass"
+				"title": "$:/plugins/BTC/TiddlyFlex/modules/startup/widget.js",
+				"module-type": "startup"
 			}
 		},{
 			"file": "modules/utils/dom/scroller.js",

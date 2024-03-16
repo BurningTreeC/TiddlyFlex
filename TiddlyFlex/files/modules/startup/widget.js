@@ -1,9 +1,9 @@
 /*\
-title: $:/plugins/BTC/TiddlyFlex/modules/widgets/subclasses/widget.js
+title: $:/plugins/BTC/TiddlyFlex/modules/startup/widget.js
 type: application/javascript
-module-type: widget-subclass
+module-type: startup
 
-Base widget subclass
+Base Widget widget override
 
 \*/
 (function(){
@@ -12,15 +12,9 @@ Base widget subclass
 /*global $tw: false */
 "use strict";
 
-exports.baseClass = "widget"; // Extend the <$checkbox> widget
+var Widget = require("$:/core/modules/widgets/widget.js").widget;
 
-exports.constructor = function(parseTreeNode,options) {
-	this.initialise(parseTreeNode,options);
-};
-
-exports.prototype = {};
-
-exports.prototype.refreshChildren = function(changedTiddlers) {
+Widget.prototype.refreshChildren = function(changedTiddlers) {
 	var children = this.children,
 		refreshed = false;
 	for (var i = 0; i < children.length; i++) {

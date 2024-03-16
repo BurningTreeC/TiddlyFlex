@@ -1,5 +1,5 @@
 /*\
-title: $:/core/modules/widgets/draggable.js
+title: $:/plugins/BTC/TiddlyFlex/modules/widgets/tiddlyflex-draggable.js
 type: application/javascript
 module-type: widget
 
