@@ -56,6 +56,7 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 		destPrefix: "data-"
 	});
 
+	this.changedTiddlers = {};
 	this.dynanodeElements = [];
 	this.spaced = new WeakMap();
 	this.stateMap = new WeakMap();
@@ -64,7 +65,7 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 		for(var i=0; i<self.dynanodeElements.length; i++) {
 			self.reserveSpace(self.dynanodeElements.length,i,self.dynanodeElements[i]);
 		}
-	}
+	};
 
 	this.onScroll = function(event) {
 		if(!self.isWaitingForAnimationFrame) {
@@ -268,6 +269,7 @@ DynaNodeWidget.prototype.checkVisibility = function() {
 				]);
 				if(currValue !== undefined) {
 					self.refreshChildren(self.changedTiddlers);
+					self.changedTiddlers = {};
 				}
 			}
 			if(newValue === STATE_NEAR_VIEW) {
@@ -348,7 +350,7 @@ Selectively refreshes the widget if needed. Returns true if the widget or any of
 */
 DynaNodeWidget.prototype.refresh = function(changedTiddlers) {
 	var self = this;
-	this.changedTiddlers = changedTiddlers;
+	$tw.utils.extend(this.changedTiddlers,changedTiddlers);
 	var changedAttributes = this.computeAttributes(),
 		changedAttributesCount = $tw.utils.count(changedAttributes);
 	if(changedAttributesCount === 1 && changedAttributes["class"]) {
