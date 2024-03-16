@@ -100,7 +100,7 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 	};
 
 	this.resizeObserver = new ResizeObserver(function(entries) {
-		if(!isWaitingForAnimationFrame) {
+		if(!self.isWaitingForAnimationFrame) {
 			self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
 				if(!Array.isArray(entries) || !entries.length) {
 					return;
