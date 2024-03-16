@@ -61,9 +61,8 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 	this.stateMap = new WeakMap();
 
 	function worker() {
-		var elements = self.dynanodeElements;
-		for(var i=0; i<elements.length; i++) {
-			self.reserveSpace(elements.length,i,elements[i],undefined,elements);
+		for(var i=0; i<self.dynanodeElements.length; i++) {
+			self.reserveSpace(self.dynanodeElements.length,i,self.dynanodeElements[i]);
 		}
 	}
 
@@ -82,6 +81,8 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 	};
 
 	this.dynanodeWorker = function(entries) {
+		console.log("dynanodeWorker");
+		console.log(self.dynanodeElements);
 		var length = entries.length,
 			targets = [];
 		for(var i=0; i<length; i++) {
@@ -90,13 +91,13 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 			if(self.dynanodeElements.indexOf(target) === -1) {
 				self.dynanodeElements.push(target);
 			}
-			targets.push(target);
 		}
+		console.log(self.dynanodeElements);
 		for(i=0; i<length; i++) {
 			var entry= entries[i];
 			var rect = entry.contentRect ? entry.contentRect : undefined;
 			var target = entry.target ? entry.target : entry;
-			self.reserveSpace(length,i,target,rect,targets);
+			self.reserveSpace(length,i,target,rect);
 		}
 	};
 
@@ -122,37 +123,45 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 				for(var j=0; j<mutation.addedNodes.length; j++) {
 					var addedNode = mutation.addedNodes[j];
 					if((addedNode.matches || addedNode.msMatchesSelector) && $tw.utils.domMatchesSelector(addedNode,self.dynanodeSelector)) {
-						childListChanged = true;
 						addedNodes.push(addedNode);
+						if(j === (mutation.addedNodes.length - 1)) {
+							for(var k=0; k<addedNodes.length; k++) {
+								self.dynanodeElements.push(addedNodes[k]);
+								self.resizeObserver.observe(addedNodes[k]);
+								if(k === (addedNodes.length - 1)) {
+									if(!self.isWaitingForAnimationFrame) {
+										self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
+											self.dynanodeWorker(addedNodes);
+										});
+									}
+									self.isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_LOAD;
+								}
+							}
+						}
 					}
 				}
 				for(j=0; j<mutation.removedNodes.length; j++) {
 					var removedNode = mutation.removedNodes[j];
-					if((removedNode.matches || removedNode.msMatchesSelector) && $tw.utils.domMatchesSelector(removedNode,self.dynanodeSelector)) {
-						childListChanged = true;
+					if((removedNode.matches || removedNode.msMatchesSelector) && $tw.utils.domMatchesSelector(removedNode,self.dynanodeRemoveSelector)) {
 						removedNodes.push(removedNode);
+						if(j === (mutation.removedNodes.length - 1)) {
+							for(var k=0; k<removedNodes.length; k++) {
+								self.resizeObserver.unobserve(removedNodes[k]);
+								var index = self.dynanodeElements.indexOf(removedNodes[k]);
+								self.dynanodeElements.splice(index,1);
+								self.spaced.delete(removedNodes[k]);
+								self.stateMap.delete(removedNodes[k]);
+								if(k === (removedNodes.length - 1)) {
+									if(!self.isWaitingForAnimationFrame) {
+										self.domNode.ownerDocument.defaultView.requestAnimationFrame(worker);
+									}
+									self.isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_LOAD;
+								}
+							}
+						}
 					}
 				}
 			}
-		}
-		if(childListChanged) {
-			for(var k=0; k<addedNodes.length; k++) {
-				self.dynanodeElements.push(addedNodes[k]);
-				self.resizeObserver.observe(addedNodes[k]);
-			}
-			for(var l=0; l<removedNodes.length; l++) {
-				self.resizeObserver.unobserve(removedNodes[l]);
-				var index = self.dynanodeElements.indexOf(removedNodes[l]);
-				self.dynanodeElements.splice(index,1);
-				self.spaced.delete(removedNodes[l]);
-				self.stateMap.delete(removedNodes[l]);
-			}
-			if(!self.isWaitingForAnimationFrame && addedNodes.length) {
-				self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
-					self.dynanodeWorker(addedNodes);
-				});
-			}
-			self.isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_LOAD;
 		}
 	});
 
@@ -160,7 +169,7 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 		domNode.addEventListener("scroll",this.onScroll,false);
 		domNode.addEventListener("resize",this.onResize,false);
 		domNode.ownerDocument.defaultView.addEventListener("resize",this.onResize,false);
-		this.mutationObserver.observe(domNode,{attributes: true, childList: true, subtree: true});
+		this.mutationObserver.observe(domNode,{childList: true, subtree: true});
 	}
 
 	// Insert element
@@ -188,7 +197,7 @@ DynaNodeWidget.prototype.rectNotEQ = function(a,b) {
 			!this.eqIsh(a.height, b.height));
 };
 
-DynaNodeWidget.prototype.reserveSpace = function(length,i,element,rect,elements) {
+DynaNodeWidget.prototype.reserveSpace = function(length,i,element,rect) {
 	if(rect === undefined) {
 		var bounds = element.getBoundingClientRect(),
 			width = bounds.width,
@@ -206,14 +215,15 @@ DynaNodeWidget.prototype.reserveSpace = function(length,i,element,rect,elements)
 			{containIntrinsicSize: `${rect.width}px ${rect.height}px` }
 		]);
 	}
-	if(elements && (i === (length - 1))) {
-		this.checkVisibility(elements);
+	if(i === (length - 1)) {
+		this.checkVisibility();
 	}
 };
 
-DynaNodeWidget.prototype.checkVisibility = function(elements) {
+DynaNodeWidget.prototype.checkVisibility = function() {
 	var self = this;
 	//var elements = this.domNode.querySelectorAll(this.dynanodeSelector);
+	var elements = this.dynanodeElements;
 	var domNodeWidth = this.domNode.offsetWidth,
 		domNodeHeight = this.domNode.offsetHeight,
 		domNodeBounds = this.domNode.getBoundingClientRect();
@@ -290,6 +300,24 @@ DynaNodeWidget.prototype.checkVisibility = function(elements) {
 	}
 };
 
+DynaNodeWidget.prototype.clearElementStyles = function() {
+	for(var i=0; i<this.dynanodeElements.length; i++) {
+		var element = this.dynanodeElements[i];
+		$tw.utils.removeClass(element,"tc-dynanode-visible");
+		$tw.utils.removeClass(element,"tc-dynanode-near");
+		$tw.utils.removeClass(element,"tc-dynanode-hidden");
+		$tw.utils.setStyle(element,[
+			{ contentVisibility: null },
+			{ containIntrinsicSize: null }
+		]);
+		if(i === (this.dynanodeElements.length - 1)) {
+			this.dynanodeElements = [];
+			this.spaced = new WeakMap();
+			this.stateMap = new WeakMap();
+		}
+	}
+};
+
 /*
 Compute the internal state of the widget
 */
@@ -298,6 +326,7 @@ DynaNodeWidget.prototype.execute = function() {
 	this.elementTag = this.getAttribute("tag");
 	this.dynanodeEnable = this.getAttribute("enable","no") === "yes";
 	this.dynanodeSelector = this.getAttribute("selector",".tc-dynanode-track-tiddler-when-visible");
+	this.dynanodeRemoveSelector = this.getAttribute("removeselector",".tc-dynanode-remove-tiddler-frame");
 	this.dynanodeHide = this.getAttribute("hide","no") === "yes";
 	// Make child widgets
 	this.makeChildWidgets();
@@ -327,7 +356,7 @@ DynaNodeWidget.prototype.refresh = function(changedTiddlers) {
 			this.domNode.addEventListener("scroll",this.onScroll,false);
 			this.domNode.addEventListener("resize",this.onResize,false);
 			this.domNode.ownerDocument.defaultView.addEventListener("resize",this.onResize,false);
-			this.mutationObserver.observe(this.domNode,{attributes: true, childList: true, subtree: true});
+			this.mutationObserver.observe(this.domNode,{childList: true, subtree: true});
 			this.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
 				self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
 					var elements = self.domNode.querySelectorAll(self.dynanodeSelector);
@@ -341,6 +370,7 @@ DynaNodeWidget.prototype.refresh = function(changedTiddlers) {
 			this.domNode.ownerDocument.defaultView.removeEventListener("resize",this.onResize,false);
 			this.resizeObserver.disconnect();
 			this.mutationObserver.disconnect();
+			this.clearElementStyles();
 		}
 	} else {
 		this.assignAttributes(this.domNode,{
@@ -351,6 +381,9 @@ DynaNodeWidget.prototype.refresh = function(changedTiddlers) {
 	}
 	if(changedAttributes.hide) {
 		this.dynanodeHide = this.getAttribute("hide","no") === "yes";
+		if(this.dynanodeEnable) {
+			this.checkVisibility();
+		}
 	}
 	return this.refreshChildren(changedTiddlers);
 };
