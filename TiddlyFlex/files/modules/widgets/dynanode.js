@@ -81,8 +81,6 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 	};
 
 	this.dynanodeWorker = function(entries) {
-		console.log("dynanodeWorker");
-		console.log(self.dynanodeElements);
 		var length = entries.length,
 			targets = [];
 		for(var i=0; i<length; i++) {
@@ -92,7 +90,6 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 				self.dynanodeElements.push(target);
 			}
 		}
-		console.log(self.dynanodeElements);
 		for(i=0; i<length; i++) {
 			var entry= entries[i];
 			var rect = entry.contentRect ? entry.contentRect : undefined;
@@ -102,15 +99,20 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 	};
 
 	this.resizeObserver = new ResizeObserver(function(entries) {
-		if(self.isWaitingForAnimationFrame) {
-			return;
-		}
-		if(!self.isWaitingForAnimationFrame) {
-			self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
-				self.dynanodeWorker(entries);
-			});
-		}
-		self.isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_RESIZE;
+		self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
+			if(!Array.isArray(entries) || !entries.length) {
+				return;
+			}
+			if(self.isWaitingForAnimationFrame) {
+				return;
+			}
+			if(!self.isWaitingForAnimationFrame) {
+				self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
+					self.dynanodeWorker(entries);
+				});
+			}
+			self.isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_RESIZE;
+		});
 	});
 
 	this.mutationObserver = new MutationObserver(function(mutations) {
@@ -264,6 +266,9 @@ DynaNodeWidget.prototype.checkVisibility = function() {
 				$tw.utils.setStyle(element,[
 					{ contentVisibility: null }
 				]);
+				if(currValue !== undefined) {
+					self.refreshChildren(self.changedTiddlers);
+				}
 			}
 			if(newValue === STATE_NEAR_VIEW) {
 				$tw.utils.addClass(element,"tc-dynanode-near");
@@ -343,6 +348,7 @@ Selectively refreshes the widget if needed. Returns true if the widget or any of
 */
 DynaNodeWidget.prototype.refresh = function(changedTiddlers) {
 	var self = this;
+	this.changedTiddlers = changedTiddlers;
 	var changedAttributes = this.computeAttributes(),
 		changedAttributesCount = $tw.utils.count(changedAttributes);
 	if(changedAttributesCount === 1 && changedAttributes["class"]) {
