@@ -257,10 +257,18 @@ DynaNodeWidget.prototype.checkVisibility = function() {
 				$tw.utils.addClass(element,"tc-dynanode-hidden");
 				$tw.utils.removeClass(element,"tc-dynanode-visible");
 				$tw.utils.removeClass(element,"tc-dynanode-near");
-				if(element.style["content-visibility"] !== "auto") {
-					$tw.utils.setStyle(element,[
-						{ contentVisibility: "auto" }
-					]);
+				if(self.dynanodeHide) {
+					if(element.style["content-visibility"] !== "hidden") {
+						$tw.utils.setStyle(element,[
+							{ contentVisibility: "hidden" }
+						]);
+					}
+				} else {
+					if(element.style["content-visibility"] !== "auto") {
+						$tw.utils.setStyle(element,[
+							{ contentVisibility: "auto" }
+						]);
+					}					
 				}
 			}
 		}
@@ -278,6 +286,7 @@ DynaNodeWidget.prototype.execute = function() {
 	this.elementTag = this.getAttribute("tag");
 	this.dynanodeEnable = this.getAttribute("enable","no") === "yes";
 	this.dynanodeSelector = this.getAttribute("selector",".tc-dynanode-track-tiddler-when-visible");
+	this.dynanodeHide = this.getAttribute("hide","no") === "yes";
 	// Make child widgets
 	this.makeChildWidgets();
 };
@@ -327,6 +336,9 @@ DynaNodeWidget.prototype.refresh = function(changedTiddlers) {
 			sourcePrefix: "data-",
 			destPrefix: "data-"
 		});
+	}
+	if(changedAttribute.hide) {
+		this.dynanodeHide = this.getAttribute("hide","no") === "yes";
 	}
 	return this.refreshChildren(changedTiddlers);
 };
