@@ -55,13 +55,15 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 		sourcePrefix: "data-",
 		destPrefix: "data-"
 	});
+
+	this.dynanodeElements = [];
 	this.spaced = new WeakMap();
 	this.stateMap = new WeakMap();
 
 	function worker() {
-		var elements = self.domNode.querySelectorAll(self.dynanodeSelector);
+		var elements = self.dynanodeElements;
 		for(var i=0; i<elements.length; i++) {
-			self.reserveSpace(elements.length,i,elements[i]);
+			self.reserveSpace(elements.length,i,elements[i],undefined,elements);
 		}
 	}
 
@@ -80,12 +82,21 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 	};
 
 	this.dynanodeWorker = function(entries) {
-		var length = entries.length;
+		var length = entries.length,
+			targets = [];
 		for(var i=0; i<length; i++) {
+			var entry = entries[i];
+			var target = entry.target ? entry.target : entry;
+			if(self.dynanodeElements.indexOf(target) === -1) {
+				self.dynanodeElements.push(target);
+			}
+			targets.push(target);
+		}
+		for(i=0; i<length; i++) {
 			var entry= entries[i];
 			var rect = entry.contentRect ? entry.contentRect : undefined;
 			var target = entry.target ? entry.target : entry;
-			self.reserveSpace(length,i,target,rect);
+			self.reserveSpace(length,i,target,rect,targets);
 		}
 	};
 
@@ -115,23 +126,24 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 						addedNodes.push(addedNode);
 					}
 				}
-				if(!childListChanged) {
-					for(var j=0; j<mutation.removedNodes.length; j++) {
-						var removedNode = mutation.removedNodes[j];
-						if((removedNode.matches || removedNode.msMatchesSelector) && $tw.utils.domMatchesSelector(removedNode,self.dynanodeSelector)) {
-							childListChanged = true;
-							removedNodes.push(removedNode);
-						}
-					}					
+				for(j=0; j<mutation.removedNodes.length; j++) {
+					var removedNode = mutation.removedNodes[j];
+					if((removedNode.matches || removedNode.msMatchesSelector) && $tw.utils.domMatchesSelector(removedNode,self.dynanodeSelector)) {
+						childListChanged = true;
+						removedNodes.push(removedNode);
+					}
 				}
 			}
 		}
 		if(childListChanged) {
 			for(var k=0; k<addedNodes.length; k++) {
+				self.dynanodeElements.push(addedNodes[k]);
 				self.resizeObserver.observe(addedNodes[k]);
 			}
 			for(var l=0; l<removedNodes.length; l++) {
 				self.resizeObserver.unobserve(removedNodes[l]);
+				var index = self.dynanodeElements.indexOf(removedNodes[l]);
+				self.dynanodeElements.splice(index,1);
 				self.spaced.delete(removedNodes[l]);
 				self.stateMap.delete(removedNodes[l]);
 			}
@@ -176,7 +188,7 @@ DynaNodeWidget.prototype.rectNotEQ = function(a,b) {
 			!this.eqIsh(a.height, b.height));
 };
 
-DynaNodeWidget.prototype.reserveSpace = function(length,i,element,rect) {
+DynaNodeWidget.prototype.reserveSpace = function(length,i,element,rect,elements) {
 	if(rect === undefined) {
 		var bounds = element.getBoundingClientRect(),
 			width = bounds.width,
@@ -194,14 +206,14 @@ DynaNodeWidget.prototype.reserveSpace = function(length,i,element,rect) {
 			{containIntrinsicSize: `${rect.width}px ${rect.height}px` }
 		]);
 	}
-	if(i === (length - 1)) {
-		this.checkVisibility();
+	if(elements && (i === (length - 1))) {
+		this.checkVisibility(elements);
 	}
 };
 
-DynaNodeWidget.prototype.checkVisibility = function() {
+DynaNodeWidget.prototype.checkVisibility = function(elements) {
 	var self = this;
-	var elements = this.domNode.querySelectorAll(this.dynanodeSelector);
+	//var elements = this.domNode.querySelectorAll(this.dynanodeSelector);
 	var domNodeWidth = this.domNode.offsetWidth,
 		domNodeHeight = this.domNode.offsetHeight,
 		domNodeBounds = this.domNode.getBoundingClientRect();
