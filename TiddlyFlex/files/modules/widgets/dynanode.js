@@ -115,6 +115,7 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 				}
 				self.isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_RESIZE;
 			});
+			self.isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_RESIZE;
 		} else {
 			return;
 		}
@@ -271,7 +272,7 @@ DynaNodeWidget.prototype.checkVisibility = function() {
 				$tw.utils.setStyle(element,[
 					{ contentVisibility: null }
 				]);
-				if(currValue !== undefined) {
+				if((currValue !== undefined) && (Object.keys(self.changedTiddlers).length !== 0)) {
 					self.refreshChildren(self.changedTiddlers);
 					self.changedTiddlers = {};
 				}
