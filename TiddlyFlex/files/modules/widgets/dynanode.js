@@ -100,20 +100,24 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 	};
 
 	this.resizeObserver = new ResizeObserver(function(entries) {
-		self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
-			if(!Array.isArray(entries) || !entries.length) {
-				return;
-			}
-			if(self.isWaitingForAnimationFrame) {
-				return;
-			}
-			if(!self.isWaitingForAnimationFrame) {
-				self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
-					self.dynanodeWorker(entries);
-				});
-			}
-			self.isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_RESIZE;
-		});
+		if(!isWaitingForAnimationFrame) {
+			self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
+				if(!Array.isArray(entries) || !entries.length) {
+					return;
+				}
+				if(self.isWaitingForAnimationFrame) {
+					return;
+				}
+				if(!self.isWaitingForAnimationFrame) {
+					self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
+						self.dynanodeWorker(entries);
+					});
+				}
+				self.isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_RESIZE;
+			});
+		} else {
+			return;
+		}
 	});
 
 	this.mutationObserver = new MutationObserver(function(mutations) {
