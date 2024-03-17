@@ -69,7 +69,6 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 
 	this.onScroll = function(event) {
 		if(!self.isWaitingForAnimationFrame) {
-			self.refreshChildren(self.changedTiddlers);
 			self.domNode.ownerDocument.defaultView.requestAnimationFrame(worker);
 		}
 		self.isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_SCROLL;
@@ -101,20 +100,24 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 	};
 
 	this.resizeObserver = new ResizeObserver(function(entries) {
-		self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
-			if(!Array.isArray(entries) || !entries.length) {
-				return;
-			}
-			if(self.isWaitingForAnimationFrame) {
-				return;
-			}
-			if(!self.isWaitingForAnimationFrame) {
-				self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
-					self.dynanodeWorker(entries);
-				});
-			}
-			self.isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_RESIZE;
-		});
+		if(!self.isWaitingForAnimationFrame) {
+			self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
+				if(!Array.isArray(entries) || !entries.length) {
+					return;
+				}
+				if(self.isWaitingForAnimationFrame) {
+					return;
+				}
+				if(!self.isWaitingForAnimationFrame) {
+					self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
+						self.dynanodeWorker(entries);
+					});
+				}
+				self.isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_RESIZE;
+			});
+		} else {
+			return;
+		}
 	});
 
 	this.mutationObserver = new MutationObserver(function(mutations) {
@@ -130,8 +133,10 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 						addedNodes.push(addedNode);
 						if(j === (mutation.addedNodes.length - 1)) {
 							for(var k=0; k<addedNodes.length; k++) {
-								self.dynanodeElements.push(addedNodes[k]);
-								self.resizeObserver.observe(addedNodes[k]);
+								if(self.dynanodeElements.indexOf(addedNodes[k]) === -1) {
+									self.dynanodeElements.push(addedNodes[k]);
+									self.resizeObserver.observe(addedNodes[k]);
+								}
 								if(k === (addedNodes.length - 1)) {
 									if(!self.isWaitingForAnimationFrame) {
 										self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
@@ -228,6 +233,7 @@ DynaNodeWidget.prototype.checkVisibility = function() {
 	var self = this;
 	//var elements = this.domNode.querySelectorAll(this.dynanodeSelector);
 	var elements = this.dynanodeElements;
+	var visibilityChanged = false;
 	var domNodeWidth = this.domNode.offsetWidth,
 		domNodeHeight = this.domNode.offsetHeight,
 		domNodeBounds = this.domNode.getBoundingClientRect();
@@ -268,9 +274,9 @@ DynaNodeWidget.prototype.checkVisibility = function() {
 				$tw.utils.setStyle(element,[
 					{ contentVisibility: null }
 				]);
-				if(currValue !== undefined) {
-					self.refreshChildren(self.changedTiddlers);
-				}
+				//if(currValue !== undefined) {
+					visibilityChanged = true;
+				//}
 			}
 			if(newValue === STATE_NEAR_VIEW) {
 				$tw.utils.addClass(element,"tc-dynanode-near");
@@ -294,6 +300,9 @@ DynaNodeWidget.prototype.checkVisibility = function() {
 			}
 		}
 		if(i === (elements.length - 1)) {
+			if(visibilityChanged) {
+				self.refreshChildren(self.changedTiddlers);
+			}
 			self.isWaitingForAnimationFrame = 0;
 		}
 	}
