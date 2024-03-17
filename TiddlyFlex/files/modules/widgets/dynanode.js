@@ -38,7 +38,6 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 	var self = this;
 	// Remember domNode
 	this.parentDomNode = parent;
-	this.isWaitingForAnimationFrame = 0;
 	// Compute attributes and execute state
 	this.computeAttributes();
 	this.execute();
@@ -56,6 +55,7 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 		destPrefix: "data-"
 	});
 
+	this.isWaitingForAnimationFrame = 0;
 	this.changedTiddlers = {};
 	this.dynanodeElements = [];
 	this.spaced = new WeakMap();
@@ -83,6 +83,7 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 	};
 
 	this.dynanodeWorker = function(entries) {
+		console.log("dynanodeWorker");
 		var length = entries.length,
 			targets = [];
 		for(var i=0; i<length; i++) {
@@ -101,25 +102,22 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 	};
 
 	this.resizeObserver = new ResizeObserver(function(entries) {
-		if(!self.isWaitingForAnimationFrame) {
-			self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
-				if(!Array.isArray(entries) || !entries.length) {
-					return;
-				}
-				if(self.isWaitingForAnimationFrame) {
-					return;
-				}
-				if(!self.isWaitingForAnimationFrame) {
-					self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
-						self.dynanodeWorker(entries);
-					});
-				}
-				self.isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_RESIZE;
-			});
-			//self.isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_RESIZE;
-		} else {
-			return;
-		}
+		self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
+			if(!Array.isArray(entries) || !entries.length) {
+				return;
+			}
+			if(self.isWaitingForAnimationFrame) {
+				return;
+			}
+			if(!self.isWaitingForAnimationFrame) {
+				self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
+					self.dynanodeWorker(entries);
+				});
+			} else {
+				return;
+			}
+			self.isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_RESIZE;
+		});
 	});
 
 	this.mutationObserver = new MutationObserver(function(mutations) {
