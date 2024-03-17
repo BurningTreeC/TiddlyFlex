@@ -38,7 +38,7 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 	var self = this;
 	// Remember domNode
 	this.parentDomNode = parent;
-	this.isWaitingForAnimationFrame = 0; // Bitmask:
+	this.isWaitingForAnimationFrame = 0;
 	// Compute attributes and execute state
 	this.computeAttributes();
 	this.execute();
