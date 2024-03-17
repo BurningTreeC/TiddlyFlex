@@ -59,6 +59,7 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 	this.changedTiddlers = {};
 	this.dynanodeElements = [];
 	this.spaced = new WeakMap();
+	this.spacedTimestamps = new WeakMap();
 	this.stateMap = new WeakMap();
 
 	function worker(refreshChildren) {
@@ -156,6 +157,7 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 									if((removedNodes[k] === dynanodeElement) || (removedNodes[k].contains(dynanodeElement))) {
 										self.dynanodeElements.splice(l,1);
 										self.spaced.delete(dynanodeElement);
+										self.spacedTimestamps.delete(dynanodeElement);
 										self.stateMap.delete(dynanodeElement);
 									}
 								}
@@ -219,11 +221,20 @@ DynaNodeWidget.prototype.reserveSpace = function(length,i,element,rect,refreshCh
 		};
 	}
 	var old = this.spaced.get(element);
+	var oldTimestamp = this.spacedTimestamps.get(element),
+		newTimestamp = Date.now();
 	if(!old || this.rectNotEQ(old,rect)) {
 		this.spaced.set(element,rect);
-		$tw.utils.setStyle(element,[
-			{ containIntrinsicSize: `${rect.width}px ${rect.height}px` }
-		]);
+		this.spacedTimestamps.set(element,newTimestamp);
+		if(oldTimestamp === undefined) {
+			oldTimestamp = newTimestamp - 1000;
+		}
+		if((newTimestamp - oldTimestamp) >= this.dynanodeTimeout) {
+			console.log("SETTING ITNRINSIC SIZE!");
+			$tw.utils.setStyle(element,[
+				{ containIntrinsicSize: `${rect.width}px ${rect.height}px` }
+			]);
+		}
 	}
 	if(i === (length - 1)) {
 		this.checkVisibility(refreshChildren);
@@ -302,7 +313,7 @@ DynaNodeWidget.prototype.checkVisibility = function(refreshChildren) {
 		}
 		if(i === (elements.length - 1)) {
 			if(visibilityChanged) {
-				self.refreshChildren(self.changedTiddlers,refreshChildren);
+				self.refreshChildren(self.changedTiddlers,true);
 			}
 			self.isWaitingForAnimationFrame = 0;
 		}
@@ -322,6 +333,7 @@ DynaNodeWidget.prototype.clearElementStyles = function() {
 		if(i === (this.dynanodeElements.length - 1)) {
 			this.dynanodeElements = [];
 			this.spaced = new WeakMap();
+			this.spacedTimestamps = new WeakMap();
 			this.stateMap = new WeakMap();
 		}
 	}
@@ -336,6 +348,7 @@ DynaNodeWidget.prototype.execute = function() {
 	this.dynanodeEnable = this.getAttribute("enable","no") === "yes";
 	this.dynanodeSelector = this.getAttribute("selector",".tc-dynanode-track-tiddler-when-visible");
 	this.dynanodeRemoveSelector = this.getAttribute("removeselector",".tc-dynanode-track-tiddler-when-visible");
+	this.dynanodeTimeout = parseInt(this.getAttribute("timeout","20"));
 	// Make child widgets
 	this.makeChildWidgets();
 };
@@ -356,7 +369,7 @@ DynaNodeWidget.prototype.refresh = function(changedTiddlers) {
 		changedAttributesCount = $tw.utils.count(changedAttributes);
 	if(changedAttributesCount === 1 && changedAttributes["class"]) {
 		this.assignDomNodeClasses();
-	} else if(changedAttributes.tag || changedAttributes.selector) {
+	} else if(changedAttributes.tag || changedAttributes.selector || changedAttributes.timeout) {
 		this.refreshSelf();
 		return true;
 	} else if(changedAttributes.enable) {
