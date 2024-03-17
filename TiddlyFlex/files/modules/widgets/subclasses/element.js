@@ -14,9 +14,6 @@ Element widget base class
 
 exports.baseClass = "element";
 
-// Specify a different name to make the subclass available as a new widget instead of overwriting the baseclass:
-// exports.name = "my-enhanced-checkbox";
-
 exports.constructor = function(parseTreeNode,options) {
 	this.initialise(parseTreeNode,options);
 };

@@ -69,6 +69,7 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 
 	this.onScroll = function(event) {
 		if(!self.isWaitingForAnimationFrame) {
+			self.refreshChildren(self.changedTiddlers);
 			self.domNode.ownerDocument.defaultView.requestAnimationFrame(worker);
 		}
 		self.isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_SCROLL;
@@ -290,18 +291,10 @@ DynaNodeWidget.prototype.checkVisibility = function() {
 				$tw.utils.addClass(element,"tc-dynanode-hidden");
 				$tw.utils.removeClass(element,"tc-dynanode-visible");
 				$tw.utils.removeClass(element,"tc-dynanode-near");
-				if(self.dynanodeHide) {
-					if(element.style["content-visibility"] !== "hidden") {
-						$tw.utils.setStyle(element,[
-							{ contentVisibility: "hidden" }
-						]);
-					}
-				} else {
-					if(element.style["content-visibility"] !== "auto") {
-						$tw.utils.setStyle(element,[
-							{ contentVisibility: "auto" }
-						]);
-					}					
+				if(element.style["content-visibility"] !== "auto") {
+					$tw.utils.setStyle(element,[
+						{ contentVisibility: "auto" }
+					]);
 				}
 			}
 		}
@@ -338,7 +331,6 @@ DynaNodeWidget.prototype.execute = function() {
 	this.dynanodeEnable = this.getAttribute("enable","no") === "yes";
 	this.dynanodeSelector = this.getAttribute("selector",".tc-dynanode-track-tiddler-when-visible");
 	this.dynanodeRemoveSelector = this.getAttribute("removeselector",".tc-dynanode-remove-tiddler-frame");
-	this.dynanodeHide = this.getAttribute("hide","no") === "yes";
 	// Make child widgets
 	this.makeChildWidgets();
 };
@@ -390,12 +382,6 @@ DynaNodeWidget.prototype.refresh = function(changedTiddlers) {
 			sourcePrefix: "data-",
 			destPrefix: "data-"
 		});
-	}
-	if(changedAttributes.hide) {
-		this.dynanodeHide = this.getAttribute("hide","no") === "yes";
-		if(this.dynanodeEnable) {
-			this.checkVisibility();
-		}
 	}
 	return this.refreshChildren(changedTiddlers);
 };
