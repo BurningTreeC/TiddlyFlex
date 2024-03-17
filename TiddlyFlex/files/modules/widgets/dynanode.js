@@ -158,7 +158,7 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 								for(var l=0; l<self.dynanodeElements.length; l++) {
 									var dynanodeElement = self.dynanodeElements[l];
 									if((removedNodes[k] === dynanodeElement) || (removedNodes[k].contains(dynanodeElement))) {
-										self.resizeObserver.unobservve(dynanodeElement);
+										self.resizeObserver.unobserve(dynanodeElement);
 										self.dynanodeElements.splice(l,1);
 										self.spaced.delete(dynanodeElement);
 										self.spacedTimestamps.delete(dynanodeElement);
