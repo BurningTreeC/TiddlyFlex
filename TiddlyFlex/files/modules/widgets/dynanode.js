@@ -207,7 +207,7 @@ DynaNodeWidget.prototype.rectNotEQ = function(a,b) {
 			!this.eqIsh(a.height, b.height));
 };
 
-DynaNodeWidget.prototype.reserveSpace = function(length,i,element,rect,refreshChildren) {
+DynaNodeWidget.prototype.reserveSpace = function(length,i,element,rect) {
 	if(rect === undefined) {
 		var bounds = element.getBoundingClientRect(),
 			width = bounds.width,
@@ -234,11 +234,11 @@ DynaNodeWidget.prototype.reserveSpace = function(length,i,element,rect,refreshCh
 		}
 	}
 	if(i === (length - 1)) {
-		this.checkVisibility(refreshChildren);
+		this.checkVisibility();
 	}
 };
 
-DynaNodeWidget.prototype.checkVisibility = function(refreshChildren) {
+DynaNodeWidget.prototype.checkVisibility = function() {
 	var self = this;
 	var elements = this.dynanodeElements;
 	var visibilityChanged = false;
@@ -366,7 +366,6 @@ Selectively refreshes the widget if needed. Returns true if the widget or any of
 */
 DynaNodeWidget.prototype.refresh = function(changedTiddlers) {
 	var self = this;
-	// this.changedTiddlers = changedTiddlers;
 	$tw.utils.extend(this.changedTiddlers,changedTiddlers);
 	var changedAttributes = this.computeAttributes(),
 		changedAttributesCount = $tw.utils.count(changedAttributes);
