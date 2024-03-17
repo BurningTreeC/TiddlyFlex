@@ -313,12 +313,10 @@ DynaNodeWidget.prototype.checkVisibility = function() {
 		}
 		if(i === (elements.length - 1)) {
 			//if(visibilityChanged) {
-				var refreshed = self.refreshChildren(self.changedTiddlers,self.dynanodeRefreshChildren);
-				console.log(refreshed);
-				if(refreshed) {
-					console.log(self.changedTiddlers);
-					self.changedTiddlers = {};
-				}
+			var refreshed = self.refreshChildren(self.changedTiddlers,self.dynanodeRefreshChildren);
+			if(refreshed) {
+				self.changedTiddlers = {};
+			}
 			//}
 			self.isWaitingForAnimationFrame = 0;
 		}
