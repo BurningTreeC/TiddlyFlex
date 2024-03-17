@@ -122,7 +122,7 @@ DraggableWidget.prototype.updateDomNodeClasses = function() {
 /*
 Selectively refreshes the widget if needed. Returns true if the widget or any of its children needed re-rendering
 */
-DraggableWidget.prototype.refresh = function(changedTiddlers) {
+DraggableWidget.prototype.refresh = function(changedTiddlers,force) {
 	var changedAttributes = this.computeAttributes();
 	if(changedAttributes.tag || changedAttributes.selector || changedAttributes.dragimagetype || changedAttributes.startactions || changedAttributes.endactions) {
 		this.refreshSelf();
@@ -133,7 +133,7 @@ DraggableWidget.prototype.refresh = function(changedTiddlers) {
 			this.makeDraggable(this.domNodes[0]);
 			if(!this.dragHandleSelector && this.dragEnable && !this.domNodes[0].classList.contains("tc-draggable")) {
 				this.domNodes[0].classList.add("tc-draggable");
-			} else if(!this.dragEnable && this.domNodes[0].classList.contains("tc-draggable")) {
+			} else if(!this.dragHandleSelector && !this.dragEnable && this.domNodes[0].classList.contains("tc-draggable")) {
 				this.domNodes[0].classList.remove("tc-draggable");
 			}
 		}
@@ -146,7 +146,7 @@ DraggableWidget.prototype.refresh = function(changedTiddlers) {
 			destPrefix: "data-"
 		});
 	}
-	return this.refreshChildren(changedTiddlers);
+	return this.refreshChildren(changedTiddlers,force);
 };
 
 exports["tiddlyflex-draggable"] = DraggableWidget;

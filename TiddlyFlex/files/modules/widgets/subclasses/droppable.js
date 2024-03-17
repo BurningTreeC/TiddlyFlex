@@ -191,7 +191,7 @@ exports.prototype.execute = function() {
 /*
 Selectively refreshes the widget if needed. Returns true if the widget or any of its children needed re-rendering
 */
-exports.prototype.refresh = function(changedTiddlers) {
+exports.prototype.refresh = function(changedTiddlers,force) {
 	var changedAttributes = this.computeAttributes();
 	if(changedAttributes.tag || changedAttributes.enable || changedAttributes.disabledClass || changedAttributes.actions || changedAttributes.effect || changedAttributes.dragenteractions || changedAttributes.dragleaveactions || changedAttributes.dragendactions) {
 		this.refreshSelf();
@@ -199,7 +199,7 @@ exports.prototype.refresh = function(changedTiddlers) {
 	} else if(changedAttributes["class"]) {
 		this.assignDomNodeClasses();
 	}
-	return this.refreshChildren(changedTiddlers);
+	return this.refreshChildren(changedTiddlers,force);
 };
 
 })();
