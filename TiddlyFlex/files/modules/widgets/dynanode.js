@@ -348,7 +348,7 @@ DynaNodeWidget.prototype.execute = function() {
 	this.dynanodeEnable = this.getAttribute("enable","no") === "yes";
 	this.dynanodeSelector = this.getAttribute("selector",".tc-dynanode-track-tiddler-when-visible");
 	this.dynanodeRemoveSelector = this.getAttribute("removeselector",".tc-dynanode-track-tiddler-when-visible");
-	this.dynanodeTimeout = parseInt(this.getAttribute("timeout","20"));
+	this.dynanodeTimeout = parseInt(this.getAttribute("timeout","25"));
 	// Make child widgets
 	this.makeChildWidgets();
 };
@@ -369,7 +369,7 @@ DynaNodeWidget.prototype.refresh = function(changedTiddlers) {
 		changedAttributesCount = $tw.utils.count(changedAttributes);
 	if(changedAttributesCount === 1 && changedAttributes["class"]) {
 		this.assignDomNodeClasses();
-	} else if(changedAttributes.tag || changedAttributes.selector || changedAttributes.timeout) {
+	} else if(changedAttributes.tag || changedAttributes.selector) {
 		this.refreshSelf();
 		return true;
 	} else if(changedAttributes.enable) {
@@ -403,6 +403,9 @@ DynaNodeWidget.prototype.refresh = function(changedTiddlers) {
 			sourcePrefix: "data-",
 			destPrefix: "data-"
 		});
+	}
+	if(changedAttributes.timeout) {
+		this.dynanodeTimeout = parseInt(this.getAttribute("timeout","25"));
 	}
 	return this.refreshChildren(changedTiddlers);
 };
