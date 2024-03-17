@@ -82,16 +82,8 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 	};
 
 	this.dynanodeWorker = function(entries) {
-		var length = entries.length,
-			targets = [];
+		var length = entries.length;
 		for(var i=0; i<length; i++) {
-			var entry = entries[i];
-			var target = entry.target ? entry.target : entry;
-			if(self.dynanodeElements.indexOf(target) === -1) {
-				self.dynanodeElements.push(target);
-			}
-		}
-		for(i=0; i<length; i++) {
 			var entry= entries[i];
 			var rect = entry.contentRect ? entry.contentRect : undefined;
 			var target = entry.target ? entry.target : entry;
@@ -131,8 +123,8 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 							for(var k=0; k<addedNodes.length; k++) {
 								if(self.dynanodeElements.indexOf(addedNodes[k]) === -1) {
 									self.dynanodeElements.push(addedNodes[k]);
-									self.resizeObserver.observe(addedNodes[k]);
 								}
+								self.resizeObserver.observe(addedNodes[k]);
 								if(k === (addedNodes.length - 1)) {
 									if(!self.isWaitingForAnimationFrame) {
 										self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
@@ -152,10 +144,14 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 						if(j === (mutation.removedNodes.length - 1)) {
 							for(var k=0; k<removedNodes.length; k++) {
 								self.resizeObserver.unobserve(removedNodes[k]);
-								var index = self.dynanodeElements.indexOf(removedNodes[k]);
-								self.dynanodeElements.splice(index,1);
-								self.spaced.delete(removedNodes[k]);
-								self.stateMap.delete(removedNodes[k]);
+								for(var l=0; l<self.dynanodeElements.length; l++) {
+									var dynanodeElement = self.dynanodeElements[l];
+									if((removedNodes[k] === dynanodeElement) || (removedNodes[k].contains(dynanodeElement))) {
+										self.dynanodeElements.splice(l,1);
+										self.spaced.delete(dynanodeElement);
+										self.stateMap.delete(dynanodeElement);
+									}
+								}
 								if(k === (removedNodes.length - 1)) {
 									if(!self.isWaitingForAnimationFrame) {
 										self.domNode.ownerDocument.defaultView.requestAnimationFrame(worker);
