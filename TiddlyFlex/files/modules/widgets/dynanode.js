@@ -261,56 +261,60 @@ DynaNodeWidget.prototype.checkVisibility = function(refreshChildren) {
 	};
 	for(var i=0; i<elements.length; i++) {
 		var element = elements[i];
-		// Calculate whether the element is visible
-		var elementRect = element.getBoundingClientRect();
-		var currValue = self.stateMap.get(element),//self.wiki.getTiddlerText(title),
-			newValue = currValue;
-		// Within viewport
-		if(!(elementRect.left > domNodeRect.right || 
-							elementRect.right < domNodeRect.left || 
-							elementRect.top > domNodeRect.bottom ||
-							elementRect.bottom < domNodeRect.top)) {
-			newValue = STATE_IN_VIEW;
-		// Near viewport
-		} else if(!(elementRect.left > (domNodeRect.right + domNodeWidth) || 
-							elementRect.right < (domNodeRect.left - domNodeWidth) || 
-							elementRect.top > (domNodeRect.bottom + domNodeHeight) ||
-							elementRect.bottom < (domNodeRect.top - domNodeHeight))) {
-			newValue = STATE_NEAR_VIEW;
-		} else {
-			newValue = STATE_OUT_OF_VIEW;
-		}
-		if(newValue !== currValue) {
-			self.stateMap.set(element,newValue);
-			if(newValue === STATE_IN_VIEW) {
-				$tw.utils.addClass(element,"tc-dynanode-visible");
-				$tw.utils.removeClass(element,"tc-dynanode-near");
-				$tw.utils.removeClass(element,"tc-dynanode-hidden");
-				$tw.utils.setStyle(element,[
-					{ contentVisibility: null }
-				]);
-				if(currValue !== undefined) {
-					visibilityChanged = true;
-				}
+		var oldTimestamp = this.spacedTimestamps.get(element),
+			newTimestamp = Date.now();
+		if((newTimestamp - oldTimestamp) >= self.dynanodeTimeout) {
+			// Calculate whether the element is visible
+			var elementRect = element.getBoundingClientRect();
+			var currValue = self.stateMap.get(element),//self.wiki.getTiddlerText(title),
+				newValue = currValue;
+			// Within viewport
+			if(!(elementRect.left > domNodeRect.right || 
+								elementRect.right < domNodeRect.left || 
+								elementRect.top > domNodeRect.bottom ||
+								elementRect.bottom < domNodeRect.top)) {
+				newValue = STATE_IN_VIEW;
+			// Near viewport
+			} else if(!(elementRect.left > (domNodeRect.right + domNodeWidth) || 
+								elementRect.right < (domNodeRect.left - domNodeWidth) || 
+								elementRect.top > (domNodeRect.bottom + domNodeHeight) ||
+								elementRect.bottom < (domNodeRect.top - domNodeHeight))) {
+				newValue = STATE_NEAR_VIEW;
+			} else {
+				newValue = STATE_OUT_OF_VIEW;
 			}
-			if(newValue === STATE_NEAR_VIEW) {
-				$tw.utils.addClass(element,"tc-dynanode-near");
-				$tw.utils.removeClass(element,"tc-dynanode-visible");
-				$tw.utils.removeClass(element,"tc-dynanode-hidden");
-				if(element.style["content-visibility"] !== "auto") {
+			if(newValue !== currValue) {
+				self.stateMap.set(element,newValue);
+				if(newValue === STATE_IN_VIEW) {
+					$tw.utils.addClass(element,"tc-dynanode-visible");
+					$tw.utils.removeClass(element,"tc-dynanode-near");
+					$tw.utils.removeClass(element,"tc-dynanode-hidden");
 					$tw.utils.setStyle(element,[
-						{ contentVisibility: "auto" }
+						{ contentVisibility: null }
 					]);
+					if(currValue !== undefined) {
+						visibilityChanged = true;
+					}
 				}
-			}
-			if(newValue === STATE_OUT_OF_VIEW) {
-				$tw.utils.addClass(element,"tc-dynanode-hidden");
-				$tw.utils.removeClass(element,"tc-dynanode-visible");
-				$tw.utils.removeClass(element,"tc-dynanode-near");
-				if(element.style["content-visibility"] !== "auto") {
-					$tw.utils.setStyle(element,[
-						{ contentVisibility: "auto" }
-					]);
+				if(newValue === STATE_NEAR_VIEW) {
+					$tw.utils.addClass(element,"tc-dynanode-near");
+					$tw.utils.removeClass(element,"tc-dynanode-visible");
+					$tw.utils.removeClass(element,"tc-dynanode-hidden");
+					if(element.style["content-visibility"] !== "auto") {
+						$tw.utils.setStyle(element,[
+							{ contentVisibility: "auto" }
+						]);
+					}
+				}
+				if(newValue === STATE_OUT_OF_VIEW) {
+					$tw.utils.addClass(element,"tc-dynanode-hidden");
+					$tw.utils.removeClass(element,"tc-dynanode-visible");
+					$tw.utils.removeClass(element,"tc-dynanode-near");
+					if(element.style["content-visibility"] !== "auto") {
+						$tw.utils.setStyle(element,[
+							{ contentVisibility: "auto" }
+						]);
+					}
 				}
 			}
 		}
