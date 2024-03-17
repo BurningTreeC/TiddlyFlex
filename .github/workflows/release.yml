@@ -1,0 +1,25 @@
+name: Publish my plugin
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: tiddly-gittly/tw5-plugin-packer@v0.0.12
+        with:
+            source: "TiddlyFlex"
+            output: "output"
+      - name: Upload to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+            repo_token: ${{ secrets.GITHUB_TOKEN }}
+            file: output/*.json
+            tag: ${{ env.RELEASE_VERSION }}
+            overwrite: true
+            file_glob: true
