@@ -155,10 +155,10 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 						removedNodes.push(removedNode);
 						if(j === (mutation.removedNodes.length - 1)) {
 							for(var k=0; k<removedNodes.length; k++) {
-								self.resizeObserver.unobserve(removedNodes[k]);
 								for(var l=0; l<self.dynanodeElements.length; l++) {
 									var dynanodeElement = self.dynanodeElements[l];
 									if((removedNodes[k] === dynanodeElement) || (removedNodes[k].contains(dynanodeElement))) {
+										self.resizeObserver.unobservve(dynanodeElement);
 										self.dynanodeElements.splice(l,1);
 										self.spaced.delete(dynanodeElement);
 										self.spacedTimestamps.delete(dynanodeElement);
@@ -239,7 +239,7 @@ DynaNodeWidget.prototype.reserveSpace = function(length,i,element,rect,refreshCh
 			]);
 		}
 	}
-	if((i === (length - 1)) && ((newTimestamp - oldTimestamp) >= this.dynanodeTimeout)) {
+	if(i === (length - 1)) {
 		this.checkVisibility(refreshChildren);
 	}
 };
