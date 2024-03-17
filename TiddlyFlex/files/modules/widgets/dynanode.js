@@ -335,7 +335,7 @@ DynaNodeWidget.prototype.execute = function() {
 	this.elementTag = this.getAttribute("tag");
 	this.dynanodeEnable = this.getAttribute("enable","no") === "yes";
 	this.dynanodeSelector = this.getAttribute("selector",".tc-dynanode-track-tiddler-when-visible");
-	this.dynanodeRemoveSelector = this.getAttribute("removeselector",".tc-dynanode-remove-tiddler-frame");
+	this.dynanodeRemoveSelector = this.getAttribute("removeselector",".tc-dynanode-track-tiddler-when-visible");
 	// Make child widgets
 	this.makeChildWidgets();
 };
