@@ -85,6 +85,9 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 		var length = entries.length;
 		for(var i=0; i<length; i++) {
 			var entry= entries[i];
+			if(!entry.target &&(self.dynanodeElements.indexOf(entry) === -1)) {
+				self.dynanodeElements.push(entry);
+			}
 			var rect = entry.contentRect ? entry.contentRect : undefined;
 			var target = entry.target ? entry.target : entry;
 			self.reserveSpace(length,i,target,rect);
