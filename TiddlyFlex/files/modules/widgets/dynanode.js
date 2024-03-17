@@ -112,8 +112,6 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 				self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
 					self.dynanodeWorker(entries);
 				});
-			} else {
-				return;
 			}
 			self.isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_RESIZE;
 		});
