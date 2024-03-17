@@ -85,7 +85,7 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 		var length = entries.length;
 		for(var i=0; i<length; i++) {
 			var entry= entries[i];
-			if(!entry.target &&(self.dynanodeElements.indexOf(entry) === -1)) {
+			if(!entry.target && (self.dynanodeElements.indexOf(entry) === -1)) {
 				self.dynanodeElements.push(entry);
 			}
 			var rect = entry.contentRect ? entry.contentRect : undefined;
@@ -364,6 +364,9 @@ DynaNodeWidget.prototype.refresh = function(changedTiddlers) {
 				self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
 					var elements = self.domNode.querySelectorAll(self.dynanodeSelector);
 					self.dynanodeWorker(elements);
+					for(var i=0; i<elements.length; i++) {
+						self.resizeObserver.observe(elements[i]);
+					}
 				});
 			});
 			self.isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_LOAD;
