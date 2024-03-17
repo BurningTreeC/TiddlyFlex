@@ -312,9 +312,10 @@ DynaNodeWidget.prototype.checkVisibility = function(refreshChildren) {
 			}
 		}
 		if(i === (elements.length - 1)) {
-			if(visibilityChanged) {
+			//if(visibilityChanged) {
 				self.refreshChildren(self.changedTiddlers,self.dynanodeRefreshChildren);
-			}
+				self.changedTiddlers = {};
+			//}
 			self.isWaitingForAnimationFrame = 0;
 		}
 	}
@@ -365,7 +366,8 @@ Selectively refreshes the widget if needed. Returns true if the widget or any of
 */
 DynaNodeWidget.prototype.refresh = function(changedTiddlers) {
 	var self = this;
-	this.changedTiddlers = changedTiddlers;
+	// this.changedTiddlers = changedTiddlers;
+	$tw.utils.extend(this.changedTiddlers,changedTiddlers);
 	var changedAttributes = this.computeAttributes(),
 		changedAttributesCount = $tw.utils.count(changedAttributes);
 	if(changedAttributesCount === 1 && changedAttributes["class"]) {
