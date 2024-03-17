@@ -24,7 +24,7 @@ Widget.prototype.refreshChildren = function(changedTiddlers,force) {
 		refreshed = false;
 	for(var i=0; i<children.length; i++) {
 		var child = children[i];
-		if(!force && child.domNodes && child.domNodes[0] && child.domNodes[0].style && ((child.domNodes[0].style["content-visibility"] === "auto") || (child.domNodes[0].style["content-visibility"] === "hidden"))) {
+		if(!force && child.domNodes && child.domNodes[0] && child.domNodes[0].style && child.domNodes[0].style["content-visibility"] && ((child.domNodes[0].style["content-visibility"] === "auto") || (child.domNodes[0].style["content-visibility"] === "hidden"))) {
 			return false;
 		} else {
 			refreshed = child.refresh(changedTiddlers) || refreshed;

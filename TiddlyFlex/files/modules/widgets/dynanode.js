@@ -227,16 +227,15 @@ DynaNodeWidget.prototype.reserveSpace = function(length,i,element,rect,refreshCh
 		this.spaced.set(element,rect);
 		this.spacedTimestamps.set(element,newTimestamp);
 		if(oldTimestamp === undefined) {
-			oldTimestamp = newTimestamp - 1000;
+			oldTimestamp = newTimestamp - this.dynanodeTimeout;
 		}
 		if((newTimestamp - oldTimestamp) >= this.dynanodeTimeout) {
-			console.log("SETTING ITNRINSIC SIZE!");
 			$tw.utils.setStyle(element,[
 				{ containIntrinsicSize: `${rect.width}px ${rect.height}px` }
 			]);
 		}
 	}
-	if(i === (length - 1)) {
+	if((i === (length - 1)) && ((newTimestamp - oldTimestamp) >= this.dynanodeTimeout)) {
 		this.checkVisibility(refreshChildren);
 	}
 };
