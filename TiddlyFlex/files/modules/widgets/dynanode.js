@@ -83,7 +83,6 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 	};
 
 	this.dynanodeWorker = function(entries) {
-		console.log("dynanodeWorker");
 		var length = entries.length,
 			targets = [];
 		for(var i=0; i<length; i++) {
