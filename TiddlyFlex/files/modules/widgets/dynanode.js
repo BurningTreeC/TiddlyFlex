@@ -62,26 +62,22 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 	this.spacedTimestamps = new WeakMap();
 	this.stateMap = new WeakMap();
 
-	function worker(refreshChildren) {
+	function worker() {
 		for(var i=0; i<self.dynanodeElements.length; i++) {
-			self.reserveSpace(self.dynanodeElements.length,i,self.dynanodeElements[i],undefined,refreshChildren);
+			self.reserveSpace(self.dynanodeElements.length,i,self.dynanodeElements[i]);
 		}
 	};
 
 	this.onScroll = function(event) {
 		if(!self.isWaitingForAnimationFrame) {
-			self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
-				worker(true);
-			});
+			self.domNode.ownerDocument.defaultView.requestAnimationFrame(worker);
 		}
 		self.isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_SCROLL;
 	};
 
 	this.onResize = function(event) {
 		if(!self.isWaitingForAnimationFrame) {
-			self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
-				worker(false);
-			});
+			self.domNode.ownerDocument.defaultView.requestAnimationFrame(worker);
 		}
 		self.isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_RESIZE;
 	};
@@ -167,9 +163,7 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 								}
 								if(k === (removedNodes.length - 1)) {
 									if(!self.isWaitingForAnimationFrame) {
-										self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
-											worker(false);
-										});
+										self.domNode.ownerDocument.defaultView.requestAnimationFrame(worker);
 									}
 									self.isWaitingForAnimationFrame |= ANIM_FRAME_CAUSED_BY_LOAD;
 								}
@@ -246,7 +240,6 @@ DynaNodeWidget.prototype.reserveSpace = function(length,i,element,rect,refreshCh
 
 DynaNodeWidget.prototype.checkVisibility = function(refreshChildren) {
 	var self = this;
-	//var elements = this.domNode.querySelectorAll(this.dynanodeSelector);
 	var elements = this.dynanodeElements;
 	var visibilityChanged = false;
 	var domNodeWidth = this.domNode.offsetWidth,
@@ -320,7 +313,7 @@ DynaNodeWidget.prototype.checkVisibility = function(refreshChildren) {
 		}
 		if(i === (elements.length - 1)) {
 			if(visibilityChanged) {
-				self.refreshChildren(self.changedTiddlers,true);
+				self.refreshChildren(self.changedTiddlers,self.dynanodeRefreshChildren);
 			}
 			self.isWaitingForAnimationFrame = 0;
 		}
@@ -356,6 +349,7 @@ DynaNodeWidget.prototype.execute = function() {
 	this.dynanodeSelector = this.getAttribute("selector",".tc-dynanode-track-tiddler-when-visible");
 	this.dynanodeRemoveSelector = this.getAttribute("removeselector",".tc-dynanode-track-tiddler-when-visible");
 	this.dynanodeTimeout = parseInt(this.getAttribute("timeout","25"));
+	this.dynanodeRefreshChildren = this.getAttribute("refreshchildren","no") === "yes";
 	// Make child widgets
 	this.makeChildWidgets();
 };
@@ -413,6 +407,9 @@ DynaNodeWidget.prototype.refresh = function(changedTiddlers) {
 	}
 	if(changedAttributes.timeout) {
 		this.dynanodeTimeout = parseInt(this.getAttribute("timeout","25"));
+	}
+	if(changedAttributes.refreshchildren) {
+		this.dynanodeRefreshChildren = this.getAttribute("refreshchildren","no") === "yes";
 	}
 	return this.refreshChildren(changedTiddlers);
 };
