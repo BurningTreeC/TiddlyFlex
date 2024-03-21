@@ -290,7 +290,6 @@ DynaNodeWidget.prototype.execute = function() {
 	this.dynanodeEnable = this.getAttribute("enable","no") === "yes";
 	this.dynanodeSelector = this.getAttribute("selector",".tc-dynanode-track-tiddler-when-visible");
 	this.dynanodeRemoveSelector = this.getAttribute("removeselector",".tc-dynanode-track-tiddler-when-visible");
-	this.dynanodeTimeout = parseInt(this.getAttribute("timeout","25"));
 	// Make child widgets
 	this.makeChildWidgets();
 };
@@ -345,9 +344,6 @@ DynaNodeWidget.prototype.refresh = function(changedTiddlers,force) {
 			sourcePrefix: "data-",
 			destPrefix: "data-"
 		});
-	}
-	if(changedAttributes.timeout) {
-		this.dynanodeTimeout = parseInt(this.getAttribute("timeout","25"));
 	}
 	if(this.dynanodeEnable && (Object.keys(this.changedTiddlers).length !== 0) && (!this.isWaitingForAnimationFrame || (this.isWaitingForAnimationFrame === ANIM_FRAME_CAUSED_BY_ADD) || (this.isWaitingForAnimationFrame === ANIM_FRAME_CAUSED_BY_REMOVE))) {
 		if(this.isWaitingForAnimationFrame === ANIM_FRAME_CAUSED_BY_ADD) {
