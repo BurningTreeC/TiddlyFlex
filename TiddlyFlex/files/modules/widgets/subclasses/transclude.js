@@ -20,9 +20,9 @@ exports.constructor = function(parseTreeNode,options) {
 
 exports.prototype = {};
 
-exports.refresh = function(changedTiddlers,force) {
+exports.prototype.refresh = function(changedTiddlers,force) {
 	var changedAttributes = this.computeAttributes();
-	if(($tw.utils.count(changedAttributes) > 0) || (this.transcludeVariableIsFunction && this.functionNeedsRefresh()) || (!this.transcludeVariable && changedTiddlers[this.transcludeTitle] && this.parserNeedsRefresh())) {
+	if($tw.utils.count(changedAttributes) > 0 || (this.transcludeVariableIsFunction && this.functionNeedsRefresh()) || (!this.transcludeVariable && changedTiddlers[this.transcludeTitle] && this.parserNeedsRefresh())) {
 		this.refreshSelf();
 		return true;
 	} else {

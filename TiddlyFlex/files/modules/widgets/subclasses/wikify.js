@@ -20,7 +20,7 @@ exports.constructor = function(parseTreeNode,options) {
 
 exports.prototype = {};
 
-exports.refresh = function(changedTiddlers,force) {
+exports.prototype.refresh = function(changedTiddlers,force) {
 	var changedAttributes = this.computeAttributes();
 	// Refresh ourselves entirely if any of our attributes have changed
 	if(changedAttributes.name || changedAttributes.text || changedAttributes.type || changedAttributes.mode || changedAttributes.output) {
@@ -28,7 +28,7 @@ exports.refresh = function(changedTiddlers,force) {
 		return true;
 	} else {
 		// Refresh the widget tree
-		if(this.wikifyWidgetNode.refresh(changedTiddlers)) {
+		if(this.wikifyWidgetNode.refresh(changedTiddlers,force)) {
 			// Check if there was any change
 			var result = this.getResult();
 			if(result !== this.wikifyResult) {

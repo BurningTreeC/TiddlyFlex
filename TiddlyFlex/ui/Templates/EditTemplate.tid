@@ -30,7 +30,7 @@ code-body: yes
 <div
 	data-tiddler-title=<<currentTiddler>>
 	data-tags={{!!tags}}
-	class={{{ [all[shadows+tiddlers]tag[$:/tags/ClassFilters/TiddlerTemplate]!is[draft]] :map:flat[subfilter{!!text}] [subfilter<tdff.tiddlyflex-enlist-columns>count[]addprefix[tc-tiddlyflex-column-]] tc-tiddler-edit-frame [<currentTiddler>is[tiddler]then[tc-tiddler-exists]] [<currentTiddler>is[missing]!is[shadow]then[tc-tiddler-missing]] [<currentTiddler>is[shadow]then[tc-tiddler-exists tc-tiddler-shadow]] [<currentTiddler>is[system]then[tc-tiddler-system]] [{!!class}] tc-dynanode-track-tiddler-when-visible [<currentTiddler>tags[]encodeuricomponent[]addprefix[tc-tagged-]] +[join[ ]] }}}
+	class={{{ [all[shadows+tiddlers]tag[$:/tags/ClassFilters/TiddlerTemplate]!is[draft]] :map:flat[subfilter{!!text}] [subfilter<tdff.tiddlyflex-enlist-columns>count[]addprefix[tc-tiddlyflex-column-]] tc-tiddler-edit-frame [<currentTiddler>is[tiddler]then[tc-tiddler-exists]] [<currentTiddler>is[missing]!is[shadow]then[tc-tiddler-missing]] [<currentTiddler>is[shadow]then[tc-tiddler-exists tc-tiddler-shadow]] [<currentTiddler>is[system]then[tc-tiddler-system]] tc-dynanode-track-tiddler-when-visible [{!!class}] [<currentTiddler>tags[]encodeuricomponent[]addprefix[tc-tagged-]] +[join[ ]] }}}
 	role="region"
 	aria-label={{$:/language/EditTemplate/Caption}}>
 	<$fieldmangler>

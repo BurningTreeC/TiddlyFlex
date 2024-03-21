@@ -1,5 +1,5 @@
 /*\
-title: $:/plugins/BTC/TiddlyFlex/modules/widgets/subclasses/navigator.js
+title: $:/plugins/BTC/TiddlyFlex/modules/widgets/subclasses/listitem.js
 type: application/javascript
 module-type: widget-subclass
 
@@ -12,7 +12,7 @@ Widget base class
 /*global $tw: false */
 "use strict";
 
-exports.baseClass = "navigator";
+exports.baseClass = "listitem";
 
 exports.constructor = function(parseTreeNode,options) {
 	this.initialise(parseTreeNode,options);
@@ -21,13 +21,7 @@ exports.constructor = function(parseTreeNode,options) {
 exports.prototype = {};
 
 exports.prototype.refresh = function(changedTiddlers,force) {
-	var changedAttributes = this.computeAttributes();
-	if(changedAttributes.story || changedAttributes.history) {
-		this.refreshSelf();
-		return true;
-	} else {
-		return this.refreshChildren(changedTiddlers,force);
-	}
+	return this.refreshChildren(changedTiddlers,force);
 };
 
 })();

@@ -20,7 +20,7 @@ exports.constructor = function(parseTreeNode,options) {
 
 exports.prototype = {};
 
-exports.refresh = function(changedTiddlers,force) {
+exports.prototype.refresh = function(changedTiddlers,force) {
 	var changedAttributes = this.computeAttributes(),
 		changedAttributesCount = $tw.utils.count(changedAttributes);
 	if(changedAttributesCount === 1 && changedAttributes["class"]) {

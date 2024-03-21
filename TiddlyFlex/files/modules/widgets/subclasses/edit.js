@@ -20,7 +20,7 @@ exports.constructor = function(parseTreeNode,options) {
 
 exports.prototype = {};
 
-exports.refresh = function(changedTiddlers,force) {
+exports.prototype.refresh = function(changedTiddlers,force) {
 	var changedAttributes = this.computeAttributes();
 	// Refresh if an attribute has changed, or the type associated with the target tiddler has changed
 	if(changedAttributes.tiddler || changedAttributes.field || changedAttributes.index || changedAttributes.tabindex || changedAttributes.cancelPopups || changedAttributes.inputActions || changedAttributes.refreshTitle || changedAttributes.autocomplete || (this.getEditorType() !== this.editorType)) {

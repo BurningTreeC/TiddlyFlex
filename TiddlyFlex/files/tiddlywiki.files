@@ -197,6 +197,13 @@
 				"module-type": "widget-subclass"
 			}
 		},{
+			"file": "modules/widgets/subclasses/listitem.js",
+			"fields": {
+				"type": "application/javascript",
+				"title": "$:/plugins/BTC/TiddlyFlex/modules/widgets/subclasses/listitem.js",
+				"module-type": "widget-subclass"
+			}
+		},{
 			"file": "modules/widgets/subclasses/macrocall.js",
 			"fields": {
 				"type": "application/javascript",

@@ -12,25 +12,42 @@ Overwriting the Base Widget refreshChildren method
 /*global $tw: false */
 "use strict";
 
-exports.name = "tiddlyflex-widget";
+exports.name = "widget";
 exports.platforms = ["browser"];
 exports.after = ["startup"];
 exports.synchronous = true;
 
 var Widget = require("$:/core/modules/widgets/widget.js").widget;
 
+Widget.prototype.hasDomNodesWithContain = function(force) {
+	var contain = false;
+	for(var i=0; i<this.domNodes.length; i++) {
+		var domNode = this.domNodes[i];
+		if(domNode.style && domNode.style["contain"] && (domNode.style["contain"] === "content")) {
+			contain = true;
+			break;
+		}
+	}
+	return contain;
+};
+
 Widget.prototype.refreshChildren = function(changedTiddlers,force) {
 	var children = this.children,
+		refreshed = false,
+		hasDomNodes = this.hasDomNodesWithContain(force);
+	if(!force && hasDomNodes) {
 		refreshed = false;
-	for(var i=0; i<children.length; i++) {
-		var child = children[i];
-		if(!force && child.domNodes && child.domNodes[0] && child.domNodes[0].style && child.domNodes[0].style["content-visibility"] && ((child.domNodes[0].style["content-visibility"] === "auto") || (child.domNodes[0].style["content-visibility"] === "hidden"))) {
-			return false;
-		} else {
+	} else {
+		for(var i=0; i<children.length; i++) {
+			var child = children[i];
 			refreshed = child.refresh(changedTiddlers,force) || refreshed;
 		}
 	}
 	return refreshed;
+};
+
+Widget.prototype.refresh = function(changedTiddlers,force) {
+	return this.refreshChildren(changedTiddlers,force);
 };
 
 })();

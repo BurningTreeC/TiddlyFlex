@@ -20,7 +20,7 @@ exports.constructor = function(parseTreeNode,options) {
 
 exports.prototype = {};
 
-exports.refresh = function(changedTiddlers,force) {
+exports.prototype.refresh = function(changedTiddlers,force) {
 	var changedAttributes = this.computeAttributes();
 	if(changedAttributes.tiddler || changedAttributes.tag || changedAttributes.invertTag || changedAttributes.field || changedAttributes.index || changedAttributes.listField || changedAttributes.listIndex || changedAttributes.filter || changedAttributes.checked || changedAttributes.unchecked || changedAttributes["default"] || changedAttributes.indeterminate || changedAttributes["class"] || changedAttributes.disabled) {
 		this.refreshSelf();
