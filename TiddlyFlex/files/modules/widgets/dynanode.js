@@ -57,21 +57,29 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 		destPrefix: "data-"
 	});
 
-	this.refreshed = false;
 	this.isWaitingForAnimationFrame = 0;
-	this.changedTiddlers = {};
+	this.changedTiddlersWhileAnimating = {};
+	this.changedTiddlersNotAnimating = {};
 	this.dynanodeElements = [];
 	this.spaced = new WeakMap();
 	this.spacedTimestamps = new WeakMap();
 	this.stateMap = new WeakMap();
 
+	var animationFrameTimeout;
+
+	function doneWorker() {
+		if(Object.keys(self.changedTiddlersWhileAnimating).length !== 0) {
+			self.refreshChildren(self.changedTiddlersWhileAnimating,true);
+			self.changedTiddlersWhileAnimating = {};
+		}
+		self.isWaitingForAnimationFrame = 0;
+	};
+
 	this.worker = function() {
-		self.refreshed = false;
 		for(var i=0; i<self.dynanodeElements.length; i++) {
 			self.checkVisibility(self.dynanodeElements[i]);
 		}
 		self.isWaitingForAnimationFrame = 0;
-		self.refreshed = true;
 	};
 
 	this.onScroll = function(event) {
@@ -79,13 +87,7 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 		self.domNode.ownerDocument.defaultView.requestAnimationFrame(self.worker);
 	};
 
-	this.onResize = function(event) {
-		self.isWaitingForAnimationFrame = ANIM_FRAME_CAUSED_BY_RESIZE;
-		self.domNode.ownerDocument.defaultView.requestAnimationFrame(self.worker);
-	};
-
 	this.dynanodeWorker = function(entries) {
-		self.refreshed = false;
 		var length = entries.length;
 		for(var i=0; i<length; i++) {
 			var entry = entries[i];
@@ -99,13 +101,15 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 			var target = entry.target ? entry.target : entry;
 			self.checkVisibility(target);
 		}
-		self.isWaitingForAnimationFrame = 0;
-		self.refreshed = true;
 	};
 
 	this.resizeObserver = new ResizeObserver(function(entries) {
 		self.isWaitingForAnimationFrame = ANIM_FRAME_CAUSED_BY_RESIZE;
+		self.domNode.ownerDocument.defaultView.clearTimeout(animationFrameTimeout);
 		self.dynanodeWorker(entries);
+		self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
+			animationFrameTimeout = self.domNode.ownerDocument.defaultView.setTimeout(doneWorker,100);
+		});
 	});
 
 	this.mutationObserver = new MutationObserver(function(mutations) {
@@ -135,10 +139,6 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 									self.domNode.ownerDocument.defaultView.requestAnimationFrame(self.worker);
 								}
 							}
-							if(Object.keys(self.changedTiddlers).length !== 0) {
-								self.refreshChildren(self.changedTiddlers,true);
-								self.changedTiddlers = {};
-							}
 						}
 					}
 				}
@@ -157,10 +157,6 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 									self.domNode.ownerDocument.defaultView.requestAnimationFrame(self.worker);
 								}
 							}
-							if(Object.keys(self.changedTiddlers).length !== 0) {
-								self.refreshChildren(self.changedTiddlers,true);
-								self.changedTiddlers = {};
-							}
 						}
 					}
 				}
@@ -170,7 +166,6 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 
 	if(this.dynanodeEnable) {
 		domNode.addEventListener("scroll",this.onScroll,false);
-		domNode.ownerDocument.defaultView.addEventListener("resize",this.onResize,false);
 		this.mutationObserver.observe(domNode,{childList: true, subtree: true});
 	}
 
@@ -181,7 +176,6 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 
 	if(this.dynanodeEnable) {
 		this.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
-			self.isWaitingForAnimationFrame = ANIM_FRAME_CAUSED_BY_LOAD;
 			self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
 				var elements = self.domNode.querySelectorAll(self.dynanodeSelector);
 				self.dynanodeWorker(elements);
@@ -305,8 +299,10 @@ Selectively refreshes the widget if needed. Returns true if the widget or any of
 */
 DynaNodeWidget.prototype.refresh = function(changedTiddlers,force) {
 	var self = this;
-	for(var obj in changedTiddlers) {
-		this.changedTiddlers[obj] = changedTiddlers[obj];
+	if(this.dynanodeEnable && this.isWaitingForAnimationFrame) {
+		this.changedTiddlersWhileAnimating = $tw.utils.extend(self.changedTiddlersWhileAnimating,changedTiddlers);
+	} else if(this.dynanodeEnable && !this.isWaitingForAnimationFrame) {
+		this.changedTiddlersNotAnimating = $tw.utils.extend(self.changedTiddlersNotAnimating,changedTiddlers);
 	}
 	var changedAttributes = this.computeAttributes(),
 		changedAttributesCount = $tw.utils.count(changedAttributes);
@@ -319,10 +315,8 @@ DynaNodeWidget.prototype.refresh = function(changedTiddlers,force) {
 		this.dynanodeEnable = this.getAttribute("enable","no") === "yes";
 		if(this.dynanodeEnable) {
 			this.domNode.addEventListener("scroll",this.onScroll,false);
-			this.domNode.ownerDocument.defaultView.addEventListener("resize",this.onResize,false);
 			this.mutationObserver.observe(this.domNode,{childList: true, subtree: true});
 			this.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
-				self.isWaitingForAnimationFrame = ANIM_FRAME_CAUSED_BY_LOAD;
 				self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
 					var elements = self.domNode.querySelectorAll(self.dynanodeSelector);
 					self.dynanodeWorker(elements);
@@ -333,7 +327,6 @@ DynaNodeWidget.prototype.refresh = function(changedTiddlers,force) {
 			});
 		} else {
 			this.domNode.removeEventListener("scroll",this.onScroll,false);
-			this.domNode.ownerDocument.defaultView.removeEventListener("resize",this.onResize,false);
 			this.resizeObserver.disconnect();
 			this.mutationObserver.disconnect();
 			this.clearElementStyles();
@@ -345,20 +338,18 @@ DynaNodeWidget.prototype.refresh = function(changedTiddlers,force) {
 			destPrefix: "data-"
 		});
 	}
-	if(this.dynanodeEnable && (Object.keys(this.changedTiddlers).length !== 0) && (!this.isWaitingForAnimationFrame || (this.isWaitingForAnimationFrame === ANIM_FRAME_CAUSED_BY_ADD) || (this.isWaitingForAnimationFrame === ANIM_FRAME_CAUSED_BY_REMOVE))) {
-		if(this.isWaitingForAnimationFrame === ANIM_FRAME_CAUSED_BY_ADD) {
-			var refreshed = this.refreshChildren(this.changedTiddlers,true);
-			this.changedTiddlers = {};
-			return refreshed;
-		} else {
-			return this.refreshChildren(this.changedTiddlers,false);
-		}
-	} else if(this.dynanodeEnable && this.isWaitingForAnimationFrame) {
+	if(!force && this.dynanodeEnable && this.isWaitingForAnimationFrame) {
 		return false;
-	} else if(!this.dynanodeEnable) {
-		return this.refreshChildren(changedTiddlers,false);
-	}
-	return false;
+	} else if(!force && this.dynanodeEnable && !this.isWaitingForAnimationFrame && (Object.keys(this.changedTiddlersNotAnimating).length !== 0)) {
+		if(Object.keys(this.changedTiddlersWhileAnimating).length !== 0) {
+			this.changedTiddlersNotAnimating = $tw.utils.extend(self.changedTiddlersWhileAnimating,self.ChangedTiddlersNotAnimating);
+		}
+		var refreshed = this.refreshChildren(this.changedTiddlersNotAnimating,true);
+		this.changedTiddlersNotAnimating = {};
+		return refreshed;
+	} else {
+		return this.refreshChildren(changedTiddlers,force);
+	} 
 };
 
 exports.dynanode = DynaNodeWidget;
