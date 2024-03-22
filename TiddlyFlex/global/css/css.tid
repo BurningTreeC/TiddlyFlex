@@ -35,6 +35,11 @@ tags: $:/tags/Global
 	display: none;
 }
 
+.tc-tiddlyflex-story-river-container {
+	flex-basis: 100%;
+	max-width: 100%;
+}
+
 .tc-tiddlyflex-story-river-container-inner {
 	overflow-x: auto;
 	width: 100vw;
