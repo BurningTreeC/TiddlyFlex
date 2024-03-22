@@ -16,12 +16,6 @@ var STATE_OUT_OF_VIEW = "0",
 	STATE_NEAR_VIEW = "1",
 	STATE_IN_VIEW = "2";
 
-var ANIM_FRAME_CAUSED_BY_LOAD = 1,
-	ANIM_FRAME_CAUSED_BY_SCROLL = 2,
-	ANIM_FRAME_CAUSED_BY_RESIZE = 4,
-	ANIM_FRAME_CAUSED_BY_ADD = 8,
-	ANIM_FRAME_CAUSED_BY_REMOVE = 16;
-
 var Widget = require("$:/core/modules/widgets/widget.js").widget;
 
 var DynaNodeWidget = function(parseTreeNode,options) {
@@ -65,13 +59,29 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 	this.spacedTimestamps = new WeakMap();
 	this.stateMap = new WeakMap();
 
-	var animationFrameTimeout;
-
-	function doneWorker() {
-		if(Object.keys(self.changedTiddlersWhileAnimating).length !== 0) {
-			self.refreshChildren(self.changedTiddlersWhileAnimating,true);
-			self.changedTiddlersWhileAnimating = {};
+	this.checkObject = function(object,array) {
+		var copyObject = object;
+		for(var i=0; i<Object.keys(object).length; i++) {
+			var obj = Object.keys(object)[i];
+			for(var j=0; j<array.length; j++) {
+				var arr = array[j];
+				if(obj === arr) {
+					delete copyObject[arr];
+				}
+			}
 		}
+		if(Object.keys(copyObject).length !== 0) {
+			return true;
+		} else {
+			return false;
+		}
+	};
+
+	this.doneWorker = function() {
+		if((Object.keys(self.changedTiddlersWhileAnimating).length !== 0) && self.checkObject(self.changedTiddlersWhileAnimating,self.dynanodeAnimationList)) {
+			self.refreshChildren(self.changedTiddlersWhileAnimating,true);
+		}
+		self.changedTiddlersWhileAnimating = {};
 		self.isWaitingForAnimationFrame = 0;
 	};
 
@@ -83,7 +93,7 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 	};
 
 	this.onScroll = function(event) {
-		self.isWaitingForAnimationFrame = ANIM_FRAME_CAUSED_BY_SCROLL;
+		self.isWaitingForAnimationFrame = 1;
 		self.domNode.ownerDocument.defaultView.requestAnimationFrame(self.worker);
 	};
 
@@ -104,11 +114,11 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 	};
 
 	this.resizeObserver = new ResizeObserver(function(entries) {
-		self.isWaitingForAnimationFrame = ANIM_FRAME_CAUSED_BY_RESIZE;
-		self.domNode.ownerDocument.defaultView.clearTimeout(animationFrameTimeout);
+		self.isWaitingForAnimationFrame = 1;
+		self.domNode.ownerDocument.defaultView.clearTimeout(self.animationFrameTimeout);
 		self.dynanodeWorker(entries);
 		self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
-			animationFrameTimeout = self.domNode.ownerDocument.defaultView.setTimeout(doneWorker,100);
+			self.animationFrameTimeout = self.domNode.ownerDocument.defaultView.setTimeout(self.doneWorker,1);
 		});
 	});
 
@@ -135,7 +145,7 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 									}
 								}
 								if(k === (removedNodes.length - 1)) {
-									self.isWaitingForAnimationFrame = ANIM_FRAME_CAUSED_BY_REMOVE;
+									self.isWaitingForAnimationFrame = 1;
 									self.domNode.ownerDocument.defaultView.requestAnimationFrame(self.worker);
 								}
 							}
@@ -153,7 +163,7 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 								}
 								self.resizeObserver.observe(addedNodes[k]);
 								if(k === (addedNodes.length - 1)) {
-									self.isWaitingForAnimationFrame = ANIM_FRAME_CAUSED_BY_ADD;
+									self.isWaitingForAnimationFrame = 1;
 									self.domNode.ownerDocument.defaultView.requestAnimationFrame(self.worker);
 								}
 							}
@@ -284,6 +294,7 @@ DynaNodeWidget.prototype.execute = function() {
 	this.dynanodeEnable = this.getAttribute("enable","no") === "yes";
 	this.dynanodeSelector = this.getAttribute("selector",".tc-dynanode-track-tiddler-when-visible");
 	this.dynanodeRemoveSelector = this.getAttribute("removeselector",".tc-dynanode-track-tiddler-when-visible");
+	this.dynanodeAnimationList = this.wiki.filterTiddlers(this.getAttribute("animationlist",""));
 	// Make child widgets
 	this.makeChildWidgets();
 };
@@ -299,6 +310,13 @@ Selectively refreshes the widget if needed. Returns true if the widget or any of
 */
 DynaNodeWidget.prototype.refresh = function(changedTiddlers,force) {
 	var self = this;
+	if(this.dynanodeEnable && $tw.utils.isArray(this.dynanodeAnimationList) && !this.checkObject(changedTiddlers,this.dynanodeAnimationList)) {
+		this.isWaitingForAnimationFrame = 1;
+		this.domNode.ownerDocument.defaultView.clearTimeout(this.animationFrameTimeout);
+		this.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
+			self.animationFrameTimeout = self.domNode.ownerDocument.defaultView.setTimeout(self.doneWorker,1);
+		});
+	}
 	if(this.dynanodeEnable && this.isWaitingForAnimationFrame) {
 		this.changedTiddlersWhileAnimating = $tw.utils.extend(self.changedTiddlersWhileAnimating,changedTiddlers);
 	} else if(this.dynanodeEnable && !this.isWaitingForAnimationFrame) {
