@@ -1,0 +1,12 @@
+title: $:/core/ui/EditTemplate/shadow
+tags: $:/tags/EditTemplate
+
+\define lingo-base() $:/language/EditTemplate/Shadow/
+\define pluginLinkBody()
+\whitespace trim
+<$link to="""$(pluginTitle)$""">
+<$text text="""$(pluginTitle)$"""/>
+</$link>
+\end
+\whitespace trim
+<<tdfp-tiddlyflex-edittemplate-shadow>>

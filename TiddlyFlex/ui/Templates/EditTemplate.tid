@@ -27,37 +27,4 @@ code-body: yes
 \procedure get-field-editor-filter() [<newFieldNameTiddler>get[text]else[]] :cascade[all[shadows+tiddlers]tag[$:/tags/FieldEditorFilter]!is[draft]get[text]] :and[!is[blank]else{$:/core/ui/EditTemplate/fieldEditor/default}]
 
 \whitespace trim
-<div
-	data-tiddler-title=<<currentTiddler>>
-	data-tags={{!!tags}}
-	class={{{ [all[shadows+tiddlers]tag[$:/tags/ClassFilters/TiddlerTemplate]!is[draft]] :map:flat[subfilter{!!text}] [subfilter<tdff.tiddlyflex-enlist-columns>count[]addprefix[tc-tiddlyflex-column-]] tc-tiddler-edit-frame [<currentTiddler>is[tiddler]then[tc-tiddler-exists]] [<currentTiddler>is[missing]!is[shadow]then[tc-tiddler-missing]] [<currentTiddler>is[shadow]then[tc-tiddler-exists tc-tiddler-shadow]] [<currentTiddler>is[system]then[tc-tiddler-system]] tc-dynanode-track-tiddler-when-visible [{!!class}] [<currentTiddler>tags[]encodeuricomponent[]addprefix[tc-tagged-]] +[join[ ]] }}}
-	role="region"
-	aria-label={{$:/language/EditTemplate/Caption}}>
-	<$fieldmangler>
-		<$tiddlyflex-draggable enable={{{ [{$:/state/tiddlyflex/story-river/tiddler/drag-enabled}match[yes]then[$:/state/tiddlyflex/story-river/fullscreen/]addsuffix<currentTiddler>is[missing]then[yes]] ~[[no]] }}} tiddler=<<currentTiddler>> startactions=<<tiddlyflex-drag-start-actions>> endactions=<<tiddlyflex-drag-end-actions>> class="tc-tiddler-frame">
-			<$vars
-				storyTiddler=<<currentTiddler>>
-				newTagNameTiddler=<<qualify "$:/temp/NewTagName">>
-				newFieldNameTiddler=<<qualify "$:/temp/NewFieldName">>
-				newFieldValueTiddlerPrefix=<<qualify "$:/temp/NewFieldValue">>
-				newFieldNameInputTiddler=<<qualify "$:/temp/NewFieldName/input">>
-				newFieldNameSelectionTiddler=<<qualify "$:/temp/NewFieldName/selected-item">>
-				newTagNameInputTiddler=<<qualify "$:/temp/NewTagName/input">>
-				newTagNameSelectionTiddler=<<qualify "$:/temp/NewTagName/selected-item">>
-				typeInputTiddler=<<qualify "$:/temp/Type/input">>
-				typeSelectionTiddler=<<qualify "$:/temp/Type/selected-item">>>
-				<$keyboard key="((cancel-edit-tiddler))" actions=<<cancel-delete-tiddler-actions "cancel">> tag="div">
-					<$keyboard key="((save-tiddler))" actions=<<save-tiddler-actions>> tag="div">
-						<$list filter="[all[shadows+tiddlers]tag[$:/tags/EditTemplate]!is[draft]]" variable="listItem">
-							<$transclude tiddler=<<listItem>>/>
-						</$list>
-					</$keyboard>
-				</$keyboard>
-			</$vars>
-			<% if [{$:/state/dragging}match[yes]then{$:/state/tiddlyflex/story-river/tiddler/drag-enabled}match[yes]then[$:/state/story-river/full-screen/]addsuffix<currentTiddler>is[missing]] %>
-				<$droppable class="tc-tiddlyflex-droppable-top-half" actions=<<tiddlyflex-top-drop-actions>> dragenteractions=<<tiddlyflex-top-dragenter-actions>>/>
-				<$droppable class="tc-tiddlyflex-droppable-bottom-half" actions=<<tiddlyflex-bottom-drop-actions>> dragenteractions=<<tiddlyflex-bottom-dragenter-actions>>/>
-			<% endif %>
-		</$tiddlyflex-draggable>
-	</$fieldmangler>
-</div>
+<<tdfp-tiddlyflex-edit-template>>

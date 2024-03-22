@@ -1,0 +1,10 @@
+title: $:/core/ui/EditTemplate/tags
+tags: $:/tags/EditTemplate
+
+\whitespace trim
+
+\procedure lingo-base() $:/language/EditTemplate/
+
+<$let saveTiddler=<<currentTiddler>>>
+	<$macrocall $name="edit-tags-template" tagField=<<tagField>>/>
+</$let>

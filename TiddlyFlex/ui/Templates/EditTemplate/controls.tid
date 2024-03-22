@@ -1,0 +1,6 @@
+title: $:/core/ui/EditTemplate/controls
+tags: $:/tags/EditTemplate
+
+\define config-title() $:/config/EditToolbarButtons/Visibility/$(listItem)$
+\whitespace trim
+<<tdfp-tiddlyflex-edittemplate-controls>>

@@ -1,0 +1,76 @@
+title: $:/core/ui/EditTemplate/fields
+tags: $:/tags/EditTemplate
+
+\define lingo-base() $:/language/EditTemplate/
+\define config-title()
+$:/config/EditTemplateFields/Visibility/$(currentField)$
+\end
+
+\define config-filter()
+[[hide]] -[title{$(config-title)$}]
+\end
+
+<!-- Beware this is duplicated from EditTemplate.tid. For details see bug #7054 -->
+\define get-field-value-tiddler-filter() [subfilter<get-field-editor-filter>sha256[16]addprefix[/]addprefix<newFieldValueTiddlerPrefix>]
+\define get-field-editor-filter() [<newFieldNameTiddler>get[text]else[]] :cascade[all[shadows+tiddlers]tag[$:/tags/FieldEditorFilter]!is[draft]get[text]] :and[!is[blank]else{$:/core/ui/EditTemplate/fieldEditor/default}]
+
+\define current-tiddler-new-field-selector()
+[data-tiddler-title="$(currentTiddlerCSSescaped)$"] .tc-edit-field-add-name-wrapper input
+\end
+
+\define new-field-actions()
+\whitespace trim
+<$action-sendmessage $message="tm-add-field" $name={{{ [<newFieldNameTiddler>get[text]] }}} $value={{{ [<newFieldNameTiddler>get[text]] :map[subfilter<get-field-value-tiddler-filter>get[text]] }}}/>
+<$set name="safeNewFieldValueTiddlerPrefix" value=<<newFieldValueTiddlerPrefix>> emptyValue=<<qualify "$:/temp/NewFieldValue">> >
+	<$action-deletetiddler $filter="[<newFieldNameTiddler>] [prefix[$:/temp/NewFieldValue]prefix<safeNewFieldValueTiddlerPrefix>] [<storeTitle>] [<searchListState>]"/>
+</$set>
+<$action-sendmessage $message="tm-focus-selector" $param=<<current-tiddler-new-field-selector>>/>
+\end
+
+\define delete-state-tiddlers() <$action-deletetiddler $filter="[<newFieldNameTiddler>] [<storeTitle>] [<searchListState>]"/>
+
+\define cancel-search-actions-inner()
+\whitespace trim
+<$list
+	filter="[<storeTitle>has[text]] [<newFieldNameTiddler>has[text]]"
+	variable="ignore"
+	emptyMessage="<<cancel-delete-tiddler-actions 'cancel'>>">
+<<delete-state-tiddlers>>
+</$list>
+\end
+
+\define cancel-search-actions()
+\whitespace trim
+<$set name="userInput" value={{{ [<storeTitle>get[text]] }}}>
+<$list
+	filter="[<newFieldNameTiddler>get[text]!match<userInput>]"
+	emptyMessage="<<cancel-search-actions-inner>>">
+<$action-setfield $tiddler=<<newFieldNameTiddler>> text=<<userInput>>/><$action-setfield $tiddler=<<refreshTitle>> text="yes"/>
+</$list>
+</$set>
+\end
+
+\define new-field()
+\whitespace trim
+<$vars name={{{ [<newFieldNameTiddler>get[text]] }}}>
+<$reveal type="nomatch" text="" default=<<name>>>
+<$button tooltip={{$:/language/EditTemplate/Fields/Add/Button/Hint}}>
+<$action-sendmessage $message="tm-add-field"
+$name=<<name>>
+$value={{{ [subfilter<get-field-value-tiddler-filter>get[text]] }}}/>
+<$set name="safeNewFieldValueTiddlerPrefix" value=<<newFieldValueTiddlerPrefix>> emptyValue=<<qualify "$:/temp/NewFieldValue">> >
+	<$action-deletetiddler $filter="[<newFieldNameTiddler>] [prefix[$:/temp/NewFieldValue]prefix<safeNewFieldValueTiddlerPrefix>] [<storeTitle>] [<searchListState>]"/>
+</$set>
+<<lingo Fields/Add/Button>>
+</$button>
+</$reveal>
+<$reveal type="match" text="" default=<<name>>>
+<$button>
+<<lingo Fields/Add/Button>>
+</$button>
+</$reveal>
+</$vars>
+\end
+\whitespace trim
+
+<<tdfp-tiddlyflex-edittemplate-fields>>

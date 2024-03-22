@@ -1,0 +1,5 @@
+title: $:/core/ui/EditTemplate/body/canonical-uri
+
+\define lingo-base() $:/language/EditTemplate/Body/
+
+<<tdfp-tiddlyflex-edittemplate-canonical-uri>>

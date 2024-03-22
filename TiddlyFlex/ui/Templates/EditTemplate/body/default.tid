@@ -1,0 +1,16 @@
+title: $:/core/ui/EditTemplate/body/default
+
+\function edit-preview-state()
+[{$:/config/ShowEditPreview/PerTiddler}!match[yes]then[$:/state/showeditpreview]] :else[<qualified-preview-state>] +[get[text]] :else[[no]]
+\end
+
+\define config-visibility-title()
+$:/config/EditorToolbarButtons/Visibility/$(currentTiddler)$
+\end
+
+\define importFileActions()
+<$action-popup $state=<<importState>> $coords="(0,0,0,0)" $floating="yes"/>
+\end
+
+\whitespace trim
+<<tdfp-tiddlyflex-edittemplate-body-default>>

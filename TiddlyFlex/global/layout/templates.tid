@@ -1,0 +1,526 @@
+title: $:/plugins/BTC/TiddlyFlex/globals/layout/templates
+tags: $:/tags/Global
+
+\procedure tdfp-tiddlyflex-edit-template()
+<div
+	data-tiddler-title=<<currentTiddler>>
+	data-tags={{!!tags}}
+	class={{{ [all[shadows+tiddlers]tag[$:/tags/ClassFilters/TiddlerTemplate]!is[draft]] :map:flat[subfilter{!!text}] [subfilter<tdff.tiddlyflex-enlist-columns>count[]addprefix[tc-tiddlyflex-column-]] tc-tiddler-edit-frame [<currentTiddler>is[tiddler]then[tc-tiddler-exists]] [<currentTiddler>is[missing]!is[shadow]then[tc-tiddler-missing]] [<currentTiddler>is[shadow]then[tc-tiddler-exists tc-tiddler-shadow]] [<currentTiddler>is[system]then[tc-tiddler-system]] tc-dynanode-track-tiddler-when-visible [{!!class}] [<currentTiddler>tags[]encodeuricomponent[]addprefix[tc-tagged-]] +[join[ ]] }}}
+	role="region"
+	aria-label={{$:/language/EditTemplate/Caption}}>
+	<$fieldmangler>
+		<$tiddlyflex-draggable enable={{{ [{$:/state/tiddlyflex/story-river/tiddler/drag-enabled}match[yes]then[$:/state/tiddlyflex/story-river/fullscreen/]addsuffix<currentTiddler>is[missing]then[yes]] ~[[no]] }}} tiddler=<<currentTiddler>> startactions=<<tiddlyflex-drag-start-actions>> endactions=<<tiddlyflex-drag-end-actions>> class="tc-tiddler-frame">
+			<$vars
+				storyTiddler=<<currentTiddler>>
+				newTagNameTiddler=<<qualify "$:/temp/NewTagName">>
+				newFieldNameTiddler=<<qualify "$:/temp/NewFieldName">>
+				newFieldValueTiddlerPrefix=<<qualify "$:/temp/NewFieldValue">>
+				newFieldNameInputTiddler=<<qualify "$:/temp/NewFieldName/input">>
+				newFieldNameSelectionTiddler=<<qualify "$:/temp/NewFieldName/selected-item">>
+				newTagNameInputTiddler=<<qualify "$:/temp/NewTagName/input">>
+				newTagNameSelectionTiddler=<<qualify "$:/temp/NewTagName/selected-item">>
+				typeInputTiddler=<<qualify "$:/temp/Type/input">>
+				typeSelectionTiddler=<<qualify "$:/temp/Type/selected-item">>>
+				<$keyboard key="((cancel-edit-tiddler))" actions=<<cancel-delete-tiddler-actions "cancel">> tag="div">
+					<$keyboard key="((save-tiddler))" actions=<<save-tiddler-actions>> tag="div">
+						<$list filter="[all[shadows+tiddlers]tag[$:/tags/EditTemplate]!is[draft]]" variable="listItem">
+							<$transclude tiddler=<<listItem>>/>
+						</$list>
+					</$keyboard>
+				</$keyboard>
+			</$vars>
+			<% if [{$:/state/dragging}match[yes]then{$:/state/tiddlyflex/story-river/tiddler/drag-enabled}match[yes]then[$:/state/story-river/full-screen/]addsuffix<currentTiddler>is[missing]] %>
+				<$droppable class="tc-tiddlyflex-droppable-top-half" actions=<<tiddlyflex-top-drop-actions>> dragenteractions=<<tiddlyflex-top-dragenter-actions>>/>
+				<$droppable class="tc-tiddlyflex-droppable-bottom-half" actions=<<tiddlyflex-bottom-drop-actions>> dragenteractions=<<tiddlyflex-bottom-dragenter-actions>>/>
+			<% endif %>
+		</$tiddlyflex-draggable>
+	</$fieldmangler>
+</div>
+\end
+\procedure tdfp-tiddlyflex-edittemplate-body-default()
+<$let
+	qualified-preview-state=<<qualify "$:/state/showeditpreview">>
+	editPreviewStateTiddler={{{ [{$:/config/ShowEditPreview/PerTiddler}!match[yes]then[$:/state/showeditpreview]] :else[<qualified-preview-state>] }}}
+	importTitle=<<qualify $:/ImportImage>>
+	importState=<<qualify $:/state/ImportImage>> >
+<$dropzone importTitle=<<importTitle>> autoOpenOnImport="no" contentTypesFilter={{$:/config/Editor/ImportContentTypesFilter}} class="tc-dropzone-editor" enable={{{ [{$:/config/DragAndDrop/Enable}match[no]] :else[subfilter{$:/config/Editor/EnableImportFilter}then[yes]else[no]] }}} filesOnly="yes" actions=<<importFileActions>> >
+<div>
+<div class={{{ [<edit-preview-state>match[yes]then[tc-tiddler-preview]else[tc-tiddler-preview-hidden]] [[tc-tiddler-editor]] +[join[ ]] }}}>
+
+<$transclude tiddler="$:/core/ui/EditTemplate/body/editor" mode="inline"/>
+
+<$list filter="[<editPreviewStateTiddler>get[text]match[yes]]" variable="ignore">
+
+<div class="tc-tiddler-preview-preview" data-tiddler-title={{!!draft.title}} data-tags={{!!tags}}>
+
+<$transclude tiddler={{$:/state/editpreviewtype}} mode="inline">
+
+<$transclude tiddler="$:/core/ui/EditTemplate/body/preview/output" mode="inline"/>
+
+</$transclude>
+
+</div>
+
+</$list>
+
+</div>
+
+</div>
+
+</$dropzone>
+
+</$let>
+\end
+\procedure tdfp-tiddlyflex-edittemplate-canonical-uri()
+<div class="tc-message-box">
+
+<<lingo External/Hint>>
+
+<a href={{!!_canonical_uri}}><$text text={{!!_canonical_uri}}/></a>
+
+<$edit-text field="_canonical_uri" class="tc-edit-fields" tabindex={{$:/config/EditTabIndex}} cancelPopups="yes"></$edit-text>
+
+</div>
+\end
+\procedure tdfp-tiddlyflex-edittemplate-body-editor()
+<$edit
+
+  field="text"
+  class="tc-edit-texteditor tc-edit-texteditor-body"
+  placeholder={{$:/language/EditTemplate/Body/Placeholder}}
+  tabindex={{$:/config/EditTabIndex}}
+  focus={{{ [{$:/config/AutoFocus}match[text]then[true]] ~[[false]] }}}
+  cancelPopups="yes"
+  fileDrop={{{ [{$:/config/DragAndDrop/Enable}match[no]] :else[subfilter{$:/config/Editor/EnableImportFilter}then[yes]else[no]] }}}
+  type={{!!type}}
+
+><$set
+
+  name="targetTiddler"
+  value=<<currentTiddler>>
+
+><$list
+
+  filter="[all[shadows+tiddlers]tag[$:/tags/EditorToolbar]!has[draft.of]]"
+
+><$reveal
+
+  type="nomatch"
+  state=<<config-visibility-title>>
+  text="hide"
+  class="tc-text-editor-toolbar-item-wrapper"
+
+><$transclude
+
+  tiddler="$:/core/ui/EditTemplate/body/toolbar/button"
+  mode="inline"
+
+/></$reveal></$list><$list
+
+  filter="[all[shadows+tiddlers]tag[$:/tags/EditorTools]!has[draft.of]]"
+
+><$list
+	filter={{!!condition}}
+	variable="list-condition"
+><$transclude/>
+</$list></$list></$set></$edit>
+\end
+\procedure tdfp-tiddlyflex-edittemplate-controls()
+\whitespace trim
+<div class="tc-tiddler-title tc-tiddler-edit-title">
+	<$view field="title"/>
+	<span class="tc-tiddler-controls tc-titlebar">
+		<$list filter="[all[shadows+tiddlers]tag[$:/tags/EditToolbar]!has[draft.of]]" variable="listItem">
+			<$let tv-config-toolbar-class={{{ [enlist<tv-config-toolbar-class>] [<listItem>encodeuricomponent[]addprefix[tc-btn-]] +[join[ ]] }}}>
+				<$reveal type="nomatch" state=<<config-title>> text="hide">
+					<$transclude $tiddler=<<listItem>>/>
+				</$reveal>
+			</$let>
+		</$list>
+	</span>
+	<div style="clear: both;"></div>
+</div>
+\end
+\procedure tdfp-tiddlyflex-edittemplate-fieldeditor-default()
+<$edit-text tiddler=<<currentTiddler>> field=<<currentField>> tag="input" default="" class="tc-edit-texteditor tc-edit-fieldeditor" placeholder={{$:/language/EditTemplate/Fields/Add/Value/Placeholder}} tabindex={{$:/config/EditTabIndex}} cancelPopups="yes"/>
+\end
+\procedure tdfp-tiddlyflex-edittemplate-fields()
+<$set name="newFieldValueTiddlerPrefix" value=<<newFieldValueTiddlerPrefix>> emptyValue=<<qualify "$:/temp/NewFieldValue">> >
+<div class="tc-edit-fields">
+<table class={{{ [all[current]fields[]] :filter[lookup[$:/config/EditTemplateFields/Visibility/]!match[hide]] +[count[]!match[0]] +[then[tc-edit-fields]] ~[[tc-edit-fields tc-edit-fields-small]] }}}>
+<tbody>
+<$list filter="[all[current]fields[]] +[sort[title]]" variable="currentField" storyview="pop">
+<$list filter=<<config-filter>> variable="temp">
+<tr class="tc-edit-field">
+<td class="tc-edit-field-name">
+<$text text=<<currentField>>/>:</td>
+<td class="tc-edit-field-value">
+<$keyboard key="((delete-field))" actions="""<$action-deletefield $field=<<currentField>>/><$set name="currentTiddlerCSSescaped" value={{{ [<currentTiddler>escapecss[]] }}}><$action-sendmessage $message="tm-focus-selector" $param=<<current-tiddler-new-field-selector>>/></$set>""">
+<$transclude tiddler={{{ [<currentField>] :cascade[all[shadows+tiddlers]tag[$:/tags/FieldEditorFilter]!is[draft]get[text]] :and[!is[blank]else{$:/core/ui/EditTemplate/fieldEditor/default}] }}} />
+</$keyboard>
+</td>
+<td class="tc-edit-field-remove">
+<$button class="tc-btn-invisible" tooltip={{$:/language/EditTemplate/Field/Remove/Hint}} aria-label={{$:/language/EditTemplate/Field/Remove/Caption}}>
+<$action-deletefield $field=<<currentField>>/>
+{{$:/core/images/delete-button}}
+</$button>
+</td>
+</tr>
+</$list>
+</$list>
+</tbody>
+</table>
+</div>
+
+<$fieldmangler>
+<div class="tc-edit-field-add">
+<em class="tc-edit tc-small-gap-right">
+<<lingo Fields/Add/Prompt>>
+</em>
+<$vars refreshTitle=<<qualify "$:/temp/fieldname/refresh">> storeTitle=<<newFieldNameInputTiddler>> searchListState=<<newFieldNameSelectionTiddler>>>
+<div class="tc-edit-field-add-name-wrapper">
+<$macrocall $name="keyboard-driven-input" tiddler=<<newFieldNameTiddler>> storeTitle=<<storeTitle>> refreshTitle=<<refreshTitle>>
+		selectionStateTitle=<<searchListState>> tag="input" default="" placeholder={{$:/language/EditTemplate/Fields/Add/Name/Placeholder}}
+		focusPopup=<<qualify "$:/state/popup/field-dropdown">> class="tc-edit-texteditor tc-popup-handle" tabindex={{$:/config/EditTabIndex}}
+		focus={{{ [{$:/config/AutoFocus}match[fields]then[true]] ~[[false]] }}} cancelPopups="yes"
+		configTiddlerFilter="[[$:/config/EditMode/fieldname-filter]]" inputCancelActions=<<cancel-search-actions>> />
+<$button popup=<<qualify "$:/state/popup/field-dropdown">> class="tc-btn-invisible tc-btn-dropdown tc-small-gap" tooltip={{$:/language/EditTemplate/Field/Dropdown/Hint}} aria-label={{$:/language/EditTemplate/Field/Dropdown/Caption}}>{{$:/core/images/down-arrow}}</$button>
+<$reveal state=<<qualify "$:/state/popup/field-dropdown">> type="nomatch" text="" default="">
+<div class="tc-block-dropdown tc-edit-type-dropdown">
+<$set name="tv-show-missing-links" value="yes">
+<$linkcatcher to=<<newFieldNameTiddler>>>
+<div class="tc-dropdown-item">
+<<lingo Fields/Add/Dropdown/User>>
+</div>
+<$set name="newFieldName" value={{{ [<storeTitle>get[text]] }}}>
+<$list filter="[!is[shadow]!is[system]fields[]search:title<newFieldName>sort[]] -created -creator -draft.of -draft.title -modified -modifier -tags -text -title -type"  variable="currentField">
+<$list filter="[<currentField>addsuffix[-primaryList]] -[<searchListState>get[text]]" emptyMessage="""<$link to=<<currentField>> class="tc-list-item-selected"><$text text=<<currentField>>/></$link>""">
+<$link to=<<currentField>>>
+<$text text=<<currentField>>/>
+</$link>
+</$list>
+</$list>
+<div class="tc-dropdown-item">
+<<lingo Fields/Add/Dropdown/System>>
+</div>
+<$list filter="[fields[]search:title<newFieldName>sort[]] -[!is[shadow]!is[system]fields[]]" variable="currentField">
+<$list filter="[<currentField>addsuffix[-secondaryList]] -[<searchListState>get[text]]" emptyMessage="""<$link to=<<currentField>> class="tc-list-item-selected"><$text text=<<currentField>>/></$link>""">
+<$link to=<<currentField>>>
+<$text text=<<currentField>>/>
+</$link>
+</$list>
+</$list>
+</$set>
+</$linkcatcher>
+</$set>
+</div>
+</$reveal>
+</div>
+<$let currentTiddlerCSSescaped={{{ [<currentTiddler>escapecss[]] }}} currentTiddler={{{ [subfilter<get-field-value-tiddler-filter>] }}} currentField="text" currentFieldName={{{ [<newFieldNameTiddler>get[text]] }}}>
+<span class="tc-edit-field-add-value tc-small-gap-right">
+<$keyboard key="((add-field))" actions=<<new-field-actions>>>
+<$transclude tiddler={{{ [subfilter<get-field-editor-filter>] }}} />
+</$keyboard>
+</span>
+<span class="tc-edit-field-add-button">
+<$macrocall $name="new-field"/>
+</span>
+</$let>
+</$vars>
+</div>
+</$fieldmangler>
+</$set>
+\end
+\procedure tdfp-tiddlyflex-edittemplate-shadow()
+<$list filter="[all[current]get[draft.of]is[shadow]!is[tiddler]]">
+
+<$list filter="[all[current]shadowsource[]]" variable="pluginTitle">
+
+<$set name="pluginLink" value=<<pluginLinkBody>>>
+<div class="tc-message-box">
+
+<<lingo Warning>>
+
+</div>
+</$set>
+</$list>
+
+</$list>
+
+<$list filter="[all[current]get[draft.of]is[shadow]is[tiddler]]">
+
+<$list filter="[all[current]shadowsource[]]" variable="pluginTitle">
+
+<$set name="pluginLink" value=<<pluginLinkBody>>>
+<div class="tc-message-box">
+
+<<lingo OverriddenWarning>>
+
+</div>
+</$set>
+</$list>
+
+</$list>
+\end
+\procedure tdfp-tiddlyflex-edittemplate-title()
+<$edit-text field="draft.title" class="tc-titlebar tc-edit-texteditor" focus={{{ [{$:/config/AutoFocus}match[title]then[true]] ~[[false]] }}} tabindex={{$:/config/EditTabIndex}} cancelPopups="yes"/>
+
+<$vars pattern="""[\|\[\]{}]""" bad-chars="""`| [ ] { }`""">
+
+<$list filter="[all[current]regexp:draft.title<pattern>]" variable="listItem">
+
+<div class="tc-message-box">
+
+{{$:/core/images/warning}}&#32;{{$:/language/EditTemplate/Title/BadCharacterWarning}}
+
+</div>
+
+</$list>
+
+</$vars>
+
+<$reveal state="!!draft.title" type="nomatch" text={{!!draft.of}} tag="div">
+
+<$list filter="[{!!draft.title}!is[missing]]" variable="listItem">
+
+<div class="tc-message-box">
+
+{{$:/core/images/warning}}&#32;{{$:/language/EditTemplate/Title/Exists/Prompt}}:&#32;<$link to={{!!draft.title}} />
+
+</div>
+
+</$list>
+
+<$list filter="[{!!draft.of}!is[missing]]" variable="listItem">
+
+<$vars fromTitle={{!!draft.of}} toTitle={{!!draft.title}}>
+
+<$checkbox tiddler="$:/config/RelinkOnRename" field="text" checked="yes" unchecked="no" default="no">&#32;{{$:/language/EditTemplate/Title/Relink/Prompt}}</$checkbox>
+
+<$list filter="[title<fromTitle>backlinks[]limit[1]]" variable="listItem">
+
+<$vars stateTiddler=<<qualify "$:/state/edit/references">> >
+
+<$reveal type="nomatch" state=<<stateTiddler>> text="show">
+<$button set=<<stateTiddler>> setTo="show" class="tc-btn-invisible">
+{{$:/core/images/right-arrow}}
+&#32;
+<<lingo EditTemplate/Title/References/Prompt>></$button>
+</$reveal>
+<$reveal type="match" state=<<stateTiddler>> text="show">
+<$button set=<<stateTiddler>> setTo="hide" class="tc-btn-invisible">
+{{$:/core/images/down-arrow}}
+&#32;
+<<lingo EditTemplate/Title/References/Prompt>></$button>
+</$reveal>
+
+<$reveal type="match" state=<<stateTiddler>> text="show">
+<$tiddler tiddler=<<fromTitle>> >
+<$transclude tiddler="$:/core/ui/TiddlerInfo/References"/>
+</$tiddler>
+</$reveal>
+
+</$vars>
+
+</$list>
+
+</$vars>
+
+</$list>
+
+</$reveal>
+\end
+\procedure tdfp-tiddlyflex-edittemplate-type()
+<$set name="refreshTitle" value=<<qualify "$:/temp/type-search/refresh">>>
+<div class="tc-edit-type-selector-wrapper">
+<em class="tc-edit tc-small-gap-right"><<lingo Type/Prompt>></em>
+<div class="tc-type-selector-dropdown-wrapper">
+<div class="tc-type-selector"><$fieldmangler>
+<$macrocall $name="keyboard-driven-input" tiddler=<<currentTiddler>> storeTitle=<<typeInputTiddler>> refreshTitle=<<refreshTitle>> selectionStateTitle=<<typeSelectionTiddler>> field="type" tag="input" default="" placeholder={{$:/language/EditTemplate/Type/Placeholder}} focusPopup=<<qualify "$:/state/popup/type-dropdown">> class="tc-edit-typeeditor tc-edit-texteditor tc-popup-handle" tabindex={{$:/config/EditTabIndex}} focus={{{ [{$:/config/AutoFocus}match[type]then[true]] ~[[false]] }}} cancelPopups="yes" configTiddlerFilter="[[$:/core/ui/EditTemplate/type]]" inputCancelActions=<<input-cancel-actions>>/><$button popup=<<qualify "$:/state/popup/type-dropdown">> class="tc-btn-invisible tc-btn-dropdown tc-small-gap" tooltip={{$:/language/EditTemplate/Type/Dropdown/Hint}} aria-label={{$:/language/EditTemplate/Type/Dropdown/Caption}}>{{$:/core/images/down-arrow}}</$button><$button message="tm-remove-field" param="type" class="tc-btn-invisible tc-btn-icon" tooltip={{$:/language/EditTemplate/Type/Delete/Hint}} aria-label={{$:/language/EditTemplate/Type/Delete/Caption}}>{{$:/core/images/delete-button}}<$action-deletetiddler $filter="[<typeInputTiddler>] [<storeTitle>] [<refreshTitle>] [<selectionStateTitle>]"/></$button>
+</$fieldmangler></div>
+
+<div class="tc-block-dropdown-wrapper">
+<$set name="tv-show-missing-links" value="yes">
+<$reveal state=<<qualify "$:/state/popup/type-dropdown">> type="nomatch" text="" default="">
+<div class="tc-block-dropdown tc-edit-type-dropdown">
+<$linkcatcher to="!!type">
+<$list filter='[all[shadows+tiddlers]prefix[$:/language/Docs/Types/]each[group]sort[group-sort]]'>
+<div class="tc-dropdown-item">
+<$text text={{!!group}}/>
+</div>
+<$set name="userInput" value={{{ [<typeInputTiddler>get[text]] }}}>
+<$list filter="[all[shadows+tiddlers]prefix[$:/language/Docs/Types/]group{!!group}] +[sort[description]] +[removeprefix[$:/language/Docs/Types/]] +[search<userInput>]"><span class={{{ [<currentTiddler>addsuffix[-primaryList]] -[<typeSelectionTiddler>get[text]] +[then[]else[tc-list-item-selected]] }}}><$link to={{{ [<currentTiddler>addprefix[$:/language/Docs/Types/]get[name]] }}}><$view tiddler={{{ [<currentTiddler>addprefix[$:/language/Docs/Types/]] }}} field="description"/><$text text=" "/>(<$view tiddler={{{ [<currentTiddler>addprefix[$:/language/Docs/Types/]] }}} field="name"/>)</$link></span>
+</$list>
+</$set>
+</$list>
+</$linkcatcher>
+</div>
+</$reveal>
+</$set>
+</div>
+</div>
+</div>
+</$set>
+\end
+\procedure tag-body-inner(colour,fallbackTarget,colourA,colourB,icon,tagField:"tags")
+<$wikify name="foregroundColor"
+	text="""<$macrocall $name="contrastcolour"
+		target=<<colour>>
+		fallbackTarget=<<fallbackTarget>>
+		colourA=<<colourA>>
+		colourB=<<colourB>>/>
+	"""
+>
+	<$let backgroundColor=<<colour>> >
+		<span class="tc-tag-label tc-tag-list-item tc-small-gap-right"
+			data-tag-title=<<currentTiddler>>
+			style.color=<<foregroundColor>>
+			style.fill=<<foregroundColor>>
+			style.background-color=<<backgroundColor>>
+		>
+			<$transclude tiddler=<<icon>>/>
+			<$view field="title" format="text"/>
+			<$button class="tc-btn-invisible tc-remove-tag-button"
+				style.fill=<<foregroundColor>>
+			>
+				<$action-listops $tiddler=<<saveTiddler>> $field=<<tagField>> $subfilter="-[{!!title}]"/>
+				{{$:/core/images/close-button}}
+			</$button>
+		</span>
+	</$let>
+</$wikify>
+\end
+
+\procedure tag-body(colour,palette,icon,tagField:"tags")
+<$macrocall $name="tag-body-inner"
+	colour=`$(colour)$`
+	colourA={{{ [<palette>getindex[foreground]] }}}
+	colourB={{{ [<palette>getindex[background]] }}}
+	fallbackTarget={{{ [<palette>getindex[tag-background]] }}}
+	icon=<<icon>>
+	tagField=<<tagField>>
+/>
+\end
+
+\procedure edit-tags-template(tagField:"tags")
+<div class="tc-edit-tags">
+	<$list filter="[<currentTiddler>get<tagField>enlist-input[]sort[title]]" storyview="pop">
+		<$macrocall $name="tag-body"
+			colour={{{ [<currentTiddler>] :cascade[all[shadows+tiddlers]tag[$:/tags/TiddlerColourFilter]!is[draft]get[text]] }}}
+			palette={{$:/palette}}
+			icon={{{ [<currentTiddler>] :cascade[all[shadows+tiddlers]tag[$:/tags/TiddlerIconFilter]!is[draft]get[text]] }}}
+			tagField=<<tagField>>
+		/>
+	</$list>
+	<$let tabIndex={{$:/config/EditTabIndex}} cancelPopups="yes">
+		<$macrocall $name="tag-picker" tagField=<<tagField>>/>
+	</$let>
+</div>
+\end
+\procedure toolbar-button-icon()
+<$list
+
+  filter="[all[current]!has[custom-icon]]"
+  variable="no-custom-icon"
+
+><$transclude
+
+  tiddler={{!!icon}}
+
+/></$list>
+\end
+
+\procedure toolbar-button-tooltip()
+{{!!description}}<$macrocall $name="displayshortcuts" $output="text/plain" shortcuts={{!!shortcuts}} prefix="` - [" separator="] [" suffix="]`"/>
+\end
+
+\procedure toolbar-button()
+<$list
+
+  filter={{!!condition}}
+  variable="list-condition"
+
+><$wikify
+
+  name="tooltip-text"
+  text=<<toolbar-button-tooltip>>
+  mode="inline"
+  output="text"
+
+><$list
+
+  filter="[all[current]!has[dropdown]]"
+  variable="no-dropdown"
+
+><$set name=disabled filter={{!!condition-disabled}}><$button
+
+  class={{{ tc-btn-invisible [[$(buttonClasses)$]substitute[]] +[join[ ]] }}}
+  tooltip=<<tooltip-text>>
+  actions={{!!actions}}
+  disabled=<<disabled>>
+
+><span
+
+  data-tw-keyboard-shortcut={{{ [<disabled>match[yes]then[]else{!!shortcuts}] }}}
+
+/><<toolbar-button-icon>><$transclude
+
+  tiddler=<<currentTiddler>>
+  field="text"
+
+/></$button></$set></$list><$list
+
+  filter="[all[current]has[dropdown]]"
+  variable="dropdown"
+
+><$set
+
+  name="dropdown-state"
+  value=<<qualify "$:/state/EditorToolbarDropdown">>
+
+><$set name=disabled filter={{!!condition-disabled}}><$button
+
+  popup=<<dropdown-state>>
+  class={{{ tc-popup-keep tc-btn-invisible [[$(buttonClasses)$]substitute[]] +[join[ ]] }}}
+  selectedClass="tc-selected"
+  tooltip=<<tooltip-text>>
+  actions={{!!actions}}
+  disabled=<<disabled>>
+
+><span
+
+  data-tw-keyboard-shortcut={{{ [<disabled>match[yes]then[]else{!!shortcuts}] }}}
+
+/><<toolbar-button-icon>><$transclude
+
+  tiddler=<<currentTiddler>>
+  field="text"
+
+/></$button></$set><$reveal
+
+  state=<<dropdown-state>>
+  type="popup"
+  position="below"
+  animate="yes"
+  tag="span"
+
+><div
+
+  class="tc-drop-down tc-popup-keep"
+
+><$transclude
+
+  tiddler={{!!dropdown}}
+  mode="block"
+
+/></div></$reveal></$set></$list></$wikify></$list>
+\end
+
+\procedure toolbar-button-outer()
+<$set
+
+  name="buttonClasses"
+  value={{!!button-classes}}
+
+><<toolbar-button>></$set>
+\end
