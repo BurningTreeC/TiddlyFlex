@@ -1,42 +1,6 @@
 title: $:/plugins/BTC/TiddlyFlex/globals/css
 tags: $:/tags/Global
 
-\procedure tdfp-tiddlyflex-dynamic-story-river-container()
-.tc-tiddlyflex-story-river-container {
-	flex-basis: max(max(calc({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px)),calc({{{ [subfilter<tdff.tiddlyflex-enlist-columns>count[]] }}} * {{$:/config/tiddlyflex/story-river/min-width}})),calc(100% - (100% - ({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px)))));
-}
-\end
-
-\procedure tdfp-tiddlyflex-static-story-river-container()
-.tc-tiddlyflex-story-river-container {
-	flex-basis: max(max(calc({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px)),calc({{$:/state/sidebar/posx!!column-count}} * {{$:/config/tiddlyflex/story-river/min-width}})),calc(100% - (100% - ({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px)))));
-}
-\end
-
-\procedure tdfp-tiddlyflex-dynamic-sidebar()
-.tc-tiddlyflex-sidebar {
-	width: max(min(max(calc(100% - ({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px))),{{$:/config/tiddlyflex/sidebar/width}}),calc(100% - ({{{ [subfilter<tdff.tiddlyflex-enlist-columns>count[]] }}} * {{$:/config/tiddlyflex/story-river/min-width}}))),{{$:/config/tiddlyflex/sidebar/width}});
-}
-\end
-
-\procedure tdfp-tiddlyflex-static-sidebar()
-.tc-tiddlyflex-sidebar {
-	width: max(min(max(calc(100% - ({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px))),{{$:/config/tiddlyflex/sidebar/width}}),calc(100% - ({{$:/state/sidebar/posx!!column-count}} * {{$:/config/tiddlyflex/story-river/min-width}}))),{{$:/config/tiddlyflex/sidebar/width}});
-}
-\end
-
-\procedure tdfp-tiddlyflex-dynamic-sidebar-resizer()
-.tc-tiddlyflex-sidebar-resizer {
-	left: min(max(min(calc(100% - {{$:/config/tiddlyflex/sidebar/width}} - 39px),calc({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px) - 39px)),calc(({{{ [subfilter<tdff.tiddlyflex-enlist-columns>count[]] }}} * {{$:/config/tiddlyflex/story-river/min-width}}) - 39px)),calc(100% - {{$:/config/tiddlyflex/sidebar/width}} - 39px));
-}
-\end
-
-\procedure tdfp-tiddlyflex-static-sidebar-resizer()
-.tc-tiddlyflex-sidebar-resizer {
-	left: min(max(min(calc(100% - {{$:/config/tiddlyflex/sidebar/width}} - 39px),calc({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px) - 39px)),calc(({{$:/state/sidebar/posx!!column-count}} * {{$:/config/tiddlyflex/story-river/min-width}}) - 39px)),calc(100% - {{$:/config/tiddlyflex/sidebar/width}} - 39px));
-}
-\end
-
 \procedure tiddlyflex-style-current-tiddler()
 \rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
 
