@@ -1,20 +1,20 @@
 title: $:/plugins/BTC/TiddlyFlex/styles/scroll-margins
 tags: $:/tags/Stylesheet
 
-\define tiddlyflex-scroll-margin-top-story-river-padding()
+\procedure tiddlyflex-scroll-margin-top-story-river-padding()
 \rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
 
-.tc-tiddlyflex-story-river-$(tiddlyFlexColumn)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(cssEscapedTitle)$"].tc-tiddler-view-frame, .tc-tiddlyflex-story-river-$(tiddlyFlexColumn)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(cssEscapedTitle)$"].tc-tiddler-edit-frame {
+.tc-tiddlyflex-story-river-{{{ [[$(tiddlyFlexColumn)$]substitute[]] }}} .tc-tiddlyflex-story-river-inner > [data-tiddler-title={{{ [[$(cssEscapedTitle)$]substitute[]] }}}].tc-tiddler-view-frame, .tc-tiddlyflex-story-river-{{{ [[$(tiddlyFlexColumn)$]substitute[]] }}} .tc-tiddlyflex-story-river-inner > [data-tiddler-title={{{ [[$(cssEscapedTitle)$]substitute[]] }}}].tc-tiddler-edit-frame {
 	scroll-margin-top: {{$:/config/tiddlyflex/story-river/padding}};
 	scroll-margin-left: {{$:/config/tiddlyflex/story-river/padding}};
 }
 
 \end
 
-\define tiddlyflex-scroll-margin-top()
+\procedure tiddlyflex-scroll-margin-top()
 \rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
 
-.tc-tiddlyflex-story-river-$(tiddlyFlexColumn)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(cssEscapedTitle)$"].tc-tiddler-view-frame, .tc-tiddlyflex-story-river-$(tiddlyFlexColumn)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(cssEscapedTitle)$"].tc-tiddler-edit-frame {
+.tc-tiddlyflex-story-river-{{{ [[$(tiddlyFlexColumn)$]substitute[]] }}} .tc-tiddlyflex-story-river-inner > [data-tiddler-title={{{ [[$(cssEscapedTitle)$]substitute[]] }}}].tc-tiddler-view-frame, .tc-tiddlyflex-story-river-{{{ [[$(tiddlyFlexColumn)$]substitute[]] }}} .tc-tiddlyflex-story-river-inner > [data-tiddler-title={{{ [[$(cssEscapedTitle)$]substitute[]] }}}].tc-tiddler-edit-frame {
 	scroll-margin-top: {{{ [{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}compare:number:lteq{$:/config/tiddlyflex/story-river/padding}] ~[{$:/config/tiddlyflex/story-river/padding}] }}};
 	scroll-margin-left: {{$:/config/tiddlyflex/story-river/padding}};
 }

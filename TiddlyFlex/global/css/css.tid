@@ -1,7 +1,25 @@
 title: $:/plugins/BTC/TiddlyFlex/globals/css
 tags: $:/tags/Global
 
-\define tiddlyflex-css-horizontal-view()
+\procedure tiddlyflex-style-current-tiddler()
+\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
+
+.tc-tiddlyflex-story-river-{{{ [[$(currentColumn)$]substitute[]] }}} .tc-tiddlyflex-story-river-inner > [data-tiddler-title={{{ [[$(cssEscapedTitle)$]substitute[]] }}}]:not(.tc-navigating) > .tc-tiddler-frame {
+	border: 1px solid <<colour tiddlyflex-current-tiddler>>;
+}
+
+\end
+
+\procedure tiddlyflex-style-unfocused-tiddlers()
+\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
+
+.tc-tiddlyflex-story-river-{{{ [[$(column)$]substitute[]] }}} .tc-tiddlyflex-story-river-inner >  [data-tiddler-title={{{ [[$(cssEscapedTitle)$]substitute[]] }}}]:not(.tc-navigating) > .tc-tiddler-frame {
+	border: 1px solid <<colour tiddlyflex-current-tiddler-muted>>;
+}
+
+\end
+
+\procedure tiddlyflex-css-horizontal-view()
 
 .tc-tiddlyflex-main-wrapper {
 	overflow-x: auto;

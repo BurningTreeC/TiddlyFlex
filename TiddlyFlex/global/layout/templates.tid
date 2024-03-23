@@ -2,6 +2,7 @@ title: $:/plugins/BTC/TiddlyFlex/globals/layout/templates
 tags: $:/tags/Global
 
 \procedure tdfp-tiddlyflex-edit-template()
+\whitespace trim
 <div
 	data-tiddler-title=<<currentTiddler>>
 	data-tags={{!!tags}}
@@ -38,6 +39,7 @@ tags: $:/tags/Global
 </div>
 \end
 \procedure tdfp-tiddlyflex-edittemplate-body-default()
+\whitespace trim
 <$let
 	qualified-preview-state=<<qualify "$:/state/showeditpreview">>
 	editPreviewStateTiddler={{{ [{$:/config/ShowEditPreview/PerTiddler}!match[yes]then[$:/state/showeditpreview]] :else[<qualified-preview-state>] }}}
@@ -72,6 +74,7 @@ tags: $:/tags/Global
 </$let>
 \end
 \procedure tdfp-tiddlyflex-edittemplate-canonical-uri()
+\whitespace trim
 <div class="tc-message-box">
 
 <<lingo External/Hint>>
@@ -83,6 +86,7 @@ tags: $:/tags/Global
 </div>
 \end
 \procedure tdfp-tiddlyflex-edittemplate-body-editor()
+\whitespace trim
 <$edit
 
   field="text"
@@ -142,9 +146,11 @@ tags: $:/tags/Global
 </div>
 \end
 \procedure tdfp-tiddlyflex-edittemplate-fieldeditor-default()
+\whitespace trim
 <$edit-text tiddler=<<currentTiddler>> field=<<currentField>> tag="input" default="" class="tc-edit-texteditor tc-edit-fieldeditor" placeholder={{$:/language/EditTemplate/Fields/Add/Value/Placeholder}} tabindex={{$:/config/EditTabIndex}} cancelPopups="yes"/>
 \end
 \procedure tdfp-tiddlyflex-edittemplate-fields()
+\whitespace trim
 <$set name="newFieldValueTiddlerPrefix" value=<<newFieldValueTiddlerPrefix>> emptyValue=<<qualify "$:/temp/NewFieldValue">> >
 <div class="tc-edit-fields">
 <table class={{{ [all[current]fields[]] :filter[lookup[$:/config/EditTemplateFields/Visibility/]!match[hide]] +[count[]!match[0]] +[then[tc-edit-fields]] ~[[tc-edit-fields tc-edit-fields-small]] }}}>
@@ -232,6 +238,7 @@ tags: $:/tags/Global
 </$set>
 \end
 \procedure tdfp-tiddlyflex-edittemplate-shadow()
+\whitespace trim
 <$list filter="[all[current]get[draft.of]is[shadow]!is[tiddler]]">
 
 <$list filter="[all[current]shadowsource[]]" variable="pluginTitle">
@@ -263,6 +270,7 @@ tags: $:/tags/Global
 </$list>
 \end
 \procedure tdfp-tiddlyflex-edittemplate-title()
+\whitespace trim
 <$edit-text field="draft.title" class="tc-titlebar tc-edit-texteditor" focus={{{ [{$:/config/AutoFocus}match[title]then[true]] ~[[false]] }}} tabindex={{$:/config/EditTabIndex}} cancelPopups="yes"/>
 
 <$vars pattern="""[\|\[\]{}]""" bad-chars="""`| [ ] { }`""">
@@ -331,6 +339,7 @@ tags: $:/tags/Global
 </$reveal>
 \end
 \procedure tdfp-tiddlyflex-edittemplate-type()
+\whitespace trim
 <$set name="refreshTitle" value=<<qualify "$:/temp/type-search/refresh">>>
 <div class="tc-edit-type-selector-wrapper">
 <em class="tc-edit tc-small-gap-right"><<lingo Type/Prompt>></em>
@@ -363,6 +372,7 @@ tags: $:/tags/Global
 </$set>
 \end
 \procedure tag-body-inner(colour,fallbackTarget,colourA,colourB,icon,tagField:"tags")
+\whitespace trim
 <$wikify name="foregroundColor"
 	text="""<$macrocall $name="contrastcolour"
 		target=<<colour>>
@@ -392,6 +402,7 @@ tags: $:/tags/Global
 \end
 
 \procedure tag-body(colour,palette,icon,tagField:"tags")
+\whitespace trim
 <$macrocall $name="tag-body-inner"
 	colour=`$(colour)$`
 	colourA={{{ [<palette>getindex[foreground]] }}}
@@ -403,6 +414,7 @@ tags: $:/tags/Global
 \end
 
 \procedure edit-tags-template(tagField:"tags")
+\whitespace trim
 <div class="tc-edit-tags">
 	<$list filter="[<currentTiddler>get<tagField>enlist-input[]sort[title]]" storyview="pop">
 		<$macrocall $name="tag-body"
@@ -418,6 +430,7 @@ tags: $:/tags/Global
 </div>
 \end
 \procedure toolbar-button-icon()
+\whitespace trim
 <$list
 
   filter="[all[current]!has[custom-icon]]"
@@ -435,6 +448,7 @@ tags: $:/tags/Global
 \end
 
 \procedure toolbar-button()
+\whitespace trim
 <$list
 
   filter={{!!condition}}
@@ -517,6 +531,7 @@ tags: $:/tags/Global
 \end
 
 \procedure toolbar-button-outer()
+\whitespace trim
 <$set
 
   name="buttonClasses"

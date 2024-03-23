@@ -1,10 +1,10 @@
 title: $:/plugins/BTC/TiddlyFlex/styles/fullscreen
 tags: $:/tags/Stylesheet
 
-\define tiddlyflex-view-tiddler-full-screen()
+\procedure tiddlyflex-view-tiddler-full-screen()
 \rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
 
-.tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"]:not(.tc-navigating), .tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"].tc-navigating {
+.tc-tiddlyflex-story-river-{{{ [[$(column)$]substitute[]] }}} .tc-tiddlyflex-story-river-inner > [data-tiddler-title={{{ [[$(tiddlerTitleCSSEscaped)$]substitute[]] }}}]:not(.tc-navigating), .tc-tiddlyflex-story-river-{{{ [[$(column)$]substitute[]] }}} .tc-tiddlyflex-story-river-inner > [data-tiddler-title={{{ [[$(tiddlerTitleCSSEscaped)$]substitute[]] }}}].tc-navigating {
 	position: fixed;
 	left: 0;
 	top: 0;
@@ -15,7 +15,7 @@ tags: $:/tags/Stylesheet
 	border-radius: 0px;
 }
 
-.tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"]:not(.tc-navigating) > .tc-tiddler-frame, .tc-tiddlyflex-story-river-$(column)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(tiddlerTitleCSSEscaped)$"].tc-navigating > .tc-tiddler-frame {
+.tc-tiddlyflex-story-river-{{{ [[$(column)$]substitute[]] }}} .tc-tiddlyflex-story-river-inner > [data-tiddler-title={{{ [[$(tiddlerTitleCSSEscaped)$]substitute[]] }}}]:not(.tc-navigating) > .tc-tiddler-frame, .tc-tiddlyflex-story-river-{{{ [[$(column)$]substitute[]] }}} .tc-tiddlyflex-story-river-inner > [data-tiddler-title={{{ [[$(tiddlerTitleCSSEscaped)$]substitute[]] }}}].tc-navigating > .tc-tiddler-frame {
 	min-height: 100%;
 	height: 100%;
 	overflow-y: auto;
@@ -26,7 +26,7 @@ tags: $:/tags/Stylesheet
 
 \end
 
-\define tiddlyflex-inherit-overflow-columns()
+\procedure tiddlyflex-inherit-overflow-columns()
 \rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
 
 .tc-tiddlyflex-story-river-wrapper-inner.tc-tiddlyflex-story-river-$(column)$ {

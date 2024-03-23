@@ -1,11 +1,11 @@
 title: $:/plugins/BTC/TiddlyFlex/styles/z-indexes
 tags: $:/tags/Stylesheet
 
-\define tiddlyflex-tiddler-z-indexes-inner()
+\procedure tiddlyflex-tiddler-z-indexes-inner()
 
 <$list filter="[range<storyListCount>]">
-`.tc-tiddlyflex-story-river-`$(tiddlyFlexColumn)$ `.tc-tiddlyflex-story-river-inner > .tc-tiddler-view-frame:nth-child(100n+`<$text text=<<currentTiddler>>/>`) > .tc-tiddler-frame`,
-`.tc-tiddlyflex-story-river-`$(tiddlyFlexColumn)$ `.tc-tiddlyflex-story-river-inner > .tc-tiddler-edit-frame:nth-child(100n+`<$text text=<<currentTiddler>>/>`) > .tc-tiddler-frame {
+`.tc-tiddlyflex-story-river-`{{{ [[$(tiddlyFlexColumn)$]substitute[]] }}} `.tc-tiddlyflex-story-river-inner > .tc-tiddler-view-frame:nth-child(100n+`<$text text=<<currentTiddler>>/>`) > .tc-tiddler-frame`,
+`.tc-tiddlyflex-story-river-`{{{ [[$(tiddlyFlexColumn)$]substitute[]] }}} `.tc-tiddlyflex-story-river-inner > .tc-tiddler-edit-frame:nth-child(100n+`<$text text=<<currentTiddler>>/>`) > .tc-tiddler-frame {
 z-index: `<$text text={{{ [<storyListCount>add[501]subtract<currentTiddler>] }}}/>`;
 }
 `
@@ -13,7 +13,7 @@ z-index: `<$text text={{{ [<storyListCount>add[501]subtract<currentTiddler>] }}}
 
 \end
 
-\define tiddlyflex-tiddler-z-indexes()
+\procedure tiddlyflex-tiddler-z-indexes()
 
 <$set name="storyListCount" value={{{ [subfilter<tdff.tiddlyflex-story-river-filter>] +[count[]] }}}>
 

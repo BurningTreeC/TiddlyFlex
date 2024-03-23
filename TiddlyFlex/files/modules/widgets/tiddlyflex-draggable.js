@@ -122,7 +122,7 @@ DraggableWidget.prototype.updateDomNodeClasses = function() {
 /*
 Selectively refreshes the widget if needed. Returns true if the widget or any of its children needed re-rendering
 */
-DraggableWidget.prototype.refresh = function(changedTiddlers,force) {
+DraggableWidget.prototype.refresh = function(changedTiddlers) {
 	var changedAttributes = this.computeAttributes();
 	if(changedAttributes.tag || changedAttributes.selector || changedAttributes.dragimagetype || changedAttributes.startactions || changedAttributes.endactions) {
 		this.refreshSelf();
@@ -146,7 +146,7 @@ DraggableWidget.prototype.refresh = function(changedTiddlers,force) {
 			destPrefix: "data-"
 		});
 	}
-	return this.refreshChildren(changedTiddlers,force);
+	return this.refreshChildren(changedTiddlers);
 };
 
 exports["tiddlyflex-draggable"] = DraggableWidget;
