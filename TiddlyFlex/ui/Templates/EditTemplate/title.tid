@@ -1,5 +1,5 @@
-title: $:/core/ui/EditTemplate/title
-tags: $:/tags/EditTemplate
+title: $:/plugins/BTC/TiddlyFlex/ui/EditTemplate/title
+tags: $:/tags/TiddlyFlex/EditTemplate
 
 \whitespace trim
 <<tdfp-tiddlyflex-edittemplate-title>>

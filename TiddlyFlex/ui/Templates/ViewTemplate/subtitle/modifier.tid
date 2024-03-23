@@ -1,0 +1,5 @@
+title: $:/plugins/BTC/TiddlyFlex/ui/ViewTemplate/subtitle/modifier
+tags: $:/tags/TiddlyFlex/ViewTemplate/Subtitle
+
+\whitespace trim
+<<tdfp-tiddlyflex-viewtemplate-subtitle-modifier>>

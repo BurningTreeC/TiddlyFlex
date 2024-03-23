@@ -1,0 +1,4 @@
+title: $:/config/TiddlyFlex/ViewTemplateBodyFilters/code-body
+tags: $:/tags/TiddlyFlex/ViewTemplateBodyFilter
+
+[field:code-body[yes]then[$:/plugins/BTC/TiddlyFlex/ui/ViewTemplate/body/code]]

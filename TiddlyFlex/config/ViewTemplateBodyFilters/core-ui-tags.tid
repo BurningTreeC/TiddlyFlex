@@ -1,0 +1,4 @@
+title: $:/config/TiddlyFlex/ViewTemplateBodyFilters/core-ui-tags
+tags: $:/tags/TiddlyFlex/ViewTemplateBodyFilter
+
+[tag[$:/tags/PageTemplate]] [tag[$:/tags/EditTemplate]] [tag[$:/tags/ViewTemplate]] [tag[$:/tags/KeyboardShortcut]] [tag[$:/tags/ImportPreview]] [tag[$:/tags/EditPreview]] [tag[$:/tags/TiddlyFlex/EditPreview]] [tag[$:/tags/EditorToolbar]] [tag[$:/tags/Actions]] :then[[$:/plugins/BTC/TiddlyFlex/ui/ViewTemplate/body/code]]

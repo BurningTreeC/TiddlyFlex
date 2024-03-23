@@ -1,0 +1,6 @@
+title: $:/plugins/BTC/TiddlyFlex/ui/ViewTemplate/classic
+tags: $:/tags/TiddlyFlex/ViewTemplate $:/tags/TiddlyFlex/EditTemplate
+
+\define lingo-base() $:/language/ClassicWarning/
+\whitespace trim
+<<tdfp-tiddlyflex-viewtemplate-classic>>

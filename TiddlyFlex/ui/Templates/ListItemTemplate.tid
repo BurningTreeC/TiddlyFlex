@@ -1,0 +1,4 @@
+title: $:/plugins/BTC/TiddlyFlex/ui/ListItemTemplate
+
+\whitespace trim
+<<tdfp-tiddlyflex-templates-list-item-template>>

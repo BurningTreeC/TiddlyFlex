@@ -1,0 +1,4 @@
+title: $:/config/TiddlyFlex/ViewTemplateBodyFilters/stylesheet
+tags: $:/tags/TiddlyFlex/ViewTemplateBodyFilter
+
+[tag[$:/tags/Stylesheet]then[$:/plugins/BTC/TiddlyFlex/ui/ViewTemplate/body/rendered-plain-text]]

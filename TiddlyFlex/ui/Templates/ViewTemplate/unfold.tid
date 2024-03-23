@@ -1,0 +1,5 @@
+title: $:/plugins/BTC/TiddlyFlex/ui/ViewTemplate/unfold
+tags: $:/tags/TiddlyFlex/ViewTemplate
+
+\whitespace trim
+<<tdfp-tiddlyflex-viewtemplate-unfold>>

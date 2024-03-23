@@ -1,0 +1,5 @@
+title: $:/plugins/BTC/TiddlyFlex/ui/ViewTemplate/body/rendered-plain-text
+code-body: yes
+
+\whitespace trim
+<<tdfp-tiddlyflex-viewtemplate-body-rendered-plain-text>>

@@ -1,0 +1,5 @@
+title: $:/plugins/BTC/TiddlyFlex/ui/ViewTemplate/tags
+tags: $:/tags/TiddlyFlex/ViewTemplate
+
+\whitespace trim
+<<tdfp-tiddlyflex-viewtemplate-tags>>

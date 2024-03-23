@@ -1,0 +1,4 @@
+title: $:/config/TiddlyFlex/ViewTemplateBodyFilters/plugin
+tags: $:/tags/TiddlyFlex/ViewTemplateBodyFilter
+
+[has[plugin-type]then[$:/plugins/BTC/TiddlyFlex/ui/ViewTemplate/body/plugin]]

@@ -1,0 +1,4 @@
+title: $:/config/TiddlyFlex/ViewTemplateBodyFilters/hide-body
+tags: $:/tags/TiddlyFlex/ViewTemplateBodyFilter
+
+[field:hide-body[yes]then[$:/plugins/BTC/TiddlyFlex/ui/ViewTemplate/body/blank]]

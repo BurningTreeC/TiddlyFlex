@@ -1,0 +1,4 @@
+title: $:/plugins/BTC/TiddlyFlex/ui/ViewTemplate/title/system
+
+\whitespace trim
+<<tdfp-tiddlyflex-viewtemplate-title-system>>

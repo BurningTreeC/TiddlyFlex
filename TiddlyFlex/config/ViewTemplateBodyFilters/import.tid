@@ -1,0 +1,4 @@
+title: $:/config/TiddlyFlex/ViewTemplateBodyFilters/import
+tags: $:/tags/TiddlyFlex/ViewTemplateBodyFilter
+
+[field:plugin-type[import]then[$:/plugins/BTC/TiddlyFlex/ui/ViewTemplate/body/import]]

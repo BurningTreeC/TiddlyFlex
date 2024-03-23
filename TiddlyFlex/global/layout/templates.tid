@@ -24,7 +24,7 @@ tags: $:/tags/Global
 				typeSelectionTiddler=<<qualify "$:/temp/Type/selected-item">>>
 				<$keyboard key="((cancel-edit-tiddler))" actions=<<cancel-delete-tiddler-actions "cancel">> tag="div">
 					<$keyboard key="((save-tiddler))" actions=<<save-tiddler-actions>> tag="div">
-						<$list filter="[all[shadows+tiddlers]tag[$:/tags/EditTemplate]!is[draft]]" variable="listItem">
+						<$list filter="[all[shadows+tiddlers]tag[$:/tags/TiddlyFlex/EditTemplate]!is[draft]]" variable="listItem">
 							<$transclude tiddler=<<listItem>>/>
 						</$list>
 					</$keyboard>
@@ -38,6 +38,70 @@ tags: $:/tags/Global
 	</$fieldmangler>
 </div>
 \end
+
+\procedure tiddlyflex-preview-type-button()
+\whitespace trim
+<$button tag="a">
+
+<$action-setfield $tiddler="$:/state/editpreviewtype" $value={{{ [[$(previewType)$]substitute[]] }}}/>
+
+<$action-deletetiddler
+	$tiddler=<<dropdown-state>>
+/>
+
+<$transclude tiddler=<<previewType>> field="caption" mode="inline">
+
+<$view tiddler=<<previewType>> field="title" mode="inline"/>
+
+</$transclude> 
+
+<$reveal tag="span" state="$:/state/editpreviewtype" type="match" text=<<previewType>> default={{{ [{$:/layout}match[$:/plugins/BTC/TiddlyFlex/ui/Layout]then[$:/plugins/BTC/TiddlyFlex/ui/EditTemplate/body/preview/output]else[$:/core/ui/EditTemplate/body/preview/output]] }}}>
+
+<$entity entity="&nbsp;"/>
+
+<$entity entity="&#x2713;"/>
+
+</$reveal>
+
+</$button>
+\end
+
+\procedure tdfp-tiddlyflex-editortoolbar-preview-type-dropdown()
+\whitespace trim
+<$list filter="[all[shadows+tiddlers]tag[$:/tags/EditPreview]!is[draft]] :cascade[all[shadows+tiddlers]tag[$:/tags/EditTemplatePreviewFilter]!is[draft]get[text]]" variable="previewType">
+
+<<tiddlyflex-preview-type-button>>
+
+</$list>
+\end
+
+\procedure tdfp-tiddlyflex-edittemplate-preview-diffs-current()
+\whitespace trim
+<$list filter="[<currentTiddler>!is[image]]" emptyMessage={{$:/core/ui/EditTemplate/body/preview/output}}>
+
+<$macrocall $name="compareTiddlerText" sourceTiddlerTitle={{!!draft.of}} destTiddlerTitle=<<currentTiddler>>/>
+
+</$list>
+\end
+
+\procedure tdfp-tiddlyflex-edittemplate-preview-diffs-shadow()
+\whitespace trim
+<$list filter="[<currentTiddler>!is[image]]" emptyMessage={{$:/core/ui/EditTemplate/body/preview/output}}>
+
+<$macrocall $name="compareTiddlerText" sourceTiddlerTitle={{{ [{!!draft.of}shadowsource[]] }}} sourceSubTiddlerTitle={{!!draft.of}} destTiddlerTitle=<<currentTiddler>>/>
+
+</$list>
+\end
+
+\procedure tdfp-tiddlyflex-edittemplate-preview-output()
+\whitespace trim
+<$set name="tv-tiddler-preview" value="yes">
+
+<$transclude tiddler={{{ [<currentTiddler>] :cascade[all[shadows+tiddlers]tag[$:/tags/TiddlyFlex/ViewTemplateBodyFilter]!is[draft]get[text]] :and[!is[blank]else[$:/plugins/BTC/TiddlyFlex/ui/ViewTemplate/body/default]] }}} />
+
+</$set>
+\end
+
 \procedure tdfp-tiddlyflex-edittemplate-body-default()
 \whitespace trim
 <$let
@@ -49,7 +113,7 @@ tags: $:/tags/Global
 <div>
 <div class={{{ [<edit-preview-state>match[yes]then[tc-tiddler-preview]else[tc-tiddler-preview-hidden]] [[tc-tiddler-editor]] +[join[ ]] }}}>
 
-<$transclude tiddler="$:/core/ui/EditTemplate/body/editor" mode="inline"/>
+<$transclude tiddler="$:/plugins/BTC/TiddlyFlex/ui/EditTemplate/body/editor" mode="inline"/>
 
 <$list filter="[<editPreviewStateTiddler>get[text]match[yes]]" variable="ignore">
 
@@ -57,7 +121,7 @@ tags: $:/tags/Global
 
 <$transclude tiddler={{$:/state/editpreviewtype}} mode="inline">
 
-<$transclude tiddler="$:/core/ui/EditTemplate/body/preview/output" mode="inline"/>
+<$transclude tiddler="$:/plugins/BTC/TiddlyFlex/ui/EditTemplate/body/preview/output" mode="inline"/>
 
 </$transclude>
 
@@ -116,7 +180,7 @@ tags: $:/tags/Global
 
 ><$transclude
 
-  tiddler="$:/core/ui/EditTemplate/body/toolbar/button"
+  tiddler="$:/plugins/BTC/TiddlyFlex/ui/EditTemplate/body/toolbar/button"
   mode="inline"
 
 /></$reveal></$list><$list
@@ -162,7 +226,7 @@ tags: $:/tags/Global
 <$text text=<<currentField>>/>:</td>
 <td class="tc-edit-field-value">
 <$keyboard key="((delete-field))" actions="""<$action-deletefield $field=<<currentField>>/><$set name="currentTiddlerCSSescaped" value={{{ [<currentTiddler>escapecss[]] }}}><$action-sendmessage $message="tm-focus-selector" $param=<<current-tiddler-new-field-selector>>/></$set>""">
-<$transclude tiddler={{{ [<currentField>] :cascade[all[shadows+tiddlers]tag[$:/tags/FieldEditorFilter]!is[draft]get[text]] :and[!is[blank]else{$:/core/ui/EditTemplate/fieldEditor/default}] }}} />
+<$transclude tiddler={{{ [<currentField>] :cascade[all[shadows+tiddlers]tag[$:/tags/FieldEditorFilter]!is[draft]get[text]] :and[!is[blank]else{$:/plugins/BTC/TiddlyFlex/ui/EditTemplate/fieldEditor/default}] }}} />
 </$keyboard>
 </td>
 <td class="tc-edit-field-remove">
@@ -345,7 +409,7 @@ tags: $:/tags/Global
 <em class="tc-edit tc-small-gap-right"><<lingo Type/Prompt>></em>
 <div class="tc-type-selector-dropdown-wrapper">
 <div class="tc-type-selector"><$fieldmangler>
-<$macrocall $name="keyboard-driven-input" tiddler=<<currentTiddler>> storeTitle=<<typeInputTiddler>> refreshTitle=<<refreshTitle>> selectionStateTitle=<<typeSelectionTiddler>> field="type" tag="input" default="" placeholder={{$:/language/EditTemplate/Type/Placeholder}} focusPopup=<<qualify "$:/state/popup/type-dropdown">> class="tc-edit-typeeditor tc-edit-texteditor tc-popup-handle" tabindex={{$:/config/EditTabIndex}} focus={{{ [{$:/config/AutoFocus}match[type]then[true]] ~[[false]] }}} cancelPopups="yes" configTiddlerFilter="[[$:/core/ui/EditTemplate/type]]" inputCancelActions=<<input-cancel-actions>>/><$button popup=<<qualify "$:/state/popup/type-dropdown">> class="tc-btn-invisible tc-btn-dropdown tc-small-gap" tooltip={{$:/language/EditTemplate/Type/Dropdown/Hint}} aria-label={{$:/language/EditTemplate/Type/Dropdown/Caption}}>{{$:/core/images/down-arrow}}</$button><$button message="tm-remove-field" param="type" class="tc-btn-invisible tc-btn-icon" tooltip={{$:/language/EditTemplate/Type/Delete/Hint}} aria-label={{$:/language/EditTemplate/Type/Delete/Caption}}>{{$:/core/images/delete-button}}<$action-deletetiddler $filter="[<typeInputTiddler>] [<storeTitle>] [<refreshTitle>] [<selectionStateTitle>]"/></$button>
+<$macrocall $name="keyboard-driven-input" tiddler=<<currentTiddler>> storeTitle=<<typeInputTiddler>> refreshTitle=<<refreshTitle>> selectionStateTitle=<<typeSelectionTiddler>> field="type" tag="input" default="" placeholder={{$:/language/EditTemplate/Type/Placeholder}} focusPopup=<<qualify "$:/state/popup/type-dropdown">> class="tc-edit-typeeditor tc-edit-texteditor tc-popup-handle" tabindex={{$:/config/EditTabIndex}} focus={{{ [{$:/config/AutoFocus}match[type]then[true]] ~[[false]] }}} cancelPopups="yes" configTiddlerFilter="[[$:/plugins/BTC/TiddlyFlex/ui/EditTemplate/type]]" inputCancelActions=<<input-cancel-actions>>/><$button popup=<<qualify "$:/state/popup/type-dropdown">> class="tc-btn-invisible tc-btn-dropdown tc-small-gap" tooltip={{$:/language/EditTemplate/Type/Dropdown/Hint}} aria-label={{$:/language/EditTemplate/Type/Dropdown/Caption}}>{{$:/core/images/down-arrow}}</$button><$button message="tm-remove-field" param="type" class="tc-btn-invisible tc-btn-icon" tooltip={{$:/language/EditTemplate/Type/Delete/Hint}} aria-label={{$:/language/EditTemplate/Type/Delete/Caption}}>{{$:/core/images/delete-button}}<$action-deletetiddler $filter="[<typeInputTiddler>] [<storeTitle>] [<refreshTitle>] [<selectionStateTitle>]"/></$button>
 </$fieldmangler></div>
 
 <div class="tc-block-dropdown-wrapper">
@@ -538,4 +602,210 @@ tags: $:/tags/Global
   value={{!!button-classes}}
 
 ><<toolbar-button>></$set>
+\end
+
+\procedure tdfp-tiddlyflex-viewtemplate-body-code()
+\whitespace trim
+<$codeblock code={{{ [<currentTiddler>get[text]] }}} language={{{ [<currentTiddler>get[type]else[text/vnd.tiddlywiki]] }}}/>
+\end
+
+\procedure tdfp-tiddlyflex-viewtemplate-body-default()
+\whitespace trim
+<$transclude>
+
+<$transclude tiddler="$:/language/MissingTiddler/Hint"/>
+
+</$transclude>
+\end
+
+\procedure tdfp-tiddlyflex-viewtemplate-body-import()
+\whitespace trim
+<$list filter="[all[current]field:plugin-type[import]]">
+
+<div class="tc-import">
+
+<<lingo Listing/Hint>>
+
+<<buttons>>
+
+{{||$:/core/ui/ImportListing}}
+
+<<buttons>>
+
+</div>
+
+</$list>
+\end
+
+\procedure tdfp-tiddlyflex-viewtemplate-body-plugin()
+\whitespace trim
+<div class="tc-tiddler-plugin-info">
+<$let plugin-type={{!!plugin-type}}
+	default-popup-state="yes"
+	qualified-state=<<qualify "$:/state/plugin-info">>
+>
+{{||$:/core/ui/Components/plugin-info}}
+</$let>
+</div>
+\end
+
+\procedure tdfp-tiddlyflex-viewtemplate-body-rendered-plain-text()
+\whitespace trim
+<$wikify name="text" text={{!!text}} type={{!!type}}>
+<$codeblock code=<<text>> language="css"/>
+</$wikify>
+\end
+
+\procedure tdfp-tiddlyflex-viewtemplate-body()
+\whitespace trim
+<$reveal tag="div" class="tc-tiddler-body" type="nomatch" stateTitle=<<folded-state>> text="hide" retain="yes" animate="yes">
+
+<$transclude tiddler={{{ [<currentTiddler>] :cascade[all[shadows+tiddlers]tag[$:/tags/TiddlyFlex/ViewTemplateBodyFilter]!is[draft]get[text]] :and[!is[blank]else[$:/plugins/BTC/TiddlyFlex/ui/ViewTemplate/body/default]] }}} />
+
+</$reveal>
+\end
+
+\procedure tdfp-tiddlyflex-viewtemplate-classic()
+\whitespace trim
+<$list filter="[all[current]type[text/x-tiddlywiki]]">
+<div class="tc-message-box">
+
+<<lingo Hint>>
+
+<$button set="!!type" setTo="text/vnd.tiddlywiki"><<lingo Upgrade/Caption>></$button>
+
+</div>
+</$list>
+\end
+
+\procedure tdfp-tiddlyflex-viewtemplate-subtitle-modified()
+\whitespace trim
+<$view field="modified" format="date" template={{$:/language/Tiddler/DateFormat}}/>
+\end
+
+\procedure tdfp-tiddlyflex-viewtemplate-subtitle-modifier()
+\whitespace trim
+<$link to={{!!modifier}}/>
+\end
+
+\procedure tdfp-tiddlyflex-viewtemplate-subtitle()
+\whitespace trim
+<$reveal type="nomatch" stateTitle=<<folded-state>> text="hide" tag="div" retain="yes" animate="yes">
+<div class="tc-subtitle">
+<$list filter="[all[shadows+tiddlers]tag[$:/tags/TiddlyFlex/ViewTemplate/Subtitle]!has[draft.of]]" variable="subtitleTiddler">
+<$transclude tiddler=<<subtitleTiddler>> mode="inline"/><$list-join>&nbsp;</$list-join>
+</$list>
+</div>
+</$reveal>
+\end
+
+\procedure tdfp-tiddlyflex-viewtemplate-tags()
+\whitespace trim
+<$reveal type="nomatch" stateTitle=<<folded-state>> text="hide" tag="div" retain="yes" animate="yes">
+<div class="tc-tags-wrapper"><$list filter="[all[current]tags[]sort[title]]" template="$:/plugins/BTC/TiddlyFlex/ui/TagTemplate" storyview="pop"/></div>
+</$reveal>
+\end
+
+\procedure tdfp-tiddlyflex-viewtemplate-title-default()
+\whitespace trim
+<h2 class="tc-title">
+<$view field="title"/>
+</h2>
+\end
+
+\procedure tdfp-tiddlyflex-viewtemplate-title-system()
+\whitespace trim
+<h2 class="tc-title" title={{$:/language/SystemTiddler/Tooltip}}>
+<span class="tc-system-title-prefix">$:/</span><$text text={{{ [<currentTiddler>removeprefix[$:/]] }}}/>
+</h2>
+\end
+
+\procedure tdfp-tiddlyflex-viewtemplate-title()
+\whitespace trim
+<div class="tc-tiddler-title">
+	<div class="tc-titlebar">
+		<span class="tc-tiddler-controls">
+			<$list filter="[all[shadows+tiddlers]tag[$:/tags/ViewToolbar]!has[draft.of]] :filter[lookup[$:/config/ViewToolbarButtons/Visibility/]!match[hide]]"
+				storyview="pop"
+				variable="listItem"
+			>
+				<$set name="tv-config-toolbar-class" filter="[<tv-config-toolbar-class>] [<listItem>encodeuricomponent[]addprefix[tc-btn-]]">
+					<$transclude tiddler=<<listItem>>/>
+				</$set>
+			</$list>
+		</span>
+		<$set name="tv-wikilinks" value={{$:/config/Tiddlers/TitleLinks}}>
+			<$link>
+				<$list filter="[<currentTiddler>] :cascade[all[shadows+tiddlers]tag[$:/tags/TiddlerIconFilter]!is[draft]get[text]] +[!is[blank]]"
+					variable="ignore"
+				>
+					<$let foregroundColor={{{ [<currentTiddler>] :cascade[all[shadows+tiddlers]tag[$:/tags/TiddlerColourFilter]!is[draft]get[text]] }}}>
+						<span class="tc-tiddler-title-icon" style=<<title-styles>>>
+							{{||$:/core/ui/TiddlerIcon}}
+						</span>
+					</$let>
+				</$list>
+				<$transclude tiddler={{{ [<currentTiddler>] :cascade[all[shadows+tiddlers]tag[$:/tags/TiddlyFlex/ViewTemplateTitleFilter]!is[draft]get[text]] :and[!is[blank]else[$:/plugins/BTC/TiddlyFlex/ui/ViewTemplate/title/default]] }}} />
+			</$link>
+		</$set>
+	</div>
+	<$reveal tag="div" type="nomatch" text="" default="" state=<<tiddlerInfoState>> class="tc-tiddler-info tc-popup-handle" animate="yes" retain="yes">
+		<$list filter="[all[shadows+tiddlers]tag[$:/tags/TiddlerInfoSegment]!has[draft.of]] [[$:/core/ui/TiddlerInfo]]" variable="listItem">
+			<$transclude tiddler=<<listItem>> mode="block"/>
+		</$list>
+	</$reveal>
+</div>
+\end
+
+\procedure tdfp-tiddlyflex-viewtemplate-unfold()
+\whitespace trim
+<div class="tc-reveal">
+<$list filter="[{$:/config/ViewToolbarButtons/Visibility/$:/core/ui/Buttons/fold-bar}match[show]]" variable="ignore">
+<$reveal tag="div" type="nomatch" stateTitle=<<folded-state>> text="hide" default="show" retain="yes" animate="yes">
+<$button tooltip={{$:/language/Buttons/Fold/Hint}} aria-label={{$:/language/Buttons/Fold/Caption}} class="tc-fold-banner">
+<$action-sendmessage $message="tm-fold-tiddler" $param=<<currentTiddler>> foldedState=<<folded-state>>/>
+{{$:/core/images/chevron-up}}
+</$button>
+</$reveal>
+</$list>
+<$list filter="[{$:/config/ViewToolbarButtons/Visibility/$:/core/ui/Buttons/fold-bar}match[show]] :else[<folded-state>get[text]match[hide]]" variable="ignore">
+<$reveal tag="div" type="nomatch" stateTitle=<<folded-state>> text="show" default="show" retain="yes" animate="yes">
+<$button tooltip={{$:/language/Buttons/Unfold/Hint}} aria-label={{$:/language/Buttons/Unfold/Caption}} class="tc-unfold-banner">
+<$action-sendmessage $message="tm-fold-tiddler" $param=<<currentTiddler>> foldedState=<<folded-state>>/>
+{{$:/core/images/chevron-down}}
+</$button>
+</$reveal>
+</$list>
+</div>
+\end
+
+\procedure tdfp-tiddlyflex-templates-list-item-template()
+\whitespace trim
+<div class="tc-menu-list-item"><$link /></div>
+\end
+
+\procedure tdfp-tiddlyflex-templates-tag-template()
+\whitespace trim
+<span class="tc-tag-list-item" data-tag-title=<<currentTiddler>>>
+<$set name="transclusion" value=<<currentTiddler>>>
+	<$macrocall $name="tag-pill-body"
+		tag=<<currentTiddler>>
+		icon={{{ [<currentTiddler>] :cascade[all[shadows+tiddlers]tag[$:/tags/TiddlerIconFilter]!is[draft]get[text]] }}}
+		colour={{{ [<currentTiddler>] :cascade[all[shadows+tiddlers]tag[$:/tags/TiddlerColourFilter]!is[draft]get[text]] }}}
+		palette={{$:/palette}}
+		element-tag="$button"
+		element-attributes="""popup=<<qualify "$:/state/popup/tag">> dragFilter="[all[current]tagging[]]" tag='span'"""
+	/>
+	<$reveal state=<<qualify "$:/state/popup/tag">> type="popup" position="below" animate="yes" class="tc-drop-down">
+		<$set name="tv-show-missing-links" value="yes">
+			<$transclude tiddler="$:/plugins/BTC/TiddlyFlex/ui/ListItemTemplate"/>
+		</$set>
+		<$list filter="[all[shadows+tiddlers]tag[$:/tags/TagDropdown]!has[draft.of]]" variable="listItem"> 
+			<$transclude tiddler=<<listItem>>/>
+		</$list>
+		<hr>
+		<$macrocall $name="list-tagged-draggable" tag=<<currentTiddler>>/>
+	</$reveal>
+</$set>
+</span>
 \end

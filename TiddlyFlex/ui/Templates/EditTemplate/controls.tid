@@ -1,5 +1,5 @@
-title: $:/core/ui/EditTemplate/controls
-tags: $:/tags/EditTemplate
+title: $:/plugins/BTC/TiddlyFlex/ui/EditTemplate/controls
+tags: $:/tags/TiddlyFlex/EditTemplate
 
 \define config-title() $:/config/EditToolbarButtons/Visibility/$(listItem)$
 \whitespace trim

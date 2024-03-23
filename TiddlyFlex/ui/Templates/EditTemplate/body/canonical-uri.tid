@@ -1,4 +1,4 @@
-title: $:/core/ui/EditTemplate/body/canonical-uri
+title: $:/plugins/BTC/TiddlyFlex/ui/EditTemplate/body/canonical-uri
 
 \define lingo-base() $:/language/EditTemplate/Body/
 

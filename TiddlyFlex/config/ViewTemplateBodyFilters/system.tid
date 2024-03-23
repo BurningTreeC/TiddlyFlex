@@ -1,0 +1,4 @@
+title: $:/config/TiddlyFlex/ViewTemplateBodyFilters/system
+tags: $:/tags/TiddlyFlex/ViewTemplateBodyFilter
+
+[prefix[$:/boot/]] [prefix[$:/config/]] [prefix[$:/core/macros]] [prefix[$:/core/save/]] [prefix[$:/core/templates/]]  [prefix[$:/info/]] [prefix[$:/language/]] [prefix[$:/languages/]] [prefix[$:/snippets/]] [prefix[$:/state/]] [prefix[$:/status/]] [prefix[$:/info/]] [prefix[$:/temp/]] +[!is[image]limit[1]then[$:/plugins/BTC/TiddlyFlex/ui/ViewTemplate/body/code]]

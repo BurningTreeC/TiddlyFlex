@@ -1,4 +1,4 @@
-title: $:/core/ui/EditTemplate/body/default
+title: $:/plugins/BTC/TiddlyFlex/ui/EditTemplate/body/default
 
 \function edit-preview-state()
 [{$:/config/ShowEditPreview/PerTiddler}!match[yes]then[$:/state/showeditpreview]] :else[<qualified-preview-state>] +[get[text]] :else[[no]]

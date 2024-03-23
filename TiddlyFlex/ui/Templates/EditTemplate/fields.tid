@@ -1,5 +1,5 @@
-title: $:/core/ui/EditTemplate/fields
-tags: $:/tags/EditTemplate
+title: $:/plugins/BTC/TiddlyFlex/ui/EditTemplate/fields
+tags: $:/tags/TiddlyFlex/EditTemplate
 
 \define lingo-base() $:/language/EditTemplate/
 \define config-title()

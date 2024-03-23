@@ -1,0 +1,7 @@
+title: $:/plugins/BTC/TiddlyFlex/ui/EditTemplate/body/preview/diffs-current
+tags: $:/tags/EditPreview
+caption: {{$:/language/EditTemplate/Body/Preview/Type/DiffCurrent}}
+list-after: $:/plugins/BTC/TiddlyFlex/ui/EditTemplate/body/preview/output
+
+\whitespace trim
+<<tdfp-tiddlyflex-edittemplate-preview-diffs-current>>

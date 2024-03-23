@@ -1,0 +1,4 @@
+title: $:/config/TiddlyFlex/ViewTemplateTitleFilters/system
+tags: $:/tags/TiddlyFlex/ViewTemplateTitleFilter
+
+[prefix[$:/]then[$:/plugins/BTC/TiddlyFlex/ui/ViewTemplate/title/system]]

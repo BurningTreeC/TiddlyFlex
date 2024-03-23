@@ -1,0 +1,4 @@
+title: $:/plugins/BTC/TiddlyFlex/ui/TagTemplate
+
+\whitespace trim
+<<tdfp-tiddlyflex-templates-tag-template>>

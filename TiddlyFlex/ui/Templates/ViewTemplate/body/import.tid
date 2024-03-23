@@ -1,0 +1,27 @@
+title: $:/plugins/BTC/TiddlyFlex/ui/ViewTemplate/body/import
+
+\procedure lingo-base() $:/language/Import/
+
+\procedure confirmCancel()
+\whitespace trim
+<$action-confirm $message={{$:/language/Import/Listing/Cancel/Warning}} >
+<$action-deletetiddler $tiddler=<<currentTiddler>>/>
+<$action-sendmessage $message="tm-close-tiddler" title=<<currentTiddler>>/>
+</$action-confirm>
+\end
+
+\procedure buttons()
+\whitespace trim
+<$button actions=<<confirmCancel>> ><<lingo Listing/Cancel/Caption>></$button>
+&#32;
+<$button message="tm-perform-import" param=<<currentTiddler>>><<lingo Listing/Import/Caption>></$button>
+&#32;
+<<lingo Listing/Preview>>&#32;<$select tiddler="$:/state/importpreviewtype" default="$:/core/ui/ImportPreviews/Text">
+<$list filter="[all[shadows+tiddlers]tag[$:/tags/ImportPreview]!has[draft.of]]">
+<option value=<<currentTiddler>>>{{!!caption}}</option>
+</$list>
+</$select>
+\end
+\whitespace trim
+
+<<tdfp-tiddlyflex-viewtemplate-body-import>>

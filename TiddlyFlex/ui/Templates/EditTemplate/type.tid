@@ -1,5 +1,5 @@
-title: $:/core/ui/EditTemplate/type
-tags: $:/tags/EditTemplate
+title: $:/plugins/BTC/TiddlyFlex/ui/EditTemplate/type
+tags: $:/tags/TiddlyFlex/EditTemplate
 first-search-filter: [all[shadows+tiddlers]prefix[$:/language/Docs/Types/]sort[description]sort[group-sort]removeprefix[$:/language/Docs/Types/]search<userInput>]
 
 \define lingo-base() $:/language/EditTemplate/
