@@ -1,0 +1,2 @@
+title: $:/tags/TiddlyFlex/ViewTemplateBodyFilter
+list: $:/config/TiddlyFlex/ViewTemplateBodyFilters/hide-body $:/config/TiddlyFlex/ViewTemplateBodyFilters/code-body $:/config/TiddlyFlex/ViewTemplateBodyFilters/stylesheet $:/config/TiddlyFlex/ViewTemplateBodyFilters/core-ui-advanced-search $:/config/TiddlyFlex/ViewTemplateBodyFilters/core-ui-tags $:/config/TiddlyFlex/ViewTemplateBodyFilters/system $:/config/TiddlyFlex/ViewTemplateBodyFilters/import $:/config/TiddlyFlex/ViewTemplateBodyFilters/plugin $:/config/TiddlyFlex/ViewTemplateBodyFilters/default

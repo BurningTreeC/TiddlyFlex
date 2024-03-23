@@ -1,0 +1,4 @@
+title: $:/config/TiddlyFlex/EditTemplateBodyFilters/default
+tags: $:/tags/TiddlyFlex/EditTemplateBodyFilter
+
+[{$:/layout}match[$:/plugins/BTC/TiddlyFlex/ui/Layout]then[$:/plugins/BTC/TiddlyFlex/ui/EditTemplate/body/default]else[$:/core/ui/EditTemplate/body/default]]
