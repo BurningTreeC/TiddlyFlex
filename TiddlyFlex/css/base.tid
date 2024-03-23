@@ -176,6 +176,7 @@ tags: $:/tags/Stylesheet
 	flex-shrink: 0;
 	flex-grow: 1;
 	overflow: hidden;
+	z-index: 500;
 }
 
 @media (min-width: 992px) {
