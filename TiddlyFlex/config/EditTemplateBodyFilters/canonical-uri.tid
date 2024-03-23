@@ -1,4 +1,4 @@
 title: $:/config/TiddlyFlex/EditTemplateBodyFilters/canonical-uri
 tags: $:/tags/TiddlyFlex/EditTemplateBodyFilter
 
-[has[_canonical_uri]then{$:/layout}match[$:/plugins/BTC/TiddlyFlex/ui/Layout]then[$:/plugins/BTC/TiddlyFlex/ui/EditTemplate/body/default]] [has[_canonical_uri]then{$:/layout}!match[$:/plugins/BTC/TiddlyFlex/ui/Layout]then[$:/plugins/BTC/TiddlyFlex/ui/EditTemplate/body/canonical-uri]else[$:/core/ui/EditTemplate/body/canonical-uri]]
+[has[_canonical_uri]then{$:/layout}match[$:/plugins/BTC/TiddlyFlex/ui/Layout]then[$:/plugins/BTC/TiddlyFlex/ui/EditTemplate/body/canonical-uri]] [has[_canonical_uri]then{$:/layout}!match[$:/plugins/BTC/TiddlyFlex/ui/Layout]then[$:/core/ui/EditTemplate/body/canonical-uri]]
