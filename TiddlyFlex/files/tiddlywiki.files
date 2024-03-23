@@ -63,13 +63,6 @@
 				"title": "$:/plugins/BTC/TiddlyFlex/modules/widgets/subclasses/droppable.js",
 				"module-type": "widget-subclass"
 			}
-		},{
-			"file": "modules/widgets/subclasses/list.js",
-			"fields": {
-				"type": "application/javascript",
-				"title": "$:/plugins/BTC/TiddlyFlex/modules/widgets/subclasses/list.js",
-				"module-type": "widget-subclass"
-			}
 		}
 	]
 }
