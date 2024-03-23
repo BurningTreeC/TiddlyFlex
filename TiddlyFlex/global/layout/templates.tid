@@ -55,7 +55,7 @@ tags: $:/tags/Global
 
 </$transclude> 
 
-<$reveal tag="span" state="$:/state/editpreviewtype" type="match" text=<<previewType>> default={{{ [{$:/layout}match[$:/plugins/BTC/TiddlyFlex/ui/Layout]then[$:/plugins/BTC/TiddlyFlex/ui/EditTemplate/body/preview/output]else[$:/core/ui/EditTemplate/body/preview/output]] }}}>
+<$reveal tag="span" state="$:/state/editpreviewtype" type="match" text=<<previewType>> default={{{ [function[tiddlyflex-layout]then[$:/plugins/BTC/TiddlyFlex/ui/EditTemplate/body/preview/output]else[$:/core/ui/EditTemplate/body/preview/output]] }}}>
 
 <$entity entity="&nbsp;"/>
 
@@ -68,7 +68,7 @@ tags: $:/tags/Global
 
 \procedure tdfp-tiddlyflex-editortoolbar-preview-type-dropdown()
 \whitespace trim
-<$list filter="[all[shadows+tiddlers]tag[$:/tags/EditPreview]!is[draft]] :cascade[all[shadows+tiddlers]tag[$:/tags/EditTemplatePreviewFilter]!is[draft]get[text]]" variable="previewType">
+<$list filter="[all[shadows+tiddlers]tag[$:/tags/EditPreview]!is[draft]] :cascade[all[shadows+tiddlers]tag[$:/tags/TiddlyFlex/EditTemplatePreviewFilter]!is[draft]get[text]]" variable="previewType">
 
 <<tiddlyflex-preview-type-button>>
 

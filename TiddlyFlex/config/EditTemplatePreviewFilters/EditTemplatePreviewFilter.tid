@@ -1,4 +1,4 @@
 title: $:/config/TiddlyFlex/EditTemplatePreviewFilters
-tags: $:/tags/EditTemplatePreviewFilter
+tags: $:/tags/TiddlyFlex/EditTemplatePreviewFilter
 
-[{$:/layout}match[$:/plugins/BTC/TiddlyFlex/ui/Layout]then<currentTiddler>prefix[$:/plugins/BTC/TiddlyFlex/ui/EditTemplate/body/preview/]else<currentTiddler>prefix[$:/core/]] [<currentTiddler>!prefix[$:/plugins/BTC/TiddlyFlex/ui/EditTemplate/body/preview/]!prefix[$:/core/]]
+[prefix[$:/plugins/BTC/TiddlyFlex/ui/EditTemplate/body/preview/]] [prefix[$:/core/]] :map:flat[function[tiddlyflex-layout]then<currentTiddler>!prefix[$:/core/]] :map:flat[!function[tiddlyflex-layout]then<currentTiddler>!prefix[prefix[$:/plugins/BTC/TiddlyFlex/ui/EditTemplate/body/preview/]] [!prefix[$:/plugins/BTC/TiddlyFlex/ui/EditTemplate/body/preview/]!prefix[$:/core/]]
