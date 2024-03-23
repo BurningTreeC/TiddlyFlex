@@ -120,7 +120,7 @@ tags: $:/tags/Global
 
 <$transclude tiddler="$:/plugins/BTC/TiddlyFlex/ui/EditTemplate/body/editor" mode="inline"/>
 
-<%if [<editPreviewStateTiddler>get[text]match[yes]]>
+<%if [<editPreviewStateTiddler>get[text]match[yes]] %>
 
 <div class="tc-tiddler-preview-preview" data-tiddler-title={{!!draft.title}} data-tags={{!!tags}}>
 
@@ -176,19 +176,12 @@ tags: $:/tags/Global
 
   filter="[all[shadows+tiddlers]tag[$:/tags/EditorToolbar]!has[draft.of]]"
 
-><$reveal
-
-  type="nomatch"
-  state=<<config-visibility-title>>
-  text="hide"
-  class="tc-text-editor-toolbar-item-wrapper"
-
-><$transclude
+><%if [<config-visibility-title>!match[hide]] %><span class="tc-text-editor-toolbar-item-wrapper"><$transclude
 
   tiddler="$:/plugins/BTC/TiddlyFlex/ui/EditTemplate/body/toolbar/button"
   mode="inline"
 
-/></$reveal></$list><$list
+/></span><% endif %></$list><$list
 
   filter="[all[shadows+tiddlers]tag[$:/tags/EditorTools]!has[draft.of]]"
 
@@ -198,6 +191,7 @@ tags: $:/tags/Global
 ><$transclude/>
 </$list></$list></$set></$edit>
 \end
+
 \procedure tdfp-tiddlyflex-edittemplate-controls()
 \whitespace trim
 <div class="tc-tiddler-title tc-tiddler-edit-title">
@@ -214,52 +208,14 @@ tags: $:/tags/Global
 	<div style="clear: both;"></div>
 </div>
 \end
+
 \procedure tdfp-tiddlyflex-edittemplate-fieldeditor-default()
 \whitespace trim
 <$edit-text tiddler=<<currentTiddler>> field=<<currentField>> tag="input" default="" class="tc-edit-texteditor tc-edit-fieldeditor" placeholder={{$:/language/EditTemplate/Fields/Add/Value/Placeholder}} tabindex={{$:/config/EditTabIndex}} cancelPopups="yes"/>
 \end
-\procedure tdfp-tiddlyflex-edittemplate-fields()
-\whitespace trim
-<$set name="newFieldValueTiddlerPrefix" value=<<newFieldValueTiddlerPrefix>> emptyValue=<<qualify "$:/temp/NewFieldValue">> >
-<div class="tc-edit-fields">
-<table class={{{ [all[current]fields[]] :filter[lookup[$:/config/EditTemplateFields/Visibility/]!match[hide]] +[count[]!match[0]] +[then[tc-edit-fields]] ~[[tc-edit-fields tc-edit-fields-small]] }}}>
-<tbody>
-<$list filter="[all[current]fields[]] +[sort[title]]" variable="currentField" storyview="pop">
-<$list filter=<<config-filter>> variable="temp">
-<tr class="tc-edit-field">
-<td class="tc-edit-field-name">
-<$text text=<<currentField>>/>:</td>
-<td class="tc-edit-field-value">
-<$keyboard key="((delete-field))" actions="""<$action-deletefield $field=<<currentField>>/><$set name="currentTiddlerCSSescaped" value={{{ [<currentTiddler>escapecss[]] }}}><$action-sendmessage $message="tm-focus-selector" $param=<<current-tiddler-new-field-selector>>/></$set>""">
-<$transclude tiddler={{{ [<currentField>] :cascade[all[shadows+tiddlers]tag[$:/tags/FieldEditorFilter]!is[draft]get[text]] :and[!is[blank]else{$:/plugins/BTC/TiddlyFlex/ui/EditTemplate/fieldEditor/default}] }}} />
-</$keyboard>
-</td>
-<td class="tc-edit-field-remove">
-<$button class="tc-btn-invisible" tooltip={{$:/language/EditTemplate/Field/Remove/Hint}} aria-label={{$:/language/EditTemplate/Field/Remove/Caption}}>
-<$action-deletefield $field=<<currentField>>/>
-{{$:/core/images/delete-button}}
-</$button>
-</td>
-</tr>
-</$list>
-</$list>
-</tbody>
-</table>
-</div>
 
-<$fieldmangler>
-<div class="tc-edit-field-add">
-<em class="tc-edit tc-small-gap-right">
-<<lingo Fields/Add/Prompt>>
-</em>
-<$vars refreshTitle=<<qualify "$:/temp/fieldname/refresh">> storeTitle=<<newFieldNameInputTiddler>> searchListState=<<newFieldNameSelectionTiddler>>>
-<div class="tc-edit-field-add-name-wrapper">
-<$macrocall $name="keyboard-driven-input" tiddler=<<newFieldNameTiddler>> storeTitle=<<storeTitle>> refreshTitle=<<refreshTitle>>
-		selectionStateTitle=<<searchListState>> tag="input" default="" placeholder={{$:/language/EditTemplate/Fields/Add/Name/Placeholder}}
-		focusPopup=<<qualify "$:/state/popup/field-dropdown">> class="tc-edit-texteditor tc-popup-handle" tabindex={{$:/config/EditTabIndex}}
-		focus={{{ [{$:/config/AutoFocus}match[fields]then[true]] ~[[false]] }}} cancelPopups="yes"
-		configTiddlerFilter="[[$:/config/EditMode/fieldname-filter]]" inputCancelActions=<<cancel-search-actions>> />
-<$button popup=<<qualify "$:/state/popup/field-dropdown">> class="tc-btn-invisible tc-btn-dropdown tc-small-gap" tooltip={{$:/language/EditTemplate/Field/Dropdown/Hint}} aria-label={{$:/language/EditTemplate/Field/Dropdown/Caption}}>{{$:/core/images/down-arrow}}</$button>
+\procedure tdfp-tiddlyflex-edittemplate-fields-add-field-dropdown()
+\whitespace trim
 <$reveal state=<<qualify "$:/state/popup/field-dropdown">> type="nomatch" text="" default="">
 <div class="tc-block-dropdown tc-edit-type-dropdown">
 <$set name="tv-show-missing-links" value="yes">
@@ -290,6 +246,24 @@ tags: $:/tags/Global
 </$set>
 </div>
 </$reveal>
+\end
+
+\procedure tdfp-tiddlyflex-edittemplate-fields-add-field()
+\whitespace trim
+<$fieldmangler>
+<div class="tc-edit-field-add">
+<em class="tc-edit tc-small-gap-right">
+<<lingo Fields/Add/Prompt>>
+</em>
+<$vars refreshTitle=<<qualify "$:/temp/fieldname/refresh">> storeTitle=<<newFieldNameInputTiddler>> searchListState=<<newFieldNameSelectionTiddler>>>
+<div class="tc-edit-field-add-name-wrapper">
+<$macrocall $name="keyboard-driven-input" tiddler=<<newFieldNameTiddler>> storeTitle=<<storeTitle>> refreshTitle=<<refreshTitle>>
+		selectionStateTitle=<<searchListState>> tag="input" default="" placeholder={{$:/language/EditTemplate/Fields/Add/Name/Placeholder}}
+		focusPopup=<<qualify "$:/state/popup/field-dropdown">> class="tc-edit-texteditor tc-popup-handle" tabindex={{$:/config/EditTabIndex}}
+		focus={{{ [{$:/config/AutoFocus}match[fields]then[true]] ~[[false]] }}} cancelPopups="yes"
+		configTiddlerFilter="[[$:/config/EditMode/fieldname-filter]]" inputCancelActions=<<cancel-search-actions>> />
+<$button popup=<<qualify "$:/state/popup/field-dropdown">> class="tc-btn-invisible tc-btn-dropdown tc-small-gap" tooltip={{$:/language/EditTemplate/Field/Dropdown/Hint}} aria-label={{$:/language/EditTemplate/Field/Dropdown/Caption}}>{{$:/core/images/down-arrow}}</$button>
+<<tdfp-tiddlyflex-edittemplate-fields-add-field-dropdown>>
 </div>
 <$let currentTiddlerCSSescaped={{{ [<currentTiddler>escapecss[]] }}} currentTiddler={{{ [subfilter<get-field-value-tiddler-filter>] }}} currentField="text" currentFieldName={{{ [<newFieldNameTiddler>get[text]] }}}>
 <span class="tc-edit-field-add-value tc-small-gap-right">
@@ -304,8 +278,40 @@ tags: $:/tags/Global
 </$vars>
 </div>
 </$fieldmangler>
+\end
+
+\procedure tdfp-tiddlyflex-edittemplate-fields()
+\whitespace trim
+<$set name="newFieldValueTiddlerPrefix" value=<<newFieldValueTiddlerPrefix>> emptyValue=<<qualify "$:/temp/NewFieldValue">> >
+<div class="tc-edit-fields">
+<table class={{{ [all[current]fields[]] :filter[lookup[$:/config/EditTemplateFields/Visibility/]!match[hide]] +[count[]!match[0]] +[then[tc-edit-fields]] ~[[tc-edit-fields tc-edit-fields-small]] }}}>
+<tbody>
+<$list filter="[all[current]fields[]] +[sort[title]]" variable="currentField" storyview="pop">
+<$list filter=<<config-filter>> variable="temp">
+<tr class="tc-edit-field">
+<td class="tc-edit-field-name">
+<$text text=<<currentField>>/>:</td>
+<td class="tc-edit-field-value">
+<$keyboard key="((delete-field))" actions="""<$action-deletefield $field=<<currentField>>/><$set name="currentTiddlerCSSescaped" value={{{ [<currentTiddler>escapecss[]] }}}><$action-sendmessage $message="tm-focus-selector" $param=<<current-tiddler-new-field-selector>>/></$set>""">
+<$transclude tiddler={{{ [<currentField>] :cascade[all[shadows+tiddlers]tag[$:/tags/FieldEditorFilter]!is[draft]get[text]] :and[!is[blank]else{$:/plugins/BTC/TiddlyFlex/ui/EditTemplate/fieldEditor/default}] }}} />
+</$keyboard>
+</td>
+<td class="tc-edit-field-remove">
+<$button class="tc-btn-invisible" tooltip={{$:/language/EditTemplate/Field/Remove/Hint}} aria-label={{$:/language/EditTemplate/Field/Remove/Caption}}>
+<$action-deletefield $field=<<currentField>>/>
+{{$:/core/images/delete-button}}
+</$button>
+</td>
+</tr>
+</$list>
+</$list>
+</tbody>
+</table>
+</div>
+<<tdfp-tiddlyflex-edittemplate-fields-add-field>>
 </$set>
 \end
+
 \procedure tdfp-tiddlyflex-edittemplate-shadow()
 \whitespace trim
 <$list filter="[all[current]get[draft.of]is[shadow]!is[tiddler]]">
@@ -338,6 +344,7 @@ tags: $:/tags/Global
 
 </$list>
 \end
+
 \procedure tdfp-tiddlyflex-edittemplate-title()
 \whitespace trim
 <$edit-text field="draft.title" class="tc-titlebar tc-edit-texteditor" focus={{{ [{$:/config/AutoFocus}match[title]then[true]] ~[[false]] }}} tabindex={{$:/config/EditTabIndex}} cancelPopups="yes"/>
@@ -407,6 +414,7 @@ tags: $:/tags/Global
 
 </$reveal>
 \end
+
 \procedure tdfp-tiddlyflex-edittemplate-type()
 \whitespace trim
 <$set name="refreshTitle" value=<<qualify "$:/temp/type-search/refresh">>>
@@ -440,6 +448,7 @@ tags: $:/tags/Global
 </div>
 </$set>
 \end
+
 \procedure tag-body-inner(colour,fallbackTarget,colourA,colourB,icon,tagField:"tags")
 \whitespace trim
 <$wikify name="foregroundColor"
@@ -512,56 +521,32 @@ tags: $:/tags/Global
 /></$list>
 \end
 
-\procedure toolbar-button-tooltip()
-{{!!description}}<$macrocall $name="displayshortcuts" $output="text/plain" shortcuts={{!!shortcuts}} prefix="` - [" separator="] [" suffix="]`"/>
+\procedure toolbar-button-wikified-dropdown()
+\whitespace trim
+<$reveal
+
+  state=<<dropdown-state>>
+  type="popup"
+  position="below"
+  animate="yes"
+  retain="yes"
+  tag="span"
+
+><div
+
+  class="tc-drop-down tc-popup-keep"
+
+><$transclude
+
+  tiddler={{!!dropdown}}
+  mode="block"
+
+/></div></$reveal>
 \end
 
-\procedure toolbar-button()
+\procedure toolbar-button-wikified-dropdown-button()
 \whitespace trim
-<$list
-
-  filter={{!!condition}}
-  variable="list-condition"
-
-><$wikify
-
-  name="tooltip-text"
-  text=<<toolbar-button-tooltip>>
-  mode="inline"
-  output="text"
-
-><$list
-
-  filter="[all[current]!has[dropdown]]"
-  variable="no-dropdown"
-
-><$set name=disabled filter={{!!condition-disabled}}><$button
-
-  class={{{ tc-btn-invisible [[$(buttonClasses)$]substitute[]] +[join[ ]] }}}
-  tooltip=<<tooltip-text>>
-  actions={{!!actions}}
-  disabled=<<disabled>>
-
-><span
-
-  data-tw-keyboard-shortcut={{{ [<disabled>match[yes]then[]else{!!shortcuts}] }}}
-
-/><<toolbar-button-icon>><$transclude
-
-  tiddler=<<currentTiddler>>
-  field="text"
-
-/></$button></$set></$list><$list
-
-  filter="[all[current]has[dropdown]]"
-  variable="dropdown"
-
-><$set
-
-  name="dropdown-state"
-  value=<<qualify "$:/state/EditorToolbarDropdown">>
-
-><$set name=disabled filter={{!!condition-disabled}}><$button
+<$button
 
   popup=<<dropdown-state>>
   class={{{ tc-popup-keep tc-btn-invisible [[$(buttonClasses)$]substitute[]] +[join[ ]] }}}
@@ -579,24 +564,70 @@ tags: $:/tags/Global
   tiddler=<<currentTiddler>>
   field="text"
 
-/></$button></$set><$reveal
+/></$button>
+\end
 
-  state=<<dropdown-state>>
-  type="popup"
-  position="below"
-  animate="yes"
-  tag="span"
+\procedure toolbar-button-wikified-button()
+\whitespace trim
+<$button
 
-><div
+  class={{{ tc-btn-invisible [[$(buttonClasses)$]substitute[]] +[join[ ]] }}}
+  tooltip=<<tooltip-text>>
+  actions={{!!actions}}
+  disabled=<<disabled>>
 
-  class="tc-drop-down tc-popup-keep"
+><span
 
-><$transclude
+  data-tw-keyboard-shortcut={{{ [<disabled>match[yes]then[]else{!!shortcuts}] }}}
 
-  tiddler={{!!dropdown}}
-  mode="block"
+/><<toolbar-button-icon>><$transclude
 
-/></div></$reveal></$set></$list></$wikify></$list>
+  tiddler=<<currentTiddler>>
+  field="text"
+
+/></$button>
+\end
+
+\procedure toolbar-button-wikified()
+\whitespace trim
+<$wikify
+
+  name="tooltip-text"
+  text=<<toolbar-button-tooltip>>
+  mode="inline"
+  output="text"
+
+><$list
+
+  filter="[all[current]!has[dropdown]]"
+  variable="no-dropdown"
+
+><$set name=disabled filter={{!!condition-disabled}}><<toolbar-button-wikified-button>></$set></$list><$list
+
+  filter="[all[current]has[dropdown]]"
+  variable="dropdown"
+
+><$set
+
+  name="dropdown-state"
+  value=<<qualify "$:/state/EditorToolbarDropdown">>
+
+><$set name=disabled filter={{!!condition-disabled}}><<toolbar-button-wikified-dropdown-button>></$set><<toolbar-button-wikified-dropdown>></$set></$list></$wikify>
+\end
+
+\procedure toolbar-button-tooltip()
+\whitespace trim
+{{!!description}}<$macrocall $name="displayshortcuts" $output="text/plain" shortcuts={{!!shortcuts}} prefix="` - [" separator="] [" suffix="]`"/>
+\end
+
+\procedure toolbar-button()
+\whitespace trim
+<$list
+
+  filter={{!!condition}}
+  variable="list-condition"
+
+><<toolbar-button-wikified>></$list>
 \end
 
 \procedure toolbar-button-outer()
