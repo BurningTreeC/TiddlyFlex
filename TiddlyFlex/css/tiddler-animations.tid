@@ -81,83 +81,87 @@ tags: $:/tags/Stylesheet
 
 \end
 
-<%if [{$:/config/AnimationDuration}!is[blank]!match[0]] %>
+<%if [function[tiddlyflex-layout]] %>
 
-	@keyframes slide-out-left {
-		from {
-			transform: translateX(0%);
+	<%if [{$:/config/AnimationDuration}!is[blank]!match[0]] %>
+
+		@keyframes slide-out-left {
+			from {
+				transform: translateX(0%);
+			}
+			to {
+				transform: translateX(calc(-100% - (2 * {{$:/config/tiddlyflex/story-river/padding}})));
+			}
 		}
-		to {
-			transform: translateX(calc(-100% - (2 * {{$:/config/tiddlyflex/story-river/padding}})));
+
+		@keyframes slide-out-right {
+			from {
+				transform: translateX(0%);
+			}
+			to {
+				transform: translateX(calc(100% + (2 * {{$:/config/tiddlyflex/story-river/padding}})));
+			}
 		}
+
+		@keyframes slide-in-left {
+			from {
+				transform: translateX(calc( -100% - (2 * {{$:/config/tiddlyflex/story-river/padding}})));
+			}
+			to {
+				transform: translateX(0%);
+			}
+		}
+
+		@keyframes slide-in-right {
+			from {
+				transform: translateX(calc(100% + (2 * {{$:/config/tiddlyflex/story-river/padding}})));
+			}
+			to {
+				transform: translateX(0%);
+			}
+		}
+
+		<$list filter="[all[tiddlers]prefix[$:/state/tiddlyflex/removing/]]" variable="stateTiddler">
+			<$let tiddlerTitle={{{ [<stateTiddler>removeprefix[$:/state/tiddlyflex/removing/]] }}} tiddlerTitleCSSEscaped={{{ [<tiddlerTitle>escapecss[]] }}} column={{{ [<stateTiddler>get[column]] }}}>
+
+				<<tiddlyflex-dont-display-tiddler>>
+
+				<%if [<stateTiddler>has[height]] %>
+					<$let direction={{{ [<stateTiddler>get[direction]] }}} tiddlerHeight={{{ [<stateTiddler>get[height]] }}}>
+
+						<<tiddlyflex-remove-tiddler-animation>>
+
+						.tc-tiddlyflex-story-river {
+							overflow-x: clip;
+						}
+
+					</$let>
+				<% endif %>
+			</$let>
+		</$list>
+		<$list filter="[all[tiddlers]prefix[$:/state/tiddlyflex/adding/]]" variable="stateTiddler">
+			<$let tiddlerTitle={{{ [<stateTiddler>removeprefix[$:/state/tiddlyflex/adding/]] }}} tiddlerTitleCSSEscaped={{{ [<tiddlerTitle>escapecss[]] }}} column={{{ [<stateTiddler>get[column]] }}}>
+
+				<<tiddlyflex-dont-display-tiddler>>
+
+				<%if [<stateTiddler>has[height]] %>
+					<$let direction={{{ [<stateTiddler>get[direction]] }}} tiddlerHeight={{{ [<stateTiddler>get[height]] }}}>
+
+						<<tiddlyflex-add-tiddler-animation>>
+
+						.tc-tiddlyflex-story-river {
+							overflow-x: clip;
+						}
+
+					</$let>
+				<% endif %>
+			</$let>
+		</$list>
+
+	<% endif %>
+
+	.tc-tiddlyflex-adding {
+		visibility: hidden;
 	}
-
-	@keyframes slide-out-right {
-		from {
-			transform: translateX(0%);
-		}
-		to {
-			transform: translateX(calc(100% + (2 * {{$:/config/tiddlyflex/story-river/padding}})));
-		}
-	}
-
-	@keyframes slide-in-left {
-		from {
-			transform: translateX(calc( -100% - (2 * {{$:/config/tiddlyflex/story-river/padding}})));
-		}
-		to {
-			transform: translateX(0%);
-		}
-	}
-
-	@keyframes slide-in-right {
-		from {
-			transform: translateX(calc(100% + (2 * {{$:/config/tiddlyflex/story-river/padding}})));
-		}
-		to {
-			transform: translateX(0%);
-		}
-	}
-
-	<$list filter="[all[tiddlers]prefix[$:/state/tiddlyflex/removing/]]" variable="stateTiddler">
-		<$let tiddlerTitle={{{ [<stateTiddler>removeprefix[$:/state/tiddlyflex/removing/]] }}} tiddlerTitleCSSEscaped={{{ [<tiddlerTitle>escapecss[]] }}} column={{{ [<stateTiddler>get[column]] }}}>
-
-			<<tiddlyflex-dont-display-tiddler>>
-
-			<%if [<stateTiddler>has[height]] %>
-				<$let direction={{{ [<stateTiddler>get[direction]] }}} tiddlerHeight={{{ [<stateTiddler>get[height]] }}}>
-
-					<<tiddlyflex-remove-tiddler-animation>>
-
-					.tc-tiddlyflex-story-river {
-						overflow-x: clip;
-					}
-
-				</$let>
-			<% endif %>
-		</$let>
-	</$list>
-	<$list filter="[all[tiddlers]prefix[$:/state/tiddlyflex/adding/]]" variable="stateTiddler">
-		<$let tiddlerTitle={{{ [<stateTiddler>removeprefix[$:/state/tiddlyflex/adding/]] }}} tiddlerTitleCSSEscaped={{{ [<tiddlerTitle>escapecss[]] }}} column={{{ [<stateTiddler>get[column]] }}}>
-
-			<<tiddlyflex-dont-display-tiddler>>
-
-			<%if [<stateTiddler>has[height]] %>
-				<$let direction={{{ [<stateTiddler>get[direction]] }}} tiddlerHeight={{{ [<stateTiddler>get[height]] }}}>
-
-					<<tiddlyflex-add-tiddler-animation>>
-
-					.tc-tiddlyflex-story-river {
-						overflow-x: clip;
-					}
-
-				</$let>
-			<% endif %>
-		</$let>
-	</$list>
 
 <% endif %>
-
-.tc-tiddlyflex-adding {
-	visibility: hidden;
-}

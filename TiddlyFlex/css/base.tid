@@ -1,6 +1,8 @@
 title: $:/plugins/BTC/TiddlyFlex/styles/base
 tags: $:/tags/Stylesheet
 
+<%if [function[tiddlyflex-layout]] %>
+
 .tc-tiddlyflex-container {
 	display: flex;
 	flex-flow: column;
@@ -129,15 +131,11 @@ tags: $:/tags/Stylesheet
 
 	<%if [[$:/state/sidebar/resizing]!is[missing]] %>
 
-		.tc-tiddlyflex-story-river-container {
-			flex-basis: max(max(calc({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px)),calc({{{ [subfilter<tdff.tiddlyflex-enlist-columns>count[]] }}} * {{$:/config/tiddlyflex/story-river/min-width}})),calc(100% - (100% - ({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px)))));
-		}
+		<<tdfp-tiddlyflex-dynamic-story-river-container>>
 
 	<% else %>
 
-		.tc-tiddlyflex-story-river-container {
-			flex-basis: max(max(calc({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px)),calc({{$:/state/sidebar/posx!!column-count}} * {{$:/config/tiddlyflex/story-river/min-width}})),calc(100% - (100% - ({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px)))));
-		}
+		<<tdfp-tiddlyflex-static-story-river-container>>
 
 	<% endif %>
 
@@ -253,15 +251,11 @@ tags: $:/tags/Stylesheet
 
 	<%if [[$:/state/sidebar/resizing]!is[missing]] %>
 
-		.tc-tiddlyflex-sidebar {
-			width: max(min(max(calc(100% - ({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px))),{{$:/config/tiddlyflex/sidebar/width}}),calc(100% - ({{{ [subfilter<tdff.tiddlyflex-enlist-columns>count[]] }}} * {{$:/config/tiddlyflex/story-river/min-width}}))),{{$:/config/tiddlyflex/sidebar/width}});
-		}
+		<<tdfp-tiddlyflex-dynamic-sidebar>>
 
 	<% else %>
 
-		.tc-tiddlyflex-sidebar {
-			width: max(min(max(calc(100% - ({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px))),{{$:/config/tiddlyflex/sidebar/width}}),calc(100% - ({{$:/state/sidebar/posx!!column-count}} * {{$:/config/tiddlyflex/story-river/min-width}}))),{{$:/config/tiddlyflex/sidebar/width}});
-		}
+		<<tdfp-tiddlyflex-static-sidebar>>
 
 	<% endif %>
 
@@ -379,3 +373,5 @@ div[class^="tc-tiddlyflex-dropzone-"].tc-dragover:before {
 	text-align: center;
 	content: "<<lingo DropMessage>>";
 }
+
+<% endif %>

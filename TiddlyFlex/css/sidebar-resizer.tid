@@ -1,107 +1,107 @@
 title: $:/plugins/BTC/TiddlyFlex/styles/sidebar-resizer
 tags: $:/tags/Stylesheet
 
-@media (min-width: 992px) {
+<%if [function[tiddlyflex-layout]] %>
 
-	<%if [{$:/config/tiddlyflex/sidebar/resizer}match[yes]] %>
+	@media (min-width: 992px) {
 
-		.tc-tiddlyflex-pointerdown-eventcatcher {
-			position: absolute;
-			top: 0;
-			left: 0;
-			height: 100%;
-			width: 100%;
-		}
-
-		<%if [[$:/state/sidebar/resizing]!is[missing]] %>
+		<%if [{$:/config/tiddlyflex/sidebar/resizer}match[yes]] %>
 
 			.tc-tiddlyflex-pointerdown-eventcatcher {
-				z-index: 1001;
+				position: absolute;
+				top: 0;
+				left: 0;
+				height: 100%;
+				width: 100%;
 			}
-
-		<% endif %>
-
-		.tc-tiddlyflex-pointermove-eventcatcher {
-			position: absolute;
-			top: 0;
-			left: 0;
-			height: 100%;
-			width: 100%;
-			z-index: 1003;
-		}
-
-		.tc-tiddlyflex-pointermove {
-			position: fixed;
-			top: 0;
-			left: 0;
-			height: 100vh;
-			width: 100vw;
-			z-index: 1003;
-		}
-
-		.tc-tiddlyflex-sidebar-resizer {
-			position: absolute;
-			top: calc(50% - 26px);
-			left: calc(100% - 39px);
-			height: 26px;
-			width: 52px;
-			border-radius: 26px 26px 0 0;
-			transform: rotate(-90deg);
-			background-color: <<colour tiddlyflex-sidebar-resizer>>;
-			z-index: 1002;
-			transition: left {{$:/config/AnimationDuration}}ms linear, visibility {{$:/config/AnimationDuration}}ms linear;
-			visibility: hidden;
-		}
-
-		<%if [{$:/state/sidebar}!match[no]then[$:/state/sidebar/resizing]!is[missing]] %>
-
-			.tc-tiddlyflex-sidebar-resizer {
-				transition: none;
-			}
-
-		<% endif %>
-
-		<%if [{$:/state/sidebar}!match[no]] %>
-
-			.tc-tiddlyflex-sidebar-resizer {
-				left: calc(100% - {{$:/config/tiddlyflex/sidebar/width}} - 39px);
-				visibility: visible;
-			}
-
-		<% endif %>
-
-		<%if [[$:/state/sidebar/posx]!is[missing]then{$:/state/sidebar}!match[no]] %>
 
 			<%if [[$:/state/sidebar/resizing]!is[missing]] %>
 
-				.tc-tiddlyflex-sidebar-resizer {
-					left: min(max(min(calc(100% - {{$:/config/tiddlyflex/sidebar/width}} - 39px),calc({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px) - 39px)),calc(({{{ [subfilter<tdff.tiddlyflex-enlist-columns>count[]] }}} * {{$:/config/tiddlyflex/story-river/min-width}}) - 39px)),calc(100% - {{$:/config/tiddlyflex/sidebar/width}} - 39px));
-				}
-
-			<% else %>
-
-				.tc-tiddlyflex-sidebar-resizer {
-					left: min(max(min(calc(100% - {{$:/config/tiddlyflex/sidebar/width}} - 39px),calc({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px) - 39px)),calc(({{$:/state/sidebar/posx!!column-count}} * {{$:/config/tiddlyflex/story-river/min-width}}) - 39px)),calc(100% - {{$:/config/tiddlyflex/sidebar/width}} - 39px));
+				.tc-tiddlyflex-pointerdown-eventcatcher {
+					z-index: 1001;
 				}
 
 			<% endif %>
 
+			.tc-tiddlyflex-pointermove-eventcatcher {
+				position: absolute;
+				top: 0;
+				left: 0;
+				height: 100%;
+				width: 100%;
+				z-index: 1003;
+			}
+
+			.tc-tiddlyflex-pointermove {
+				position: fixed;
+				top: 0;
+				left: 0;
+				height: 100vh;
+				width: 100vw;
+				z-index: 1003;
+			}
+
+			.tc-tiddlyflex-sidebar-resizer {
+				position: absolute;
+				top: calc(50% - 26px);
+				left: calc(100% - 39px);
+				height: 26px;
+				width: 52px;
+				border-radius: 26px 26px 0 0;
+				transform: rotate(-90deg);
+				background-color: <<colour tiddlyflex-sidebar-resizer>>;
+				z-index: 1002;
+				transition: left {{$:/config/AnimationDuration}}ms linear, visibility {{$:/config/AnimationDuration}}ms linear;
+				visibility: hidden;
+			}
+
+			<%if [{$:/state/sidebar}!match[no]then[$:/state/sidebar/resizing]!is[missing]] %>
+
+				.tc-tiddlyflex-sidebar-resizer {
+					transition: none;
+				}
+
+			<% endif %>
+
+			<%if [{$:/state/sidebar}!match[no]] %>
+
+				.tc-tiddlyflex-sidebar-resizer {
+					left: calc(100% - {{$:/config/tiddlyflex/sidebar/width}} - 39px);
+					visibility: visible;
+				}
+
+			<% endif %>
+
+			<%if [[$:/state/sidebar/posx]!is[missing]then{$:/state/sidebar}!match[no]] %>
+
+				<%if [[$:/state/sidebar/resizing]!is[missing]] %>
+
+					<<tdfp-tiddlyflex-dynamic-sidebar-resizer>>
+
+				<% else %>
+
+					<<tdfp-tiddlyflex-static-sidebar-resizer>>
+
+				<% endif %>
+
+			<% endif %>
+
+		<% else %>
+
+			.tc-tiddlyflex-pointerdown-eventcatcher {
+				display: none;
+			}
+
 		<% endif %>
 
-	<% else %>
+	}
+
+	@media (max-width: 991.98px) {
 
 		.tc-tiddlyflex-pointerdown-eventcatcher {
 			display: none;
 		}
 
-	<% endif %>
-
-}
-
-@media (max-width: 991.98px) {
-
-	.tc-tiddlyflex-pointerdown-eventcatcher {
-		display: none;
 	}
 
-}
+<% endif %>

@@ -1,22 +1,26 @@
 title: $:/plugins/BTC/TiddlyFlex/styles/current-tiddler
 tags: $:/tags/Stylesheet
 
-<$let currentColumn={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-current-column-filtered>] }}} historyList={{{ [[$:/HistoryList-]addsuffix<currentColumn>!match[$:/HistoryList-]] ~[[$:/HistoryList-1]] }}}>
+<%if [function[tiddlyflex-layout]] %>
 
-	<$set name="cssEscapedTitle" value={{{ [<historyList>get[current-tiddler]escapecss[]] }}}>
+	<$let currentColumn={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-current-column-filtered>] }}} historyList={{{ [[$:/HistoryList-]addsuffix<currentColumn>!match[$:/HistoryList-]] ~[[$:/HistoryList-1]] }}}>
 
-		<<tiddlyflex-style-current-tiddler>>
+		<$set name="cssEscapedTitle" value={{{ [<historyList>get[current-tiddler]escapecss[]] }}}>
 
-	</$set>
+			<<tiddlyflex-style-current-tiddler>>
 
-	<$list filter="[subfilter<tdff.tiddlyflex-enlist-columns>] +[!match<currentColumn>]" variable="column">
+		</$set>
 
-		<$let historyList={{{ [[$:/HistoryList-]addsuffix<column>!match[$:/HistoryList-]] ~[[$:/HistoryList-1]] }}} cssEscapedTitle={{{ [<historyList>get[current-tiddler]escapecss[]] }}}>
+		<$list filter="[subfilter<tdff.tiddlyflex-enlist-columns>] +[!match<currentColumn>]" variable="column">
 
-			<<tiddlyflex-style-unfocused-tiddlers>>
+			<$let historyList={{{ [[$:/HistoryList-]addsuffix<column>!match[$:/HistoryList-]] ~[[$:/HistoryList-1]] }}} cssEscapedTitle={{{ [<historyList>get[current-tiddler]escapecss[]] }}}>
 
-		</$let>
+				<<tiddlyflex-style-unfocused-tiddlers>>
 
-	</$list>
+			</$let>
 
-</$let>
+		</$list>
+
+	</$let>
+
+<% endif %>

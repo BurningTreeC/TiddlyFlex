@@ -1,45 +1,49 @@
 title: $:/plugins/BTC/TiddlyFlex/styles/narrow
 tags: $:/tags/Stylesheet
 
-@media (max-width: 991.98px) {
+<%if [function[tiddlyflex-layout]] %>
 
-	<<tiddlyflex-css-horizontal-view>>
+	@media (max-width: 991.98px) {
 
-	.tc-tiddlyflex-sidebar {
-		width: 90%;
-	}
-
-	<%if [{$:/state/sidebar}!match[yes]!match[no]] %>
+		<<tiddlyflex-css-horizontal-view>>
 
 		.tc-tiddlyflex-sidebar {
-			display: none;
-			transform: translate3d(100%,0,0);
+			width: 90%;
 		}
 
-		.tc-tiddlyflex-sidebar-hide.tc-tiddlyflex-sidebar-shown {
+		<%if [{$:/state/sidebar}!match[yes]!match[no]] %>
+
+			.tc-tiddlyflex-sidebar {
+				display: none;
+				transform: translate3d(100%,0,0);
+			}
+
+			.tc-tiddlyflex-sidebar-hide.tc-tiddlyflex-sidebar-shown {
+				display: none;
+			}
+
+		<% endif %>
+
+	}
+
+	@media (max-width: 767.98px) {
+		
+		.tc-tiddlyflex-top-toolbar .tc-sidebar-lists .tc-search input {
+			width: 150px;
+		}
+
+	}
+
+	@media (max-width: 575.98px) {
+		
+		.tc-tiddlyflex-top-toolbar .tc-sidebar-lists .tc-search input {
+			width: 100px;
+		}
+
+		.tc-tiddlyflex-top-toolbar .tc-sidebar-lists .tc-search .tc-image-down-arrow + em {
 			display: none;
 		}
 
-	<% endif %>
-
-}
-
-@media (max-width: 767.98px) {
-	
-	.tc-tiddlyflex-top-toolbar .tc-sidebar-lists .tc-search input {
-		width: 150px;
 	}
 
-}
-
-@media (max-width: 575.98px) {
-	
-	.tc-tiddlyflex-top-toolbar .tc-sidebar-lists .tc-search input {
-		width: 100px;
-	}
-
-	.tc-tiddlyflex-top-toolbar .tc-sidebar-lists .tc-search .tc-image-down-arrow + em {
-		display: none;
-	}
-
-}
+<% endif %>
