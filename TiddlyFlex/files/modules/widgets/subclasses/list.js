@@ -53,10 +53,10 @@ exports.prototype.handleListChanges = function(changedTiddlers) {
 		var hasRefreshed = false,t;
 		if(this.counterName) {
 			var mustRefreshOldLast = false;
+			var thisHasRefreshed = false;
 			var oldLength = this.children.length;
 			// Cycle through the list and remove and re-insert the first item that has changed, and all the remaining items
 			for(t=0; t<this.list.length; t++) {
-				var thisHasRefreshed = false;
 				if(hasRefreshed || !this.children[t] || this.children[t].parseTreeNode.itemTitle !== this.list[t]) {
 					if(this.children[t]) {
 						this.removeListItem(t);
@@ -65,11 +65,12 @@ exports.prototype.handleListChanges = function(changedTiddlers) {
 					if(!hasRefreshed && t === oldLength) {
 						mustRefreshOldLast = true;
 					}
-					hasRefreshed = thisHasRefreshed = true;
+					hasRefreshed = true;
+					thisHasRefreshed = true;
 				} else {
 					// Refresh the item we're reusing
-					var refreshed = thisHasRefreshed || this.children[t].refresh(changedTiddlers);
-					hasRefreshed = hasRefreshed || refreshed;
+					var refreshed = (thisHasRefreshed && hasRefreshed) || this.children[t].refresh(changedTiddlers);
+					var hasRefreshed = hasRefreshed || refreshed;
 				}
 			}
 			// If items were inserted then we must recreate the item that used to be at the last position as it is no longer last
@@ -86,6 +87,7 @@ exports.prototype.handleListChanges = function(changedTiddlers) {
 		} else {
 			// Cycle through the list, inserting and removing list items as needed
 			var mustRecreateLastItem = false;
+			var thisHasRefreshed = false;
 			if(this.join && this.join.length) {
 				if(this.children.length !== this.list.length) {
 						mustRecreateLastItem = true;
@@ -95,7 +97,6 @@ exports.prototype.handleListChanges = function(changedTiddlers) {
 			}
 			var isLast = false, wasLast = false;
 			for(t=0; t<this.list.length; t++) {
-				var thisHasRefreshed = false;
 				isLast = t === this.list.length-1;
 				var index = this.findListItem(t,this.list[t]);
 				wasLast = index === this.children.length-1;
@@ -110,20 +111,23 @@ exports.prototype.handleListChanges = function(changedTiddlers) {
 						this.insertListItem(t-1,this.list[t-1]);
 					}
 					this.insertListItem(t,this.list[t]);
-					hasRefreshed = thisHasRefreshed = true;
+					hasRefreshed = true;
+					thisHasRefreshed = true;
 				} else {
 					// There are intervening list items that must be removed
 					for(var n=index-1; n>=t; n--) {
 						this.removeListItem(n);
-						hasRefreshed = thisHasRefreshed = true;
+						hasRefreshed = true;
+						thisHasRefreshed = false;
 					}
 					// Refresh the item we're reusing, or recreate if necessary
 					if(mustRecreateLastItem && (isLast || wasLast)) {
 						this.removeListItem(t);
 						this.insertListItem(t,this.list[t]);
-						hasRefreshed = thisHasRefreshed = true;
+						hasRefreshed = true;
+						thisHasRefreshed = true;
 					} else {
-						var refreshed = thisHasRefreshed || this.children[t].refresh(changedTiddlers);
+						var refreshed = (thisHasRefreshed && hasRefreshed) || this.children[t].refresh(changedTiddlers);
 						hasRefreshed = hasRefreshed || refreshed;
 					}
 				}
