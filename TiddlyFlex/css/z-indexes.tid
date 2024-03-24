@@ -25,18 +25,14 @@ z-index: `<$text text={{{ [<storyListCount>add[501]subtract<currentTiddler>] }}}
 
 <%if [function[tiddlyflex-layout]] %>
 
-	<%if [{$:/themes/tiddlywiki/vanilla/options/stickytitles}match[yes]] %>
+	<$list filter="[subfilter<tdff.tiddlyflex-enlist-columns>]" variable="tiddlyFlexColumn">
 
-		<$list filter="[subfilter<tdff.tiddlyflex-enlist-columns>]" variable="tiddlyFlexColumn">
+		<$set name="tv-story-list" value={{{ [[$:/StoryList-]addsuffix<tiddlyFlexColumn>] }}}>
 
-			<$set name="tv-story-list" value={{{ [[$:/StoryList-]addsuffix<tiddlyFlexColumn>] }}}>
+			<<tiddlyflex-tiddler-z-indexes>>
 
-				<<tiddlyflex-tiddler-z-indexes>>
+		</$set>
 
-			</$set>
-
-		</$list>
-
-	<% endif %>
+	</$list>
 
 <% endif %>
