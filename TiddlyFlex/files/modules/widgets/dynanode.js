@@ -109,7 +109,17 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 				self.dynanodeElements.push(entry);
 			}
 			var target = entry.target ? entry.target : entry;
-			self.checkVisibility(target);
+			if(entry.target && entry.target.getAttribute("data-tiddler-title") && entry.target.getAttribute("data-tiddler-title") === "New Tiddler") {
+				console.log(entry.borderBoxSize);
+			}
+			var rect;
+			if(entry.target) {
+				rect = {
+					width: entry.borderBoxSize[0].inlineSize,
+					height: entry.borderBoxSize[0].blockSize
+				}
+			}
+			self.checkVisibility(target,rect);
 		}
 	};
 
@@ -209,7 +219,7 @@ DynaNodeWidget.prototype.rectNotEQ = function(a,b) {
 			!this.eqIsh(a.height, b.height));
 };
 
-DynaNodeWidget.prototype.checkVisibility = function(element) {
+DynaNodeWidget.prototype.checkVisibility = function(element,rect) {
 	var domNodeWidth = this.domNode.offsetWidth,
 		domNodeHeight = this.domNode.offsetHeight,
 		domNodeBounds = this.domNode.getBoundingClientRect();
@@ -225,6 +235,17 @@ DynaNodeWidget.prototype.checkVisibility = function(element) {
 	var currValue = this.stateMap.get(element),
 		newValue = currValue;
 	var elementRect = element.getBoundingClientRect();
+
+	if(rect) {
+		$tw.utils.setStyle(element,[
+			{ containIntrinsicSize: `${rect.width}px ${rect.height}px` }
+		]);
+	} else {
+		$tw.utils.setStyle(element,[
+			{ containIntrinsicSize: `${elementRect.width}px ${elementRect.height}px` }
+		]);		
+	}
+
 	// Within viewport
 	if(!(elementRect.left > domNodeRect.right || 
 						elementRect.right < domNodeRect.left || 
@@ -256,7 +277,7 @@ DynaNodeWidget.prototype.checkVisibility = function(element) {
 			$tw.utils.removeClass(element,"tc-dynanode-hidden");
 			if(element.style["contain"] !== "content") {
 				$tw.utils.setStyle(element,[
-					{ contain: "content" }
+					{ contain: "size layout paint style" }
 				]);
 			}
 		}
@@ -266,7 +287,7 @@ DynaNodeWidget.prototype.checkVisibility = function(element) {
 			$tw.utils.removeClass(element,"tc-dynanode-near");
 			if(element.style["contain"] !== "content") {
 				$tw.utils.setStyle(element,[
-					{ contain: "content" }
+					{ contain: "size layout paint style" }
 				]);
 			}
 		}
