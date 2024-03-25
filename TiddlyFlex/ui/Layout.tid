@@ -49,27 +49,27 @@ code-body: yes
 \end
 \procedure tiddlyflex-layout-header()
 \whitespace trim
-<div class="tc-tiddlyflex-header">
+<$dynanode class="tc-tiddlyflex-header" enable={{{ [{$:/config/tiddlyflex/story-river/dynanode}match[yes]] }}} animationlist="$:/state/sidebar/resizing $:/state/sidebar/posx" selectors="[[:not(*)]]" removeselectors="[[:not(*)]]">
 	<$list filter="[{$:/status/RequireReloadDueToPluginChange}match[yes]then{$:/temp/HidePluginWarning}!match[yes]then[$:/plugins/BTC/TiddlyFlex/ui/Toolbars/PluginReloadWarning]] [all[shadows+tiddlers]tag[$:/tags/TopToolbar]!is[draft]]" variable="listItem" storyview="pop">
 		<$transclude tiddler=<<listItem>>/>
 	</$list>
-</div>
+</$dynanode>
 \end
 \procedure tiddlyflex-layout-leftbar()
 \whitespace trim
-<div class="tc-tiddlyflex-leftbar">
+<$dynanode class="tc-tiddlyflex-leftbar" enable={{{ [{$:/config/tiddlyflex/story-river/dynanode}match[yes]] }}} animationlist="$:/state/sidebar/resizing $:/state/sidebar/posx" selectors="[[:not(*)]]" removeselectors="[[:not(*)]]">
 	<$list filter="[all[shadows+tiddlers]tag[$:/tags/LeftToolbar]!is[draft]]" variable="listItem" storyview="pop">
 		<$transclude tiddler=<<listItem>>/>
 	</$list>
-</div>
+</$dynanode>
 \end
 \procedure tiddlyflex-layout-footer()
 \whitespace trim
-<div class="tc-tiddlyflex-footer">
+<$dynanode class="tc-tiddlyflex-footer" enable={{{ [{$:/config/tiddlyflex/story-river/dynanode}match[yes]] }}} animationlist="$:/state/sidebar/resizing $:/state/sidebar/posx" selectors="[[:not(*)]]" removeselectors="[[:not(*)]]">
 	<$list filter="[all[shadows+tiddlers]tag[$:/tags/BottomToolbar]!is[draft]]" variable="listItem" storyview="pop">
 		<$transclude tiddler=<<listItem>>/>
 	</$list>
-</div>
+</$dynanode>
 \end
 <$vars
 	tv-config-toolbar-icons={{$:/config/Toolbar/Icons}}
