@@ -130,23 +130,25 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 			if(mutation.type === "childList") {
 				for(var j=0; j<mutation.removedNodes.length; j++) {
 					var removedNode = mutation.removedNodes[j];
-					if((removedNode.matches || removedNode.msMatchesSelector) && $tw.utils.domMatchesSelector(removedNode,self.dynanodeRemoveSelector)) {
-						removedNodes.push(removedNode);
-						if(j === (mutation.removedNodes.length - 1)) {
-							for(var k=0; k<removedNodes.length; k++) {
-								for(var l=0; l<self.dynanodeElements.length; l++) {
-									var dynanodeElement = self.dynanodeElements[l];
-									if((removedNodes[k] === dynanodeElement) || (removedNodes[k].contains(dynanodeElement))) {
-										self.resizeObserver.unobserve(dynanodeElement);
-										self.dynanodeElements.splice(l,1);
-										self.spaced.delete(dynanodeElement);
-										self.spacedTimestamps.delete(dynanodeElement);
-										self.stateMap.delete(dynanodeElement);
+					for(var k=0; k<self.dynanodeSelectors.length; k++) {
+						if((removedNode.matches || removedNode.msMatchesSelector) && $tw.utils.domMatchesSelector(removedNode,self.dynanodeRemoveSelectors[k])) {
+							removedNodes.push(removedNode);
+							if(j === (mutation.removedNodes.length - 1)) {
+								for(var l=0; l<removedNodes.length; l++) {
+									for(var m=0; m<self.dynanodeElements.length; m++) {
+										var dynanodeElement = self.dynanodeElements[m];
+										if((removedNodes[l] === dynanodeElement) || (removedNodes[l].contains(dynanodeElement))) {
+											self.resizeObserver.unobserve(dynanodeElement);
+											self.dynanodeElements.splice(m,1);
+											self.spaced.delete(dynanodeElement);
+											self.spacedTimestamps.delete(dynanodeElement);
+											self.stateMap.delete(dynanodeElement);
+										}
 									}
-								}
-								if(k === (removedNodes.length - 1)) {
-									self.isWaitingForAnimationFrame = 1;
-									self.domNode.ownerDocument.defaultView.requestAnimationFrame(self.worker);
+									if(l === (removedNodes.length - 1)) {
+										self.isWaitingForAnimationFrame = 1;
+										self.domNode.ownerDocument.defaultView.requestAnimationFrame(self.worker);
+									}
 								}
 							}
 						}
@@ -154,17 +156,19 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 				}
 				for(j=0; j<mutation.addedNodes.length; j++) {
 					var addedNode = mutation.addedNodes[j];
-					if((addedNode.matches || addedNode.msMatchesSelector) && $tw.utils.domMatchesSelector(addedNode,self.dynanodeSelector)) {
-						addedNodes.push(addedNode);
-						if(j === (mutation.addedNodes.length - 1)) {
-							for(var k=0; k<addedNodes.length; k++) {
-								if(self.dynanodeElements.indexOf(addedNodes[k]) === -1) {
-									self.dynanodeElements.push(addedNodes[k]);
-								}
-								self.resizeObserver.observe(addedNodes[k]);
-								if(k === (addedNodes.length - 1)) {
-									self.isWaitingForAnimationFrame = 1;
-									self.domNode.ownerDocument.defaultView.requestAnimationFrame(self.worker);
+					for(var k=0; k<self.dynanodeSelectors.length; k++) {
+						if((addedNode.matches || addedNode.msMatchesSelector) && $tw.utils.domMatchesSelector(addedNode,self.dynanodeSelectors[k])) {
+							addedNodes.push(addedNode);
+							if(j === (mutation.addedNodes.length - 1)) {
+								for(var l=0; l<addedNodes.length; l++) {
+									if(self.dynanodeElements.indexOf(addedNodes[l]) === -1) {
+										self.dynanodeElements.push(addedNodes[l]);
+									}
+									self.resizeObserver.observe(addedNodes[l]);
+									if(l === (addedNodes.length - 1)) {
+										self.isWaitingForAnimationFrame = 1;
+										self.domNode.ownerDocument.defaultView.requestAnimationFrame(self.worker);
+									}
 								}
 							}
 						}
@@ -187,8 +191,10 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 	if(this.dynanodeEnable) {
 		this.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
 			self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
-				var elements = self.domNode.querySelectorAll(self.dynanodeSelector);
-				self.dynanodeWorker(elements);
+				for(var i=0; i<self.dynanodeSelectors.length; i++) {
+					var elements = self.domNode.querySelectorAll(self.dynanodeSelectors[i]);
+					self.dynanodeWorker(elements);
+				}
 			});
 		});
 	}
@@ -292,8 +298,8 @@ Compute the internal state of the widget
 DynaNodeWidget.prototype.execute = function() {
 	this.elementTag = this.getAttribute("tag");
 	this.dynanodeEnable = this.getAttribute("enable","no") === "yes";
-	this.dynanodeSelector = this.getAttribute("selector",".tc-dynanode-track-tiddler-when-visible");
-	this.dynanodeRemoveSelector = this.getAttribute("removeselector",".tc-dynanode-track-tiddler-when-visible");
+	this.dynanodeSelectors = this.wiki.filterTiddlers(this.getAttribute("selectors",".tc-dynanode-track-tiddler-when-visible"));
+	this.dynanodeRemoveSelectors = this.wiki.filterTiddlers(this.getAttribute("removeselectors",".tc-dynanode-track-tiddler-when-visible"));
 	this.dynanodeAnimationList = this.wiki.filterTiddlers(this.getAttribute("animationlist",""));
 	// Make child widgets
 	this.makeChildWidgets();
@@ -326,7 +332,7 @@ DynaNodeWidget.prototype.refresh = function(changedTiddlers) {
 		changedAttributesCount = $tw.utils.count(changedAttributes);
 	if(changedAttributesCount === 1 && changedAttributes["class"]) {
 		this.assignDomNodeClasses();
-	} else if(changedAttributes.tag || changedAttributes.selector) {
+	} else if(changedAttributes.tag || changedAttributes.selectors || changedAttributes.removeselectors) {
 		this.refreshSelf();
 		return true;
 	} else if(changedAttributes.enable) {
@@ -336,10 +342,12 @@ DynaNodeWidget.prototype.refresh = function(changedTiddlers) {
 			this.mutationObserver.observe(this.domNode,{childList: true, subtree: true});
 			this.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
 				self.domNode.ownerDocument.defaultView.requestAnimationFrame(function() {
-					var elements = self.domNode.querySelectorAll(self.dynanodeSelector);
-					self.dynanodeWorker(elements);
-					for(var i=0; i<elements.length; i++) {
-						self.resizeObserver.observe(elements[i]);
+					for(var i=0; i<self.dynanodeSelectors.length; i++) {
+						var elements = self.domNode.querySelectorAll(self.dynanodeSelectors[i]);
+						self.dynanodeWorker(elements);
+						for(var j=0; j<elements.length; j++) {
+							self.resizeObserver.observe(elements[j]);
+						}
 					}
 				});
 			});

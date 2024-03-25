@@ -39,7 +39,7 @@ tags: $:/tags/Stylesheet
 
 	<$list filter="[all[tiddlers]prefix[$:/state/tiddlyflex/story-river/fullscreen/]]" variable="fullScreenTiddler">
 
-		.tc-tiddlyflex-story-river-wrapper-inner {
+		.tc-tiddlyflex-story-river-wrapper-inner, .tc-tiddlyflex-story-river-wrapper {
 			z-index: initial;
 		}
 
