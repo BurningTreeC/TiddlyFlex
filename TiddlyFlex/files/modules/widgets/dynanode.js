@@ -287,7 +287,7 @@ DynaNodeWidget.prototype.checkVisibility = function(element,rect) {
 			$tw.utils.removeClass(element,"tc-dynanode-hidden");
 			if(element.style["contain"] !== "content") {
 				$tw.utils.setStyle(element,[
-					{ contain: "size layout paint style" }
+					{ contain: "layout style paint" } // no size
 				]);
 			}
 		}
@@ -297,7 +297,7 @@ DynaNodeWidget.prototype.checkVisibility = function(element,rect) {
 			$tw.utils.removeClass(element,"tc-dynanode-near");
 			if(element.style["contain"] !== "content") {
 				$tw.utils.setStyle(element,[
-					{ contain: "size layout paint style" }
+					{ contain: "layout style paint" } // no size
 				]);
 			}
 		}
