@@ -109,14 +109,11 @@ DynaNodeWidget.prototype.render = function(parent,nextSibling) {
 				self.dynanodeElements.push(entry);
 			}
 			var target = entry.target ? entry.target : entry;
-			if(entry.target && entry.target.getAttribute("data-tiddler-title") && entry.target.getAttribute("data-tiddler-title") === "New Tiddler") {
-				console.log(entry.borderBoxSize);
-			}
 			var rect;
 			if(entry.target) {
 				rect = {
-					width: entry.borderBoxSize[0].inlineSize,
-					height: entry.borderBoxSize[0].blockSize
+					width: entry.contentBoxSize[0].inlineSize,
+					height: entry.contentBoxSize[0].blockSize
 				}
 			}
 			self.checkVisibility(target,rect);
@@ -236,14 +233,27 @@ DynaNodeWidget.prototype.checkVisibility = function(element,rect) {
 		newValue = currValue;
 	var elementRect = element.getBoundingClientRect();
 
+	var height,
+		oldHeight;
 	if(rect) {
-		$tw.utils.setStyle(element,[
-			{ containIntrinsicSize: `${rect.width}px ${rect.height}px` }
-		]);
+		height = rect.height;
+		oldHeight = this.spaced.get(element);
+		if(!oldHeight || (oldHeight !== height)) {
+			this.spaced.set(element,height);
+			$tw.utils.setStyle(element,[
+				{ containIntrinsicHeight: `${rect.height}px` }
+			]);
+		}
 	} else {
-		$tw.utils.setStyle(element,[
-			{ containIntrinsicSize: `${elementRect.width}px ${elementRect.height}px` }
-		]);		
+		var computedStyle = this.domNode.ownerDocument.defaultView.getComputedStyle(element);
+		height = elementRect.height - (parseFloat(computedStyle.paddingTop) + parseFloat(computedStyle.paddingBottom) + parseFloat(computedStyle.borderTopWidth) + parseFloat(computedStyle.borderBottomWidth));
+		oldHeight = this.spaced.get(element);
+		if(!oldHeight || (oldHeight !== height)) {
+			this.spaced.set(element,height);
+			$tw.utils.setStyle(element,[
+				{ containIntrinsicHeight: `${elementRect.height}px` }
+			]);
+		}	
 	}
 
 	// Within viewport
