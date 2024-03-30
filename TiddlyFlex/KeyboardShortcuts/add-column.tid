@@ -3,8 +3,8 @@ tags: $:/tags/KeyboardShortcut
 key: ((add-column))
 
 \import $:/plugins/BTC/TiddlyFlex/globals/layout/functions
-<%if [function[tiddlyflex-layout]] %>
-	<%if [function[tiddlyflex-fullscreen]is[blank]] %>
+<%if [tdff.tiddlyflex-layout[]] %>
+	<%if [tdff.tiddlyflex-fullscreen[]is[blank]] %>
 		<$let columns={{{ [list[$:/columns]count[]!match[0]] ~1 }}} nextColumn={{{ [<columns>add[1]] }}}>
 			<%if [list[$:/columns]count[]match[0]] %>
 				<$action-listops $tiddler="$:/columns" $subfilter="1"/>

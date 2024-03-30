@@ -3,7 +3,7 @@ tags: $:/tags/TopRightBar
 list-before: $:/core/ui/TopBar/menu
 
 \whitespace trim
-<%if [function[tiddlyflex-layout]] %>
+<%if [tdff.tiddlyflex-layout[]] %>
 	<$let columns={{{ [list[$:/columns]count[]!match[0]] ~1 }}} nextColumn={{{ [<columns>add[1]] }}}>
 		<$button class="tc-btn-invisible">
 			<%if [list[$:/columns]count[]match[0]] %>

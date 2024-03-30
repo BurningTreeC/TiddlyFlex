@@ -1,7 +1,7 @@
 title: $:/plugins/BTC/TiddlyFlex/styles/narrow
 tags: $:/tags/Stylesheet
 
-<%if [function[tiddlyflex-layout]] %>
+<%if [tdff.tiddlyflex-layout[]] %>
 
 	@media (max-width: 991.98px) {
 

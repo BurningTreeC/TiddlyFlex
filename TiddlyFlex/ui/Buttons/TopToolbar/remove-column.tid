@@ -13,7 +13,7 @@ list-before: $:/plugins/BTC/TiddlyFlex/ui/Buttons/TopToolbar/add-column
 	</$list>
 </$set>
 \end
-<%if [function[tiddlyflex-layout]] %>
+<%if [tdff.tiddlyflex-layout[]] %>
 	<$let columns={{{ [list[$:/columns]count[]] ~1 }}}>
 		<$button class="tc-btn-invisible" actions=<<remove-column-actions>>>
 			{{$:/core/images/minus-button}}

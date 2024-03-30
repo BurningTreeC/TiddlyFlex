@@ -5,9 +5,9 @@ tags: $:/tags/Global
 \procedure tiddlyFlexPrefix() [
 \procedure tiddlyFlexSuffix() ]
 
-\function tiddlyflex-layout() [{$:/layout}match[$:/plugins/BTC/TiddlyFlex/ui/Layout]]
+\function tdff.tiddlyflex-layout() [{$:/layout}match[$:/plugins/BTC/TiddlyFlex/ui/Layout]]
 
-\function tiddlyflex-fullscreen() [all[tiddlers]prefix[$:/state/tiddlyflex/story-river/fullscreen/]limit[1]] ~[[]]
+\function tdff.tiddlyflex-fullscreen() [all[tiddlers]prefix[$:/state/tiddlyflex/story-river/fullscreen/]limit[1]] ~[[]]
 
 \function tdff.tiddlyflex-current-column-filtered() [subfilter<tdff.tiddlyflex-enlist-columns>] +[count[]!match[1]] :then[subfilter<tdff.tiddlyflex-current-column-filtered-before>] ~[subfilter<tdff.tiddlyflex-enlist-columns>] ~1
 

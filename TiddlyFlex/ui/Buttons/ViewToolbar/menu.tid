@@ -2,7 +2,7 @@ title: $:/plugins/BTC/TiddlyFlex/ui/Buttons/ViewToolbar/menu
 tags: $:/tags/ViewToolbar
 
 \whitespace trim
-<%if [function[tiddlyflex-layout]] %>
+<%if [tdff.tiddlyflex-layout[]] %>
 <$button popup=<<qualify "$:/state/popup/tiddlyflex/menu">> tooltip={{$:/language/Buttons/More/Hint}} aria-label={{$:/language/Buttons/More/Caption}} class={{{ [<tv-config-toolbar-class>] tc-tiddlyflex-shown-when-narrow +[join[ ]] }}} selectedClass="tc-selected">
 {{$:/core/images/menu-button}}
 </$button>

@@ -55,7 +55,7 @@ tags: $:/tags/Global
 
 </$transclude> 
 
-<$reveal tag="span" state="$:/state/editpreviewtype" type="match" text=<<previewType>> default={{{ [function[tiddlyflex-layout]then[$:/plugins/BTC/TiddlyFlex/ui/EditTemplate/body/preview/output]else[$:/core/ui/EditTemplate/body/preview/output]] }}}>
+<$reveal tag="span" state="$:/state/editpreviewtype" type="match" text=<<previewType>> default={{{ [tdff.tiddlyflex-layout[]then[$:/plugins/BTC/TiddlyFlex/ui/EditTemplate/body/preview/output]else[$:/core/ui/EditTemplate/body/preview/output]] }}}>
 
 <$entity entity="&nbsp;"/>
 

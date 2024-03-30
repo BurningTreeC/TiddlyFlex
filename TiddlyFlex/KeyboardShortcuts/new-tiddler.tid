@@ -6,7 +6,7 @@ key: ((new-tiddler))
 \procedure actions()
 {{$:/core/ui/Actions/new-tiddler}}
 \end
-<%if [function[tiddlyflex-layout]] %>
+<%if [tdff.tiddlyflex-layout[]] %>
 	<%if [all[tiddlers]prefix[$:/state/tiddlyflex/story-river/fullscreen/]limit[1]] %>
 		<$action-deletetiddler $filter="[all[tiddlers]prefix[$:/state/tiddlyflex/story-river/fullscreen/]]"/>
 	<% endif %>

@@ -10,8 +10,8 @@ key: ((move-down))
 	<% endif %>
 </$set>
 \end
-<%if [function[tiddlyflex-layout]] %>
-	<%if [function[tiddlyflex-fullscreen]is[blank]] %>
+<%if [tdff.tiddlyflex-layout[]] %>
+	<%if [tdff.tiddlyflex-fullscreen[]is[blank]] %>
 		<$macrocall $name="tiddlyflex-keyboard-navigator" actions=<<actions>>/>
 	<% endif %>
 <% endif %>

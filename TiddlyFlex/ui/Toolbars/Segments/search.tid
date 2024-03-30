@@ -2,6 +2,6 @@ title: $:/plugins/BTC/TiddlyFlex/ui/Toolbars/Segments/search
 tags: $:/tags/TopLeftBar
 
 \whitespace trim
-<%if [function[tiddlyflex-layout]] %>
+<%if [tdff.tiddlyflex-layout[]] %>
 	{{$:/core/ui/SideBarSegments/search}}
 <% endif %>

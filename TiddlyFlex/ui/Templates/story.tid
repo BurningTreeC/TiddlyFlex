@@ -14,7 +14,7 @@ code-body: yes
 \end
 <$dynanode enable={{{ [{$:/config/tiddlyflex/story-river/dynanode}match[yes]] }}} animationlist="$:/state/sidebar/resizing $:/state/sidebar/posx" class={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-current-column-filtered>] +[match<tiddlyFlexColumn>then[tc-tiddlyflex-story-river-active]] [[tc-tiddlyflex-story-river-wrapper-inner]] [[tc-tiddlyflex-story-river-]addsuffix<tiddlyFlexColumn>] :and[unique[]join[ ]] }}}>
 
-	<$dropzone enable={{{ [function[tiddlyflex-fullscreen]is[blank]then<tv-enable-drag-and-drop>] }}} class={{{ [<tiddlyFlexColumn>!is[blank]addprefix[tc-tiddlyflex-dropzone-]] ~tc-tiddlyflex-dropzone-1 }}} importTitle={{{ [[$:/Import-]addsuffix<tiddlyFlexColumn>] }}}>
+	<$dropzone enable={{{ [tdff.tiddlyflex-fullscreen[]is[blank]then<tv-enable-drag-and-drop>] }}} class={{{ [<tiddlyFlexColumn>!is[blank]addprefix[tc-tiddlyflex-dropzone-]] ~tc-tiddlyflex-dropzone-1 }}} importTitle={{{ [[$:/Import-]addsuffix<tiddlyFlexColumn>] }}}>
 
 		<$eventcatcher selector=".tc-tiddlyflex-activate-column" matchSelector=".tc-tiddlyflex-activate-column" $click=<<tiddlyflex-activate-column-actions>> class="tc-tiddlyflex-active-column-wrapper">
 
