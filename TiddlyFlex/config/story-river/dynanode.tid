@@ -1,3 +1,6 @@
 title: $:/config/tiddlyflex/story-river/dynanode
+caption: Enable Dynanode
+description: Whether or not the Dynanode functionality is enabled
+settings-template: $:/plugins/BTC/TiddlyFlex/ui/ControlPanel/Templates/input-switch
 
 no

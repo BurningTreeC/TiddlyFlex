@@ -1,2 +1,5 @@
 title: $:/config/ShowEditPreview/PerTiddler
+caption: Show Edit-Preview Per-Tiddler
+description: Whether or not the Edit-Preview should be shown for the current Tiddler only
+settings-template: $:/plugins/BTC/TiddlyFlex/ui/ControlPanel/Templates/input-switch
 text: yes

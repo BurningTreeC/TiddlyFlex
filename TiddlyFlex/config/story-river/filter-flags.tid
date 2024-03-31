@@ -1,3 +1,8 @@
 title: $:/config/tiddlyflex/story-river/filter/flags
+caption: Story-River Filter Flags-Suffix
+description: The Flags Suffix used for the search operator when filtering the Story Rivers
+option-names: [[words]] [[literal]] [[regexp]] [[whitespace]] [[some]]
+option-values: [[words]] [[literal]] [[regexp]] [[whitespace]] [[some]]
+settings-template: $:/plugins/BTC/TiddlyFlex/ui/ControlPanel/Templates/select
 
 words

@@ -1,3 +1,6 @@
 title: $:/config/tiddlyflex/sidebar/resizer
+caption: Sidebar resizer
+description: Whether or not the Sidebar Resizer should be enabled
+settings-template: $:/plugins/BTC/TiddlyFlex/ui/ControlPanel/Templates/input-switch
 
 no

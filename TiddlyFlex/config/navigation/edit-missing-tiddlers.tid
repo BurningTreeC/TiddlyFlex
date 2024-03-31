@@ -1,3 +1,6 @@
 title: $:/config/tiddlyflex/navigation/edit-missing-tiddlers
+caption: Edit missing tiddlers
+description: Whether or not clicking a Link to a missing Tiddler should automatically open it for Editing
+settings-template: $:/plugins/BTC/TiddlyFlex/ui/ControlPanel/Templates/input-switch
 
 no

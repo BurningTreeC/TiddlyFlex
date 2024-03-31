@@ -1,3 +1,6 @@
 title: $:/config/tiddlyflex/story-river/min-width
+caption: Story-River Min-Width
+description: The Minimum Width for the Story Rivers
+settings-template: $:/plugins/BTC/TiddlyFlex/ui/ControlPanel/Templates/input
 
 300px

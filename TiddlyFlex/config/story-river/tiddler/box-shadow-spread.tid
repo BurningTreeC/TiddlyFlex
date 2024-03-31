@@ -1,3 +1,6 @@
 title: $:/config/tiddlyflex/story-river/tiddler/box-shadow-spread
+caption: Box-Shadow spread for Tiddlers
+description: The Box-Shadow spread for Tiddlers in the Story Rivers
+settings-template: $:/plugins/BTC/TiddlyFlex/ui/ControlPanel/Templates/input
 
 4px

@@ -1,0 +1,4 @@
+title: $:/plugins/BTC/TiddlyFlex/ui/ControlPanel/Templates/input
+
+<label class="tc-tiddlyflex-ui-form-label"><$link tooltip={{!!description}}>{{!!caption}}</$link></label>
+<$edit-text tag="input" class="tc-tiddlyflex-ui-form-input"/>

@@ -1,3 +1,6 @@
 title: $:/config/tiddlyflex/dragndrop/AnimationDuration
+caption: Drag&Drop animation duration
+description: The Duration in Milliseconds for the Drag&Drop Animations
+settings-template: $:/plugins/BTC/TiddlyFlex/ui/ControlPanel/Templates/input
 
 175

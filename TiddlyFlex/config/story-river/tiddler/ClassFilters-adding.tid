@@ -1,4 +1,4 @@
-title: $:/config/tiddlyflex/story-river/tiddler/ClassFilters/adding
+title: $:/config/TiddlyFlex/story-river/tiddler/ClassFilters/adding
 tags: $:/tags/ClassFilters/TiddlerTemplate
 
 [<..currentTiddler>addprefix[$:/state/tiddlyflex/adding/]!is[missing]then[tc-tiddlyflex-adding]]

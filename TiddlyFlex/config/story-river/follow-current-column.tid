@@ -1,3 +1,6 @@
 title: $:/config/tiddlyflex/story-river/follow-current-column
+caption: Follow Active Column
+description: Whether or not the Active Column follows where Tiddlers are moved to
+settings-template: $:/plugins/BTC/TiddlyFlex/ui/ControlPanel/Templates/input-switch
 
 yes

@@ -1,0 +1,3 @@
+title: $:/plugins/BTC/TiddlyFlex/ui/ControlPanel/Templates/input-switch
+
+<label class="tc-tiddlyflex-ui-form-label"><$link tooltip={{!!description}}>{{!!caption}}</$link></label><$checkbox field="text" checked="yes" unchecked="no" class="tc-tiddlyflex-ui-form-switch"/>

@@ -1,0 +1,10 @@
+title: $:/plugins/BTC/TiddlyFlex/ui/ControlPanel/Templates/select
+
+<label class="tc-tiddlyflex-ui-form-label"><$link tooltip={{!!description}}>{{!!caption}}</$link></label>
+<$vars cnt={{{[enlist{!!option-names}count[]]}}}>
+<$select class="tc-tiddlyflex-ui-form-select">
+<$list filter="[range<cnt>]" variable="index">
+<option value={{{[enlist{!!option-values}nth<index>]}}}><$text text={{{[enlist{!!option-names}nth<index>]}}}/></option>
+</$list>
+</$select>
+</$vars>

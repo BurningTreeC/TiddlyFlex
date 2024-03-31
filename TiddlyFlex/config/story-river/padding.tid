@@ -1,3 +1,6 @@
 title: $:/config/tiddlyflex/story-river/padding
+caption: Story-River Padding
+description: The Padding of the Story Rivers
+settings-template: $:/plugins/BTC/TiddlyFlex/ui/ControlPanel/Templates/input
 
 42px
