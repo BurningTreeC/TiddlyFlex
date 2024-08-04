@@ -1,5 +1,7 @@
 title: $:/plugins/BTC/TiddlyFlex/ui/Buttons/TopToolbar/remove-column
-tags: $:/tags/TopRightBar
+caption: {{$:/core/images/minus-button}} Close last column
+description: Close the last column
+tags: $:/tags/TopRightBar $:/tags/PageControls
 list-before: $:/plugins/BTC/TiddlyFlex/ui/Buttons/TopToolbar/add-column
 
 \whitespace trim

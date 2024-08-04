@@ -1,0 +1,19 @@
+title: $:/plugins/BTC/TiddlyFlex/ui/ControlPanel/settings/Toolbars
+caption: Toolbars
+tags: $:/tags/TiddlyFlex/Settings
+
+\define config-base() $:/config/TiddlyFlex/Toolbars/Visibility/
+
+<$list filter="$:/tags/TopToolbar $:/tags/LeftToolbar $:/tags/BottomToolbar" variable="toolbarTag">
+
+	<%if [all[tiddlers+shadows]tag<toolbarTag>limit[1]] %>
+
+		!! <$text text={{{ [<toolbarTag>removeprefix[$:/tags/]] }}}/>
+
+		<$macrocall $name="list-tagged-draggable" tag=<<toolbarTag>> itemTemplate="$:/core/ui/ControlPanel/Toolbars/ItemTemplate"/>
+
+		<hr>
+
+	<% endif %>
+
+</$list>

@@ -6,16 +6,16 @@ svg.lucide.lucide-layout-dashboard {
 	stroke-width: 3;
 }
 
-.tc-tiddlyflex-top-toolbar-right svg.lucide {
+svg.lucide {
 	stroke: <<colour muted-foreground>>;
 	fill: none;
 }
 
-.tc-tiddlyflex-top-toolbar-right .tc-selected svg.lucide, .tc-tiddlyflex-top-toolbar-right .tc-btn-invisible:hover svg.lucide {
+.tc-selected svg.lucide, .tc-btn-invisible:hover svg.lucide {
 	stroke: <<colour foreground>>;
 	fill: none;
 }
 
-.tc-tiddlyflex-top-toolbar-right .tc-selected svg.lucide.lucide-grip {
+.tc-selected svg.lucide.lucide-grip {
 	stroke: <<colour primary>>;
 }

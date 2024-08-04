@@ -2,18 +2,4 @@ title: $:/plugins/BTC/TiddlyFlex/ui/ControlPanel/settings
 caption: TiddlyFlex
 tags: $:/tags/ControlPanel/SettingsTab
 
-\define sortBySettingsGroupFilter()
-[get[settings-group]!is[blank]else[!general]] [get[settings-group-header]!is[blank]else[99]] +[join[]]
-\end
-
-<$edit-text tiddler="$:/state/tiddlyflex/settings/search" class="tc-tiddlyflex-search-input" default="" tag="input" type="search" placeholder="search..."/>
-
-<div class="tc-tiddlyflex-list-group tc-tiddlyflex-list-group-box-shadow tc-tiddlyflex-list-settings">
-<$list filter="[all[shadows+tiddlers]prefix[$:/config/tiddlyflex/]has[settings-template]] [[$:/config/ShowEditPreview/PerTiddler]] +[search:title,caption,description{$:/state/tiddlyflex/settings/search}] +[sortsub<sortBySettingsGroupFilter>]">
-<$list filter={{{[{!!condition}!is[blank]] :else[{!!title}]}}} variable="list-condition">
-<div class="tc-tiddlyflex-list-group-item">
-<$transclude tiddler={{!!settings-template}}/>
-</div>
-</$list>
-</$list>
-</div>
+<<tabs "[all[tiddlers+shadows]tag[$:/tags/TiddlyFlex/Settings]]" "$:/plugins/BTC/TiddlyFlex/ui/ControlPanel/settings/UI">>

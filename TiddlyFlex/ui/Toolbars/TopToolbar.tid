@@ -1,4 +1,6 @@
 title: $:/plugins/BTC/TiddlyFlex/ui/Toolbars/TopToolbar
+caption: Top ~TiddlyFlex Toolbar
+description: The standard Top ~TiddlyFlex Toolbar
 tags: $:/tags/TopToolbar
 
 \whitespace trim
