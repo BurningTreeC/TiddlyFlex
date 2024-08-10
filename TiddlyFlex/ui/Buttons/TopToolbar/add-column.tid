@@ -7,12 +7,19 @@ list-before: $:/core/ui/TopBar/menu
 \whitespace trim
 <%if [tdff.tiddlyflex-layout[]] %>
 	<$let columns={{{ [list[$:/columns]count[]!match[0]] ~1 }}} nextColumn={{{ [<columns>add[1]] }}}>
-		<$button class="tc-btn-invisible">
+		<$button class=<<tv-config-toolbar-class>>>
 			<%if [list[$:/columns]count[]match[0]] %>
 				<$action-listops $tiddler="$:/columns" $subfilter="1"/>
 			<% endif %>
 			<$action-listops $tiddler="$:/columns" $subfilter="[<nextColumn>]"/>
-			{{$:/core/images/plus-button}}
+			<$list filter="[<tv-config-toolbar-icons>match[yes]]">
+				{{$:/core/images/plus-button}}
+			</$list>
+			<$list filter="[<tv-config-toolbar-text>match[yes]]">
+				<span class="tc-btn-text">
+					<$text text="Add a column"/>
+				</span>
+			</$list>
 		</$button>
 	</$let>
 <% endif %>

@@ -41,6 +41,20 @@ tags: $:/tags/Stylesheet
 
 \end
 
+\procedure tiddlyflex-position-start-tiddlers-no-copying-last()
+\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
+
+.tc-tiddlyflex-story-river-{{{ [[$(currentRiver)$]substitute[]] }}} [data-tiddler-title={{{ [[$(startingBeforeTiddlerCSSEscaped)$]substitute[]] }}}] .tc-tiddler-frame {
+	margin-bottom: calc({{$:/state/dragging!!height}}px + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + 2px);
+}
+
+.tc-tiddlyflex-story-river-{{{ [[$(currentRiver)$]substitute[]] }}} [data-tiddler-title={{{ [[$(startingBeforeTiddlerCSSEscaped)$]substitute[]] }}}] .tc-tiddler-frame .tc-tiddlyflex-droppable-bottom-half {
+	height: calc(50% + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + {{$:/config/tiddlyflex/story-river/padding}} + {{$:/config/tiddlyflex/story-river/padding}} + {{$:/state/dragging!!height}}px + 2px);
+	bottom: calc(-{{$:/state/dragging!!height}}px - {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} - {{$:/config/tiddlyflex/story-river/padding}} - {{$:/config/tiddlyflex/story-river/padding}} - 2px);
+}
+
+\end
+
 \procedure tiddlyflex-position-start-tiddlers-copying()
 \rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
 
@@ -108,7 +122,7 @@ tags: $:/tags/Stylesheet
 			top: calc( -{{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} - 2px);
 			left: calc( -{{$:/config/tiddlyflex/story-river/padding}} - 1px);
 			height: calc(50% + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + 2px);
-			width: calc(100% + (2 * {{$:/config/tiddlyflex/story-river/padding}}) + 2px);
+			width: calc(100% + (2 * {{$:/config/tiddlyflex/story-river/padding}}));
 			display: none;
 			z-index: 501;
 		}
@@ -123,7 +137,7 @@ tags: $:/tags/Stylesheet
 			top: 50%;
 			left: calc( -{{$:/config/tiddlyflex/story-river/padding}} - 1px);
 			height: calc(50% + 2px);
-			width: calc(100% + (2 * {{$:/config/tiddlyflex/story-river/padding}}) + 2px);
+			width: calc(100% + (2 * {{$:/config/tiddlyflex/story-river/padding}}));
 			z-index: 501;
 			display: none;
 		}
@@ -180,7 +194,7 @@ tags: $:/tags/Stylesheet
 			top: -{{$:/config/tiddlyflex/story-river/padding}};
 		}
 
-		<$let currentRiver={{$:/state/dragging!!start-river}} dragTiddler={{$:/state/dragging!!drag-tiddler}} startingNextTiddler={{$:/state/dragging!!starting-next-tiddler}} startingNextTiddlerCSSEscaped={{{ [<startingNextTiddler>escapecss[]] }}} dragTiddlerCSSEscaped={{{ [<dragTiddler>escapecss[]] }}}>
+		<$let currentRiver={{$:/state/dragging!!start-river}} dragTiddler={{$:/state/dragging!!drag-tiddler}} startingNextTiddler={{$:/state/dragging!!starting-next-tiddler}} startingNextTiddlerCSSEscaped={{{ [<startingNextTiddler>escapecss[]] }}} startingBeforeTiddler={{$:/state/dragging!!starting-before-tiddler}} startingBeforeTiddlerCSSEscaped={{{ [<startingBeforeTiddler>escapecss[]] }}} dragTiddlerCSSEscaped={{{ [<dragTiddler>escapecss[]] }}}>
 
 			<%if [{$:/state/dragging!!copying}!match[yes]] %>
 
@@ -189,6 +203,12 @@ tags: $:/tags/Stylesheet
 				<%if [{$:/state/dragging!!nth}match[0]] %>
 
 					<<tiddlyflex-position-start-tiddlers-no-copying-nth-0>>
+
+				<% endif %>
+
+				<%if [<startingNextTiddler>is[blank]] :and[<startingBeforeTiddler>!is[blank]] %>
+
+					<<tiddlyflex-position-start-tiddlers-no-copying-last>>
 
 				<% endif %>
 

@@ -10,7 +10,7 @@ tags: $:/tags/TiddlyFlex/Settings
 
 		!! <$text text={{{ [<toolbarTag>removeprefix[$:/tags/]] }}}/>
 
-		<$macrocall $name="list-tagged-draggable" tag=<<toolbarTag>> itemTemplate="$:/core/ui/ControlPanel/Toolbars/ItemTemplate"/>
+			<$macrocall $name="list-tagged-draggable" tag=<<toolbarTag>> itemTemplate="$:/core/ui/ControlPanel/Toolbars/ItemTemplate"/>
 
 		<hr>
 

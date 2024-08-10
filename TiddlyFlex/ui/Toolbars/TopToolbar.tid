@@ -6,7 +6,7 @@ tags: $:/tags/TopToolbar
 \whitespace trim
 <div class="tc-tiddlyflex-top-toolbar">
 	<div class="tc-tiddlyflex-top-toolbar-left">
-		<$list filter="[all[shadows+tiddlers]tag[$:/tags/TopLeftBar]!is[draft]]" variable="listItem" storyview="pop">
+		<$list filter="[all[shadows+tiddlers]tag[$:/tags/TopLeftBar]!is[draft]] :filter[lookup[$:/config/TiddlyFlex/Toolbars/TopLeftToolbarItems/Visibility/]!match[hide]]" variable="listItem" storyview="pop">
 			<$transclude tiddler=<<listItem>>/>
 		</$list>
 	</div>
@@ -14,7 +14,7 @@ tags: $:/tags/TopToolbar
 
 	</div>
 	<div class="tc-tiddlyflex-top-toolbar-right">
-		<$list filter="[all[shadows+tiddlers]tag[$:/tags/TopRightBar]!is[draft]]" variable="listItem" storyview="pop">
+		<$list filter="[all[shadows+tiddlers]tag[$:/tags/TopRightBar]!is[draft]] :filter[lookup[$:/config/TiddlyFlex/Toolbars/TopRightToolbarItems/Visibility/]!match[hide]]" variable="listItem" storyview="pop">
 			<$transclude tiddler=<<listItem>>/>
 		</$list>
 	</div>

@@ -2,6 +2,7 @@ title: $:/plugins/BTC/TiddlyFlex/globals/dragndrop
 tags: $:/tags/Global
 
 \procedure tiddlyflex-top-dragenter-actions()
+<$action-setfield $tiddler="$:/state/dragging" drag-count={{{ [[$:/state/dragging]get[drag-count]add[1]] }}}/>
 <%if [[$:/state/dragging]has[dragenter-count]] %>
  	<$action-setfield $tiddler="$:/state/dragging" starting-next-tiddler="" copying="" target=<<currentTiddler>> margin="top" nth={{{ [list<tv-story-list>allbefore<currentTiddler>count[]] }}} river=<<tiddlyFlexColumn>> next-tiddler="" from-index={{{ [list<tv-story-list>allbefore<currentTiddler>count[]] }}} from-story=<<tv-story-list>> dragenter-count={{{ [[$:/state/dragging]get[dragenter-count]add[1]] }}}/>
 <% else %>
@@ -9,6 +10,7 @@ tags: $:/tags/Global
 <% endif %>
 \end
 \procedure tiddlyflex-bottom-dragenter-actions()
+<$action-setfield $tiddler="$:/state/dragging" drag-count={{{ [[$:/state/dragging]get[drag-count]add[1]] }}}/>
 <%if [[$:/state/dragging]has[dragenter-count]] %>
 	<$action-setfield $tiddler="$:/state/dragging" starting-next-tiddler="" copying="" target=<<currentTiddler>> margin="bottom" nth={{{ [list<tv-story-list>allbefore<currentTiddler>count[]add[1]] }}} river=<<tiddlyFlexColumn>> next-tiddler="" from-index={{{ [list<tv-story-list>allbefore<currentTiddler>count[]add[1]] }}} from-story=<<tv-story-list>> dragenter-count={{{ [[$:/state/dragging]get[dragenter-count]add[1]] }}}/>
 <% else %>
@@ -83,30 +85,36 @@ tags: $:/tags/Global
 </$vars>
 \end
 \procedure tiddlyflex-drag-start-actions()
-<$action-setfield $tiddler="$:/state/dragging"
-	nth={{{ [list<tv-story-list>allbefore<currentTiddler>count[]] }}}
-	height=<<tv-selectednode-height>>
-	width=<<tv-selectednode-width>>
-	start-river=<<tiddlyFlexColumn>>
-	starting-next-tiddler={{{ [list<tv-story-list>after<currentTiddler>] }}}
-	starting-from-index={{{ [list<tv-story-list>allbefore<currentTiddler>count[]] }}}
-	starting-from-story=<<tv-story-list>>
-/>
-<$action-setfield $tiddler="$:/state/dragging"
-	drag-tiddler=<<currentTiddler>>
-	next-tiddler={{{ [list<tv-story-list>after<currentTiddler>] }}}
-	from-index={{{ [list<tv-story-list>allbefore<currentTiddler>count[]] }}}
-	from-story=<<tv-story-list>>
-	from-history=<<tv-history-list>>
-	is-focused-tiddler={{{ [<tv-history-list>get[current-tiddler]match<currentTiddler>then[TRUE]] ~[[FALSE]] }}}
-	target={{{ [list<tv-story-list>after<currentTiddler>] }}}
-/>
-<$action-setfield $tiddler="$:/state/dragging" text="yes"/>
-<%if [<modifier>!match[ctrl]] %>
-	<$action-listops $tiddler=<<tv-story-list>> $subfilter="-[<currentTiddler>]"/>
-<% else %>
-	<$action-setfield $tiddler="$:/state/dragging" copying="yes"/>
-<% endif %>
+<$let nth={{{ [list<tv-story-list>allbefore<currentTiddler>count[]] }}} storyListLength={{{ [list<tv-story-list>count[]subtract[1]] }}}>
+	<%if [<nth>match<storyListLength>] %>
+		<$action-setfield $tiddler="$:/state/dragging" starting-before-tiddler={{{ [list<tv-story-list>before<currentTiddler>] }}}/>
+	<% endif %>
+	<$action-setfield $tiddler="$:/state/dragging"
+		drag-count="0"
+		nth=<<nth>>
+		height=<<tv-selectednode-height>>
+		width=<<tv-selectednode-width>>
+		start-river=<<tiddlyFlexColumn>>
+		starting-next-tiddler={{{ [list<tv-story-list>after<currentTiddler>] }}}
+		starting-from-index={{{ [list<tv-story-list>allbefore<currentTiddler>count[]] }}}
+		starting-from-story=<<tv-story-list>>
+	/>
+	<$action-setfield $tiddler="$:/state/dragging"
+		drag-tiddler=<<currentTiddler>>
+		next-tiddler={{{ [list<tv-story-list>after<currentTiddler>] }}}
+		from-index={{{ [list<tv-story-list>allbefore<currentTiddler>count[]] }}}
+		from-story=<<tv-story-list>>
+		from-history=<<tv-history-list>>
+		is-focused-tiddler={{{ [<tv-history-list>get[current-tiddler]match<currentTiddler>then[TRUE]] ~[[FALSE]] }}}
+		target={{{ [list<tv-story-list>after<currentTiddler>] }}}
+	/>
+	<$action-setfield $tiddler="$:/state/dragging" text="yes"/>
+	<%if [<modifier>!match[ctrl]] %>
+		<$action-listops $tiddler=<<tv-story-list>> $subfilter="-[<currentTiddler>]"/>
+	<% else %>
+		<$action-setfield $tiddler="$:/state/dragging" copying="yes"/>
+	<% endif %>
+</$let>
 \end
 \procedure tiddlyflex-drag-end-actions()
 <%if [[$:/state/drag-handled]is[missing]] %>

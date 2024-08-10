@@ -6,7 +6,7 @@ list-before:
 
 \whitespace trim
 <%if [tdff.tiddlyflex-layout[]] %>
-	<$button class={{{ [{$:/state/tiddlyflex/story-river/filter}match[yes]then[tc-selected]] tc-btn-invisible +[join[ ]] }}}>
+	<$button class={{{ [{$:/state/tiddlyflex/story-river/filter}match[yes]then[tc-selected]] [<tv-config-toolbar-class>] +[join[ ]] }}}>
 		<%if [{$:/state/tiddlyflex/story-river/filter}match[yes]] %>
 			<$action-deletetiddler $tiddler="$:/state/tiddlyflex/story-river/filter"/>
 		<% else %>
@@ -15,6 +15,13 @@ list-before:
 				<$action-sendmessage $message="tm-focus-selector" $param=".tc-search input"/>
 			<% endif %>
 		<% endif %>
-		{{$:/plugins/BTC/TiddlyFlex/icons/filter}}
+		<$list filter="[<tv-config-toolbar-icons>match[yes]]">
+			{{$:/plugins/BTC/TiddlyFlex/icons/filter}}
+		</$list>
+		<$list filter="[<tv-config-toolbar-text>match[yes]]">
+			<span class="tc-btn-text">
+				<$text text="Filter story"/>
+			</span>
+		</$list>
 	</$button>
 <% endif %>
