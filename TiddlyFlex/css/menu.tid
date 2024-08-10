@@ -3,7 +3,7 @@ tags: $:/tags/Stylesheet
 
 <%if [tdff.tiddlyflex-layout[]] %>
 
-	@media (min-width: 992px) {
+	@media (min-width: 1200px) {
 
 		.tc-tiddlyflex-shown-when-narrow {
 			display: none;
@@ -85,7 +85,7 @@ tags: $:/tags/Stylesheet
 
 	}
 
-	@media (max-width: 991.98px) {
+	@media (max-width: 1199.98px) {
 
 		.tc-tiddler-controls >  button:not(.tc-tiddlyflex-shown-when-narrow) {
 			display: none;

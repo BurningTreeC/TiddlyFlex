@@ -3,7 +3,7 @@ tags: $:/tags/Stylesheet
 
 <%if [tdff.tiddlyflex-layout[]] %>
 
-	@media (max-width: 991.98px) {
+	@media (max-width: 1199.98px) {
 
 		<<tiddlyflex-css-horizontal-view>>
 
