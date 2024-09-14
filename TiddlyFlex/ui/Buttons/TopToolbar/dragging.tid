@@ -6,7 +6,7 @@ list-before: $:/plugins/BTC/TiddlyFlex/ui/Buttons/TopToolbar/remove-column
 
 \whitespace trim
 <%if [tdff.tiddlyflex-layout[]] %>
-	<$button class={{{ [{$:/state/tiddlyflex/story-river/tiddler/drag-enabled}match[yes]then[tc-selected]] [<tv-config-toolbar-class>] +[join[ ]] }}}>
+	<$button class={{{ [{$:/state/tiddlyflex/story-river/tiddler/drag-enabled}match[yes]then[tc-selected]] [<tv-config-toolbar-class>] +[join[ ]] }}} tooltip="dragging">
 		<$list filter="[<tv-config-toolbar-icons>match[yes]]">
 			{{$:/plugins/BTC/TiddlyFlex/icons/drag-grip}}
 		</$list>

@@ -17,7 +17,7 @@ list-before: $:/plugins/BTC/TiddlyFlex/ui/Buttons/TopToolbar/add-column
 \end
 <%if [tdff.tiddlyflex-layout[]] %>
 	<$let columns={{{ [list[$:/columns]count[]] ~1 }}}>
-		<$button class=<<tv-config-toolbar-class>> actions=<<remove-column-actions>>>
+		<$button class=<<tv-config-toolbar-class>> actions=<<remove-column-actions>> tooltip="remove column">
 			<$list filter="[<tv-config-toolbar-icons>match[yes]]">
 				{{$:/core/images/minus-button}}
 			</$list>

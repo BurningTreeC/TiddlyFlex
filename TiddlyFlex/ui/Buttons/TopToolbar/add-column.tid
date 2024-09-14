@@ -7,7 +7,7 @@ list-before: $:/core/ui/TopBar/menu
 \whitespace trim
 <%if [tdff.tiddlyflex-layout[]] %>
 	<$let columns={{{ [list[$:/columns]count[]!match[0]] ~1 }}} nextColumn={{{ [<columns>add[1]] }}}>
-		<$button class=<<tv-config-toolbar-class>>>
+		<$button class=<<tv-config-toolbar-class>> tooltip="add column">
 			<%if [list[$:/columns]count[]match[0]] %>
 				<$action-listops $tiddler="$:/columns" $subfilter="1"/>
 			<% endif %>

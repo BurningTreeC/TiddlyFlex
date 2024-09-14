@@ -6,7 +6,7 @@ list-before:
 
 \whitespace trim
 <%if [tdff.tiddlyflex-layout[]] %>
-	<$button class={{{ [{$:/state/tiddlyflex/story-river/filter}match[yes]then[tc-selected]] [<tv-config-toolbar-class>] +[join[ ]] }}}>
+	<$button class={{{ [{$:/state/tiddlyflex/story-river/filter}match[yes]then[tc-selected]] [<tv-config-toolbar-class>] +[join[ ]] }}} tooltip="filter">
 		<%if [{$:/state/tiddlyflex/story-river/filter}match[yes]] %>
 			<$action-deletetiddler $tiddler="$:/state/tiddlyflex/story-river/filter"/>
 		<% else %>
