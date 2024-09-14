@@ -7,25 +7,34 @@ code-body: yes
 
 \whitespace trim
 \import [subfilter{$:/core/config/GlobalImportFilter}]
+\procedure tiddlyflex-activate-column-actions()
+<%if [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-current-column-filtered>] +[!match<tiddlyFlexColumn>] %>
+	<$action-setfield $tiddler="$:/columns" current-column=<<tiddlyFlexColumn>>/>
+<% endif %>
+\end
 \procedure tiddlyflex-hide-sidebar-actions() <$action-setfield $tiddler="$:/state/sidebar" text="no"/>
 \procedure tiddlyflex-layout-story()
 \whitespace trim
 <div class="tc-tiddlyflex-story-river-wrapper">
-	<div class="tc-tiddlyflex-story-river-header">
-		<$set name="aboveStoryHeaderTag" value={{{ [[$:/tags/AboveStoryHeader-]addsuffix<tiddlyFlexColumn>] }}}>
-			<$list filter="[all[shadows+tiddlers]tag<aboveStoryHeaderTag>!is[draft]]" variable="listItem" storyview="pop">
-				<$transclude tiddler=<<listItem>>/>
-			</$list>
-		</$set>
-	</div>
+	<$eventcatcher selector=".tc-tiddlyflex-story-river-header" $click=<<tiddlyflex-activate-column-actions>>>
+		<div class="tc-tiddlyflex-story-river-header">
+			<$set name="aboveStoryHeaderTag" value={{{ [[$:/tags/AboveStoryHeader-]addsuffix<tiddlyFlexColumn>] }}}>
+				<$list filter="[all[shadows+tiddlers]tag<aboveStoryHeaderTag>!is[draft]]" variable="listItem" storyview="pop">
+					<$transclude tiddler=<<listItem>>/>
+				</$list>
+			</$set>
+		</div>
+	</$eventcatcher>
 	<$transclude tiddler="$:/plugins/BTC/TiddlyFlex/ui/Templates/story"/>
-	<div class="tc-tiddlyflex-story-river-footer">
-		<$set name="belowStoryFooterTag" value={{{ [[$:/tags/BelowStoryFooter-]addsuffix<tiddlyFlexColumn>] }}}>
-			<$list filter="[all[shadows+tiddlers]tag<belowStoryFooterTag>!is[draft]]" variable="listItem" storyview="pop">
-				<$transclude tiddler=<<listItem>>/>
-			</$list>
-		</$set>
-	</div>
+	<$eventcatcher selector=".tc-tiddlyflex-story-river-footer" $click=<<tiddlyflex-activate-column-actions>>>
+		<div class="tc-tiddlyflex-story-river-footer">
+			<$set name="belowStoryFooterTag" value={{{ [[$:/tags/BelowStoryFooter-]addsuffix<tiddlyFlexColumn>] }}}>
+				<$list filter="[all[shadows+tiddlers]tag<belowStoryFooterTag>!is[draft]]" variable="listItem" storyview="pop">
+					<$transclude tiddler=<<listItem>>/>
+				</$list>
+			</$set>
+		</div>
+	</$eventcatcher>
 </div>
 \end
 \procedure tiddlyflex-layout-story-rivers()

@@ -2,6 +2,14 @@ title: $:/plugins/BTC/TiddlyFlex/ui/SideBar/Ensemble
 caption: Ensemble
 tags: $:/tags/SideBar
 
+\define tiddlyflex-get-ensemble-delete-message()
+Do you want to delete the Ensemble "$(ensembleName)$"?
+\end
+\procedure tiddlyflex-delete-ensemble-actions()
+<$action-confirm $message=<<tiddlyflex-get-ensemble-delete-message>>>
+	<$action-deletetiddler $tiddler=<<ensembleTiddler>>/>
+</$action-confirm>
+\end
 \whitespace trim
 
 !! Save Ensemble
@@ -24,7 +32,7 @@ Optionally, provide a list of tiddlers that should get the tag <span class="tc-s
 
 <$let ensembleName={{{ [<ensembleTiddler>removeprefix[$:/Ensemble/]] }}}>
 
-<$text text=<<ensembleName>>/><$button actions=<<tiddlyflex-load-ensemble-actions>> class="tc-small-gap-left">Load</$button><$button class="tc-small-gap-left" actions="""<$action-deletetiddler $tiddler=<<ensembleTiddler>>/>""">Delete</$button>
+<$text text=<<ensembleName>>/><$button actions=<<tiddlyflex-load-ensemble-actions>> class="tc-small-gap-left">Load</$button><$button class="tc-small-gap-left" actions=<<tiddlyflex-delete-ensemble-actions>>>Delete</$button>
 
 </$let>
 

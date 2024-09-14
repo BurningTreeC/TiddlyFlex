@@ -11,9 +11,9 @@ Do you want to overwrite it?
 
 \procedure tiddlyflex-set-ensemble-configuration(tiddler,field:"text",value)
 \whitespace trim
-<%if [<value>!is[blank]then<tiddler>get<field>!match<value>] ~[<value>!is[blank]then<tiddler>!has<field>] ~[<value>!is[blank]then<tiddler>!is[shadow]is[missing]] %>
+<!--<%if [<tiddler>!is[shadow]!is[missing]get<field>!match<value>] ~[<tiddler>!is[shadow]is[missing]] ~[<tiddler>is[shadow]get<field>!match<value>] %>-->
 	<$action-setfield $tiddler=<<tiddler>> $field=<<field>> $value=<<value>>/>
-<% endif %>
+<!--<% endif %>-->
 \end
 
 \procedure tiddlyflex-save-ensemble-actions-inner(ensembleTitle)
@@ -38,7 +38,7 @@ Do you want to overwrite it?
 		<% endif %>
 	</$list>
 	<$list filter="[all[shadows+tiddlers]tag[$:/tags/BottomToolbar]!is[draft]]" variable="bottomToolbarTiddler">
-		<%if [<ensembleTiddler>!contains:top-toolbar-tiddler<bottomToolbarTiddler>] %>
+		<%if [<ensembleTiddler>!contains:bottom-toolbar-tiddler<bottomToolbarTiddler>] %>
 			<$action-listops $tiddler=<<ensembleTiddler>> $field="bottom-toolbar-tiddler" $subfilter="[<bottomToolbarTiddler>]"/>
 		<% endif %>
 	</$list>
@@ -76,6 +76,7 @@ Do you want to overwrite it?
 \procedure tiddlyflex-overwrite-ensemble-message()
 \whitespace trim
 <$action-confirm $message=<<tiddlyflex-get-ensemble-overwrite-message>>>
+	<$action-deletetiddler $tiddler={{{ [[$:/Ensemble/]addsuffix<ensembleTitle>] }}}/>
 	<$macrocall $name="tiddlyflex-save-ensemble-actions-inner" ensembleTitle=<<ensembleTitle>>/>
 </$action-confirm>
 \end
@@ -96,6 +97,9 @@ Do you want to overwrite it?
 \procedure tiddlyflex-load-ensemble-actions()
 \whitespace trim
 <%if [<ensembleTiddler>!is[missing]] %>
+	<$list filter="[all[tiddlers+shadows]prefix[$:/StoryList-]]" variable="storyList">
+		<$action-deletetiddler $tiddler=<<storyList>>/>
+	</$list>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/layout" value={{{ [<ensembleTiddler>get[layout]] }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/view" value={{{ [<ensembleTiddler>get[view]] }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/state/sidebar" value={{{ [<ensembleTiddler>get[sidebar-state]] }}}/>
@@ -116,7 +120,7 @@ Do you want to overwrite it?
 				</$list>
 			</$set>
 		<% endif %>
-		<%if [<ensembleTiddler>has[top-toolbar-tiddler]]" %>
+		<%if [<ensembleTiddler>has[top-toolbar-tiddler]] %>
 			<$set name="topbarsList" value={{{ [<ensembleTiddler>get[top-toolbar-tiddler]] }}}>
 				<$list filter="[enlist<topbarsList>]" variable="topbarTiddler">
 					<$fieldmangler tiddler=<<topbarTiddler>>>
@@ -125,7 +129,7 @@ Do you want to overwrite it?
 				</$list>
 			</$set>
 		<% endif %>
-		<%if [<ensembleTiddler>has[bottom-toolbar-tiddler]]" %>
+		<%if [<ensembleTiddler>has[bottom-toolbar-tiddler]] %>
 			<$set name="bottombarsList" value={{{ [<ensembleTiddler>get[bottom-toolbar-tiddler]] }}}>
 				<$list filter="[enlist<bottombarsList>]" variable="bottombarTiddler">
 					<$fieldmangler tiddler=<<bottombarTiddler>>>
@@ -156,55 +160,55 @@ Do you want to overwrite it?
 	<%if [<ensembleTiddler>has[stylesheets]] %>
 		<$set name="stylesheetsList" value={{{ [<ensembleTiddler>get[stylesheets]] }}}>
 			<$list filter="[enlist<stylesheetsList>]" variable="stylesheetTiddler">
-				<%if [<stylesheetTiddler>!tag[$:/tags/Stylesheet]] %>
+				<!--<%if [<stylesheetTiddler>!tag[$:/tags/Stylesheet]] %>-->
 					<$fieldmangler tiddler=<<stylesheetTiddler>>>
 						<$action-sendmessage $message="tm-add-tag" $param="$:/tags/Stylesheet"/>
 					</$fieldmangler>
-				<% endif %>
+				<!--<% endif %>-->
 			</$list>
 		</$set>
 	<% endif %>
-	<%if [<ensembleTiddler>has[top-toolbar-tiddler]]" %>
+	<%if [<ensembleTiddler>has[top-toolbar-tiddler]] %>
 		<$set name="topbarsList" value={{{ [<ensembleTiddler>get[top-toolbar-tiddler]] }}}>
 			<$list filter="[enlist<topbarsList>]" variable="topbarTiddler">
-				<%if [<topbarTiddler>!tag[$:/tags/TopToolbar]] %>
+				<!--<%if [<topbarTiddler>!tag[$:/tags/TopToolbar]] %>-->
 					<$fieldmangler tiddler=<<topbarTiddler>>>
 						<$action-sendmessage $message="tm-add-tag" $param="$:/tags/TopToolbar"/>
 					</$fieldmangler>
-				<% endif %>
+				<!--<% endif %>-->
 			</$list>
 		</$set>
 	<% endif %>
-	<%if [<ensembleTiddler>has[bottom-toolbar-tiddler]]" %>
+	<%if [<ensembleTiddler>has[bottom-toolbar-tiddler]] %>
 		<$set name="bottombarsList" value={{{ [<ensembleTiddler>get[bottom-toolbar-tiddler]] }}}>
 			<$list filter="[enlist<bottombarsList>]" variable="bottombarTiddler">
-				<%if [<bottombarTiddler>!tag[$:/tags/BottomToolbar]] %>
+				<!--<%if [<bottombarTiddler>!tag[$:/tags/BottomToolbar]] %>-->
 					<$fieldmangler tiddler=<<bottombarTiddler>>>
 						<$action-sendmessage $message="tm-add-tag" $param="$:/tags/BottomToolbar"/>
 					</$fieldmangler>
-				<% endif %>
+				<!--<% endif %>-->
 			</$list>
 		</$set>
 	<% endif %>
 	<$list filter="[<ensembleTiddler>fields[]prefix[above-story-header-tiddler-]]" variable="aboveStoryHeaderField">
 		<$let aboveStoryHeaderList={{{ [<ensembleTiddler>get<aboveStoryHeaderField>] }}} index={{{ [<aboveStoryHeaderField>removeprefix[above-story-header-tiddler-]] }}} aboveStoryHeaderTag={{{ [[$:/tags/AboveStoryHeader-]addsuffix<index>] }}}>
 			<$list filter="[enlist<aboveStoryHeaderList>]" variable="aboveStoryHeaderTiddler">
-				<%if [<aboveStoryHeaderTiddler>!tag<aboveStoryHeaderTag>] %>
+				<!--<%if [<aboveStoryHeaderTiddler>!tag<aboveStoryHeaderTag>] %>-->
 					<$fieldmangler tiddler=<<aboveStoryHeaderTiddler>>>
 						<$action-sendmessage $message="tm-add-tag" $param=<<aboveStoryHeaderTag>>/>
 					</$fieldmangler>
-				<% endif %>
+				<!--<% endif %>-->
 			</$list>
 		</$let>
 	</$list>
 	<$list filter="[<ensembleTiddler>fields[]prefix[below-story-footer-tiddler-]]" variable="belowStoryFooterField">
 		<$let belowStoryFooterList={{{ [<ensembleTiddler>get<belowStoryFooterField>] }}} index={{{ [<belowStoryFooterField>removeprefix[below-story-footer-tiddler-]] }}} belowStoryFooterTag={{{ [[$:/tags/BelowStoryFooter-]addsuffix<index>] }}}>
 			<$list filter="[enlist<belowStoryFooterList>]" variable="belowStoryFooterTiddler">
-				<%if [<belowStoryFooterTiddler>!tag<belowStoryFooterTag>] %>
+				<!--<%if [<belowStoryFooterTiddler>!tag<belowStoryFooterTag>] %>-->
 					<$fieldmangler tiddler=<<belowStoryFooterTiddler>>>
 						<$action-sendmessage $message="tm-add-tag" $param=<<belowStoryFooterTag>>/>
 					</$fieldmangler>
-				<% endif %>
+				<!--<% endif %>-->
 			</$list>
 		</$let>
 	</$list>
