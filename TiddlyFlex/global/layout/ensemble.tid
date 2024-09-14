@@ -33,14 +33,14 @@ Do you want to overwrite it?
 		<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field={{{ [[story-list-]addsuffix<column>] }}} value={{{ [[$:/StoryList-]addsuffix<column>get[list]] ~[[]] }}}/>
 	</$list>
 	<$list filter="[all[shadows+tiddlers]tag[$:/tags/TopToolbar]!is[draft]]" variable="topToolbarTiddler">
-		<%if [<ensembleTiddler>!contains:top-toolbar-tiddler<topToolbarTiddler>] %>
+		<!--<%if [<ensembleTiddler>!contains:top-toolbar-tiddler<topToolbarTiddler>] %>-->
 			<$action-listops $tiddler=<<ensembleTiddler>> $field="top-toolbar-tiddler" $subfilter="[<topToolbarTiddler>]"/>
-		<% endif %>
+		<!--<% endif %>-->
 	</$list>
 	<$list filter="[all[shadows+tiddlers]tag[$:/tags/BottomToolbar]!is[draft]]" variable="bottomToolbarTiddler">
-		<%if [<ensembleTiddler>!contains:bottom-toolbar-tiddler<bottomToolbarTiddler>] %>
+		<!--<%if [<ensembleTiddler>!contains:bottom-toolbar-tiddler<bottomToolbarTiddler>] %>-->
 			<$action-listops $tiddler=<<ensembleTiddler>> $field="bottom-toolbar-tiddler" $subfilter="[<bottomToolbarTiddler>]"/>
-		<% endif %>
+		<!--<% endif %>-->
 	</$list>
 	<$list filter="[tags[]prefix[$:/tags/AboveStoryHeader-]]" variable="aboveStoryHeaderTag">
 		<$set name="index" value={{{ [<aboveStoryHeaderTag>removeprefix[$:/tags/AboveStoryHeader-]] }}}>
@@ -102,7 +102,7 @@ Do you want to overwrite it?
 	</$list>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/layout" value={{{ [<ensembleTiddler>get[layout]] }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/view" value={{{ [<ensembleTiddler>get[view]] }}}/>
-	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/state/sidebar" value={{{ [<ensembleTiddler>get[sidebar-state]] }}}/>
+	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/state/sidebar" value={{{ [<ensembleTiddler>get[sidebar-state]] ~yes }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/columns" field="list" value={{{ [<ensembleTiddler>get[columns]] }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/columns" field="current-column" value={{{ [<ensembleTiddler>get[current-column]] }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/config/ShowEditPreview/PerTiddler" value={{{ [<ensembleTiddler>get[show-edit-preview-per-tiddler]] }}}/>
