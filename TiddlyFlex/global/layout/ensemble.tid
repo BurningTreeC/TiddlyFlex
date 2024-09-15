@@ -1,7 +1,7 @@
 title: $:/plugins/BTC/TiddlyFlex/globals/ensemble
 tags: $:/tags/Global
 
-\function tdff.tiddlyflex-ensemble-tiddler-not-contains-value-in-field() [[<ensembleTiddler>]addprefix[$(tiddlyFlexPrefix)$]substitute[]addsuffix[!contains:]] ${$(field)$}$ +[substitute[]] +[join[]] +[addsuffix[<value>]addsuffix[$(tiddlyFlexSuffix)$]substitute[]]
+\function tdff.tiddlyflex-ensemble-tiddler-not-contains-value-in-field() [[$(ensembleTiddler)$]substitute[]addprefix[$(tiddlyFlexPrefix)$]substitute[]addprefix[$(tiddlyFlexPrefix)$]substitute[]addsuffix[$(tiddlyFlexSuffix)$]substitute[]addsuffix[!contains:]] ${$(field)$}$ +[substitute[]] +[join[]] +[addsuffix[$(tiddlyFlexPrefix)$]substitute[]addsuffix[$(value)$]substitute[]addsuffix[$(tiddlyFlexSuffix)$]substitute[]addsuffix[$(tiddlyFlexSuffix)$]substitute[]]
 
 \define tiddlyflex-get-ensemble-overwrite-message()
 The ensemble "$(ensembleTitle)$" already exists.
@@ -11,9 +11,7 @@ Do you want to overwrite it?
 
 \procedure tiddlyflex-set-ensemble-configuration(tiddler,field:"text",value)
 \whitespace trim
-<!--<%if [<tiddler>!is[shadow]!is[missing]get<field>!match<value>] ~[<tiddler>!is[shadow]is[missing]] ~[<tiddler>is[shadow]get<field>!match<value>] %>-->
-	<$action-setfield $tiddler=<<tiddler>> $field=<<field>> $value=<<value>>/>
-<!--<% endif %>-->
+<$action-setfield $tiddler=<<tiddler>> $field=<<field>> $value=<<value>>/>
 \end
 
 \procedure tiddlyflex-save-ensemble-actions-inner(ensembleTitle)
@@ -34,33 +32,25 @@ Do you want to overwrite it?
 		<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field={{{ [[story-list-]addsuffix<column>] }}} value={{{ [[$:/StoryList-]addsuffix<column>get[list]] ~[[]] }}}/>
 	</$list>
 	<$list filter="[all[shadows+tiddlers]tag[$:/tags/TopToolbar]!is[draft]]" variable="topToolbarTiddler">
-		<!--<%if [<ensembleTiddler>!contains:top-toolbar-tiddler<topToolbarTiddler>] %>-->
-			<$action-listops $tiddler=<<ensembleTiddler>> $field="top-toolbar-tiddler" $subfilter="[<topToolbarTiddler>]"/>
-		<!--<% endif %>-->
+		<$action-listops $tiddler=<<ensembleTiddler>> $field="top-toolbar-tiddler" $subfilter="+[<topToolbarTiddler>]"/>
 	</$list>
 	<$list filter="[all[shadows+tiddlers]tag[$:/tags/BottomToolbar]!is[draft]]" variable="bottomToolbarTiddler">
-		<!--<%if [<ensembleTiddler>!contains:bottom-toolbar-tiddler<bottomToolbarTiddler>] %>-->
-			<$action-listops $tiddler=<<ensembleTiddler>> $field="bottom-toolbar-tiddler" $subfilter="[<bottomToolbarTiddler>]"/>
-		<!--<% endif %>-->
+		<$action-listops $tiddler=<<ensembleTiddler>> $field="bottom-toolbar-tiddler" $subfilter="+[<bottomToolbarTiddler>]"/>
 	</$list>
-	<$list filter="[tags[]prefix[$:/tags/AboveStoryHeader-]]" variable="aboveStoryHeaderTag">
+	<$list filter="[all[shadows+tiddlers]tags[]prefix[$:/tags/AboveStoryHeader-]]" variable="aboveStoryHeaderTag">
 		<$set name="index" value={{{ [<aboveStoryHeaderTag>removeprefix[$:/tags/AboveStoryHeader-]] }}}>
 			<$list filter="[all[shadows+tiddlers]tag<aboveStoryHeaderTag>!is[draft]]" variable="aboveStoryHeaderTiddler">
 				<$vars field={{{ [[above-story-header-tiddler-]addsuffix<index>] }}} value=<<aboveStoryHeaderTiddler>>>
-					<%if [subfilter<tdff.tiddlyflex-ensemble-tiddler-not-contains-value-in-field>] %>
-						<$action-listops $tiddler=<<ensembleTiddler>> $field=<<field>> $subfilter="[<value>]"/>
-					<% endif %>
+					<$action-listops $tiddler=<<ensembleTiddler>> $field=<<field>> $subfilter="+[<value>]"/>
 				</$vars>
 			</$list>
 		</$set>
 	</$list>
-	<$list filter="[tags[]prefix[$:/tags/BelowStoryFooter-]]" variable="belowStoryFooterTag">
+	<$list filter="[all[shadows+tiddlers]tags[]prefix[$:/tags/BelowStoryFooter-]]" variable="belowStoryFooterTag">
 		<$set name="index" value={{{ [<belowStoryFooterTag>removeprefix[$:/tags/BelowStoryFooter-]] }}}>
 			<$list filter="[all[shadows+tiddlers]tag<belowStoryFooterTag>!is[draft]]" variable="belowStoryFooterTiddler">
 				<$vars field={{{ [[below-story-footer-tiddler-]addsuffix<index>] }}} value=<<belowStoryFooterTiddler>>>
-					<%if [subfilter<tdff.tiddlyflex-ensemble-tiddler-not-contains-value-in-field>] %>
-						<$action-listops $tiddler=<<ensembleTiddler>> $field=<<field>> $subfilter="[<value>]"/>
-					<% endif %>
+					<$action-listops $tiddler=<<ensembleTiddler>> $field=<<field>> $subfilter="+[<value>]"/>
 				</$vars>
 			</$list>
 		</$set>
@@ -112,7 +102,8 @@ Do you want to overwrite it?
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/config/tiddlyflex/story-river/tiddler/margin-bottom" value={{{ [<ensembleTiddler>get[tiddler-margin-bottom]] }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/config/tiddlyflex/story-river/follow-current-column" value={{{ [<ensembleTiddler>get[follow-current-column]] }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/palette" value={{{ [<ensembleTiddler>get[palette]] }}}/>
-	<$list filter="[all[tiddlers+shadows]prefix[$:/Ensemble/]!match<ensembleTiddler>]" variable="ensembleTiddler">
+
+	<$list filter="[all[tiddlers+shadows]prefix[$:/Ensemble/]]" variable="ensembleTiddler">
 		<%if [<ensembleTiddler>has[stylesheets]] %>
 			<$set name="stylesheetsList" value={{{ [<ensembleTiddler>get[stylesheets]] }}}>
 				<$list filter="[enlist<stylesheetsList>]" variable="stylesheetTiddler">
@@ -162,55 +153,45 @@ Do you want to overwrite it?
 	<%if [<ensembleTiddler>has[stylesheets]] %>
 		<$set name="stylesheetsList" value={{{ [<ensembleTiddler>get[stylesheets]] }}}>
 			<$list filter="[enlist<stylesheetsList>]" variable="stylesheetTiddler">
-				<!--<%if [<stylesheetTiddler>!tag[$:/tags/Stylesheet]] %>-->
-					<$fieldmangler tiddler=<<stylesheetTiddler>>>
-						<$action-sendmessage $message="tm-add-tag" $param="$:/tags/Stylesheet"/>
-					</$fieldmangler>
-				<!--<% endif %>-->
+				<$fieldmangler tiddler=<<stylesheetTiddler>>>
+					<$action-sendmessage $message="tm-add-tag" $param="$:/tags/Stylesheet"/>
+				</$fieldmangler>
 			</$list>
 		</$set>
 	<% endif %>
 	<%if [<ensembleTiddler>has[top-toolbar-tiddler]] %>
 		<$set name="topbarsList" value={{{ [<ensembleTiddler>get[top-toolbar-tiddler]] }}}>
 			<$list filter="[enlist<topbarsList>]" variable="topbarTiddler">
-				<!--<%if [<topbarTiddler>!tag[$:/tags/TopToolbar]] %>-->
-					<$fieldmangler tiddler=<<topbarTiddler>>>
-						<$action-sendmessage $message="tm-add-tag" $param="$:/tags/TopToolbar"/>
-					</$fieldmangler>
-				<!--<% endif %>-->
+				<$fieldmangler tiddler=<<topbarTiddler>>>
+					<$action-sendmessage $message="tm-add-tag" $param="$:/tags/TopToolbar"/>
+				</$fieldmangler>
 			</$list>
 		</$set>
 	<% endif %>
 	<%if [<ensembleTiddler>has[bottom-toolbar-tiddler]] %>
 		<$set name="bottombarsList" value={{{ [<ensembleTiddler>get[bottom-toolbar-tiddler]] }}}>
 			<$list filter="[enlist<bottombarsList>]" variable="bottombarTiddler">
-				<!--<%if [<bottombarTiddler>!tag[$:/tags/BottomToolbar]] %>-->
-					<$fieldmangler tiddler=<<bottombarTiddler>>>
-						<$action-sendmessage $message="tm-add-tag" $param="$:/tags/BottomToolbar"/>
-					</$fieldmangler>
-				<!--<% endif %>-->
+				<$fieldmangler tiddler=<<bottombarTiddler>>>
+					<$action-sendmessage $message="tm-add-tag" $param="$:/tags/BottomToolbar"/>
+				</$fieldmangler>
 			</$list>
 		</$set>
 	<% endif %>
 	<$list filter="[<ensembleTiddler>fields[]prefix[above-story-header-tiddler-]]" variable="aboveStoryHeaderField">
 		<$let aboveStoryHeaderList={{{ [<ensembleTiddler>get<aboveStoryHeaderField>] }}} index={{{ [<aboveStoryHeaderField>removeprefix[above-story-header-tiddler-]] }}} aboveStoryHeaderTag={{{ [[$:/tags/AboveStoryHeader-]addsuffix<index>] }}}>
 			<$list filter="[enlist<aboveStoryHeaderList>]" variable="aboveStoryHeaderTiddler">
-				<!--<%if [<aboveStoryHeaderTiddler>!tag<aboveStoryHeaderTag>] %>-->
-					<$fieldmangler tiddler=<<aboveStoryHeaderTiddler>>>
-						<$action-sendmessage $message="tm-add-tag" $param=<<aboveStoryHeaderTag>>/>
-					</$fieldmangler>
-				<!--<% endif %>-->
+				<$fieldmangler tiddler=<<aboveStoryHeaderTiddler>>>
+					<$action-sendmessage $message="tm-add-tag" $param=<<aboveStoryHeaderTag>>/>
+				</$fieldmangler>
 			</$list>
 		</$let>
 	</$list>
 	<$list filter="[<ensembleTiddler>fields[]prefix[below-story-footer-tiddler-]]" variable="belowStoryFooterField">
 		<$let belowStoryFooterList={{{ [<ensembleTiddler>get<belowStoryFooterField>] }}} index={{{ [<belowStoryFooterField>removeprefix[below-story-footer-tiddler-]] }}} belowStoryFooterTag={{{ [[$:/tags/BelowStoryFooter-]addsuffix<index>] }}}>
 			<$list filter="[enlist<belowStoryFooterList>]" variable="belowStoryFooterTiddler">
-				<!--<%if [<belowStoryFooterTiddler>!tag<belowStoryFooterTag>] %>-->
-					<$fieldmangler tiddler=<<belowStoryFooterTiddler>>>
-						<$action-sendmessage $message="tm-add-tag" $param=<<belowStoryFooterTag>>/>
-					</$fieldmangler>
-				<!--<% endif %>-->
+				<$fieldmangler tiddler=<<belowStoryFooterTiddler>>>
+					<$action-sendmessage $message="tm-add-tag" $param=<<belowStoryFooterTag>>/>
+				</$fieldmangler>
 			</$list>
 		</$let>
 	</$list>
