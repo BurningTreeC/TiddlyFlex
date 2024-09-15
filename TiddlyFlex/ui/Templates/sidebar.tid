@@ -6,7 +6,7 @@ code-body: yes
 $:/config/SideBarSegments/Visibility/$(listItem)$
 \end
 
-<div class="tc-tiddlyflex-sidebar-scrollable">
+<$scrollable class="tc-tiddlyflex-sidebar-scrollable" fallthrough="no">
 
 	<div class="tc-sidebar-header">
 
@@ -26,4 +26,4 @@ $:/config/SideBarSegments/Visibility/$(listItem)$
 
 	</div>
 
-</div>
+</$scrollable>
