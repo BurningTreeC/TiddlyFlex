@@ -33,4 +33,17 @@ tags: $:/tags/Stylesheet
 		bottom: 0;
 	}
 
+	<%if [{$:/config/tiddlyflex/story-river/tiddler/show-controls-hover}match[yes]] %>
+
+		.tc-tiddler-frame .tc-tiddler-controls {
+			display: none;
+			padding: 0;
+		}
+
+		.tc-tiddler-frame:hover .tc-tiddler-controls {
+			display: block;
+		}
+
+	<% endif %>
+
 <% endif %>

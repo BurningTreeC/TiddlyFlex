@@ -1,6 +1,6 @@
 title: $:/config/tiddlyflex/story-river/tiddler/controls-breakpoint-sidebar
 caption: Menu Breakpoint when Sidebar is shown
-description: The Menu Breakpoint in columns for when the Sidebar is shown
+description: The Menu Breakpoint in columns (when the Sidebar is shown)
 settings-template: $:/plugins/BTC/TiddlyFlex/ui/ControlPanel/Templates/input
 
 3

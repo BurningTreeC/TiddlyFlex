@@ -1,6 +1,6 @@
 title: $:/config/tiddlyflex/story-river/tiddler/controls-breakpoint
 caption: Menu Breakpoint
-description: The Menu Breakpoint in columns for when the Sidebar is hidden
+description: The Menu Breakpoint in columns (when the Sidebar is hidden)
 settings-template: $:/plugins/BTC/TiddlyFlex/ui/ControlPanel/Templates/input
 
 4

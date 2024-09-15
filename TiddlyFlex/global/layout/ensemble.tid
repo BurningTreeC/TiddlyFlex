@@ -26,6 +26,7 @@ Do you want to overwrite it?
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="current-column" value={{$:/columns!!current-column}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="follow-current-column" value={{{ [{$:/config/tiddlyflex/story-river/follow-current-column}match[no]] ~yes }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="show-edit-preview-per-tiddler" value={{$:/config/ShowEditPreview/PerTiddler}}/>
+	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="show-controls-hover" value={{$:/config/tiddlyflex/story-river/tiddler/show-controls-hover}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="story-river-padding" value={{{ [[$:/config/tiddlyflex/story-river/padding]get[text]] ~[[]] }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="tiddler-margin-bottom" value={{{ [[$:/config/tiddlyflex/story-river/tiddler/margin-bottom]get[text]] ~[[]] }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="palette" value={{$:/palette}}/>
@@ -106,6 +107,7 @@ Do you want to overwrite it?
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/columns" field="list" value={{{ [<ensembleTiddler>get[columns]] }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/columns" field="current-column" value={{{ [<ensembleTiddler>get[current-column]] }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/config/ShowEditPreview/PerTiddler" value={{{ [<ensembleTiddler>get[show-edit-preview-per-tiddler]] }}}/>
+	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/config/tiddlyflex/story-river/tiddler/show-controls-hover" value={{{ [<ensembleTiddler>get[show-controls-hover]] }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/config/tiddlyflex/story-river/padding" value={{{ [<ensembleTiddler>get[story-river-padding]] }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/config/tiddlyflex/story-river/tiddler/margin-bottom" value={{{ [<ensembleTiddler>get[tiddler-margin-bottom]] }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/config/tiddlyflex/story-river/follow-current-column" value={{{ [<ensembleTiddler>get[follow-current-column]] }}}/>
