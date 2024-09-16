@@ -14,7 +14,7 @@ Everyone is welcome to create an Issue or a Pull request
 
 ## Installation
 
-You can install the plgin in two ways
+You can install the plugin in two ways
 
 ### Drag and Drop
 
