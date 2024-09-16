@@ -19,6 +19,7 @@ Do you want to overwrite it?
 <$set name="ensembleTiddler" value={{{ [[$:/Ensemble/]addsuffix<ensembleTitle>] }}}>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="layout" value={{$:/layout}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="view" value={{$:/view}}/>
+	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="horizontal" value={{$:/config/tiddlyflex/story-river/horizontal}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="sidebar-state" value={{$:/state/sidebar}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="columns" value={{$:/columns!!list}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="current-column" value={{$:/columns!!current-column}}/>
@@ -106,6 +107,7 @@ Do you want to overwrite it?
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/state/sidebar" value={{{ [<ensembleTiddler>get[sidebar-state]] ~yes }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/columns" field="list" value={{{ [<ensembleTiddler>get[columns]] ~1 }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/columns" field="current-column" value={{{ [<ensembleTiddler>get[current-column]] ~1 }}}/>
+	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/config/tiddlyflex/story-river/horizontal" value={{{ [<ensembleTiddler>get[horizontal]] ~no }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/config/ShowEditPreview/PerTiddler" value={{{ [<ensembleTiddler>get[show-edit-preview-per-tiddler]] ~yes }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/config/tiddlyflex/story-river/tiddler/show-controls-hover" value={{{ [<ensembleTiddler>get[show-controls-hover]] ~no }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/config/tiddlyflex/story-river/animation-curve" value={{{ [<ensembleTiddler>get[animation-curve]] ~linear }}}/>
