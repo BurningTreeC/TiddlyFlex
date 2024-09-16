@@ -48,6 +48,9 @@ Do you want to overwrite it?
 	<$list filter="[all[shadows+tiddlers]tag[$:/tags/BottomToolbar]!is[draft]]" variable="bottomToolbarTiddler">
 		<$action-listops $tiddler=<<ensembleTiddler>> $field="bottom-toolbar-tiddler" $subfilter="+[<bottomToolbarTiddler>]"/>
 	</$list>
+	<$list filter="[all[shadows+tiddlers]tag[$:/tags/LeftToolbar]!is[draft]]" variable="leftToolbarTiddler">
+		<$action-listops $tiddler=<<ensembleTiddler>> $field="left-toolbar-tiddler" $subfilter="+[<leftToolbarTiddler>]"/>
+	</$list>
 	<$list filter="[all[shadows+tiddlers]tags[]prefix[$:/tags/AboveStoryHeader-]]" variable="aboveStoryHeaderTag">
 		<$set name="index" value={{{ [<aboveStoryHeaderTag>removeprefix[$:/tags/AboveStoryHeader-]] }}}>
 			<$list filter="[all[shadows+tiddlers]tag<aboveStoryHeaderTag>!is[draft]]" variable="aboveStoryHeaderTiddler">
@@ -79,14 +82,16 @@ Do you want to overwrite it?
 \whitespace trim
 <$action-confirm $message=<<tiddlyflex-get-ensemble-overwrite-message>>>
 	<$action-deletetiddler $tiddler={{{ [[$:/Ensemble/]addsuffix<ensembleTitle>] }}}/>
+	<$action-setfield $tiddler={{{ [[$:/Ensemble/]addsuffix<ensembleTitle>] }}} icon=<<icon>>/>
 	<$macrocall $name="tiddlyflex-save-ensemble-actions-inner" ensembleTitle=<<ensembleTitle>>/>
 </$action-confirm>
 \end
 
-\procedure tiddlyflex-save-ensemble-actions(ensembleTitle)
+\procedure tiddlyflex-save-ensemble-actions(ensembleTitle,icon)
 \whitespace trim
 <%if [<ensembleTitle>!is[blank]!match[]] %>
 	<%if [[$:/Ensemble/]addsuffix<ensembleTitle>is[missing]] %>
+		<$action-setfield $tiddler={{{ [[$:/Ensemble/]addsuffix<ensembleTitle>] }}} icon=<<icon>>/>
 		<$macrocall $name="tiddlyflex-save-ensemble-actions-inner" ensembleTitle=<<ensembleTitle>>/>
 	<% else %>
 		<<tiddlyflex-overwrite-ensemble-message>>

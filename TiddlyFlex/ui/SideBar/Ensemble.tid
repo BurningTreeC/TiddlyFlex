@@ -17,11 +17,11 @@ Do you want to delete the Ensemble "$(ensembleName)$"?
 Give your ensemble a title:<br>
 <$edit-text tiddler="$:/temp/tiddlyflex/save-ensemble/story-title" default="" placeholder="Title" tag="input" class="tc-story-title tc-small-gap-right"/><$button class="tc-btn-invisible tc-greyed-out-button"><$action-deletefield $tiddler="$:/temp/tiddlyflex/save-ensemble/story-title" $field="text"/>{{$:/core/images/close-button}}</$button>
 
-Optionally, provide a list of tiddlers that should get the tag <span class="tc-small-gap-left tc-small-gap-right"><<tag-pill "$:/tags/Stylesheet">></span> when the Ensemble is loaded:<br>
-<$edit-text tiddler="$:/temp/tiddlyflex/save-ensemble/story-title" default="" field="stylesheets" placeholder="Stylesheets" tag="input" class="tc-small-gap-right"/><$button class="tc-btn-invisible tc-greyed-out-button"><$action-deletefield $tiddler="$:/temp/tiddlyflex/save-ensemble/story-title" $field="stylesheets"/>{{$:/core/images/close-button}}</$button>
+Optionally, provide an icon:<br>
+<$edit-text tiddler="$:/temp/tiddlyflex/save-ensemble/story-title" default="" field="icon" placeholder="Icon" tag="input" class="tc-small-gap-right"/><$button class="tc-btn-invisible tc-greyed-out-button"><$action-deletefield $tiddler="$:/temp/tiddlyflex/save-ensemble/story-title" $field="icon"/>{{$:/core/images/close-button}}</$button>
 
-<$let ensembleTitle={{{ [[$:/temp/tiddlyflex/save-ensemble/story-title]get[text]] }}}>
-	<$button><$macrocall $name="tiddlyflex-save-ensemble-actions" ensembleTitle=<<ensembleTitle>>/>Save</$button>
+<$let ensembleTitle={{{ [[$:/temp/tiddlyflex/save-ensemble/story-title]get[text]] }}} icon={{{ [[$:/temp/tiddlyflex/save-ensemble/story-title]get[icon]] }}}>
+	<$button><$macrocall $name="tiddlyflex-save-ensemble-actions" ensembleTitle=<<ensembleTitle>> icon=<<icon>>/>Save</$button>
 </$let>
 
 <hr class="simple">
@@ -32,7 +32,7 @@ Optionally, provide a list of tiddlers that should get the tag <span class="tc-s
 
 <$let ensembleName={{{ [<ensembleTiddler>removeprefix[$:/Ensemble/]] }}}>
 
-<$text text=<<ensembleName>>/><$button actions=<<tiddlyflex-load-ensemble-actions>> class="tc-small-gap-left">Load</$button><$button class="tc-small-gap-left" actions=<<tiddlyflex-delete-ensemble-actions>>>Delete</$button><$button class="tc-big-gap-left"><$macrocall $name="tiddlyflex-save-ensemble-actions" ensembleTitle=<<ensembleName>>/>Save</$button>
+<span class="tc-small-gap-right" style="font-size: 24px;"><$transclude tiddler={{{ [<ensembleTiddler>get[icon]] ~$:/core/icon }}}/></span><span style="font-size: 24px;"><$text text=<<ensembleName>>/></span><$button actions=<<tiddlyflex-load-ensemble-actions>> class="tc-small-gap-left">Load</$button><$button class="tc-small-gap-left" actions=<<tiddlyflex-delete-ensemble-actions>>>Delete</$button><$button class="tc-big-gap-left"><$macrocall $name="tiddlyflex-save-ensemble-actions" ensembleTitle=<<ensembleName>> icon={{{ [<ensembleTiddler>get[icon]] }}}/>Save</$button>
 
 </$let>
 
