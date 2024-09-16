@@ -3,4 +3,4 @@ caption: Sidebar width
 description: The Width of the Sidebar in % or px
 settings-template: $:/plugins/BTC/TiddlyFlex/ui/ControlPanel/Templates/input
 
-15%
+25%

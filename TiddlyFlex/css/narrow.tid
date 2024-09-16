@@ -1,9 +1,12 @@
 title: $:/plugins/BTC/TiddlyFlex/styles/narrow
 tags: $:/tags/Stylesheet
 
+\procedure story-river-width-sidebar() calc(100% - (100% - {{{ [[$(sidebarPosX)$]substitute[]] }}}))
+\procedure story-river-width() calc(100% - {{{ [[$(sidebarWidth)$]substitute[]] }}})
+
 <%if [tdff.tiddlyflex-layout[]] %>
 
-	@media (max-width: 1199.98px) {
+	@media (max-width: 991.98px) {
 
 		<<tiddlyflex-css-horizontal-view>>
 
@@ -21,6 +24,49 @@ tags: $:/tags/Stylesheet
 			.tc-tiddlyflex-sidebar-hide.tc-tiddlyflex-sidebar-shown {
 				display: none;
 			}
+
+		<% endif %>
+
+	}
+
+	@media (min-width: 992px) {
+
+		<%if [{$:/config/tiddlyflex/story-river/horizontal}match[yes]] %>
+
+			<$let sidebarPosX={{{ [[$:/state/sidebar/posx]!is[missing]get[text]addsuffix[px]] ~DEFAULT }}} sidebarWidth={{$:/config/tiddlyflex/sidebar/width}}>
+
+				<$wikify name="horizontalWidth" text={{{ [<sidebarPosX>!match[DEFAULT]then<story-river-width-sidebar>] ~[<story-river-width>] }}}>
+
+					.tc-tiddlyflex-main-wrapper {
+						overflow-x: auto;
+					}
+
+					.tc-tiddlyflex-main {
+						overflow-x: clip;
+					}
+
+					.tc-tiddlyflex-story-river-container, {
+						flex-basis: <<horizontalWidth>>;
+						max-width: <<horizontalWidth>>;
+					}
+
+					.tc-tiddlyflex-story-river-container-inner {
+						overflow-x: auto;
+						width: 100%;
+						scroll-behavior: smooth;
+						scroll-snap-type: x mandatory;
+					}
+
+					.tc-tiddlyflex-story-river-wrapper {
+						width: 100%;
+						flex-basis: 100%;
+						scroll-snap-align: start;
+						overflow: hidden;
+					}
+
+				</$wikify>
+
+			</$let>
 
 		<% endif %>
 

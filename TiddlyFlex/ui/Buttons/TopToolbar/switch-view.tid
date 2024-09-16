@@ -1,0 +1,28 @@
+title: $:/plugins/BTC/TiddlyFlex/ui/Buttons/TopToolbar/switch-view
+caption: {{$:/plugins/BTC/TiddlyFlex/icons/horizontal}} Switch View
+description: Switch the Story River View
+tags: $:/tags/TopRightBar $:/tags/PageControls
+list-before: $:/plugins/BTC/TiddlyFlex/ui/Buttons/TopToolbar/dragging
+
+\whitespace trim
+<%if [tdff.tiddlyflex-layout[]] %>
+	<$button class={{{ [{$:/config/tiddlyflex/story-river/horizontal}match[yes]then[tc-selected]] [<tv-config-toolbar-class>] +[join[ ]] }}} tooltip="horizontal / vertical">
+		<$list filter="[<tv-config-toolbar-icons>match[yes]]">
+			<%if [{$:/config/tiddlyflex/story-river/horizontal}match[yes]] %>
+				{{$:/plugins/BTC/TiddlyFlex/icons/horizontal}}
+			<% else %>
+				{{$:/plugins/BTC/TiddlyFlex/icons/vertical}}
+			<% endif %>
+		</$list>
+		<$list filter="[<tv-config-toolbar-text>match[yes]]">
+			<span class="tc-btn-text">
+				<$text text="Horizontal / Vertical"/>
+			</span>
+		</$list>
+		<%if [{$:/config/tiddlyflex/story-river/horizontal}!match[yes]] %>
+			<$action-setfield $tiddler="$:/config/tiddlyflex/story-river/horizontal" text="yes"/>
+		<% else %>
+			<$action-deletetiddler $tiddler="$:/config/tiddlyflex/story-river/horizontal"/>
+		<% endif %>
+	</$button>
+<% endif %>

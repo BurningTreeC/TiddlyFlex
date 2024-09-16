@@ -33,7 +33,7 @@ tags: $:/tags/Stylesheet
 	position: relative;
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 992px) {
 
 	.tc-tiddlyflex-main {
 		-webkit-transition: max-width {{$:/config/AnimationDuration}}ms {{$:/config/tiddlyflex/story-river/animation-curve}};
@@ -51,7 +51,7 @@ tags: $:/tags/Stylesheet
 
 <% endif %>
 
-@media (min-width: 1200px) {
+@media (min-width: 992px) {
 
 	.tc-tiddlyflex-main {
 		overflow-x: clip;
@@ -100,7 +100,7 @@ tags: $:/tags/Stylesheet
 	max-width: 100%;
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 992px) {
 
 	.tc-tiddlyflex-story-river-container {
 		-webkit-transition: flex-basis {{$:/config/AnimationDuration}}ms {{$:/config/tiddlyflex/story-river/animation-curve}}, max-width {{$:/config/AnimationDuration}}ms {{$:/config/tiddlyflex/story-river/animation-curve}};
@@ -132,13 +132,13 @@ tags: $:/tags/Stylesheet
 	<%if [[$:/state/sidebar/resizing]!is[missing]] %>
 
 		.tc-tiddlyflex-story-river-container {
-			flex-basis: max(max(calc({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px)),calc({{{ [subfilter<tdff.tiddlyflex-enlist-columns>count[]] }}} * {{$:/config/tiddlyflex/story-river/min-width}})),calc(100% - (100% - ({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px)))));
+			flex-basis: max(max(calc({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px)),calc({{{ [{$:/config/tiddlyflex/story-river/horizontal}!match[yes]] :then[subfilter<tdff.tiddlyflex-enlist-columns>count[]] ~1 }}} * {{$:/config/tiddlyflex/story-river/min-width}})),calc(100% - (100% - ({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px)))));
 		}
 
 	<% else %>
 
 		.tc-tiddlyflex-story-river-container {
-			flex-basis: max(max(calc({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px)),calc({{$:/state/sidebar/posx!!column-count}} * {{$:/config/tiddlyflex/story-river/min-width}})),calc(100% - (100% - ({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px)))));
+			flex-basis: max(max(calc({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px)),calc({{{ [{$:/config/tiddlyflex/story-river/horizontal}!match[yes]] :then[subfilter<tdff.tiddlyflex-enlist-columns>count[]] ~1 }}} * {{$:/config/tiddlyflex/story-river/min-width}})),calc(100% - (100% - ({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px)))));
 		}
 
 	<% endif %>
@@ -163,7 +163,7 @@ tags: $:/tags/Stylesheet
 	flex-shrink: 0;
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 992px) {
 
 	.tc-tiddlyflex-story-river-container-inner {
 		overflow: hidden;
@@ -181,7 +181,7 @@ tags: $:/tags/Stylesheet
 	z-index: 500;
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 992px) {
 
 	.tc-tiddlyflex-story-river-wrapper {
 		flex-basis: 0;
@@ -197,7 +197,7 @@ tags: $:/tags/Stylesheet
 	z-index: 600;
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 992px) {
 
 	.tc-tiddlyflex-story-river-wrapper-inner {
 		flex-basis: 0;
@@ -241,7 +241,7 @@ tags: $:/tags/Stylesheet
 	box-shadow: 0px 0px 5px 0px <<colour tiddlyflex-box-shadow>>;
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 992px) {
 
 	.tc-tiddlyflex-sidebar {
 		width: {{$:/config/tiddlyflex/sidebar/width}};
@@ -256,13 +256,13 @@ tags: $:/tags/Stylesheet
 	<%if [[$:/state/sidebar/resizing]!is[missing]] %>
 
 		.tc-tiddlyflex-sidebar {
-			width: max(min(max(calc(100% - ({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px))),{{$:/config/tiddlyflex/sidebar/width}}),calc(100% - ({{{ [subfilter<tdff.tiddlyflex-enlist-columns>count[]] }}} * {{$:/config/tiddlyflex/story-river/min-width}}))),{{$:/config/tiddlyflex/sidebar/width}});
+			width: max(min(max(calc(100% - ({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px))),{{$:/config/tiddlyflex/sidebar/width}}),calc(100% - ({{{ [{$:/config/tiddlyflex/story-river/horizontal}!match[yes]] :then[subfilter<tdff.tiddlyflex-enlist-columns>count[]] ~1 }}} * {{$:/config/tiddlyflex/story-river/min-width}}))),{{$:/config/tiddlyflex/sidebar/width}});
 		}
 
 	<% else %>
 
 		.tc-tiddlyflex-sidebar {
-			width: max(min(max(calc(100% - ({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px))),{{$:/config/tiddlyflex/sidebar/width}}),calc(100% - ({{$:/state/sidebar/posx!!column-count}} * {{$:/config/tiddlyflex/story-river/min-width}}))),{{$:/config/tiddlyflex/sidebar/width}});
+			width: max(min(max(calc(100% - ({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px))),{{$:/config/tiddlyflex/sidebar/width}}),calc(100% - ({{{ [{$:/config/tiddlyflex/story-river/horizontal}!match[yes]] :then[subfilter<tdff.tiddlyflex-enlist-columns>count[]] ~1 }}} * {{$:/config/tiddlyflex/story-river/min-width}}))),{{$:/config/tiddlyflex/sidebar/width}});
 		}
 
 	<% endif %>

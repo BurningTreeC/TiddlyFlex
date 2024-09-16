@@ -3,7 +3,7 @@ tags: $:/tags/Stylesheet
 
 <%if [tdff.tiddlyflex-layout[]] %>
 
-	@media (min-width: 1200px) {
+	@media (min-width: 992px) {
 
 		<%if [{$:/config/tiddlyflex/sidebar/resizer}match[yes]] %>
 
@@ -77,13 +77,13 @@ tags: $:/tags/Stylesheet
 				<%if [[$:/state/sidebar/resizing]!is[missing]] %>
 
 					.tc-tiddlyflex-sidebar-resizer {
-						left: min(max(min(calc(100% - {{$:/config/tiddlyflex/sidebar/width}} - 39px),calc({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px) - 39px)),calc(({{{ [subfilter<tdff.tiddlyflex-enlist-columns>count[]] }}} * {{$:/config/tiddlyflex/story-river/min-width}}) - 39px)),calc(100% - {{$:/config/tiddlyflex/sidebar/width}} - 39px));
+						left: min(max(min(calc(100% - {{$:/config/tiddlyflex/sidebar/width}} - 39px),calc({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px) - 39px)),calc(({{{ [{$:/config/tiddlyflex/story-river/horizontal}!match[yes]] :then[subfilter<tdff.tiddlyflex-enlist-columns>count[]] ~1 }}} * {{$:/config/tiddlyflex/story-river/min-width}}) - 39px)),calc(100% - {{$:/config/tiddlyflex/sidebar/width}} - 39px));
 					}
 
 				<% else %>
 
 					.tc-tiddlyflex-sidebar-resizer {
-						left: min(max(min(calc(100% - {{$:/config/tiddlyflex/sidebar/width}} - 39px),calc({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px) - 39px)),calc(({{$:/state/sidebar/posx!!column-count}} * {{$:/config/tiddlyflex/story-river/min-width}}) - 39px)),calc(100% - {{$:/config/tiddlyflex/sidebar/width}} - 39px));
+						left: min(max(min(calc(100% - {{$:/config/tiddlyflex/sidebar/width}} - 39px),calc({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px) - 39px)),calc(({{{ [{$:/config/tiddlyflex/story-river/horizontal}!match[yes]] :then[subfilter<tdff.tiddlyflex-enlist-columns>count[]] ~1 }}} * {{$:/config/tiddlyflex/story-river/min-width}}) - 39px)),calc(100% - {{$:/config/tiddlyflex/sidebar/width}} - 39px));
 					}
 
 				<% endif %>
@@ -100,7 +100,7 @@ tags: $:/tags/Stylesheet
 
 	}
 
-	@media (max-width: 1199.98px) {
+	@media (max-width: 991.98px) {
 
 		.tc-tiddlyflex-pointerdown-eventcatcher {
 			display: none;

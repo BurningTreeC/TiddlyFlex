@@ -5,4 +5,4 @@ settings-template: $:/plugins/BTC/TiddlyFlex/ui/ControlPanel/Templates/select
 option-names: Linear Ease Ease-In-Out Ease-In Ease-Out
 option-values: linear ease ease-in-out ease-in ease-out
 
-linear
+ease-in-out
