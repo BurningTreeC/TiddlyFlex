@@ -144,6 +144,15 @@ Do you want to overwrite it?
 				</$list>
 			</$set>
 		<% endif %>
+		<%if [<ensembleTiddler>has[left-toolbar-tiddler]] %>
+			<$set name="leftbarsList" value={{{ [<ensembleTiddler>get[left-toolbar-tiddler]] }}}>
+				<$list filter="[enlist<leftbarsList>]" variable="leftbarTiddler">
+					<$fieldmangler tiddler=<<leftbarTiddler>>>
+						<$action-sendmessage $message="tm-remove-tag" $param="$:/tags/LeftToolbar"/>
+					</$fieldmangler>
+				</$list>
+			</$set>
+		<% endif %>
 		<%if [<ensembleTiddler>has[bottom-toolbar-tiddler]] %>
 			<$set name="bottombarsList" value={{{ [<ensembleTiddler>get[bottom-toolbar-tiddler]] }}}>
 				<$list filter="[enlist<bottombarsList>]" variable="bottombarTiddler">
@@ -195,6 +204,15 @@ Do you want to overwrite it?
 			<$list filter="[enlist<bottombarsList>]" variable="bottombarTiddler">
 				<$fieldmangler tiddler=<<bottombarTiddler>>>
 					<$action-sendmessage $message="tm-add-tag" $param="$:/tags/BottomToolbar"/>
+				</$fieldmangler>
+			</$list>
+		</$set>
+	<% endif %>
+	<%if [<ensembleTiddler>has[left-toolbar-tiddler]] %>
+		<$set name="leftbarsList" value={{{ [<ensembleTiddler>get[left-toolbar-tiddler]] }}}>
+			<$list filter="[enlist<leftbarsList>]" variable="leftbarTiddler">
+				<$fieldmangler tiddler=<<leftbarTiddler>>>
+					<$action-sendmessage $message="tm-add-tag" $param="$:/tags/LeftToolbar"/>
 				</$fieldmangler>
 			</$list>
 		</$set>
