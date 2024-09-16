@@ -53,6 +53,7 @@ tags: $:/tags/Stylesheet
 					.tc-tiddlyflex-story-river-container-inner {
 						overflow-x: auto;
 						width: 100%;
+						max-width: 100%;
 						scroll-behavior: smooth;
 						scroll-snap-type: x mandatory;
 					}
@@ -60,6 +61,7 @@ tags: $:/tags/Stylesheet
 					.tc-tiddlyflex-story-river-wrapper {
 						width: 100%;
 						flex-basis: 100%;
+						max-width: 100%;
 						scroll-snap-align: start;
 						overflow: hidden;
 					}
