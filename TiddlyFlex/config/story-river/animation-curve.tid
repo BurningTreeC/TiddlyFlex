@@ -1,0 +1,8 @@
+title: $:/config/tiddlyflex/story-river/animation-curve
+caption: Animation Curve
+description: Which Animation Curve should be used for UI animations
+settings-template: $:/plugins/BTC/TiddlyFlex/ui/ControlPanel/Templates/select
+option-names: Linear Ease Ease-In-Out Ease-In Ease-Out
+option-values: linear ease ease-in-out ease-in ease-out
+
+linear

@@ -36,8 +36,8 @@ tags: $:/tags/Stylesheet
 @media (min-width: 1200px) {
 
 	.tc-tiddlyflex-main {
-		-webkit-transition: max-width {{$:/config/AnimationDuration}}ms linear;
-		transition: max-width {{$:/config/AnimationDuration}}ms linear;
+		-webkit-transition: max-width {{$:/config/AnimationDuration}}ms {{$:/config/tiddlyflex/story-river/animation-curve}};
+		transition: max-width {{$:/config/AnimationDuration}}ms {{$:/config/tiddlyflex/story-river/animation-curve}};
 	}
 
 }
@@ -103,8 +103,8 @@ tags: $:/tags/Stylesheet
 @media (min-width: 1200px) {
 
 	.tc-tiddlyflex-story-river-container {
-		-webkit-transition: flex-basis {{$:/config/AnimationDuration}}ms linear, max-width {{$:/config/AnimationDuration}}ms linear;
-		transition: flex-basis {{$:/config/AnimationDuration}}ms linear, max-width {{$:/config/AnimationDuration}}ms linear;
+		-webkit-transition: flex-basis {{$:/config/AnimationDuration}}ms {{$:/config/tiddlyflex/story-river/animation-curve}}, max-width {{$:/config/AnimationDuration}}ms {{$:/config/tiddlyflex/story-river/animation-curve}};
+		transition: flex-basis {{$:/config/AnimationDuration}}ms {{$:/config/tiddlyflex/story-river/animation-curve}}, max-width {{$:/config/AnimationDuration}}ms {{$:/config/tiddlyflex/story-river/animation-curve}};
 	}
 
 }
@@ -245,8 +245,8 @@ tags: $:/tags/Stylesheet
 
 	.tc-tiddlyflex-sidebar {
 		width: {{$:/config/tiddlyflex/sidebar/width}};
-		-webkit-transition: box-shadow {{$:/config/AnimationDuration}}ms linear;
-		transition: box-shadow {{$:/config/AnimationDuration}}ms linear;
+		-webkit-transition: box-shadow {{$:/config/AnimationDuration}}ms {{$:/config/tiddlyflex/story-river/animation-curve}};
+		transition: box-shadow {{$:/config/AnimationDuration}}ms {{$:/config/tiddlyflex/story-river/animation-curve}};
 	}
 
 }
