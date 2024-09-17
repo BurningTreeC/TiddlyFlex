@@ -47,14 +47,14 @@ tags: $:/tags/Global
 	<$let currentColumn=<<tiddlyFlexColumn>> tiddlyFlexColumn={{{ [<currentColumn>add[1]] }}}>
 		<<tiddlyflex-navigate-story-river-actions-inner-inner>>
 	</$let>
-<% elseif [<modifier>match[alt]] %>
+<% elseif [<modifier>match[alt-shift]] %>
 	<$let currentColumn=<<tiddlyFlexColumn>> tiddlyFlexColumn={{{ [<tiddlyFlexColumn>!match[1]subtract[1]] ~1 }}}>
 		<<tiddlyflex-navigate-story-river-actions-inner-inner>>
 	</$let>
 <% endif %>
 \end
 \procedure tiddlyflex-navigate-story-river-actions()
-\function tiddlyflex-no-shift-alt() [<modifier>!match[shift]then<modifier>!match[alt]]
+\function tiddlyflex-no-shift-alt() [<modifier>!match[shift]then<modifier>!match[alt-shift]]
 <%if [subfilter<tdff.tiddlyflex-enlist-columns>] +[addprefix[$:/StoryList-]] +[enlist-input[]] +[contains<event-navigateTo>] %>
 	<%if [function[tiddlyflex-no-shift-alt]] %>
 		<$list filter="[subfilter<tdff.tiddlyflex-enlist-columns>]" variable="tiddlyFlexColumn">
