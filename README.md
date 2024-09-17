@@ -26,7 +26,7 @@ You can install the plugin in two ways
 - clone this repository to your `$TIDDLYWIKI_PLUGIN_PATH`
 
 ```
-git clone --depth=1 git@github.com:BurningTreeC/TiddlyFlex $TIDDLYWIKI_PLUGIN_PATH
+git clone --depth=1 git@github.com:BurningTreeC/TiddlyFlex.git $TIDDLYWIKI_PLUGIN_PATH
 ```
 
 - enable the plugin in your `tiddlywiki.info` file
