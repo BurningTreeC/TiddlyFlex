@@ -49,6 +49,7 @@ key: ((move-left))
 			</$let>
 		<% endif %>
 		<$let currentColumn=<<previousStoryCounter>> cssEscapedTitle={{{ [<focusedTiddler>escapecss[]] }}}>
+			<<tiddlyflex-scroll-to-column>>
 			<<tiddlyflex-scroll-to-tiddler>>
 		</$let>
 	</$let>

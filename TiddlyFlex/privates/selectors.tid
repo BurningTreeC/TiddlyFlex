@@ -18,3 +18,6 @@ title: $:/plugins/BTC/TiddlyFlex/privates/selectors
 	<$action-sendmessage $message="tm-scroll" selector=<<scrollSelector>>/>
 </$wikify>
 \end
+\procedure tiddlyflex-scroll-to-column()
+	<$action-sendmessage $message="tm-scroll" selector={{{ [[.tc-tiddlyflex-story-river-]addsuffix<currentColumn>] }}}/>
+\end

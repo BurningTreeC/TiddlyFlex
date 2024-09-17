@@ -14,19 +14,6 @@ tags: $:/tags/Stylesheet
 			width: 90%;
 		}
 
-		<%if [{$:/state/sidebar}!match[yes]!match[no]] %>
-
-			.tc-tiddlyflex-sidebar {
-				display: none;
-				transform: translate3d(100%,0,0);
-			}
-
-			.tc-tiddlyflex-sidebar-hide.tc-tiddlyflex-sidebar-shown {
-				display: none;
-			}
-
-		<% endif %>
-
 	}
 
 	@media (min-width: 992px) {
