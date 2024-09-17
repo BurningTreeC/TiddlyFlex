@@ -39,6 +39,7 @@ Do you want to overwrite it?
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="story-river-padding" value={{{ [[$:/config/tiddlyflex/story-river/padding]get[text]] ~[[]] }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="tiddler-margin-bottom" value={{{ [[$:/config/tiddlyflex/story-river/tiddler/margin-bottom]get[text]] ~[[]] }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="palette" value={{$:/palette}}/>
+	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="show-top-right-bar" value={{$:/config/tiddlyflex/show-top-right-bar}}/>
 	<$list filter="[list[$:/columns]]" variable="column">
 		<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field={{{ [[story-list-]addsuffix<column>] }}} value={{{ [[$:/StoryList-]addsuffix<column>get[list]] ~[[]] }}}/>
 	</$list>
@@ -129,7 +130,7 @@ Do you want to overwrite it?
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/config/tiddlyflex/story-river/tiddler/margin-bottom" value={{{ [<ensembleTiddler>get[tiddler-margin-bottom]] ~28px }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/config/tiddlyflex/story-river/follow-current-column" value={{{ [<ensembleTiddler>get[follow-current-column]] ~yes }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/palette" value={{{ [<ensembleTiddler>get[palette]] ~$:/palettes/Vanilla }}}/>
-
+	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/config/tiddlyflex/show-top-right-bar" value={{{ [<ensembleTiddler>get[show-top-right-bar]] ~no }}}/>
 	<$list filter="[all[tiddlers+shadows]prefix[$:/Ensemble/]]" variable="ensembleTiddler">
 		<%if [<ensembleTiddler>has[stylesheets]] %>
 			<$set name="stylesheetsList" value={{{ [<ensembleTiddler>get[stylesheets]] }}}>
