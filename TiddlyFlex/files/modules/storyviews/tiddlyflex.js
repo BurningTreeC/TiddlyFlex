@@ -79,6 +79,10 @@ ClassicStoryView.prototype.insert = function(widget) {
 		setTimeout(function() {
 			widget.wiki.deleteTiddler("$:/state/tiddlyflex/adding/" + tiddlerTitle);
 		},duration);
+	} else {
+		setTimeout(function() {
+			widget.wiki.deleteTiddler("$:/state/tiddlyflex/adding/" + tiddlerTitle);
+		},duration);
 	}
 	if($tw.wiki.tiddlerExists("$:/state/dragging")) {
 		widget.wiki.deleteTiddler("$:/state/dragging");
@@ -132,6 +136,9 @@ ClassicStoryView.prototype.remove = function(widget) {
 		setTimeout(removeElement,duration);
 	} else {
 		widget.removeChildDomNodes();
+		setTimeout(function() {
+			widget.wiki.deleteTiddler("$:/state/tiddlyflex/removing/" + tiddlerTitle);
+		},duration);
 	}
 };
 

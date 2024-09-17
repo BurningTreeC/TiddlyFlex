@@ -7,7 +7,7 @@ key: ((move-right))
 <$action-listops $tiddler=<<nextStoryList>> $subfilter="+[insertbefore<focusedTiddler>,<firstNextStoryTiddler>]"/>
 <$action-setfield $tiddler=<<nextHistoryList>> current-tiddler=<<focusedTiddler>>/>
 \end
-\define actions()
+\procedure actions()
 <%if [<focusedTiddler>!is[blank]then<currentColumn>!match<lastColumn>] %>
 	<$let scrollTiddler={{{ [subfilter<tdff.tiddlyflex-story-river-filter>after<focusedTiddler>] ~[subfilter<tdff.tiddlyflex-story-river-filter>before<focusedTiddler>] }}}>
 		<$action-setfield $tiddler={{{ [[$:/state/tiddlyflex/removing/]addsuffix<focusedTiddler>] }}} direction="right" column=<<currentColumn>>/>
