@@ -1,0 +1,12 @@
+title: $:/plugins/BTC/TiddlyFlex/KeyboardShortcuts/horizontal-vertical
+tags: $:/tags/KeyboardShortcut
+key: ((horizontal-vertical))
+
+\import $:/plugins/BTC/TiddlyFlex/globals/layout/functions
+<%if [tdff.tiddlyflex-layout[]] %>
+	<%if [{$:/config/tiddlyflex/story-river/horizontal}!match[yes]] %>
+		<$action-setfield $tiddler="$:/config/tiddlyflex/story-river/horizontal" text="yes"/>
+	<% else %>
+		<$action-deletetiddler $tiddler="$:/config/tiddlyflex/story-river/horizontal"/>
+	<% endif %>
+<% endif %>

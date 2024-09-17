@@ -119,6 +119,9 @@ code-body: yes
 						</div>
 					</$dynanode>
 				</div>
+				<%if [{$:/config/tiddlyflex/show-top-right-bar}match[yes]] %>
+					<$transclude tiddler="$:/core/ui/PageTemplate/toprightbar"/>
+				<% endif %>
 			</main>
 		</div>
 		<$macrocall $name="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner=<<tiddlyflex-layout-footer>>/>

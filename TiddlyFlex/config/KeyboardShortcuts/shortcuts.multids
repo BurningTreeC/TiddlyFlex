@@ -8,6 +8,7 @@ dragging: alt-D
 edit-tiddler: alt-E
 filter-river: alt-F
 fullscreen: alt-shift-F
+horizontal-vertical: alt-shift-V
 move-down: alt-shift-Down
 move-left: alt-shift-Left
 move-right: alt-shift-Right

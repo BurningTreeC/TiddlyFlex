@@ -1,0 +1,6 @@
+title: $:/config/tiddlyflex/show-top-right-bar
+caption: Show the Top Right Menu
+description: Whether or not the Top Right Menu should be shown
+settings-template: $:/plugins/BTC/TiddlyFlex/ui/ControlPanel/Templates/input-switch
+
+no
