@@ -6,6 +6,9 @@ key: ((column-up))
 <%if [tdff.tiddlyflex-layout[]] %>
 	<%if [tdff.tiddlyflex-fullscreen[]is[blank]] %>
 		<$let currentColumn={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[[$:/columns]get[current-column]] ~[subfilter<tdff.tiddlyflex-current-column-filtered>] ~1 }}} nextColumn={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] +[after<currentColumn>] ~[subfilter<tdff.tiddlyflex-enlist-columns>first[]] ~1 }}} tv-story-list={{{ [[$:/StoryList-]addsuffix<nextColumn>] }}} tv-history-list={{{ [[$:/HistoryList-]addsuffix<nextColumn>] }}}>
+			<$set name="currentColumn" value=<<nextColumn>>>
+				<<tiddlyflex-scroll-to-column>>
+			</$set>
 			<<tiddlyflex-cycle-columns-navigator>>
 		</$let>
 	<% endif %>
