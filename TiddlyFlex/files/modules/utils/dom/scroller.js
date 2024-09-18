@@ -70,19 +70,14 @@ PageScroller.prototype.scrollIntoView = function(element,callback,options) {
 	var self = this,
 		duration = $tw.utils.hop(options,"animationDuration") ? parseInt(options.animationDuration) : $tw.utils.getAnimationDuration(),
 		srcWindow = element ? element.ownerDocument.defaultView : window;
-	try {
-		this.cancelScroll();
-		$tw.utils.addClass(element,"tc-navigating");
-		var scrollIntoView = function() {
-			element.scrollIntoView({block: "start", inline: "start"});
-		};
-		this.idRequestFrame = this.requestAnimationFrame.call(srcWindow,scrollIntoView);
-		setTimeout(function() {
-			$tw.utils.removeClass(element,"tc-navigating");
-		},duration);
-	} catch(e) {
-		console.log(e);
-	}
+	var scrollIntoView = function() {
+		element.scrollIntoView({block: "start", inline: "start"});
+	};
+	self.idRequestFrame = self.requestAnimationFrame.call(srcWindow,scrollIntoView);
+	$tw.utils.addClass(element,"tc-navigating");
+	setTimeout(function() {
+		$tw.utils.removeClass(element,"tc-navigating");
+	},duration);
 };
 
 PageScroller.prototype.scrollSelectorIntoView = function(baseElement,selector,callback,options) {

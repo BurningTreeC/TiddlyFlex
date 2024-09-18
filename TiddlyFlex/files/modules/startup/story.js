@@ -164,8 +164,10 @@ function openStartupTiddlers(options) {
 			if(target.indexOf("[[") === 0 && target.substr(-2) === "]]") {
 				target = target.substr(2,target.length - 4);
 			}
-			story.addToHistory(target);
-		} else if(storyList.length > 0) {
+			if($tw.wiki.getTiddlerText("$:/layout") !== "$:/plugins/BTC/TiddlyFlex/ui/Layout") {
+				story.addToHistory(target);
+			}
+		} else if((storyList.length > 0) && ($tw.wiki.getTiddlerText("$:/layout") !== "$:/plugins/BTC/TiddlyFlex/ui/Layout")) {
 			story.addToHistory(storyList[0]);
 		}
 	}

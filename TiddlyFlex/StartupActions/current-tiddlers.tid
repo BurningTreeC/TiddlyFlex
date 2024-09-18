@@ -1,11 +1,18 @@
 title: $:/plugins/BTC/TiddlyFlex/StartupActions/current-tiddlers
-tags: $:/tags/StartupAction/Browser
+tags: $:/tags/StartupAction/PostRender
 
-\import $:/plugins/BTC/TiddlyFlex/globals/layout/functions
-<$list filter="[subfilter<tdff.tiddlyflex-enlist-columns>]" variable="column">
-	<$let tv-story-list={{{ [[$:/StoryList-]addsuffix<column>!match[$:/StoryList-]] ~$:/StoryList-1 }}} tv-history-list={{{ [[$:/HistoryList-]addsuffix<column>!match[$:/HistoryList-]] ~$:/HistoryList-1 }}} currentTiddler={{{ [list<tv-story-list>nth[1]] }}}>
-		<%if [<currentTiddler>!is[blank]!match[]] %>
-			<$action-setfield $tiddler=<<tv-history-list>> current-tiddler=<<currentTiddler>>/>
-		<% endif %>
+\import $:/plugins/BTC/TiddlyFlex/globals/layout/functions $:/plugins/BTC/TiddlyFlex/privates/selectors
+<%if [tdff.tiddlyflex-layout[]] %>
+	<$list filter="[subfilter<tdff.tiddlyflex-enlist-columns>]" variable="column">
+		<$let tv-story-list={{{ [[$:/StoryList-]addsuffix<column>!match[$:/StoryList-]] ~$:/StoryList-1 }}} tv-history-list={{{ [[$:/HistoryList-]addsuffix<column>!match[$:/HistoryList-]] ~$:/HistoryList-1 }}} currentTiddler={{{ [list<tv-story-list>nth[1]] }}}>
+			<%if [<currentTiddler>!is[blank]!match[]] %>
+				<$action-setfield $tiddler=<<tv-history-list>> current-tiddler=<<currentTiddler>>/>
+			<% endif %>
+		</$let>
+	</$list>
+	<$let currentColumn={{$:/columns!!current-column}} currentStoryList={{{ [[$:/StoryList-]addsuffix<currentColumn>] }}} currentTiddler={{{ [list<currentStoryList>nth[1]] }}} cssEscapedTitle={{{ [<currentTiddler>escapecss[]] }}}>
+		<$wikify name="scrollSelector" text=<<tiddlyflex-tiddler-scroll-selector>>>
+			<$action-sendmessage $message="tm-scroll" selector=<<scrollSelector>>/>
+		</$wikify>
 	</$let>
-</$list>
+<% endif %>

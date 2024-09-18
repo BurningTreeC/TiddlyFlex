@@ -88,11 +88,10 @@ tags: $:/tags/Global
 <$macrocall $name="tiddlyflex-tm-message-navigator" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-navigate-actions()
-\procedure actions() <<tiddlyflex-navigate-story-river-actions>>
 <%if [tdff.tiddlyflex-fullscreen[]!is[blank]] %>
 	<$action-deletetiddler $filter="[all[tiddlers]prefix[$:/state/tiddlyflex/story-river/fullscreen/]]"/>
 <% endif %>
-<$macrocall $name="tiddlyflex-tm-message-navigator" actions=<<actions>>/>
+<<tiddlyflex-navigate-story-river-actions>>
 \end
 \procedure tiddlyflex-tm-import-tiddlers-actions()
 \procedure actions() <<tiddlyflex-tm-message-actions tm-import-tiddlers "param">>
@@ -164,9 +163,8 @@ tags: $:/tags/Global
 <$macrocall $name="tiddlyflex-tm-message-navigator-outside" actions=<<actions>>/>
 \end
 \procedure tiddlyflex-tm-navigate-actions-outside()
-\procedure actions() <<tiddlyflex-navigate-story-river-actions>>
 <$set name="tiddlyFlexColumn" value={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-current-column-filtered>] }}}>
-	<$macrocall $name="tiddlyflex-tm-message-navigator-outside" actions=<<actions>>/>
+	<<tiddlyflex-navigate-story-river-actions>>
 </$set>
 \end
 \procedure tiddlyflex-tm-import-tiddlers-actions-outside()

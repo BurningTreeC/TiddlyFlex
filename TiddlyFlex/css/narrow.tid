@@ -1,8 +1,8 @@
 title: $:/plugins/BTC/TiddlyFlex/styles/narrow
 tags: $:/tags/Stylesheet
 
-\procedure story-river-width-sidebar() calc(100% - (100% - {{{ [[$(sidebarPosX)$]substitute[]] }}}))
-\procedure story-river-width() calc(100% - {{{ [[$(sidebarWidth)$]substitute[]] }}})
+\procedure story-river-width-sidebar() calc(100% - (100% - {{{ [[$(sidebarPosX)$]substitute[]addsuffix[px]] }}}))
+\procedure story-river-width() calc(100% - {{{ [[$(sidebarWidth)$]substitute[]addsuffix[px]] }}})
 
 <%if [tdff.tiddlyflex-layout[]] %>
 
@@ -32,11 +32,6 @@ tags: $:/tags/Stylesheet
 						overflow-x: clip;
 					}
 
-					.tc-tiddlyflex-story-river-container, {
-						flex-basis: <<horizontalWidth>>;
-						max-width: <<horizontalWidth>>;
-					}
-
 					.tc-tiddlyflex-story-river-container-inner {
 						overflow-x: auto;
 						width: 100%;
@@ -54,6 +49,15 @@ tags: $:/tags/Stylesheet
 					}
 
 				</$wikify>
+
+				<%if [[$:/state/sidebar/resizing]!is[missing]] %>
+
+					.tc-tiddlyflex-story-river-container-inner {
+						scroll-snap-type: none;
+						scroll-behavior: auto;
+					}
+
+				<% endif %>
 
 			</$let>
 

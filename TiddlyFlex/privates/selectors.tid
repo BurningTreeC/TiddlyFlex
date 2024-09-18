@@ -2,11 +2,11 @@ title: $:/plugins/BTC/TiddlyFlex/privates/selectors
 
 \procedure tiddlyflex-tiddler-scroll-selector()
 \rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock whitespace
-.tc-tiddlyflex-story-river-{{{ [[$(currentColumn)$]substitute[]] }}} .tc-tiddlyflex-story-river-inner > [data-tiddler-title={{{ [[$(cssEscapedTitle)$]substitute[]] }}}]
+.tc-tiddlyflex-story-river-{{{ [[$(currentColumn)$]substitute[]] }}} .tc-tiddlyflex-story-river-inner > [data-tiddler-title={{{ [[$(cssEscapedTitle)$]substitute[]addprefix["]addsuffix["]] }}}]
 \end
 \procedure tiddlyflex-draft-focus-selector()
 \rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock whitespace
-.tc-tiddlyflex-story-river-{{{ [[$(currentColumn)$]substitute[]] }}} .tc-tiddlyflex-story-river-inner > [data-tiddler-title={{{ [[$(cssEscapedTitle)$]substitute[]] }}}] input.tc-titlebar.tc-edit-texteditor
+.tc-tiddlyflex-story-river-{{{ [[$(currentColumn)$]substitute[]] }}} .tc-tiddlyflex-story-river-inner > [data-tiddler-title={{{ [[$(cssEscapedTitle)$]substitute[]addprefix["]addsuffix["]] }}}] input.tc-titlebar.tc-edit-texteditor
 \end
 \procedure tiddlyflex-focus-draft-tiddler()
 <$wikify name="focusSelector" text=<<tiddlyflex-draft-focus-selector>>>
