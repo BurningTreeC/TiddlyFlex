@@ -10,7 +10,7 @@ tags: $:/tags/Stylesheet
 \end
 
 \procedure tiddlyflex-position-start-tiddlers-no-copying()
-\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
+\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock whitespace
 
 .tc-tiddlyflex-story-river-{{{ [[$(currentRiver)$]substitute[]] }}} .tc-tiddlyflex-story-river-inner > [data-tiddler-title={{{ [[$(startingNextTiddlerCSSEscaped)$]substitute[]] }}}].tc-tiddler-view-frame > .tc-tiddler-frame, .tc-tiddlyflex-story-river-{{{ [[$(currentRiver)$]substitute[]] }}} .tc-tiddlyflex-story-river-inner > [data-tiddler-title={{{ [[$(startingNextTiddlerCSSEscaped)$]substitute[]] }}}].tc-tiddler-edit-frame > .tc-tiddler-frame {
 	transition: none;
@@ -28,7 +28,7 @@ tags: $:/tags/Stylesheet
 \end
 
 \procedure tiddlyflex-position-start-tiddlers-no-copying-nth-0()
-\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
+\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock whitespace
 
 .tc-tiddlyflex-story-river-{{{ [[$(currentRiver)$]substitute[]] }}} [data-tiddler-title={{{ [[$(startingNextTiddlerCSSEscaped)$]substitute[]] }}}] .tc-tiddler-frame {
 	margin-top: calc({{$:/state/dragging!!height}}px + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + 2px);
@@ -42,7 +42,7 @@ tags: $:/tags/Stylesheet
 \end
 
 \procedure tiddlyflex-position-start-tiddlers-no-copying-last()
-\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
+\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock whitespace
 
 .tc-tiddlyflex-story-river-{{{ [[$(currentRiver)$]substitute[]] }}} [data-tiddler-title={{{ [[$(startingBeforeTiddlerCSSEscaped)$]substitute[]] }}}] .tc-tiddler-frame {
 	margin-bottom: calc({{$:/state/dragging!!height}}px + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + 2px);
@@ -56,7 +56,7 @@ tags: $:/tags/Stylesheet
 \end
 
 \procedure tiddlyflex-position-start-tiddlers-copying()
-\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
+\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock whitespace
 
 .tc-tiddlyflex-story-river-{{{ [[$(currentRiver)$]substitute[]] }}} .tc-tiddlyflex-story-river-inner > [data-tiddler-title={{{ [[$(dragTiddlerCSSEscaped)$]substitute[]] }}}].tc-tiddler-view-frame > .tc-tiddler-frame, .tc-tiddlyflex-story-river-$(currentRiver)$ .tc-tiddlyflex-story-river-inner > [data-tiddler-title="$(dragTiddlerCSSEscaped)$"].tc-tiddler-edit-frame > .tc-tiddler-frame {
 	transition: none;
@@ -74,7 +74,7 @@ tags: $:/tags/Stylesheet
 \end
 
 \procedure tiddlyflex-position-start-tiddlers-copying-nth-0()
-\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
+\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock whitespace
 
 .tc-tiddlyflex-story-river-{{{ [[$(currentRiver)$]substitute[]] }}} [data-tiddler-title={{{ [[$(dragTiddlerCSSEscaped)$]substitute[]] }}}] .tc-tiddler-frame {
 	margin-top: calc({{$:/state/dragging!!height}}px + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + 2px);
@@ -88,7 +88,7 @@ tags: $:/tags/Stylesheet
 \end
 
 \procedure tiddlyflex-target-tiddler-margin()
-\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
+\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock whitespace
 
 .tc-tiddlyflex-story-river-{{{ [[$(currentRiver)$]substitute[]] }}} .tc-tiddler-view-frame:not([data-tiddler-title={{{ [[$(targetTiddlerCSSEscaped)$]substitute[]] }}}]) .tc-tiddler-frame, .tc-tiddlyflex-story-river-$(currentRiver)$ .tc-tiddler-edit-frame:not([data-tiddler-title={{{ [[$(targetTiddlerCSSEscaped)$]substitute[]] }}}]) .tc-tiddler-frame {
 	margin-top: calc( {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + 2px);
@@ -105,7 +105,7 @@ tags: $:/tags/Stylesheet
 \end
 
 \procedure tiddlyflex-target-tiddler-margin-nth-0()
-\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
+\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock whitespace
 
 .tc-tiddlyflex-story-river-{{{ [[$(currentRiver)$]substitute[]] }}} [data-tiddler-title={{{ [[$(targetTiddlerCSSEscaped)$]substitute[]] }}}] .tc-tiddler-frame {
 	margin-top: calc({{$:/state/dragging!!height}}px + {{$:/config/tiddlyflex/story-river/tiddler/margin-bottom}} + 2px);

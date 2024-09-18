@@ -2,18 +2,18 @@ title: $:/plugins/BTC/TiddlyFlex/globals/css
 tags: $:/tags/Global
 
 \procedure tiddlyflex-style-current-tiddler()
-\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
+\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock whitespace
 
-.tc-tiddlyflex-story-river-{{{ [[$(currentColumn)$]substitute[]] }}} .tc-tiddlyflex-story-river-inner > [data-tiddler-title={{{ [[$(cssEscapedTitle)$]substitute[]] }}}]:not(.tc-navigating) > .tc-tiddler-frame {
+.tc-tiddlyflex-story-river-{{{ [[$(currentColumn)$]substitute[]] }}} .tc-tiddlyflex-story-river-inner > [data-tiddler-title={{{ [[$(cssEscapedTitle)$]substitute[]addprefix["]addsuffix["]] }}}]:not(.tc-navigating) > .tc-tiddler-frame {
 	border: 1px solid <<colour tiddlyflex-current-tiddler>>;
 }
 
 \end
 
 \procedure tiddlyflex-style-unfocused-tiddlers()
-\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
+\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock whitespace
 
-.tc-tiddlyflex-story-river-{{{ [[$(column)$]substitute[]] }}} .tc-tiddlyflex-story-river-inner >  [data-tiddler-title={{{ [[$(cssEscapedTitle)$]substitute[]] }}}]:not(.tc-navigating) > .tc-tiddler-frame {
+.tc-tiddlyflex-story-river-{{{ [[$(column)$]substitute[]] }}} .tc-tiddlyflex-story-river-inner >  [data-tiddler-title={{{ [[$(cssEscapedTitle)$]substitute[]addprefix["]addsuffix["]] }}}]:not(.tc-navigating) > .tc-tiddler-frame {
 	border: 1px solid <<colour tiddlyflex-current-tiddler-muted>>;
 }
 

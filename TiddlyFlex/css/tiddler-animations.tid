@@ -2,7 +2,7 @@ title: $:/plugins/BTC/TiddlyFlex/styles/tiddler-animations
 tags: $:/tags/Stylesheet
 
 \procedure tiddlyflex-dont-display-tiddler()
-\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
+\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock whitespace
 
 .tc-tiddlyflex-story-river-{{{ [[$(column)$]substitute[]] }}} .tc-tiddlyflex-story-river-inner > [data-tiddler-title={{{ [[$(tiddlerTitleCSSEscaped)$]substitute[]] }}}].tc-tiddler-view-frame > .tc-tiddler-frame, .tc-tiddlyflex-story-river-{{{ [[$(column)$]substitute[]] }}} .tc-tiddlyflex-story-river-inner > [data-tiddler-title={{{ [[$(tiddlerTitleCSSEscaped)$]substitute[]] }}}].tc-tiddler-edit-frame > .tc-tiddler-frame {
 	visibility: hidden;
@@ -11,7 +11,7 @@ tags: $:/tags/Stylesheet
 \end
 
 \procedure tiddlyflex-remove-tiddler-animation()
-\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
+\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock whitespace
 
 @keyframes margin-top-remove-{{{ [[$(column)$]substitute[]] }}}-{{{ [[$(tiddlerTitleCSSEscaped)$]substitute[]] }}} {
 	from {
@@ -43,7 +43,7 @@ tags: $:/tags/Stylesheet
 \end
 
 \procedure tiddlyflex-add-tiddler-animation()
-\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
+\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock whitespace
 
 @keyframes margin-top-add-{{{ [[$(column)$]substitute[]] }}}-{{{ [[$(tiddlerTitleCSSEscaped)$]substitute[]] }}} {
 	from {

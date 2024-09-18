@@ -2,7 +2,7 @@ title: $:/plugins/BTC/TiddlyFlex/styles/fullscreen
 tags: $:/tags/Stylesheet
 
 \procedure tiddlyflex-view-tiddler-full-screen()
-\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
+\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock whitespace
 
 .tc-tiddlyflex-story-river-{{{ [[$(column)$]substitute[]] }}} .tc-tiddlyflex-story-river-inner > [data-tiddler-title={{{ [[$(tiddlerTitleCSSEscaped)$]substitute[]] }}}]:not(.tc-navigating), .tc-tiddlyflex-story-river-{{{ [[$(column)$]substitute[]] }}} .tc-tiddlyflex-story-river-inner > [data-tiddler-title={{{ [[$(tiddlerTitleCSSEscaped)$]substitute[]] }}}].tc-navigating {
 	position: fixed;
@@ -27,7 +27,7 @@ tags: $:/tags/Stylesheet
 \end
 
 \procedure tiddlyflex-inherit-overflow-columns()
-\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock
+\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock whitespace
 
 .tc-tiddlyflex-story-river-wrapper-inner.tc-tiddlyflex-story-river-$(column)$ {
 	overflow-y: hidden;

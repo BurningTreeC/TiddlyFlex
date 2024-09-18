@@ -1,8 +1,9 @@
 title: $:/plugins/BTC/TiddlyFlex/globals/navigation
 tags: $:/tags/Global
 
-\define tiddlyflex-navigate-story-river-actions-selector()
-.tc-tiddlyflex-story-river-$(tiddlyFlexColumn)$ [data-tiddler-title="$(navigateToCSSEscaped)$"]
+\procedure tiddlyflex-navigate-story-river-actions-selector()
+\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock whitespace
+.tc-tiddlyflex-story-river-{{{ [[$(tiddlyFlexColumn)$]substitute[]] }}} [data-tiddler-title={{{ [[$(navigateToCSSEscaped)$]substitute[]addprefix["]addsuffix["]] }}}]
 \end
 \function tiddlyflex-suppress-navigation() [<modifier>match[ctrl]then[true]] [<modifier>match[meta]then[true]] +[match[true]] ~false +[limit[1]]
 \function edit-missing-tiddler() [{$:/config/tiddlyflex/navigation/edit-missing-tiddlers}match[yes]then<event-navigateTo>!is[shadow]is[missing]]
@@ -61,7 +62,9 @@ tags: $:/tags/Global
 			<$let tv-story-list={{{ [[$:/StoryList-]addsuffix<tiddlyFlexColumn>] }}} tv-history-list={{{ [[$:/HistoryList-]addsuffix<tiddlyFlexColumn>] }}} navigateToCSSEscaped={{{ [<event-navigateTo>escapecss[]] }}}>
 				<%if [<tv-story-list>contains<event-navigateTo>] %>
 					<%if [<modifier>!match[ctrl]then<modifier>!match[meta]] %>
-						<$action-sendmessage $message="tm-scroll" selector=<<tiddlyflex-navigate-story-river-actions-selector>>/>
+						<$wikify name="scrollSelector" text=<<tiddlyflex-navigate-story-river-actions-selector>>>
+							<$action-sendmessage $message="tm-scroll" selector=<<scrollSelector>>/>
+						</$wikify>
 					<% endif %>
 					<%if [function[edit-missing-tiddler]] %>
 						<$navigator story={{{ [<tiddlyFlexColumn>addprefix[$:/StoryList-]] }}} history={{{ [<tiddlyFlexColumn>addprefix[$:/HistoryList-]] }}} openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
@@ -101,6 +104,11 @@ tags: $:/tags/Global
 				</$set>
 			</$navigator>
 		<% endif %>
+		<$set name="navigateToCSSEscaped" value={{{ [<event-navigateTo>escapecss[]] }}}>
+			<$wikify name="scrollSelector" text=<<tiddlyflex-navigate-story-river-actions-selector>>>
+				<$action-sendmessage $message="tm-scroll" selector=<<scrollSelector>>/>
+			</$wikify>			
+		</$set>
 	<% else %>
 		<<tiddlyflex-navigate-story-river-actions-inner>>
 	<% endif %>
