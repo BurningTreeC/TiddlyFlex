@@ -160,7 +160,7 @@ tags: $:/tags/Stylesheet
 
 	<% endif %>
 
-	.tc-tiddlyflex-adding {
+	.tc-tiddlyflex-adding-from-left, .tc-tiddlyflex-adding-from-right, .tc-tiddlyflex-removing-to-left, .tc-tiddlyflex-removing-to-right {
 		visibility: hidden;
 	}
 

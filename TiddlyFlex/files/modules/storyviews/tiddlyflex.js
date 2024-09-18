@@ -13,6 +13,8 @@ Views the story as a linear sequence
 "use strict";
 
 var easing = "cubic-bezier(0.645, 0.045, 0.355, 1)"; // From http://easings.net/#easeInOutCubic
+var addTimeout,
+	removeTimeout;
 
 var ClassicStoryView = function(listWidget) {
 	this.listWidget = listWidget;
@@ -53,6 +55,10 @@ ClassicStoryView.prototype.insert = function(widget) {
 			currMarginTop = parseInt(computedStyle.marginTop,10),
 			currHeight = targetElement.offsetHeight + currMarginTop;
 		// Reset the margin once the transition is over
+		clearTimeout(addTimeout);
+		addTimeout = setTimeout(function() {
+			widget.wiki.deleteTiddler("$:/state/tiddlyflex/adding/" + tiddlerTitle);
+		},duration);
 		setTimeout(function() {
 			$tw.utils.setStyle(targetElement,[
 				{transition: "none"},
@@ -76,11 +82,13 @@ ClassicStoryView.prototype.insert = function(widget) {
 	} else if(duration && !widget.wiki.tiddlerExists("$:/state/dragging") && widget.wiki.tiddlerExists("$:/state/tiddlyflex/adding/" + tiddlerTitle)) {
 		var targetElement = widget.findFirstDomNode();
 		widget.wiki.setText("$:/state/tiddlyflex/adding/" + tiddlerTitle,"height",undefined,targetElement.offsetHeight);
-		setTimeout(function() {
+		clearTimeout(addTimeout);
+		addTimeout = setTimeout(function() {
 			widget.wiki.deleteTiddler("$:/state/tiddlyflex/adding/" + tiddlerTitle);
 		},duration);
 	} else {
-		setTimeout(function() {
+		clearTimeout(addTimeout);
+		addTimeout = setTimeout(function() {
 			widget.wiki.deleteTiddler("$:/state/tiddlyflex/adding/" + tiddlerTitle);
 		},duration);
 	}
@@ -96,6 +104,7 @@ ClassicStoryView.prototype.remove = function(widget) {
 		var targetElement = widget.findFirstDomNode(),
 			removeElement = function() {
 				widget.removeChildDomNodes();
+				widget.wiki.deleteTiddler("$:/state/tiddlyflex/removing/" + tiddlerTitle);
 			};
 		// Abandon if the list entry isn't a DOM element (it might be a text node)
 		if(!targetElement || targetElement.nodeType === Node.TEXT_NODE) {
@@ -109,6 +118,10 @@ ClassicStoryView.prototype.remove = function(widget) {
 			currMarginTop = parseInt(computedStyle.marginTop,10),
 			currHeight = targetElement.offsetHeight + currMarginTop;
 		// Remove the dom nodes of the widget at the end of the transition
+		clearTimeout(removeTimeout);
+		removeTimeout = setTimeout(function() {
+			widget.wiki.deleteTiddler("$:/state/tiddlyflex/removing/" + tiddlerTitle);
+		},duration);
 		setTimeout(removeElement,duration);
 		// Animate the closure
 		$tw.utils.setStyle(targetElement,[
@@ -130,13 +143,17 @@ ClassicStoryView.prototype.remove = function(widget) {
 		var targetElement = widget.findFirstDomNode(),
 			removeElement = function() {
 				widget.removeChildDomNodes();
-				widget.wiki.deleteTiddler("$:/state/tiddlyflex/removing/" + tiddlerTitle);
 			};
 		widget.wiki.setText("$:/state/tiddlyflex/removing/" + tiddlerTitle,"height",undefined,targetElement.offsetHeight);
+		clearTimeout(removeTimeout);
+		removeTimeout = setTimeout(function() {
+			widget.wiki.deleteTiddler("$:/state/tiddlyflex/removing/" + tiddlerTitle);
+		},duration);
 		setTimeout(removeElement,duration);
 	} else {
 		widget.removeChildDomNodes();
-		setTimeout(function() {
+		clearTimeout(removeTimeout);
+		removeTimeout = setTimeout(function() {
 			widget.wiki.deleteTiddler("$:/state/tiddlyflex/removing/" + tiddlerTitle);
 		},duration);
 	}

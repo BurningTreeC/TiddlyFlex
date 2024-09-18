@@ -58,7 +58,7 @@ code-body: yes
 \end
 \procedure tiddlyflex-layout-header()
 \whitespace trim
-<$dynanode class="tc-tiddlyflex-header" enable={{{ [{$:/config/tiddlyflex/story-river/dynanode}match[yes]] }}} animationlist="$:/state/sidebar/resizing $:/state/sidebar/posx" selectors="[[:not(*)]]" removeselectors="[[:not(*)]]">
+<$dynanode class="tc-tiddlyflex-header" enable={{{ [{$:/config/tiddlyflex/story-river/dynanode}match[yes]then[$:/state/sidebar/resizing]get[text]match[yes]] }}} animationlist="$:/state/sidebar/resizing $:/state/sidebar/posx" selectors="[[:not(*)]]" removeselectors="[[:not(*)]]">
 	<$list filter="[{$:/status/RequireReloadDueToPluginChange}match[yes]then{$:/temp/HidePluginWarning}!match[yes]then[$:/plugins/BTC/TiddlyFlex/ui/Toolbars/PluginReloadWarning]] [all[shadows+tiddlers]tag[$:/tags/TopToolbar]!is[draft]] :filter[lookup[$:/config/TiddlyFlex/Toolbars/Visibility/]!match[hide]]" variable="listItem" storyview="pop">
 		<$transclude tiddler=<<listItem>>/>
 	</$list>
@@ -66,7 +66,7 @@ code-body: yes
 \end
 \procedure tiddlyflex-layout-leftbar()
 \whitespace trim
-<$dynanode class="tc-tiddlyflex-leftbar" enable={{{ [{$:/config/tiddlyflex/story-river/dynanode}match[yes]] }}} animationlist="$:/state/sidebar/resizing $:/state/sidebar/posx" selectors="[[:not(*)]]" removeselectors="[[:not(*)]]">
+<$dynanode class="tc-tiddlyflex-leftbar" enable={{{ [{$:/config/tiddlyflex/story-river/dynanode}match[yes]then[$:/state/sidebar/resizing]get[text]match[yes]] }}} animationlist="$:/state/sidebar/resizing $:/state/sidebar/posx" selectors="[[:not(*)]]" removeselectors="[[:not(*)]]">
 	<$list filter="[all[shadows+tiddlers]tag[$:/tags/LeftToolbar]!is[draft]] :filter[lookup[$:/config/TiddlyFlex/Toolbars/Visibility/]!match[hide]]" variable="listItem" storyview="pop">
 		<$transclude tiddler=<<listItem>>/>
 	</$list>
@@ -74,7 +74,7 @@ code-body: yes
 \end
 \procedure tiddlyflex-layout-footer()
 \whitespace trim
-<$dynanode class="tc-tiddlyflex-footer" enable={{{ [{$:/config/tiddlyflex/story-river/dynanode}match[yes]] }}} animationlist="$:/state/sidebar/resizing $:/state/sidebar/posx" selectors="[[:not(*)]]" removeselectors="[[:not(*)]]">
+<$dynanode class="tc-tiddlyflex-footer" enable={{{ [{$:/config/tiddlyflex/story-river/dynanode}match[yes]then[$:/state/sidebar/resizing]get[text]match[yes]] }}} animationlist="$:/state/sidebar/resizing $:/state/sidebar/posx" selectors="[[:not(*)]]" removeselectors="[[:not(*)]]">
 	<$list filter="[all[shadows+tiddlers]tag[$:/tags/BottomToolbar]!is[draft]] :filter[lookup[$:/config/TiddlyFlex/Toolbars/Visibility/]!match[hide]]" variable="listItem" storyview="pop">
 		<$transclude tiddler=<<listItem>>/>
 	</$list>
@@ -107,13 +107,13 @@ code-body: yes
 					</$eventcatcher>
 				<% endif %>
 				<div class="tc-tiddlyflex-story-river-container">
-					<$dynanode class="tc-tiddlyflex-story-river-container-inner" enable={{{ [{$:/config/tiddlyflex/story-river/dynanode}match[yes]] }}} animationlist="$:/state/sidebar/resizing $:/state/sidebar/posx">
+					<$dynanode class="tc-tiddlyflex-story-river-container-inner" enable={{{ [{$:/config/tiddlyflex/story-river/dynanode}match[yes]then[$:/state/sidebar/resizing]get[text]match[yes]] }}} animationlist="$:/state/sidebar/resizing $:/state/sidebar/posx">
 						<<tiddlyflex-layout-story-rivers>>
 					</$dynanode>
 					<<tiddlyflex-layout-drafts>>
 				</div>
 				<div class="tc-tiddlyflex-sidebar">
-					<$dynanode class="tc-tiddlyflex-sidebar-container" enable={{{ [{$:/config/tiddlyflex/story-river/dynanode}match[yes]] }}} animationlist="$:/state/sidebar/resizing $:/state/sidebar/posx" selectors="[[:not(*)]]" removeselectors="[[:not(*)]]">
+					<$dynanode class="tc-tiddlyflex-sidebar-container" enable={{{ [{$:/config/tiddlyflex/story-river/dynanode}match[yes]then[$:/state/sidebar/resizing]get[text]match[yes]] }}} animationlist="$:/state/sidebar/resizing $:/state/sidebar/posx" selectors="[[:not(*)]]" removeselectors="[[:not(*)]]">
 						<div class="tc-tiddlyflex-sidebar-container-inner">
 							<$macrocall $name="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner=<<tiddlyflex-layout-sidebar>>/>
 						</div>

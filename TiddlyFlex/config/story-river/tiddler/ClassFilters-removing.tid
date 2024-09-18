@@ -1,4 +1,4 @@
 title: $:/config/TiddlyFlex/story-river/tiddler/ClassFilters/removing
 tags: $:/tags/ClassFilters/TiddlerTemplate
 
-[<..currentTiddler>addprefix[$:/state/tiddlyflex/removing/]!is[missing]then[tc-tiddlyflex-removing]]
+[<..currentTiddler>addprefix[$:/state/tiddlyflex/removing/]!is[missing]get[direction]addprefix[tc-tiddlyflex-removing-to-]]
