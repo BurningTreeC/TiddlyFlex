@@ -16,11 +16,11 @@ var easing = "cubic-bezier(0.645, 0.045, 0.355, 1)"; // From http://easings.net/
 var addTimeout,
 	removeTimeout;
 
-var ClassicStoryView = function(listWidget) {
+var TiddlyFlexStoryView = function(listWidget) {
 	this.listWidget = listWidget;
 };
 
-ClassicStoryView.prototype.navigateTo = function(historyInfo) {
+TiddlyFlexStoryView.prototype.navigateTo = function(historyInfo) {
 	var duration = $tw.utils.getAnimationDuration()
 	var listElementIndex = this.listWidget.findListItem(0,historyInfo.title);
 	if(listElementIndex === undefined) {
@@ -40,7 +40,7 @@ ClassicStoryView.prototype.navigateTo = function(historyInfo) {
 	}
 };
 
-ClassicStoryView.prototype.insert = function(widget) {
+TiddlyFlexStoryView.prototype.insert = function(widget) {
 	var duration = $tw.utils.getAnimationDuration(),
 		tiddlerTitle = widget.parseTreeNode.itemTitle;
 	if(duration && !widget.wiki.tiddlerExists("$:/state/dragging") && !widget.wiki.tiddlerExists("$:/state/tiddlyflex/adding/" + tiddlerTitle) && !widget.wiki.tiddlerExists("$:/state/tiddlyflex/story-river/fullscreen/" + tiddlerTitle)) {
@@ -97,7 +97,7 @@ ClassicStoryView.prototype.insert = function(widget) {
 	}
 };
 
-ClassicStoryView.prototype.remove = function(widget) {
+TiddlyFlexStoryView.prototype.remove = function(widget) {
 	var duration = $tw.utils.getAnimationDuration(),
 		tiddlerTitle = widget.parseTreeNode.itemTitle;
 	if(duration && !widget.wiki.tiddlerExists("$:/state/dragging") && !widget.wiki.tiddlerExists("$:/state/tiddlyflex/removing/" + tiddlerTitle) && !widget.wiki.tiddlerExists("$:/state/tiddlyflex/story-river/fullscreen/" + tiddlerTitle)) {
@@ -159,6 +159,6 @@ ClassicStoryView.prototype.remove = function(widget) {
 	}
 };
 
-exports.tiddlyflex = ClassicStoryView;
+exports.tiddlyflex = TiddlyFlexStoryView;
 
 })();

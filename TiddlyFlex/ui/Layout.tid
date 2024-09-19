@@ -58,27 +58,27 @@ code-body: yes
 \end
 \procedure tiddlyflex-layout-header()
 \whitespace trim
-<$dynanode class="tc-tiddlyflex-header" enable={{{ [{$:/config/tiddlyflex/story-river/dynanode}match[yes]then[$:/state/sidebar/resizing]get[text]match[yes]] }}} animationlist="$:/state/sidebar/resizing $:/state/sidebar/posx" selectors="[[:not(*)]]" removeselectors="[[:not(*)]]">
+<div class="tc-tiddlyflex-header">
 	<$list filter="[{$:/status/RequireReloadDueToPluginChange}match[yes]then{$:/temp/HidePluginWarning}!match[yes]then[$:/plugins/BTC/TiddlyFlex/ui/Toolbars/PluginReloadWarning]] [all[shadows+tiddlers]tag[$:/tags/TopToolbar]!is[draft]] :filter[lookup[$:/config/TiddlyFlex/Toolbars/Visibility/]!match[hide]]" variable="listItem" storyview="pop">
 		<$transclude tiddler=<<listItem>>/>
 	</$list>
-</$dynanode>
+</div>
 \end
 \procedure tiddlyflex-layout-leftbar()
 \whitespace trim
-<$dynanode class="tc-tiddlyflex-leftbar" enable={{{ [{$:/config/tiddlyflex/story-river/dynanode}match[yes]then[$:/state/sidebar/resizing]get[text]match[yes]] }}} animationlist="$:/state/sidebar/resizing $:/state/sidebar/posx" selectors="[[:not(*)]]" removeselectors="[[:not(*)]]">
+<div class="tc-tiddlyflex-leftbar">
 	<$list filter="[all[shadows+tiddlers]tag[$:/tags/LeftToolbar]!is[draft]] :filter[lookup[$:/config/TiddlyFlex/Toolbars/Visibility/]!match[hide]]" variable="listItem" storyview="pop">
 		<$transclude tiddler=<<listItem>>/>
 	</$list>
-</$dynanode>
+</div>
 \end
 \procedure tiddlyflex-layout-footer()
 \whitespace trim
-<$dynanode class="tc-tiddlyflex-footer" enable={{{ [{$:/config/tiddlyflex/story-river/dynanode}match[yes]then[$:/state/sidebar/resizing]get[text]match[yes]] }}} animationlist="$:/state/sidebar/resizing $:/state/sidebar/posx" selectors="[[:not(*)]]" removeselectors="[[:not(*)]]">
+<div class="tc-tiddlyflex-footer">
 	<$list filter="[all[shadows+tiddlers]tag[$:/tags/BottomToolbar]!is[draft]] :filter[lookup[$:/config/TiddlyFlex/Toolbars/Visibility/]!match[hide]]" variable="listItem" storyview="pop">
 		<$transclude tiddler=<<listItem>>/>
 	</$list>
-</$dynanode>
+</div>
 \end
 <$vars
 	tv-config-toolbar-icons={{$:/config/Toolbar/Icons}}
@@ -107,17 +107,17 @@ code-body: yes
 					</$eventcatcher>
 				<% endif %>
 				<div class="tc-tiddlyflex-story-river-container">
-					<$dynanode class="tc-tiddlyflex-story-river-container-inner" enable={{{ [{$:/config/tiddlyflex/story-river/dynanode}match[yes]then[$:/state/sidebar/resizing]get[text]match[yes]] }}} animationlist="$:/state/sidebar/resizing $:/state/sidebar/posx">
+					<div class="tc-tiddlyflex-story-river-container-inner">
 						<<tiddlyflex-layout-story-rivers>>
-					</$dynanode>
+					</div>
 					<<tiddlyflex-layout-drafts>>
 				</div>
 				<div class="tc-tiddlyflex-sidebar">
-					<$dynanode class="tc-tiddlyflex-sidebar-container" enable={{{ [{$:/config/tiddlyflex/story-river/dynanode}match[yes]then[$:/state/sidebar/resizing]get[text]match[yes]] }}} animationlist="$:/state/sidebar/resizing $:/state/sidebar/posx" selectors="[[:not(*)]]" removeselectors="[[:not(*)]]">
+					<div class="tc-tiddlyflex-sidebar-container">
 						<div class="tc-tiddlyflex-sidebar-container-inner">
 							<$macrocall $name="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner=<<tiddlyflex-layout-sidebar>>/>
 						</div>
-					</$dynanode>
+					</div>
 				</div>
 				<%if [{$:/config/tiddlyflex/show-top-right-bar}match[yes]] %>
 					<$transclude tiddler="$:/core/ui/PageTemplate/toprightbar"/>

@@ -8,11 +8,11 @@ tags: $:/tags/Global
 \function tiddlyflex-suppress-navigation() [<modifier>match[ctrl]then[true]] [<modifier>match[meta]then[true]] +[match[true]] ~false +[limit[1]]
 \function edit-missing-tiddler() [{$:/config/tiddlyflex/navigation/edit-missing-tiddlers}match[yes]then<event-navigateTo>!is[shadow]is[missing]]
 \procedure tiddlyflex-navigate-story-river-actions-navigate()
-<$set name="storyTiddler" value={{{ [subfilter<tiddlyflex-current-column>addprefix[$:/HistoryList-]get[current-tiddler]] :intersection[list<tv-story-list>] }}}>
+<$set name="storyTiddler" value={{{ [<tv-history-list>get[current-tiddler]] :intersection[list<tv-story-list>] ~[[$:/HistoryList-]addsuffix[$:/columns!!current-column]get[current-tiddler]] }}}>
 	<$action-sendmessage
 		$message="tm-navigate"
 		$navigateTo=<<event-navigateTo>>
-		$navigateFromTitle=<<storyTiddler>>
+		$navigateFromTitle={{{ [<storyTiddler>!is[blank]!match[]] ~[<event-navigateFromTitle>] }}}
 		$navigateFromClientRect=<<event-navigateFromClientRect>>
 		$navigateFromClientTop=<<event-navigateFromClientTop>>
 		$navigateFromClientLeft=<<event-navigateFromClientLeft>>
@@ -20,7 +20,7 @@ tags: $:/tags/Global
 		$navigateFromClientRight=<<event-navigateFromClientRight>>
 		$navigateFromClientBottom=<<event-navigateFromClientBottom>>
 		$navigateFromClientHeight=<<event-navigateFromClientHeight>>
-		$navigateSuppressNavigation={{{ [function[tiddlyflex-supress-navigation]] }}}
+		$navigateSuppressNavigation={{{ [<modifier>match[ctrl]then[true]] [<modifier>match[meta]then[true]] [<modifier>match[alt]then[true]] +[match[true]else[false]] }}}
 		$names="[<list-event-paramObject>enlist-input[]]"
 		$values="[<list-event-paramObject>enlist-input[]] :map:flat[addprefix[event-paramObject-]getvariable[]]"/>
 </$set>
@@ -61,13 +61,13 @@ tags: $:/tags/Global
 		<$list filter="[subfilter<tdff.tiddlyflex-enlist-columns>]" variable="tiddlyFlexColumn">
 			<$let tv-story-list={{{ [[$:/StoryList-]addsuffix<tiddlyFlexColumn>] }}} tv-history-list={{{ [[$:/HistoryList-]addsuffix<tiddlyFlexColumn>] }}} navigateToCSSEscaped={{{ [<event-navigateTo>escapecss[]] }}}>
 				<%if [<tv-story-list>contains<event-navigateTo>] %>
-					<%if [<modifier>!match[ctrl]then<modifier>!match[meta]] %>
+					<%if [<modifier>!match[ctrl]then<modifier>!match[meta]then<modifier>!match[alt]] %>
 						<$wikify name="scrollSelector" text=<<tiddlyflex-navigate-story-river-actions-selector>>>
 							<$action-sendmessage $message="tm-scroll" selector=<<scrollSelector>>/>
 						</$wikify>
 					<% endif %>
 					<%if [function[edit-missing-tiddler]] %>
-						<$navigator story={{{ [<tiddlyFlexColumn>addprefix[$:/StoryList-]] }}} history={{{ [<tiddlyFlexColumn>addprefix[$:/HistoryList-]] }}} openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
+						<$navigator story=<<tv-story-list>> history=<<tv-history-list>> openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
 							<$set name="currentColumn" value=<<tiddlyFlexColumn>>>
 								<<tiddlyflex-navigate-story-river-actions-navigate>>
 							</$set>
@@ -98,17 +98,12 @@ tags: $:/tags/Global
 					$values="[<list-event-paramObject>enlist-input[]] :map:flat[addprefix[event-paramObject-]getvariable[]]"/>
 			</$navigator>
 		<% else %>
-			<$navigator story={{{ [<tiddlyFlexColumn>addprefix[$:/StoryList-]] }}} history={{{ [<tiddlyFlexColumn>addprefix[$:/HistoryList-]] }}} openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
+			<$navigator story={{{ [<tv-story-list>!is[blank]!match[]] ~[[$:/StoryList-]addsuffix<tiddlyFlexColumn>] }}} history={{{ [<tv-history-list>!is[blank]!match[]] ~[[$:/HistoryList-]addsuffix<tiddlyFlexColumn>] }}} openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
 				<$set name="currentColumn" value=<<tiddlyFlexColumn>>>
 					<<tiddlyflex-navigate-story-river-actions-navigate>>
 				</$set>
 			</$navigator>
 		<% endif %>
-		<$set name="navigateToCSSEscaped" value={{{ [<event-navigateTo>escapecss[]] }}}>
-			<$wikify name="scrollSelector" text=<<tiddlyflex-navigate-story-river-actions-selector>>>
-				<$action-sendmessage $message="tm-scroll" selector=<<scrollSelector>>/>
-			</$wikify>			
-		</$set>
 	<% else %>
 		<<tiddlyflex-navigate-story-river-actions-inner>>
 	<% endif %>

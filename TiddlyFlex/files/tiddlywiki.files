@@ -29,6 +29,13 @@
 				"module-type": "storyview"
 			}
 		},{
+			"file": "modules/storyviews/tiddlypop.js",
+			"fields": {
+				"type": "application/javascript",
+				"title": "$:/plugins/BTC/TiddlyFlex/modules/storyviews/tiddlypop.js",
+				"module-type": "storyview"
+			}
+		},{
 			"file": "modules/startup/story.js",
 			"fields": {
 				"type": "application/javascript",
@@ -47,13 +54,6 @@
 			"fields": {
 				"type": "application/javascript",
 				"title": "$:/plugins/BTC/TiddlyFlex/modules/widgets/tiddlyflex-draggable.js",
-				"module-type": "widget"
-			}
-		},{
-			"file": "modules/widgets/dynanode.js",
-			"fields": {
-				"type": "application/javascript",
-				"title": "$:/plugins/BTC/TiddlyFlex/modules/widgets/dynanode.js",
 				"module-type": "widget"
 			}
 		},{
