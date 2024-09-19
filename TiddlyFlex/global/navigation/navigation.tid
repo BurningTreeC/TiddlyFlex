@@ -5,7 +5,6 @@ tags: $:/tags/Global
 \rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock whitespace
 .tc-tiddlyflex-story-river-{{{ [[$(tiddlyFlexColumn)$]substitute[]] }}} [data-tiddler-title={{{ [[$(navigateToCSSEscaped)$]substitute[]addprefix["]addsuffix["]] }}}]
 \end
-\function tiddlyflex-suppress-navigation() [<modifier>match[ctrl]then[true]] [<modifier>match[meta]then[true]] +[match[true]] ~false +[limit[1]]
 \function edit-missing-tiddler() [{$:/config/tiddlyflex/navigation/edit-missing-tiddlers}match[yes]then<event-navigateTo>!is[shadow]is[missing]]
 \procedure tiddlyflex-navigate-story-river-actions-navigate()
 <$set name="storyTiddler" value={{{ [<tv-history-list>get[current-tiddler]] :intersection[list<tv-story-list>] ~[[$:/HistoryList-]addsuffix[$:/columns!!current-column]get[current-tiddler]] }}}>

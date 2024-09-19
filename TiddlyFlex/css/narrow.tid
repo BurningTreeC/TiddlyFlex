@@ -38,6 +38,7 @@ tags: $:/tags/Stylesheet
 						max-width: 100%;
 						scroll-behavior: smooth;
 						scroll-snap-type: x mandatory;
+						z-index: 1;
 					}
 
 					.tc-tiddlyflex-story-river-wrapper {
