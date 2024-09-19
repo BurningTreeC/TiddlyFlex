@@ -49,7 +49,7 @@ key: ((cancel-close-tiddler))
 \define actions()
 <$set name="tiddler" value=<<currentTiddler>>>
 	<%if [<tiddler>!is[draft]] %>
-		<$let scrollTiddler={{{ [subfilter<tdff.tiddlyflex-story-river-filter>] +[after<tiddler>] ~[before<tiddler>] }}}>
+		<$let scrollTiddler={{{ [subfilter<tdff.tiddlyflex-story-river-filter>] +[before<tiddler>] ~[after<tiddler>] }}}>
 			<$action-setfield $tiddler=<<tv-history-list>> current-tiddler=<<scrollTiddler>>/>
 			<$action-sendmessage $message="tm-close-tiddler" $param=<<tiddler>>/>
 			<%if [<scrollTiddler>is[draft]] %>

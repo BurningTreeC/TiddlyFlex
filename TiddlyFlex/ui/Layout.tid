@@ -89,12 +89,18 @@ code-body: yes
 	storyviewTitle={{$:/view}}
 	languageTitle={{{ [{$:/language}get[name]] }}}>
 	<div class={{{ [all[shadows+tiddlers]tag[$:/tags/ClassFilters/PageTemplate/TiddlyFlex]!is[draft]] :map:flat[subfilter{!!text}] tc-page-container tc-tiddlyflex-container [[tc-page-view-]addsuffix<storyviewTitle>] [[tc-language-]addsuffix<languageTitle>] [{$:/state/sidebar}match[yes]then[tc-sidebar-shown]] :and[unique[]join[ ]] }}} tabindex="0">
-		<$eventcatcher selector=".tc-tiddlyflex-sidebar-shown" matchSelector=".tc-tiddlyflex-sidebar-shown" $click=<<tiddlyflex-hide-sidebar-actions>> class="tc-tiddlyflex-sidebar-shown-eventcatcher">
-			<div class={{{ [{$:/state/sidebar}!match[no]then[tc-tiddlyflex-sidebar-hide tc-btn-invisible tc-tiddlyflex-sidebar-shown]] [{$:/state/sidebar}match[no]then[tc-tiddlyflex-sidebar-hide tc-btn-invisible tc-tiddlyflex-sidebar-hidden]] }}}/>
-		</$eventcatcher>
-		<$macrocall $name="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner=<<tiddlyflex-layout-header>>/>
+		<$refresh-blocker>
+			<$eventcatcher selector=".tc-tiddlyflex-sidebar-shown" matchSelector=".tc-tiddlyflex-sidebar-shown" $click=<<tiddlyflex-hide-sidebar-actions>> class="tc-tiddlyflex-sidebar-shown-eventcatcher">
+				<div class={{{ [{$:/state/sidebar}!match[no]then[tc-tiddlyflex-sidebar-hide tc-btn-invisible tc-tiddlyflex-sidebar-shown]] [{$:/state/sidebar}match[no]then[tc-tiddlyflex-sidebar-hide tc-btn-invisible tc-tiddlyflex-sidebar-hidden]] }}}/>
+			</$eventcatcher>
+		</$refresh-blocker>
+		<$refresh-blocker>
+			<$macrocall $name="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner=<<tiddlyflex-layout-header>>/>
+		</$refresh-blocker>
 		<div class="tc-tiddlyflex-main-wrapper">
-			<$macrocall $name="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner=<<tiddlyflex-layout-leftbar>>/>
+			<$refresh-blocker>
+				<$macrocall $name="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner=<<tiddlyflex-layout-leftbar>>/>
+			</$refresh-blocker>
 			<main class="tc-tiddlyflex-main">
 				<%if [{$:/config/tiddlyflex/sidebar/resizer}match[yes]] %>
 					<$eventcatcher tag="div" class="tc-tiddlyflex-pointerdown-eventcatcher" selector=".tc-tiddlyflex-sidebar-resizer" matchSelector=".tc-tiddlyflex-sidebar-resizer" $pointerdown=<<tiddlyflex-sidebar-resizer-pointerdown-actions>> $pointerup=<<tiddlyflex-sidebar-resizer-pointerup-actions>>>
@@ -106,24 +112,29 @@ code-body: yes
 						<div class="tc-tiddlyflex-sidebar-resizer"/>
 					</$eventcatcher>
 				<% endif %>
-				<div class="tc-tiddlyflex-story-river-container">
-					<div class="tc-tiddlyflex-story-river-container-inner">
-						<<tiddlyflex-layout-story-rivers>>
+				<$refresh-blocker>
+					<div class="tc-tiddlyflex-story-river-container">
+						<div class="tc-tiddlyflex-story-river-container-inner">
+							<<tiddlyflex-layout-story-rivers>>
+						</div>
+						<<tiddlyflex-layout-drafts>>
 					</div>
-					<<tiddlyflex-layout-drafts>>
-				</div>
-				<div class="tc-tiddlyflex-sidebar">
-					<div class="tc-tiddlyflex-sidebar-container">
-						<div class="tc-tiddlyflex-sidebar-container-inner">
-							<$macrocall $name="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner=<<tiddlyflex-layout-sidebar>>/>
+					<div class="tc-tiddlyflex-sidebar">
+						<div class="tc-tiddlyflex-sidebar-container">
+							<div class="tc-tiddlyflex-sidebar-container-inner">
+								<$macrocall $name="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner=<<tiddlyflex-layout-sidebar>>/>
+							</div>
 						</div>
 					</div>
-				</div>
-				<%if [{$:/config/tiddlyflex/show-top-right-bar}match[yes]] %>
-					<$transclude tiddler="$:/core/ui/PageTemplate/toprightbar"/>
-				<% endif %>
+					<%if [{$:/config/tiddlyflex/show-top-right-bar}match[yes]] %>
+						<$transclude tiddler="$:/core/ui/PageTemplate/toprightbar"/>
+					<% endif %>
+				</$refresh-blocker>
 			</main>
 		</div>
-		<$macrocall $name="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner=<<tiddlyflex-layout-footer>>/>
+		<$refresh-blocker>
+			<$macrocall $name="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner=<<tiddlyflex-layout-footer>>/>
+		</$refresh-blocker>
 	</div>
 </$vars>
+</$refresh-blocker>
