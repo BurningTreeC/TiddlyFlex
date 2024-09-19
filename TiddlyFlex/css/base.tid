@@ -156,7 +156,7 @@ tags: $:/tags/Stylesheet
 .tc-tiddlyflex-story-river-container-inner {
 	display: flex;
 	flex-direction: row;
-	justify-content: flex-start;
+	justify-content: space-evenly;
 	align-items: stretch;
 	max-height: 100%;
 	flex-grow: 1;

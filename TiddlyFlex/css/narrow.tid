@@ -51,15 +51,6 @@ tags: $:/tags/Stylesheet
 
 				</$wikify>
 
-				<%if [[$:/state/sidebar/resizing]!is[missing]] %>
-
-					.tc-tiddlyflex-story-river-container-inner {
-						scroll-snap-type: none;
-						scroll-behavior: auto;
-					}
-
-				<% endif %>
-
 			</$let>
 
 		<% endif %>

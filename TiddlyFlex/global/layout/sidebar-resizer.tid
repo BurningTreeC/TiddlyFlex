@@ -15,5 +15,8 @@ tags: $:/tags/Global
 \procedure tiddlyflex-sidebar-resizer-pointermove-actions()
 <%if [[$:/state/sidebar/resizing]!is[missing]] %>
 	<$action-setfield $tiddler="$:/state/sidebar/posx" text=<<event-fromcatcher-posx>>/>
+	<%if [<event-fromcatcher-posx>compare:number:lt{$:/state/sidebar/posx!!starting-posx}] %>
+		<$action-setfield $tiddler="$:/state/sidebar/posx" starting-posx=<<event-fromcatcher-posx>>/>
+	<% endif %>
 <% endif %>
 \end
