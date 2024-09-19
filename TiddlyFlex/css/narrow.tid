@@ -20,7 +20,7 @@ tags: $:/tags/Stylesheet
 
 		<%if [{$:/config/tiddlyflex/story-river/horizontal}match[yes]] %>
 
-			<$let sidebarPosX={{{ [[$:/state/sidebar/posx]!is[missing]get[text]addsuffix[px]] ~DEFAULT }}} sidebarWidth={{$:/config/tiddlyflex/sidebar/width}}>
+			<$let columnCount={{{ [subfilter<tdff.tiddlyflex-enlist-columns>count[]] }}} sidebarPosX={{{ [[$:/state/sidebar/posx]!is[missing]get[text]addsuffix[px]] ~DEFAULT }}} sidebarWidth={{$:/config/tiddlyflex/sidebar/width}}>
 
 				<$wikify name="horizontalWidth" text={{{ [<sidebarPosX>!match[DEFAULT]then<story-river-width-sidebar>] ~[<story-river-width>] }}}>
 
@@ -42,11 +42,10 @@ tags: $:/tags/Stylesheet
 					}
 
 					.tc-tiddlyflex-story-river-wrapper {
-						width: 100%;
 						flex-basis: 100%;
 						max-width: 100%;
 						scroll-snap-align: start;
-						overflow: hidden;
+						overflow: clip;
 					}
 
 				</$wikify>
