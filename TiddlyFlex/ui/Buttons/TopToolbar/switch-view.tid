@@ -21,6 +21,7 @@ list-before: $:/plugins/BTC/TiddlyFlex/ui/Buttons/TopToolbar/dragging
 		</$list>
 		<%if [{$:/config/tiddlyflex/story-river/horizontal}!match[yes]] %>
 			<$action-setfield $tiddler="$:/config/tiddlyflex/story-river/horizontal" text="yes"/>
+			<$action-sendmessage $message="tm-scroll" selector={{{ [[.tc-tiddlyflex-story-river-]addsuffix{$:/columns!!current-column}] }}}/>
 		<% else %>
 			<$action-deletetiddler $tiddler="$:/config/tiddlyflex/story-river/horizontal"/>
 		<% endif %>

@@ -11,8 +11,12 @@ tags: $:/tags/StartupAction/PostRender
 		</$let>
 	</$list>
 	<$let currentColumn={{$:/columns!!current-column}} currentStoryList={{{ [[$:/StoryList-]addsuffix<currentColumn>] }}} currentTiddler={{{ [list<currentStoryList>nth[1]] }}} cssEscapedTitle={{{ [<currentTiddler>escapecss[]] }}}>
-		<$wikify name="scrollSelector" text=<<tiddlyflex-tiddler-scroll-selector>>>
-			<$action-sendmessage $message="tm-scroll" selector=<<scrollSelector>>/>
-		</$wikify>
+		<%if [<currentTiddler>!is[blank]!match[]] %>
+			<$wikify name="scrollSelector" text=<<tiddlyflex-tiddler-scroll-selector>>>
+				<$action-sendmessage $message="tm-scroll" selector=<<scrollSelector>>/>
+			</$wikify>
+		<% else %>
+			<$action-sendmessage $message="tm-scroll" selector={{{ [[.tc-tiddlyflex-story-river-]addsuffix<currentColumn>] }}}/>
+		<% endif %>
 	</$let>
 <% endif %>
