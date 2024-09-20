@@ -286,7 +286,7 @@ tags: $:/tags/Global
 <div class="tc-edit-fields">
 <table class={{{ [all[current]fields[]] :filter[lookup[$:/config/EditTemplateFields/Visibility/]!match[hide]] +[count[]!match[0]] +[then[tc-edit-fields]] ~[[tc-edit-fields tc-edit-fields-small]] }}}>
 <tbody>
-<$list filter="[all[current]fields[]] +[sort[title]]" variable="currentField" storyview="pop">
+<$list filter="[all[current]fields[]] +[sort[title]]" variable="currentField" storyview="tiddlypop">
 <$list filter=<<config-filter>> variable="temp">
 <tr class="tc-edit-field">
 <td class="tc-edit-field-name">
@@ -494,7 +494,7 @@ tags: $:/tags/Global
 \procedure edit-tags-template(tagField:"tags")
 \whitespace trim
 <div class="tc-edit-tags">
-	<$list filter="[<currentTiddler>get<tagField>enlist-input[]sort[title]]" storyview="pop">
+	<$list filter="[<currentTiddler>get<tagField>enlist-input[]sort[title]]" storyview="tiddlypop">
 		<$macrocall $name="tag-body"
 			colour={{{ [<currentTiddler>] :cascade[all[shadows+tiddlers]tag[$:/tags/TiddlerColourFilter]!is[draft]get[text]] }}}
 			palette={{$:/palette}}
@@ -738,7 +738,7 @@ tags: $:/tags/Global
 \procedure tdfp-tiddlyflex-viewtemplate-tags()
 \whitespace trim
 <$reveal type="nomatch" stateTitle=<<folded-state>> text="hide" tag="div" retain="yes" animate="yes">
-<div class="tc-tags-wrapper"><$list filter="[all[current]tags[]sort[title]]" template="$:/plugins/BTC/TiddlyFlex/ui/TagTemplate" storyview="pop"/></div>
+<div class="tc-tags-wrapper"><$list filter="[all[current]tags[]sort[title]]" template="$:/plugins/BTC/TiddlyFlex/ui/TagTemplate" storyview="tiddlypop"/></div>
 </$reveal>
 \end
 
@@ -762,7 +762,7 @@ tags: $:/tags/Global
 	<div class="tc-titlebar">
 		<span class="tc-tiddler-controls">
 			<$list filter="[all[shadows+tiddlers]tag[$:/tags/ViewToolbar]!has[draft.of]] :filter[lookup[$:/config/ViewToolbarButtons/Visibility/]!match[hide]]"
-				storyview="pop"
+				storyview="tiddlypop"
 				variable="listItem"
 			>
 				<$set name="tv-config-toolbar-class" filter="[<tv-config-toolbar-class>] [<listItem>encodeuricomponent[]addprefix[tc-btn-]]">

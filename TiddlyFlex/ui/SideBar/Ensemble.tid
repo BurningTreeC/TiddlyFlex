@@ -55,7 +55,7 @@ Optionally, provide an icon:<br>
 
 !! Load Ensemble
 
-<$list filter="[all[tiddlers+shadows]prefix[$:/Ensemble/]]" variable="ensembleTiddler" storyview="pop">
+<$list filter="[all[tiddlers+shadows]prefix[$:/Ensemble/]]" variable="ensembleTiddler" storyview="tiddlypop">
 
 <$let ensembleName={{{ [<ensembleTiddler>removeprefix[$:/Ensemble/]] }}}>
 

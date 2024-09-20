@@ -19,7 +19,7 @@ code-body: yes
 	<$eventcatcher selector=".tc-tiddlyflex-story-river-header" $click=<<tiddlyflex-activate-column-actions>>>
 		<div class="tc-tiddlyflex-story-river-header">
 			<$set name="aboveStoryHeaderTag" value={{{ [[$:/tags/AboveStoryHeader-]addsuffix<tiddlyFlexColumn>] }}}>
-				<$list filter="[all[shadows+tiddlers]tag<aboveStoryHeaderTag>!is[draft]]" variable="listItem" storyview="pop">
+				<$list filter="[all[shadows+tiddlers]tag<aboveStoryHeaderTag>!is[draft]]" variable="listItem" storyview="tiddlypop">
 					<$transclude tiddler=<<listItem>>/>
 				</$list>
 			</$set>
@@ -29,7 +29,7 @@ code-body: yes
 	<$eventcatcher selector=".tc-tiddlyflex-story-river-footer" $click=<<tiddlyflex-activate-column-actions>>>
 		<div class="tc-tiddlyflex-story-river-footer">
 			<$set name="belowStoryFooterTag" value={{{ [[$:/tags/BelowStoryFooter-]addsuffix<tiddlyFlexColumn>] }}}>
-				<$list filter="[all[shadows+tiddlers]tag<belowStoryFooterTag>!is[draft]]" variable="listItem" storyview="pop">
+				<$list filter="[all[shadows+tiddlers]tag<belowStoryFooterTag>!is[draft]]" variable="listItem" storyview="tiddlypop">
 					<$transclude tiddler=<<listItem>>/>
 				</$list>
 			</$set>
@@ -59,7 +59,7 @@ code-body: yes
 \procedure tiddlyflex-layout-header()
 \whitespace trim
 <div class="tc-tiddlyflex-header">
-	<$list filter="[{$:/status/RequireReloadDueToPluginChange}match[yes]then{$:/temp/HidePluginWarning}!match[yes]then[$:/plugins/BTC/TiddlyFlex/ui/Toolbars/PluginReloadWarning]] [all[shadows+tiddlers]tag[$:/tags/TopToolbar]!is[draft]] :filter[lookup[$:/config/TiddlyFlex/Toolbars/Visibility/]!match[hide]]" variable="listItem" storyview="pop">
+	<$list filter="[{$:/status/RequireReloadDueToPluginChange}match[yes]then{$:/temp/HidePluginWarning}!match[yes]then[$:/plugins/BTC/TiddlyFlex/ui/Toolbars/PluginReloadWarning]] [all[shadows+tiddlers]tag[$:/tags/TopToolbar]!is[draft]] :filter[lookup[$:/config/TiddlyFlex/Toolbars/Visibility/]!match[hide]]" variable="listItem" storyview="tiddlypop">
 		<$transclude tiddler=<<listItem>>/>
 	</$list>
 </div>
@@ -67,7 +67,7 @@ code-body: yes
 \procedure tiddlyflex-layout-leftbar()
 \whitespace trim
 <div class="tc-tiddlyflex-leftbar">
-	<$list filter="[all[shadows+tiddlers]tag[$:/tags/LeftToolbar]!is[draft]] :filter[lookup[$:/config/TiddlyFlex/Toolbars/Visibility/]!match[hide]]" variable="listItem" storyview="pop">
+	<$list filter="[all[shadows+tiddlers]tag[$:/tags/LeftToolbar]!is[draft]] :filter[lookup[$:/config/TiddlyFlex/Toolbars/Visibility/]!match[hide]]" variable="listItem" storyview="tiddlypop">
 		<$transclude tiddler=<<listItem>>/>
 	</$list>
 </div>
@@ -75,7 +75,7 @@ code-body: yes
 \procedure tiddlyflex-layout-footer()
 \whitespace trim
 <div class="tc-tiddlyflex-footer">
-	<$list filter="[all[shadows+tiddlers]tag[$:/tags/BottomToolbar]!is[draft]] :filter[lookup[$:/config/TiddlyFlex/Toolbars/Visibility/]!match[hide]]" variable="listItem" storyview="pop">
+	<$list filter="[all[shadows+tiddlers]tag[$:/tags/BottomToolbar]!is[draft]] :filter[lookup[$:/config/TiddlyFlex/Toolbars/Visibility/]!match[hide]]" variable="listItem" storyview="tiddlypop">
 		<$transclude tiddler=<<listItem>>/>
 	</$list>
 </div>
