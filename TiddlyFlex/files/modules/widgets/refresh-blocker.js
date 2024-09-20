@@ -32,6 +32,7 @@ Render this widget into the DOM
 */
 RefreshBlockerWidget.prototype.render = function(parent,nextSibling) {
 	this.parentDomNode = parent;
+	this.computeAttributes();
 	this.execute();
 	this.renderChildren(parent,null);
 };
@@ -40,12 +41,14 @@ RefreshBlockerWidget.prototype.render = function(parent,nextSibling) {
 Compute the internal state of the widget
 */
 RefreshBlockerWidget.prototype.execute = function() {
+	this.refreshBlockerTiddler = this.getAttribute("refresh-blocker") || "$:/state/sidebar/posx";
+	this.refreshBlockerEnabler = this.getAttribute("enabler") || "$:/state/sidebar/resizing";
 	// Make child widgets
 	this.makeChildWidgets();
 };
 
 RefreshBlockerWidget.prototype.refresh = function(changedTiddlers) {
-	if(changedTiddlers["$:/state/sidebar/posx"] && $tw.wiki.tiddlerExists("$:/state/sidebar/resizing")) {
+	if(changedTiddlers[this.refreshBlockerTiddler] && $tw.wiki.tiddlerExists(this.refreshBlockerEnabler)) {
 		return false;
 	} else {
 		return this.refreshChildren(changedTiddlers);
