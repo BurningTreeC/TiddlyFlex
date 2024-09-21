@@ -25,7 +25,7 @@ tags: $:/tags/Global
 				typeSelectionTiddler=<<qualify "$:/temp/Type/selected-item">>>
 				<$keyboard key="((cancel-edit-tiddler))" actions=<<cancel-delete-tiddler-actions "cancel">> tag="div">
 					<$keyboard key="((save-tiddler))" actions=<<save-tiddler-actions>> tag="div">
-						<$list filter="[all[shadows+tiddlers]tag[$:/tags/TiddlyFlex/EditTemplate]!is[draft]]" variable="listItem">
+						<$list filter="[all[shadows+tiddlers]tag[$:/tags/TiddlyFlex/EditTemplate]!is[draft]] [all[shadows+tiddlers]tag[$:/tags/EditTemplate]!is[draft]] -[[$:/core]plugintiddlers[]tag[$:/tags/EditTemplate]]" variable="listItem">
 							<$transclude tiddler=<<listItem>>/>
 						</$list>
 					</$keyboard>
