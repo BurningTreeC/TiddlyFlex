@@ -41,14 +41,18 @@ RefreshBlockerWidget.prototype.render = function(parent,nextSibling) {
 Compute the internal state of the widget
 */
 RefreshBlockerWidget.prototype.execute = function() {
-	this.refreshBlockerTiddler = this.getAttribute("refresh-blocker") || "$:/state/sidebar/posx";
-	this.refreshBlockerEnabler = this.getAttribute("enabler") || "$:/state/sidebar/resizing";
+	this.refreshBlockerTiddler = this.getAttribute("refresh-blocker");
+	this.refreshBlockerEnabler = this.getAttribute("enabler");
 	// Make child widgets
 	this.makeChildWidgets();
 };
 
 RefreshBlockerWidget.prototype.refresh = function(changedTiddlers) {
-	if(changedTiddlers[this.refreshBlockerTiddler] && $tw.wiki.tiddlerExists(this.refreshBlockerEnabler)) {
+	var changedAttributes = this.computeAttributes();
+	if(changedAttributes.refreshBlockerTiddler || changedAttributes.refreshBlockerEnabler) {
+		this.refreshSelf();
+		return true;
+	} else if(this.refreshBlockerTiddler && this.refreshBlockerEnabler && changedTiddlers[this.refreshBlockerTiddler] && $tw.wiki.tiddlerExists(this.refreshBlockerEnabler)) {
 		return false;
 	} else {
 		return this.refreshChildren(changedTiddlers);

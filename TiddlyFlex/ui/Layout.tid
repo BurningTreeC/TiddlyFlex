@@ -89,16 +89,16 @@ code-body: yes
 	storyviewTitle={{$:/view}}
 	languageTitle={{{ [{$:/language}get[name]] }}}>
 	<div class={{{ [all[shadows+tiddlers]tag[$:/tags/ClassFilters/PageTemplate/TiddlyFlex]!is[draft]] :map:flat[subfilter{!!text}] tc-page-container tc-tiddlyflex-container [[tc-page-view-]addsuffix<storyviewTitle>] [[tc-language-]addsuffix<languageTitle>] [{$:/state/sidebar}match[yes]then[tc-sidebar-shown]] :and[unique[]join[ ]] }}} tabindex="0">
-		<$refresh-blocker>
+		<$refresh-blocker refresh-blocker="$:/state/sidebar/posx" enabler="$:/state/sidebar/resizing">
 			<$eventcatcher selector=".tc-tiddlyflex-sidebar-shown" matchSelector=".tc-tiddlyflex-sidebar-shown" $click=<<tiddlyflex-hide-sidebar-actions>> class="tc-tiddlyflex-sidebar-shown-eventcatcher">
 				<div class={{{ [{$:/state/sidebar}!match[no]then[tc-tiddlyflex-sidebar-hide tc-btn-invisible tc-tiddlyflex-sidebar-shown]] [{$:/state/sidebar}match[no]then[tc-tiddlyflex-sidebar-hide tc-btn-invisible tc-tiddlyflex-sidebar-hidden]] }}}/>
 			</$eventcatcher>
 		</$refresh-blocker>
-		<$refresh-blocker>
+		<$refresh-blocker refresh-blocker="$:/state/sidebar/posx" enabler="$:/state/sidebar/resizing">
 			<$macrocall $name="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner=<<tiddlyflex-layout-header>>/>
 		</$refresh-blocker>
 		<div class="tc-tiddlyflex-main-wrapper">
-			<$refresh-blocker>
+			<$refresh-blocker refresh-blocker="$:/state/sidebar/posx" enabler="$:/state/sidebar/resizing">
 				<$macrocall $name="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner=<<tiddlyflex-layout-leftbar>>/>
 			</$refresh-blocker>
 			<main class="tc-tiddlyflex-main">
@@ -112,7 +112,7 @@ code-body: yes
 						<div class="tc-tiddlyflex-sidebar-resizer"/>
 					</$eventcatcher>
 				<% endif %>
-				<$refresh-blocker>
+				<$refresh-blocker refresh-blocker="$:/state/sidebar/posx" enabler="$:/state/sidebar/resizing">
 					<div class="tc-tiddlyflex-story-river-container">
 						<div class="tc-tiddlyflex-story-river-container-inner">
 							<<tiddlyflex-layout-story-rivers>>
@@ -132,7 +132,7 @@ code-body: yes
 				</$refresh-blocker>
 			</main>
 		</div>
-		<$refresh-blocker>
+		<$refresh-blocker refresh-blocker="$:/state/sidebar/posx" enabler="$:/state/sidebar/resizing">
 			<$macrocall $name="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner=<<tiddlyflex-layout-footer>>/>
 		</$refresh-blocker>
 	</div>
