@@ -95,6 +95,7 @@ code-body: yes
 			</$eventcatcher>
 		</$refresh-blocker>
 		<$refresh-blocker refresh-blocker="$:/state/sidebar/posx" enabler="$:/state/sidebar/resizing">
+			<$macrocall $name="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner={{$:/core/ui/CommandPaletteTemplate}}/>
 			<$macrocall $name="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner=<<tiddlyflex-layout-header>>/>
 		</$refresh-blocker>
 		<div class="tc-tiddlyflex-main-wrapper">
