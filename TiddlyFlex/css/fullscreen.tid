@@ -37,36 +37,40 @@ tags: $:/tags/Stylesheet
 
 <%if [tdff.tiddlyflex-layout[]] %>
 
-	<$list filter="[all[tiddlers]prefix[$:/state/tiddlyflex/story-river/fullscreen/]]" variable="fullScreenTiddler">
+	<%if [[$:/state/sidebar/resizing]is[missing]] %>
 
-		.tc-tiddlyflex-story-river-wrapper-inner, .tc-tiddlyflex-story-river-wrapper {
-			z-index: initial;
-		}
+		<$list filter="[all[tiddlers]prefix[$:/state/tiddlyflex/story-river/fullscreen/]]" variable="fullScreenTiddler">
 
-		<$vars column={{{ [<fullScreenTiddler>get[column]] }}} fullScreenTiddler={{{ [<fullScreenTiddler>removeprefix[$:/state/tiddlyflex/story-river/fullscreen/]] }}}>
-
-			<$let tiddlerTitle=<<fullScreenTiddler>> tiddlerTitleCSSEscaped={{{ [<tiddlerTitle>escapecss[]] }}}>
-
-				<<tiddlyflex-view-tiddler-full-screen>>
-
-			</$let>
-
-		</$vars>
-
-		@media (max-width: 991.98px) {
-
-			.tc-tiddlyflex-story-river-container-inner {
-				overflow: hidden;
+			.tc-tiddlyflex-story-river-wrapper-inner, .tc-tiddlyflex-story-river-wrapper {
+				z-index: initial;
 			}
 
-		}
+			<$vars column={{{ [<fullScreenTiddler>get[column]] }}} fullScreenTiddler={{{ [<fullScreenTiddler>removeprefix[$:/state/tiddlyflex/story-river/fullscreen/]] }}}>
 
-		<$list filter="[subfilter<tdff.tiddlyflex-enlist-columns>]" variable="column">
+				<$let tiddlerTitle=<<fullScreenTiddler>> tiddlerTitleCSSEscaped={{{ [<tiddlerTitle>escapecss[]] }}}>
 
-			<<tiddlyflex-inherit-overflow-columns>>
+					<<tiddlyflex-view-tiddler-full-screen>>
+
+				</$let>
+
+			</$vars>
+
+			@media (max-width: 991.98px) {
+
+				.tc-tiddlyflex-story-river-container-inner {
+					overflow: hidden;
+				}
+
+			}
+
+			<$list filter="[subfilter<tdff.tiddlyflex-enlist-columns>]" variable="column">
+
+				<<tiddlyflex-inherit-overflow-columns>>
+
+			</$list>
 
 		</$list>
 
-	</$list>
+	<% endif %>
 
 <% endif %>

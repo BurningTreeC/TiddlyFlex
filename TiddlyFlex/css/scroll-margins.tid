@@ -23,32 +23,36 @@ tags: $:/tags/Stylesheet
 
 <%if [tdff.tiddlyflex-layout[]] %>
 
-	<$list filter="[subfilter<tdff.tiddlyflex-enlist-columns>]" variable="tiddlyFlexColumn">
+	<%if [[$:/state/sidebar/resizing]is[missing]] %>
 
-		<$set name="tv-story-list" value={{{ [[$:/StoryList-]addsuffix<tiddlyFlexColumn>] }}}>
+		<$list filter="[subfilter<tdff.tiddlyflex-enlist-columns>]" variable="tiddlyFlexColumn">
 
-			<$list filter="[subfilter<tdff.tiddlyflex-story-river-filter>] +[nth[1]]" variable="tiddler">
+			<$set name="tv-story-list" value={{{ [[$:/StoryList-]addsuffix<tiddlyFlexColumn>] }}}>
 
-				<$set name="cssEscapedTitle" value={{{ [<tiddler>escapecss[]] }}}>
+				<$list filter="[subfilter<tdff.tiddlyflex-story-river-filter>] +[nth[1]]" variable="tiddler">
 
-					<<tiddlyflex-scroll-margin-top-story-river-padding>>
+					<$set name="cssEscapedTitle" value={{{ [<tiddler>escapecss[]] }}}>
 
-				</$set>
+						<<tiddlyflex-scroll-margin-top-story-river-padding>>
 
-			</$list>
+					</$set>
 
-			<$list filter="[subfilter<tdff.tiddlyflex-story-river-filter>] -[subfilter<tdff.tiddlyflex-story-river-filter>nth[1]]" variable="tiddler">
+				</$list>
 
-				<$set name="cssEscapedTitle" value={{{ [<tiddler>escapecss[]] }}}>
+				<$list filter="[subfilter<tdff.tiddlyflex-story-river-filter>] -[subfilter<tdff.tiddlyflex-story-river-filter>nth[1]]" variable="tiddler">
 
-					<<tiddlyflex-scroll-margin-top>>
+					<$set name="cssEscapedTitle" value={{{ [<tiddler>escapecss[]] }}}>
 
-				</$set>
+						<<tiddlyflex-scroll-margin-top>>
 
-			</$list>
+					</$set>
 
-		</$set>
+				</$list>
 
-	</$list>
+			</$set>
+
+		</$list>
+
+	<% endif %>
 
 <% endif %>
