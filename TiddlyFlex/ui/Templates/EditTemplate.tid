@@ -3,7 +3,7 @@ code-body: yes
 
 \procedure delete-edittemplate-state-tiddlers()
 <$set name="safeNewFieldValueTiddlerPrefix" value=<<newFieldValueTiddlerPrefix>> emptyValue=<<qualify "$:/temp/NewFieldValue">> >
-	<$action-deletetiddler $filter="[<newFieldNameTiddler>] [prefix[$:/temp/NewFieldValue]prefix<safeNewFieldValueTiddlerPrefix>] [<newFieldNameInputTiddler>] [<newFieldNameSelectionTiddler>] [<newTagNameTiddler>] [<newTagNameInputTiddler>] [<newTagNameSelectionTiddler>] [<typeInputTiddler>] [<typeSelectionTiddler>]"/>
+	<$action-deletetiddler $filter="[<newFieldNameTiddler>] [prefix[$:/temp/NewFieldValue]prefix<safeNewFieldValueTiddlerPrefix>] [<newFieldNameInputTiddler>] [<newFieldNameSelectionTiddler>] [<newTagNameTiddler>] [<newTagNameInputTiddler>] [<newTagNameSelectionTiddler>] [<typeInputTiddler>] [<typeSelectionTiddler>] [prefix[$:/state/codemirror-6/fullscreen/]]"/>
 </$set>
 \end
 
@@ -19,7 +19,11 @@ code-body: yes
 <%if [[$message$]match[delete]] %>
 	<<tiddlyflex-delete-draft-tiddler-actions>>
 <% elseif [[$message$]match[cancel]] %>
-	<<tiddlyflex-cancel-draft-tiddler-actions>>
+	<%if [<qualifiedSearchPanelState>is[missing]] %>
+		<<tiddlyflex-cancel-draft-tiddler-actions>>
+	<% else %>
+		<$action-deletetiddler $tiddler=<<qualifiedSearchPanelState>>/>
+	<% endif %>
 <% endif %>
 \end
 
