@@ -334,6 +334,8 @@ tags: $:/tags/Stylesheet
 /* ACTIVE COLUMNS */
 /******************/
 
+<$refresh-blocker refresh-blocker="$:/state/sidebar/posx" enabler="$:/state/sidebar/resizing">
+
 .tc-tiddlyflex-story-river-active {
 	background: repeating-linear-gradient(
 		to right,
@@ -381,5 +383,7 @@ div[class^="tc-tiddlyflex-dropzone-"].tc-dragover:before {
 	text-align: center;
 	content: "<<lingo DropMessage>>";
 }
+
+</$refresh-blocker>
 
 <% endif %>

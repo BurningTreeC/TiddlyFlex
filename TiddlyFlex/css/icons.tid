@@ -1,6 +1,8 @@
 title: $:/plugins/BTC/TiddlyFlex/styles/icons
 tags: $:/tags/Stylesheet
 
+<$refresh-blocker refresh-blocker="$:/state/sidebar/posx" enabler="$:/state/sidebar/resizing">
+
 svg.lucide.lucide-layout-dashboard {
 	stroke: <<colour foreground>>;
 	stroke-width: 3;
@@ -19,3 +21,5 @@ svg.lucide {
 .tc-selected svg.lucide.lucide-grip {
 	stroke: <<colour primary>>;
 }
+
+</$refresh-blocker>

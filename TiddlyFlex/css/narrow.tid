@@ -4,6 +4,8 @@ tags: $:/tags/Stylesheet
 \procedure story-river-width-sidebar() calc(100% - (100% - {{{ [[$(sidebarPosX)$]substitute[]addsuffix[px]] }}}))
 \procedure story-river-width() calc(100% - {{{ [[$(sidebarWidth)$]substitute[]addsuffix[px]] }}})
 
+<$refresh-blocker refresh-blocker="$:/state/sidebar/posx" enabler="$:/state/sidebar/resizing">
+
 <%if [tdff.tiddlyflex-layout[]] %>
 
 	@media (max-width: 991.98px) {
@@ -20,37 +22,29 @@ tags: $:/tags/Stylesheet
 
 		<%if [{$:/config/tiddlyflex/story-river/horizontal}match[yes]] %>
 
-			<$let columnCount={{{ [subfilter<tdff.tiddlyflex-enlist-columns>count[]] }}} sidebarPosX={{{ [[$:/state/sidebar/posx]!is[missing]get[text]addsuffix[px]] ~DEFAULT }}} sidebarWidth={{$:/config/tiddlyflex/sidebar/width}}>
+			.tc-tiddlyflex-main-wrapper {
+				overflow-x: auto;
+			}
 
-				<$wikify name="horizontalWidth" text={{{ [<sidebarPosX>!match[DEFAULT]then<story-river-width-sidebar>] ~[<story-river-width>] }}}>
+			.tc-tiddlyflex-main {
+				overflow-x: clip;
+			}
 
-					.tc-tiddlyflex-main-wrapper {
-						overflow-x: auto;
-					}
+			.tc-tiddlyflex-story-river-container-inner {
+				overflow-x: auto;
+				width: 100%;
+				max-width: 100%;
+				scroll-behavior: smooth;
+				scroll-snap-type: x mandatory;
+				z-index: 1;
+			}
 
-					.tc-tiddlyflex-main {
-						overflow-x: clip;
-					}
-
-					.tc-tiddlyflex-story-river-container-inner {
-						overflow-x: auto;
-						width: 100%;
-						max-width: 100%;
-						scroll-behavior: smooth;
-						scroll-snap-type: x mandatory;
-						z-index: 1;
-					}
-
-					.tc-tiddlyflex-story-river-wrapper {
-						flex-basis: 100%;
-						max-width: 100%;
-						scroll-snap-align: start;
-						overflow: clip;
-					}
-
-				</$wikify>
-
-			</$let>
+			.tc-tiddlyflex-story-river-wrapper {
+				flex-basis: 100%;
+				max-width: 100%;
+				scroll-snap-align: start;
+				overflow: clip;
+			}
 
 		<% endif %>
 
@@ -77,3 +71,5 @@ tags: $:/tags/Stylesheet
 	}
 
 <% endif %>
+
+</$refresh-blocker>

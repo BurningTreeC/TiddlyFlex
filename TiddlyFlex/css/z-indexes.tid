@@ -23,6 +23,8 @@ z-index: `<$text text={{{ [<storyListCount>add[501]subtract<currentTiddler>] }}}
 
 \end
 
+<$refresh-blocker refresh-blocker="$:/state/sidebar/posx" enabler="$:/state/sidebar/resizing">
+
 <%if [tdff.tiddlyflex-layout[]] %>
 
 	<%if [{$:/themes/tiddlywiki/vanilla/options/stickytitles}match[yes]] %>
@@ -40,3 +42,5 @@ z-index: `<$text text={{{ [<storyListCount>add[501]subtract<currentTiddler>] }}}
 	<% endif %>
 
 <% endif %>
+
+</$refresh-blocker>

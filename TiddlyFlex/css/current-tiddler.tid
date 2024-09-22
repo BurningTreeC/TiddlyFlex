@@ -1,6 +1,8 @@
 title: $:/plugins/BTC/TiddlyFlex/styles/current-tiddler
 tags: $:/tags/Stylesheet
 
+<$refresh-blocker refresh-blocker="$:/state/sidebar/posx" enabler="$:/state/sidebar/resizing">
+
 <%if [tdff.tiddlyflex-layout[]] %>
 
 	<$let currentColumn={{{ [subfilter<tdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter<tdff.tiddlyflex-current-column-filtered>] }}} historyList={{{ [[$:/HistoryList-]addsuffix<currentColumn>!match[$:/HistoryList-]] ~[[$:/HistoryList-1]] }}}>
@@ -24,3 +26,5 @@ tags: $:/tags/Stylesheet
 	</$let>
 
 <% endif %>
+
+</$refresh-blocker>

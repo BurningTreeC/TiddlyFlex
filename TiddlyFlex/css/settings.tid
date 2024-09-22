@@ -1,6 +1,8 @@
 title: $:/plugins/BTC/TiddlyFlex/styles/settings
 tags: $:/tags/Stylesheet
 
+<$refresh-blocker refresh-blocker="$:/state/sidebar/posx" enabler="$:/state/sidebar/resizing">
+
 /** checkbox switches start **/
 /** https://www.w3schools.com/howto/howto_css_switch.asp **/
 /* The switch - the box around the slider */
@@ -182,3 +184,5 @@ color: #495057;
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
 }
+
+</$refresh-blocker>

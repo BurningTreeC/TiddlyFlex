@@ -113,6 +113,8 @@ tags: $:/tags/Stylesheet
 
 \end
 
+<$refresh-blocker refresh-blocker="$:/state/sidebar/posx" enabler="$:/state/sidebar/resizing">
+
 <%if [tdff.tiddlyflex-layout[]] %>
 
 	<%if [{$:/state/dragging}match[yes]] %>
@@ -249,3 +251,5 @@ tags: $:/tags/Stylesheet
 	<% endif %>
 
 <% endif %>
+
+</$refresh-blocker>

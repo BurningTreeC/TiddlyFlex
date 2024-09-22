@@ -21,6 +21,8 @@ tags: $:/tags/Stylesheet
 
 		<% endif %>
 
+		<$refresh-blocker refresh-blocker="$:/state/sidebar/posx" enabler="$:/state/sidebar/resizing">
+
 		<%if [{$:/config/tiddlyflex/story-river/horizontal}!match[yes]] %>
 
 			<$list filter="[{$:/state/sidebar}match[no]] :then[subfilter<tdff.tiddlyflex-enlist-columns>count[]compare:number:gteq{$:/config/tiddlyflex/story-river/tiddler/controls-breakpoint}] :else[subfilter<tdff.tiddlyflex-enlist-columns>count[]compare:number:gteq{$:/config/tiddlyflex/story-river/tiddler/controls-breakpoint-sidebar}]" variable="column">
@@ -36,6 +38,8 @@ tags: $:/tags/Stylesheet
 			</$list>
 
 		<% endif %>
+
+		</$refresh-blocker>
 
 		<%if [[$:/state/sidebar/posx]!is[missing]] %>
 
