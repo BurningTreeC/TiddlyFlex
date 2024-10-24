@@ -1,8 +1,6 @@
 title: $:/config/tiddlyflex/story-river/filter/fields
 caption: Story-River Filter Fields-Suffix
 description: The Fields Suffix used for the search operator when filtering the Story Rivers
-option-names: [[*]] [[tags,text,title]] [[tags]] [[text]] [[title]]
-option-values: [[*]] [[tags,text,title]] [[tags]] [[text]] [[title]]
-settings-template: $:/plugins/BTC/TiddlyFlex/ui/ControlPanel/Templates/select
+settings-template: $:/plugins/BTC/TiddlyFlex/ui/ControlPanel/Templates/input
 
 *
