@@ -234,7 +234,7 @@ tags: $:/tags/Stylesheet
 }
 
 .tc-tiddlyflex-story-river .tc-navigating .tc-tiddler-frame {
-	border: 2px dashed <<colour primary>>;
+	outline: 2px dashed <<colour primary>>;
 }
 
 /***********/

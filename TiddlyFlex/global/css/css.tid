@@ -5,7 +5,7 @@ tags: $:/tags/Global
 \rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock whitespace
 
 .tc-tiddlyflex-story-river-{{{ [[$(currentColumn)$]substitute[]] }}} .tc-tiddlyflex-story-river-inner > [data-tiddler-title={{{ [[$(cssEscapedTitle)$]substitute[]addprefix["]addsuffix["]] }}}]:not(.tc-navigating) > .tc-tiddler-frame {
-	border: 1px solid <<colour tiddlyflex-current-tiddler>>;
+	outline: 1px solid <<colour tiddlyflex-current-tiddler>>;
 }
 
 \end
@@ -14,7 +14,7 @@ tags: $:/tags/Global
 \rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock whitespace
 
 .tc-tiddlyflex-story-river-{{{ [[$(column)$]substitute[]] }}} .tc-tiddlyflex-story-river-inner >  [data-tiddler-title={{{ [[$(cssEscapedTitle)$]substitute[]addprefix["]addsuffix["]] }}}]:not(.tc-navigating) > .tc-tiddler-frame {
-	border: 1px solid <<colour tiddlyflex-current-tiddler-muted>>;
+	outline: 1px solid <<colour tiddlyflex-current-tiddler-muted>>;
 }
 
 \end
