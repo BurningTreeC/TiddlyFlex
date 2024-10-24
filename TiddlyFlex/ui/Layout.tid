@@ -39,10 +39,10 @@ code-body: yes
 \end
 \procedure tiddlyflex-layout-story-rivers()
 \whitespace trim
-<$list filter=<<tdff.tiddlyflex-enlist-columns>> variable="tiddlyFlexColumn">
+<$list filter="[subfilter<tdff.tiddlyflex-enlist-columns>]" variable="tiddlyFlexColumn">
 	<$set name="transclusion" value=<<tiddlyFlexColumn>>>
 		<$vars tv-story-list={{{ [[$:/StoryList-]addsuffix<tiddlyFlexColumn>] }}} tv-history-list={{{ [[$:/HistoryList-]addsuffix<tiddlyFlexColumn>] }}} openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
-			<$macrocall $name="tiddlyflex-message-catcher" tiddlyflex-layout-inner=<<tiddlyflex-layout-story>>/>
+			<$transclude $variable="tiddlyflex-message-catcher" tiddlyflex-layout-inner=<<tiddlyflex-layout-story>>/>
 		</$vars>
 	</$set>
 </$list>
@@ -51,7 +51,7 @@ code-body: yes
 <$transclude tiddler="$:/plugins/BTC/TiddlyFlex/ui/Templates/drafts"/>
 \end
 \procedure tiddlyflex-layout-drafts()
-<$macrocall $name="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner=<<tiddlyflex-layout-drafts-inner>>/>
+<$transclude $variable="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner=<<tiddlyflex-layout-drafts-inner>>/>
 \end
 \procedure tiddlyflex-layout-sidebar()
 <$transclude tiddler="$:/plugins/BTC/TiddlyFlex/ui/Templates/sidebar"/>
@@ -95,12 +95,12 @@ code-body: yes
 			</$eventcatcher>
 		</$refresh-blocker>
 		<$refresh-blocker refresh-blocker="$:/state/sidebar/posx" enabler="$:/state/sidebar/resizing">
-			<$macrocall $name="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner={{$:/core/ui/CommandPaletteTemplate}}/>
-			<$macrocall $name="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner=<<tiddlyflex-layout-header>>/>
+			<$transclude $variable="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner={{$:/core/ui/CommandPaletteTemplate}}/>
+			<$transclude $variable="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner=<<tiddlyflex-layout-header>>/>
 		</$refresh-blocker>
 		<div class="tc-tiddlyflex-main-wrapper">
 			<$refresh-blocker refresh-blocker="$:/state/sidebar/posx" enabler="$:/state/sidebar/resizing">
-				<$macrocall $name="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner=<<tiddlyflex-layout-leftbar>>/>
+				<$transclude $variable="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner=<<tiddlyflex-layout-leftbar>>/>
 			</$refresh-blocker>
 			<main class="tc-tiddlyflex-main">
 				<%if [{$:/config/tiddlyflex/sidebar/resizer}match[yes]] %>
@@ -123,7 +123,7 @@ code-body: yes
 					<div class="tc-tiddlyflex-sidebar">
 						<div class="tc-tiddlyflex-sidebar-container">
 							<div class="tc-tiddlyflex-sidebar-container-inner">
-								<$macrocall $name="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner=<<tiddlyflex-layout-sidebar>>/>
+								<$transclude $variable="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner=<<tiddlyflex-layout-sidebar>>/>
 							</div>
 						</div>
 					</div>
@@ -134,7 +134,7 @@ code-body: yes
 			</main>
 		</div>
 		<$refresh-blocker refresh-blocker="$:/state/sidebar/posx" enabler="$:/state/sidebar/resizing">
-			<$macrocall $name="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner=<<tiddlyflex-layout-footer>>/>
+			<$transclude $variable="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner=<<tiddlyflex-layout-footer>>/>
 		</$refresh-blocker>
 	</div>
 </$vars>
