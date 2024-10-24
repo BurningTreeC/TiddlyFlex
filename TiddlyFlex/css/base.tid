@@ -195,6 +195,10 @@ tags: $:/tags/Stylesheet
 		flex-basis: 0;
 	}
 
+	.tc-tiddlyflex-story-river-wrapper:not(:last-of-type) {
+		border-right: 1px solid <<colour very-muted-foreground>>;
+	}
+
 }
 
 .tc-tiddlyflex-story-river-wrapper-inner {
