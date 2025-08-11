@@ -1,3 +1,9 @@
 title: $:/plugins/BTC/TiddlyFlex/icons/layout
 
-<svg width="1rem" height="1rem" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-dashboard"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+\parameters (size:"22pt")
+<svg width=<<size>> height=<<size>> viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-dashboard">
+  <rect stroke="currentColor" width="7" height="9" x="3" y="3" rx="1"/>
+  <rect stroke="currentColor" width="7" height="5" x="14" y="3" rx="1"/>
+  <rect stroke="currentColor" width="7" height="9" x="14" y="12" rx="1"/>
+  <rect stroke="currentColor" width="7" height="5" x="3" y="16" rx="1"/>
+</svg>
