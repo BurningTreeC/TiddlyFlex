@@ -17,7 +17,7 @@ code-body: yes
 \end
 \procedure on-resize-end-action()
 <$let metric={{{ [tdff.get.value.metric<actionFormattedValue>] }}}>
-	<%if [<actionValuePixels>divide<actionParentSize>multiply[100]compare:number:lt[5]] %>
+	<%if [<actionValuePixels>compare:number:lt{$:/config/tiddlyflex/sidebar/snapwidth}] %>
 		<$action-setfield $tiddler="$:/state/sidebar/width" text={{{ [[0]addsuffix<metric>] }}}/>
 		<$action-setfield $tiddler="$:/state/sidebar" text="no"/>
 	<% endif %>

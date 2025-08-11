@@ -1,0 +1,6 @@
+title: $:/config/tiddlyflex/sidebar/snapwidth
+caption: Sidebar snap-width
+description: The width limit for the sidebar, below which the sidebar collapses
+settings-template: $:/plugins/BTC/TiddlyFlex/ui/ControlPanel/Templates/input
+
+100
