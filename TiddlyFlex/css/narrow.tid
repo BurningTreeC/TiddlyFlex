@@ -4,8 +4,6 @@ tags: $:/tags/Stylesheet
 \procedure story-river-width-sidebar() calc(100% - (100% - {{{ [[$(sidebarPosX)$]substitute[]addsuffix[px]] }}}))
 \procedure story-river-width() calc(100% - {{{ [[$(sidebarWidth)$]substitute[]addsuffix[px]] }}})
 
-<$refresh-blocker refresh-blocker="$:/state/sidebar/posx" enabler="$:/state/sidebar/resizing">
-
 <%if [tdff.tiddlyflex-layout[]] %>
 
 	@media (max-width: 991.98px) {
@@ -71,5 +69,3 @@ tags: $:/tags/Stylesheet
 	}
 
 <% endif %>
-
-</$refresh-blocker>

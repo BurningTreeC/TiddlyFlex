@@ -42,15 +42,6 @@ tags: $:/tags/Stylesheet
 
 }
 
-<% if [{$:/state/sidebar}match[no]] %>
-
-	.tc-tiddlyflex-main {
-		<!--max-width: calc(100% + ((100vw / 100) * {{{ [{$:/config/tiddlyflex/sidebar/width}removesuffix[%]] ~[{$:/config/tiddlyflex/sidebar/width}removesuffix[px]] }}}));-->
-		max-width: calc(100% + {{$:/config/tiddlyflex/sidebar/width}});
-	}
-
-<% endif %>
-
 @media (min-width: 992px) {
 
 	.tc-tiddlyflex-main {
@@ -119,12 +110,26 @@ tags: $:/tags/Stylesheet
 
 <%if [{$:/state/sidebar}!match[no]] %>
 
-	.tc-tiddlyflex-story-river-container {
-		flex-basis: calc(100% - {{$:/config/tiddlyflex/sidebar/width}});
-		max-width: calc(100% - {{$:/config/tiddlyflex/sidebar/width}});
-	}
+	<%if [{$:/config/tiddlyflex/story-river/horizontal}!match[yes]] %>
+
+		.tc-tiddlyflex-story-river-container {
+			flex-basis: clamp(<<tdff.css-tiddlyflex-column-count-story-calc>>,calc(100% - max({{{ [{$:/state/sidebar/width}!is[blank]] :else[[0px]] }}},{{$:/config/tiddlyflex/sidebar/width}})),100%);
+		}
+
+	<% else %>
+
+		.tc-tiddlyflex-story-river-container {
+			max-width: calc(100% - {{$:/config/tiddlyflex/sidebar/width}});
+		}
+
+	<% endif %>
 
 <% endif %>
+
+body.tc-resizing .tc-tiddlyflex-story-river-container {
+	-webkit-transition: none;
+	transition: none;
+}
 
 <%if [[$:/state/sidebar/resizing]!is[missing]] %>
 
@@ -135,18 +140,19 @@ tags: $:/tags/Stylesheet
 
 <% endif %>
 
-<%if [{$:/config/tiddlyflex/sidebar/resizer}match[yes]then[$:/state/sidebar/posx]!is[missing]] %>
+<%if [[$:/plugins/BTC/resizer]!is[missing]] %>
 
-	<%if [[$:/state/sidebar/resizing]!is[missing]] %>
+	<%if [{$:/config/tiddlyflex/story-river/horizontal}!match[yes]] %>
 
 		.tc-tiddlyflex-story-river-container {
-			flex-basis: max(max(calc({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px)),calc({{{ [{$:/config/tiddlyflex/story-river/horizontal}!match[yes]] :then[subfilter<tdff.tiddlyflex-enlist-columns>count[]] ~1 }}} * {{$:/config/tiddlyflex/story-river/min-width}})),calc(100% - (100% - ({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px)))));
+			flex-basis: clamp(<<tdff.css-tiddlyflex-column-count-story-calc>>,calc(100% - {{$:/state/sidebar/width}}),100%);
 		}
 
 	<% else %>
 
 		.tc-tiddlyflex-story-river-container {
-			flex-basis: max(max(calc({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px)),calc({{{ [{$:/config/tiddlyflex/story-river/horizontal}!match[yes]] :then[subfilter<tdff.tiddlyflex-enlist-columns>count[]] ~1 }}} * {{$:/config/tiddlyflex/story-river/min-width}})),calc(100% - (100% - ({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px)))));
+			flex-basis: calc(100% - {{$:/state/sidebar/width}});
+			max-width: calc(100% - {{$:/state/sidebar/width}});
 		}
 
 	<% endif %>
@@ -187,13 +193,19 @@ tags: $:/tags/Stylesheet
 	flex-grow: 1;
 	overflow: hidden;
 	z-index: 500;
+	flex-basis: 100%;
 }
 
-@media (min-width: 992px) {
+<%if [{$:/config/tiddlyflex/story-river/horizontal}!match[yes]] %>
 
 	.tc-tiddlyflex-story-river-wrapper {
-		flex-basis: 0;
+		flex-shrink: 1;
+		flex-grow: 0;
 	}
+
+<% endif %>
+
+@media (min-width: 992px) {
 
 	.tc-tiddlyflex-story-river-wrapper:not(:last-of-type) {
 		border-right: 1px solid <<colour very-muted-foreground>>;
@@ -207,6 +219,7 @@ tags: $:/tags/Stylesheet
 	overflow-y: auto;
 	scroll-behavior: smooth;
 	z-index: 600;
+	outline: none;
 }
 
 @media (min-width: 992px) {
@@ -242,6 +255,7 @@ tags: $:/tags/Stylesheet
 /***********/
 
 .tc-tiddlyflex-sidebar {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
@@ -253,6 +267,14 @@ tags: $:/tags/Stylesheet
 	box-shadow: 0px 0px 5px 0px <<colour tiddlyflex-box-shadow>>;
 }
 
+<%if [{$:/state/sidebar}match[no]] %>
+
+	.tc-tiddlyflex-sidebar-container {
+		pointer-events: none !important;
+	}
+
+<% endif %>
+
 @media (min-width: 992px) {
 
 	.tc-tiddlyflex-sidebar {
@@ -263,21 +285,11 @@ tags: $:/tags/Stylesheet
 
 }
 
-<%if [{$:/config/tiddlyflex/sidebar/resizer}match[yes]then[$:/state/sidebar/posx]!is[missing]] %>
+<%if [[$:/plugins/BTC/resizer]!is[missing]] %>
 
-	<%if [[$:/state/sidebar/resizing]!is[missing]] %>
-
-		.tc-tiddlyflex-sidebar {
-			width: max(min(max(calc(100% - ({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px))),{{$:/config/tiddlyflex/sidebar/width}}),calc(100% - ({{{ [{$:/config/tiddlyflex/story-river/horizontal}!match[yes]] :then[subfilter<tdff.tiddlyflex-enlist-columns>count[]] ~1 }}} * {{$:/config/tiddlyflex/story-river/min-width}}))),{{$:/config/tiddlyflex/sidebar/width}});
-		}
-
-	<% else %>
-
-		.tc-tiddlyflex-sidebar {
-			width: max(min(max(calc(100% - ({{$:/state/sidebar/posx}}px + (({{$:/state/sidebar/posx!!selectednode-width}}px / 2) - {{$:/state/sidebar/posx!!drag-diff}}px))),{{$:/config/tiddlyflex/sidebar/width}}),calc(100% - ({{{ [{$:/config/tiddlyflex/story-river/horizontal}!match[yes]] :then[subfilter<tdff.tiddlyflex-enlist-columns>count[]] ~1 }}} * {{$:/config/tiddlyflex/story-river/min-width}}))),{{$:/config/tiddlyflex/sidebar/width}});
-		}
-
-	<% endif %>
+	.tc-tiddlyflex-sidebar {
+		width: max({{$:/state/sidebar/width}},{{$:/config/tiddlyflex/sidebar/width}});
+	}
 
 <% endif %>
 
@@ -346,8 +358,6 @@ tags: $:/tags/Stylesheet
 /* ACTIVE COLUMNS */
 /******************/
 
-<$refresh-blocker refresh-blocker="$:/state/sidebar/posx" enabler="$:/state/sidebar/resizing">
-
 .tc-tiddlyflex-story-river-active {
 	background: repeating-linear-gradient(
 		to right,
@@ -395,7 +405,5 @@ div[class^="tc-tiddlyflex-dropzone-"].tc-dragover:before {
 	text-align: center;
 	content: "<<lingo DropMessage>>";
 }
-
-</$refresh-blocker>
 
 <% endif %>

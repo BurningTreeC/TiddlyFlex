@@ -10,19 +10,15 @@ $:/config/SideBarSegments/Visibility/$(listItem)$
 
 	<div class="tc-sidebar-header">
 
-		<$reveal state="$:/state/sidebar" type="match" text="yes" default="yes" animate="yes">
+		<$list filter="[all[shadows+tiddlers]tag[$:/tags/SideBarSegment]!is[draft]]" variable="listItem">
 
-			<$list filter="[all[shadows+tiddlers]tag[$:/tags/SideBarSegment]!has[draft.of]]" variable="listItem">
+			<$reveal type="nomatch" state=<<config-title>> text="hide"  tag="div">
 
-				<$reveal type="nomatch" state=<<config-title>> text="hide"  tag="div">
+				<$transclude tiddler=<<listItem>> mode="block"/>
 
-					<$transclude tiddler=<<listItem>> mode="block"/>
+			</$reveal>
 
-				</$reveal>
-
-			</$list>
-
-		</$reveal>
+		</$list>
 
 	</div>
 

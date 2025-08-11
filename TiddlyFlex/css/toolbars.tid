@@ -1,8 +1,6 @@
 title: $:/plugins/BTC/TiddlyFlex/styles/toolbars
 tags: $:/tags/Stylesheet
 
-<$refresh-blocker refresh-blocker="$:/state/sidebar/posx" enabler="$:/state/sidebar/resizing">
-
 <%if [tdff.tiddlyflex-layout[]] %>
 
 	.tc-tiddlyflex-top-toolbar {
@@ -50,7 +48,6 @@ tags: $:/tags/Stylesheet
 	}
 
 	.tc-tiddlyflex-top-toolbar-right .tc-btn-invisible svg:not(.lucide) {
-		fill: <<colour muted-foreground>>;
 		font-size: 1rem;
 		height: 1rem;
 		width: 1rem;
@@ -67,5 +64,3 @@ tags: $:/tags/Stylesheet
 	}
 
 <% endif %>
-
-</$refresh-blocker>

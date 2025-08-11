@@ -17,6 +17,11 @@ var TiddlyPopStoryView = function(listWidget) {
 };
 
 TiddlyPopStoryView.prototype.navigateTo = function(historyInfo) {
+	// Check if storyview scrolling is enabled
+	var enableScroll = this.listWidget.getVariable("tv-enable-storyview-scroll");
+	if(enableScroll !== "yes") {
+		return;
+	}
 	var listElementIndex = this.listWidget.findListItem(0,historyInfo.title);
 	if(listElementIndex === undefined) {
 		return;
@@ -28,7 +33,7 @@ TiddlyPopStoryView.prototype.navigateTo = function(historyInfo) {
 		return;
 	}
 	// Scroll the node into view
-	//this.listWidget.dispatchEvent({type: "tm-scroll", target: targetElement});
+	this.listWidget.dispatchEvent({type: "tm-scroll", target: targetElement});
 };
 
 TiddlyPopStoryView.prototype.insert = function(widget) {

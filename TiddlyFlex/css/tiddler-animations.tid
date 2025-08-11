@@ -81,8 +81,6 @@ tags: $:/tags/Stylesheet
 
 \end
 
-<$refresh-blocker refresh-blocker="$:/state/sidebar/posx" enabler="$:/state/sidebar/resizing">
-
 <%if [tdff.tiddlyflex-layout[]] %>
 
 	<%if [[$:/state/sidebar/resizing]is[missing]] %>
@@ -171,5 +169,3 @@ tags: $:/tags/Stylesheet
 	<% endif %>
 
 <% endif %>
-
-</$refresh-blocker>

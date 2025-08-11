@@ -57,13 +57,6 @@
 				"module-type": "widget"
 			}
 		},{
-			"file": "modules/widgets/refresh-blocker.js",
-			"fields": {
-				"type": "application/javascript",
-				"title": "$:/plugins/BTC/TiddlyFlex/modules/widgets/refresh-blocker.js",
-				"module-type": "widget"
-			}
-		},{
 			"file": "modules/widgets/subclasses/droppable.js",
 			"fields": {
 				"type": "application/javascript",

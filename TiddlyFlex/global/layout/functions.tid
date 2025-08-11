@@ -5,6 +5,18 @@ tags: $:/tags/Global
 \procedure tiddlyFlexPrefix() [
 \procedure tiddlyFlexSuffix() ]
 
+\function tdff.get.value.metric(value)
+[<value>suffix[px]then[px]]
+:else[<value>suffix[%]then[%]]
+:else[<value>suffix[cm]then[cm]]
+:else[<value>suffix[mm]then[mm]]
+:else[<value>suffix[Q]then[Q]]
+:else[<value>suffix[in]then[in]]
+:else[<value>suffix[pc]then[pc]]
+:else[<value>suffix[pt]then[pt]]
+:else[<value>suffix[em]then[em]]
+\end
+
 \function tdff.tiddlyflex-layout() [{$:/layout}match[$:/plugins/BTC/TiddlyFlex/ui/Layout]]
 
 \function tdff.tiddlyflex-fullscreen() [all[tiddlers]prefix[$:/state/tiddlyflex/story-river/fullscreen/]limit[1]] ~[[]]

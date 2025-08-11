@@ -1,6 +1,10 @@
 title: $:/plugins/BTC/TiddlyFlex/globals/css
 tags: $:/tags/Global
 
+\function tdff.css-tiddlyflex-column-count() [{$:/config/tiddlyflex/story-river/horizontal}!match[yes]] :then[subfilter<tdff.tiddlyflex-enlist-columns>count[]] :else[[1]]
+\function tdff.css-tiddlyflex-column-count-calc() [[calc(100% - (]addsuffix<tdff.css-tiddlyflex-column-count>addsuffix[ * ]addsuffix{$:/config/tiddlyflex/story-river/min-width}addsuffix[))]]
+\function tdff.css-tiddlyflex-column-count-story-calc() [<tdff.css-tiddlyflex-column-count>compare:number:lteq[3]addprefix[calc(]addsuffix[ * ]addsuffix{$:/config/tiddlyflex/story-river/min-width}addsuffix[)]] :else[[calc(3 * ]addsuffix{$:/config/tiddlyflex/story-river/min-width}addsuffix[)]]
+
 \define tiddlyflex-style-current-tiddler()
 \rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock whitespace
 
@@ -68,6 +72,8 @@ tags: $:/tags/Global
 .tc-tiddlyflex-story-river-wrapper {
 	width: 100vw;
 	flex-basis: 100vw;
+	flex-grow: 1;
+	flex-shrink: 0;
 	scroll-snap-align: start;
 	overflow: hidden;
 }
