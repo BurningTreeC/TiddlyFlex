@@ -114,16 +114,34 @@ tags: $:/tags/Global
 	qualified-preview-state=<<qualify "$:/state/showeditpreview">>
 	editPreviewStateTiddler={{{ [{$:/config/ShowEditPreview/PerTiddler}!match[yes]then[$:/state/showeditpreview]] :else[<qualified-preview-state>] }}}
 	importTitle=<<qualify $:/ImportImage>>
-	importState=<<qualify $:/state/ImportImage>> >
+	importState=<<qualify $:/state/ImportImage>>
+	handleWidth={{{ [[15px]mediaquery[(pointer: coarse)]] :else[[5px]] }}} >
 <$dropzone importTitle=<<importTitle>> autoOpenOnImport="no" contentTypesFilter={{$:/config/Editor/ImportContentTypesFilter}} class="tc-dropzone-editor" enable={{{ [{$:/config/DragAndDrop/Enable}match[no]] :else[subfilter{$:/config/Editor/EnableImportFilter}then[yes]else[no]] }}} filesOnly="yes" actions=<<importFileActions>> >
 <div>
-<div class={{{ [<edit-preview-state>match[yes]then[tc-tiddler-preview]else[tc-tiddler-preview-hidden]] [[tc-tiddler-editor]] +[join[ ]] }}}>
+<div class={{{ [<edit-preview-state>match[yes]then[tc-tiddler-preview]else[tc-tiddler-preview-hidden]] [[tc-tiddler-editor]] +[join[ ]] }}} style.grid-template-areas={{{ [[$:/plugins/BTC/resizer]!is[missing]then<edit-preview-state>match[yes]then["toolbar toolbar toolbar" "editor resizer preview"]else["toolbar toolbar toolbar" "editor editor editor"]] }}} style.grid-template-columns={{{ [[$:/plugins/BTC/resizer]!is[missing]then<edit-preview-state>match[yes]then<editPreviewStateTiddler>has[width]get[width]addsuffix[ ]addsuffix<handleWidth>addsuffix[ 1fr]] :else[<edit-preview-state>match[yes]then<editPreviewStateTiddler>!has[width]then[50% ]addsuffix<handleWidth>addsuffix[ 1fr]] :else[<edit-preview-state>!match[yes]then[1fr]] }}}>
 
 <$transclude tiddler="$:/plugins/BTC/TiddlyFlex/ui/EditTemplate/body/editor" mode="inline"/>
 
 <%if [<editPreviewStateTiddler>get[text]match[yes]] %>
 
-<div class="tc-tiddler-preview-preview" data-tiddler-title={{!!draft.title}} data-tags={{!!tags}}>
+<%if [[$:/plugins/BTC/resizer]!is[missing]] %>
+
+<$resizer
+	class="tc-tiddler-editor-resizer"
+	direction="horizontal"
+	tiddler=<<editPreviewStateTiddler>>
+	field="width"
+	min="20%"
+	max="80%"
+	default="50%"
+	unit="%"
+	smoothReset="yes"
+	handleStyle="solid"
+/>
+
+<% endif %>
+
+<div class="tc-tiddler-preview-preview" data-tiddler-title={{!!draft.title}} data-tags={{!!tags}} style.grid-area="preview">
 
 <$transclude tiddler={{$:/state/editpreviewtype}} mode="inline">
 
