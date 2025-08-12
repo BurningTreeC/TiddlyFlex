@@ -369,11 +369,11 @@ body.tc-resizing .tc-tiddlyflex-story-river-container {
 
 	.tc-tiddlyflex-story-river-active {
 		background: repeating-linear-gradient(
-			to right,
+			to bottom,
 			<<colour page-background>>,
 			<<colour page-background>> 10px,
-			<<colour primary>> 10px,
-			<<colour primary>> 20px
+			<<colour tiddler-background>> 10px,
+			<<colour tiddler-background>> 20px
 		);
 	}
 
