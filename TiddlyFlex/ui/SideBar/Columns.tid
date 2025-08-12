@@ -1,0 +1,147 @@
+title: $:/plugins/BTC/TiddlyFlex/ui/SideBar/Columns
+caption: Columns
+tags: $:/tags/SideBar
+list-after: $:/plugins/BTC/TiddlyFlex/ui/SideBar/Ensemble
+
+\procedure swap-column-left()
+<$let 
+	currentColumnNumber={{{ [<currentColumn>removeprefix[]] }}}
+	targetColumnNumber={{{ [<currentColumnNumber>subtract[1]] }}}
+	targetColumn={{{ [<targetColumnNumber>addprefix[]] }}}
+	currentStoryList={{{ [[$:/StoryList-]addsuffix<currentColumn>] }}}
+	targetStoryList={{{ [[$:/StoryList-]addsuffix<targetColumn>] }}}
+	currentHistoryList={{{ [[$:/HistoryList-]addsuffix<currentColumn>] }}}
+	targetHistoryList={{{ [[$:/HistoryList-]addsuffix<targetColumn>] }}}
+	currentTiddlers={{{ [list<currentStoryList>format:titlelist[]join[ ]] }}}
+	targetTiddlers={{{ [list<targetStoryList>format:titlelist[]join[ ]] }}}
+>
+	<%if [<targetColumnNumber>compare:number:gteq[1]] %>
+		<!-- Swap story lists -->
+		<$action-setfield $tiddler=<<currentStoryList>> list=<<targetTiddlers>>/>
+		<$action-setfield $tiddler=<<targetStoryList>> list=<<currentTiddlers>>/>
+		<!-- Swap history lists -->
+		<$action-setfield $tiddler="$:/temp/history-swap" text={{{ [<currentHistoryList>get[text]] }}}/>
+		<$action-setfield $tiddler=<<currentHistoryList>> text={{{ [<targetHistoryList>get[text]] }}}/>
+		<$action-setfield $tiddler=<<targetHistoryList>> text={{{ [{$:/temp/history-swap}get[text]] }}}/>
+		<$action-deletetiddler $tiddler="$:/temp/history-swap"/>
+	<% endif %>
+</$let>
+\end
+
+\procedure swap-column-right()
+<$let 
+	currentColumnNumber={{{ [<currentColumn>removeprefix[]] }}}
+	targetColumnNumber={{{ [<currentColumnNumber>add[1]] }}}
+	targetColumn={{{ [<targetColumnNumber>addprefix[]] }}}
+	maxColumn={{{ [subfilter<tdff.tiddlyflex-enlist-columns>last[]removeprefix[]] }}}
+	currentStoryList={{{ [[$:/StoryList-]addsuffix<currentColumn>] }}}
+	targetStoryList={{{ [[$:/StoryList-]addsuffix<targetColumn>] }}}
+	currentHistoryList={{{ [[$:/HistoryList-]addsuffix<currentColumn>] }}}
+	targetHistoryList={{{ [[$:/HistoryList-]addsuffix<targetColumn>] }}}
+	currentTiddlers={{{ [list<currentStoryList>format:titlelist[]join[ ]] }}}
+	targetTiddlers={{{ [list<targetStoryList>format:titlelist[]join[ ]] }}}
+>
+	<%if [<targetColumnNumber>compare:number:lteq<maxColumn>] %>
+		<!-- Swap story lists -->
+		<$action-setfield $tiddler=<<currentStoryList>> list=<<targetTiddlers>>/>
+		<$action-setfield $tiddler=<<targetStoryList>> list=<<currentTiddlers>>/>
+		<!-- Swap history lists -->
+		<$action-setfield $tiddler="$:/temp/history-swap" text={{{ [<currentHistoryList>get[text]] }}}/>
+		<$action-setfield $tiddler=<<currentHistoryList>> text={{{ [<targetHistoryList>get[text]] }}}/>
+		<$action-setfield $tiddler=<<targetHistoryList>> text={{{ [{$:/temp/history-swap}get[text]] }}}/>
+		<$action-deletetiddler $tiddler="$:/temp/history-swap"/>
+	<% endif %>
+</$let>
+\end
+
+\procedure move-all-tiddlers()
+<$let
+	sourceStoryList={{{ [[$:/StoryList-]addsuffix<currentColumn>] }}}
+	targetStoryList={{{ [[$:/StoryList-]addsuffix<moveTarget>] }}}
+	sourceTiddlers={{{ [list<sourceStoryList>] }}}
+	existingTiddlers={{{ [list<targetStoryList>] }}}
+>
+	<!-- Add source tiddlers to target, avoiding duplicates -->
+	<$list filter=<<sourceTiddlers>> variable="tiddler">
+		<%if [<existingTiddlers>!contains<tiddler>] %>
+			<$action-listops $tiddler=<<targetStoryList>> $subfilter="[<tiddler>]"/>
+		<% endif %>
+	</$list>
+	<!-- Clear source column -->
+	<$action-setfield $tiddler=<<sourceStoryList>> list=""/>
+</$let>
+\end
+
+\procedure clear-column()
+<$action-setfield $tiddler={{{ [[$:/StoryList-]addsuffix<currentColumn>] }}} list=""/>
+<$action-setfield $tiddler={{{ [[$:/HistoryList-]addsuffix<currentColumn>] }}} text="[]"/>
+\end
+
+\whitespace trim
+
+<div class="tc-tiddlyflex-columns-sidebar">
+
+	<h2>Column Management</h2>
+	<p class="tc-muted">Swap column contents or move tiddlers between columns</p>
+
+	<div class="tc-tiddlyflex-column-list">
+		<$list filter="[subfilter<tdff.tiddlyflex-enlist-columns>]" variable="currentColumn">
+			<$let currentStoryList={{{ [[$:/StoryList-]addsuffix<currentColumn>] }}}>
+				<div class="tc-tiddlyflex-column-item">
+					<div class="tc-tiddlyflex-column-header">
+						<span class="tc-tiddlyflex-column-title">
+							<strong>Column <<currentColumn>></strong>
+							<%if [<currentColumn>match{$:/columns!!current-column}] %>
+								<span class="tc-tiddlyflex-current-badge">current</span>
+							<% endif %>
+						</span>
+						<span class="tc-tiddlyflex-column-count">
+							<span class="tc-tiny-gap-right"><$count filter="[list<currentStoryList>]"/></span>tiddlers
+						</span>
+					</div>
+					
+					<div class="tc-tiddlyflex-column-actions">
+						<div class="tc-tiddlyflex-swap-controls">
+							<$let 
+								prevColumn={{{ [<currentColumn>subtract[1]] }}}
+								nextColumn={{{ [<currentColumn>add[1]] }}}
+								hasPrev={{{ [[$:/columns]contains<prevColumn>then[yes]else[no]] }}}
+								hasNext={{{ [[$:/columns]contains<nextColumn>then[yes]else[no]] }}}
+							>
+								<%if [<hasPrev>match[yes]] %>
+									<$button actions=<<swap-column-left>> class="tc-btn-invisible tc-tiddlyflex-swap-btn" tooltip="Swap with column to the left">
+										{{$:/core/images/chevron-left}} Swap left
+									</$button>
+								<% endif %>
+								
+								<%if [<hasNext>match[yes]] %>
+									<$button actions=<<swap-column-right>> class="tc-btn-invisible tc-tiddlyflex-swap-btn" tooltip="Swap with column to the right">
+										Swap right {{$:/core/images/chevron-right}}
+									</$button>
+								<% endif %>
+							</$let>
+						</div>
+						
+						<%if [<currentStoryList>get[list]!is[blank]] %>
+							<div class="tc-tiddlyflex-move-controls">
+								<span class="tc-muted">Move all to:</span>
+								<$list filter="[subfilter<tdff.tiddlyflex-enlist-columns>]" variable="moveTarget">
+									<%if [<moveTarget>!match<currentColumn>] %>
+										<$button actions=<<move-all-tiddlers>> class="tc-btn-invisible tc-tiddlyflex-move-btn">
+											Col <<moveTarget>>
+										</$button>
+									<% endif %>
+								</$list>
+							</div>
+							
+							<$button actions=<<clear-column>> class="tc-btn-invisible tc-tiddlyflex-clear-btn">
+								{{$:/core/images/delete-button}} Clear column
+							</$button>
+						<% endif %>
+					</div>
+				</div>
+			</$let>
+		</$list>
+	</div>
+
+</div>

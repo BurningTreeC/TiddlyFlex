@@ -1,0 +1,127 @@
+title: $:/plugins/BTC/TiddlyFlex/styles/columns-sidebar
+tags: $:/tags/Stylesheet
+
+.tc-tiddlyflex-columns-sidebar {
+	padding: 0.5em;
+}
+
+.tc-tiddlyflex-columns-sidebar h2 {
+	font-size: 1.2em;
+	margin: 0.5em 0;
+}
+
+.tc-tiddlyflex-column-list {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75em;
+}
+
+.tc-tiddlyflex-column-item {
+	border: 1px solid <<colour tiddler-border>>;
+	border-radius: 4px;
+	padding: 0.75em;
+	background: <<colour tiddler-background>>;
+}
+
+.tc-tiddlyflex-column-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 0.5em;
+	padding-bottom: 0.5em;
+	border-bottom: 1px solid <<colour very-muted-foreground>>;
+}
+
+.tc-tiddlyflex-column-title {
+	display: flex;
+	align-items: center;
+	gap: 0.5em;
+}
+
+.tc-tiddlyflex-current-badge {
+	background: <<colour primary>>;
+	color: <<colour background>>;
+	padding: 0.1em 0.4em;
+	border-radius: 3px;
+	font-size: 0.85em;
+	font-weight: normal;
+}
+
+.tc-tiddlyflex-column-count {
+	color: <<colour muted-foreground>>;
+	font-size: 0.9em;
+}
+
+.tc-tiddlyflex-column-actions {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5em;
+}
+
+.tc-tiddlyflex-swap-controls {
+	display: flex;
+	gap: 0.5em;
+}
+
+.tc-tiddlyflex-swap-btn {
+	flex: 1;
+	padding: 0.25em 0.5em;
+	border: 1px solid <<colour tiddler-border>>;
+	border-radius: 3px;
+	background: <<colour page-background>>;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.25em;
+}
+
+.tc-tiddlyflex-swap-btn:hover {
+	background: <<colour primary>>;
+	color: <<colour background>>;
+	border-color: <<colour primary>>;
+}
+
+.tc-tiddlyflex-move-controls {
+	display: flex;
+	align-items: center;
+	gap: 0.5em;
+	flex-wrap: wrap;
+}
+
+.tc-tiddlyflex-move-btn {
+	padding: 0.2em 0.5em;
+	border: 1px solid <<colour tiddler-border>>;
+	border-radius: 3px;
+	background: <<colour page-background>>;
+}
+
+.tc-tiddlyflex-move-btn:hover {
+	background: <<colour primary>>;
+	color: <<colour background>>;
+	border-color: <<colour primary>>;
+}
+
+.tc-tiddlyflex-clear-btn {
+	padding: 0.25em 0.5em;
+	border: 1px solid <<colour tiddler-border>>;
+	border-radius: 3px;
+	background: <<colour page-background>>;
+	display: flex;
+	align-items: center;
+	gap: 0.25em;
+}
+
+.tc-tiddlyflex-clear-btn:hover {
+	background: <<colour alert-background>>;
+	border-color: <<colour alert-border>>;
+}
+
+.tc-tiddlyflex-clear-btn svg {
+	fill: <<colour muted-foreground>>;
+	width: 1em;
+	height: 1em;
+}
+
+.tc-tiddlyflex-clear-btn:hover svg {
+	fill: <<colour alert-highlight>>;
+}
