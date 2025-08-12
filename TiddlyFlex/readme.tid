@@ -1,5 +1,198 @@
 title: $:/plugins/BTC/TiddlyFlex/readme
 
-!!! ~TiddlyFlex
+!!! ~TiddlyFlex - A Flexible Layout System
 
-This ''plugin'' provides an alternative [ext[Flexbox|https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox]] Layout for ~TiddlyWiki5
+~TiddlyFlex transforms your ~TiddlyWiki into a modern, multi-column workspace with advanced drag-and-drop functionality. This plugin provides a powerful alternative to the standard layout using [ext[CSS Flexbox|https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox]] technology.
+
+!! Features Overview
+
+!!! Multi-Column Layout System
+* Create multiple columns to organize tiddlers across your screen
+* Dynamically add or remove columns as needed
+* Switch between horizontal and vertical orientations
+* Responsive design that adapts to different screen sizes
+
+!!! Advanced Drag and Drop
+* Visually drag tiddlers between columns and positions  
+* Smooth animations for all drag and drop operations
+* Configurable animation duration and curves
+* Toggle dragging on/off with keyboard shortcuts
+
+!!! Comprehensive Navigation
+* Navigate between tiddlers and columns using keyboard shortcuts
+* Quick creation of tiddlers, journal entries, and image tiddlers
+* Integrated filtering system for story river content
+* Full-screen mode for focused content viewing
+
+!!! Ensemble Configuration System
+* Save complete workspace configurations including:
+** Column arrangements and current tiddler positions
+** Layout settings and view preferences  
+** Sidebar state and toolbar configurations
+** Theme and styling preferences
+* Load saved configurations instantly
+* Manage multiple workspace setups for different workflows
+
+!! Getting Started
+
+!!! Initial Setup
+# Install the ~TiddlyFlex plugin (see installation instructions below)
+# The plugin will become available as a layout option
+# Access configuration through {{$:/core/ui/ControlPanel/Settings}} → ~TiddlyFlex
+# Use `Ctrl+Alt+N` to create your first additional column
+
+!!! Basic Usage
+# Start with 2-3 columns based on your screen size and workflow needs
+# Drag tiddlers between columns or use keyboard shortcuts for movement
+# Customize the interface using the extensive configuration options
+# Save your preferred setup as an Ensemble for quick restoration
+
+!! Keyboard Shortcuts Reference
+
+!!! Layout Management
+|Shortcut |Description |
+|`Ctrl+Alt+N` |Add a new column |
+|`Ctrl+Alt+M` |Remove a column |
+|`Alt+Shift+V` |Toggle horizontal/vertical layout |
+|`Alt+D` |Toggle drag and drop mode |
+
+!!! Navigation Commands  
+|Shortcut |Description |
+|`Alt+Left` |Move to previous column |
+|`Alt+Right` |Move to next column |
+|`Alt+Up` |Navigate to tiddler above |
+|`Alt+Down` |Navigate to tiddler below |
+
+!!! Tiddler Management
+|Shortcut |Description |
+|`Alt+Shift+Up` |Move current tiddler up |
+|`Alt+Shift+Down` |Move current tiddler down |
+|`Alt+Shift+Left` |Move tiddler to left column |
+|`Alt+Shift+Right` |Move tiddler to right column |
+|`Alt+E` |Edit current tiddler |
+|`Alt+C` |Cancel or close current tiddler |
+
+!!! View and Display
+|Shortcut |Description |
+|`Alt+Shift+F` |Toggle fullscreen for current tiddler |
+|`Alt+F` |Filter story river by search input |
+
+!! Configuration Options
+
+Access all configuration options through the Control Panel → Settings → ~TiddlyFlex tab.
+
+!!! Sidebar Configuration
+* ''Width'': Set sidebar width in percentage or pixels (default: 25%)
+* ''Snap Width'': Configure the width limit below which the sidebar collapses (default: 100px)  
+* ''Resizer'': Enable or disable sidebar resizing functionality
+
+!!! Story River Settings
+* ''Minimum Width'': Set the minimum width for columns (default: 300px)
+* ''Padding'': Configure story river padding (default: 42px)
+* ''Animation Curve'': Choose animation easing (linear, ease, etc.)
+* ''Follow Current Column'': Control whether the view follows column selection
+
+!!! Tiddler Appearance
+* ''Margin Bottom'': Space between tiddlers in columns (default: 28px)
+* ''Box Shadow Spread'': Customize tiddler container shadow effects (default: 4px)
+* ''Controls Breakpoint'': When to hide tiddler controls based on column count
+* ''Hover Controls'': Show tiddler controls only on mouse hover
+
+!!! Drag & Drop Customization
+* ''Animation Duration'': Configure drag animation speed in milliseconds (default: 175ms)
+* ''Visual Feedback'': Customize drag indicators and transition effects
+
+!! Advanced Features
+
+!!! Ensemble System
+The Ensemble system provides powerful workspace management:
+
+# ''Save Ensemble'': Captures your complete current workspace including:
+#* Column layout and tiddler positions
+#* All configuration settings
+#* Sidebar state and width
+#* Theme and palette selections
+#* Toolbar configurations
+# ''Load Ensemble'': Instantly restore any saved workspace configuration
+# ''Manage Ensembles'': Delete, rename, or update existing configurations  
+# ''Custom Icons'': Add visual identifiers to your saved ensembles
+
+Access the Ensemble system through the sidebar "Ensemble" tab.
+
+!!! Template Customization
+~TiddlyFlex provides customizable view and edit templates:
+* Modified view templates for optimal column display
+* Enhanced edit templates with preview functionality
+* Specialized templates for different content types
+* Configurable field visibility and layout options
+
+!!! Theme Integration
+* Works seamlessly with all ~TiddlyWiki color palettes
+* Maintains theme consistency across all interface elements
+* Supports custom CSS modifications and extensions
+* Responsive design adapts to different themes automatically
+
+!! Best Practices & Tips
+
+!!! Workflow Optimization
+* Create different Ensembles for different types of work (writing, research, project management)
+* Use 2-3 columns on standard monitors, more on ultra-wide displays
+* Take advantage of fullscreen mode for focused writing or reading
+* Configure hover controls to reduce visual clutter
+
+!!! Keyboard Efficiency  
+* Master the `Alt+Arrow` key combinations for quick navigation
+* Use `Alt+D` to toggle drag mode when you don't need it
+* Combine shortcuts: `Alt+E` to edit, then `Alt+C` to close quickly
+* Use `Alt+F` for quick filtering when working with many tiddlers
+
+!!! Performance Considerations
+* Keep animation duration reasonable (100-200ms) for responsiveness
+* Use appropriate column counts for your hardware capabilities
+* Consider disabling animations on slower devices if needed
+* Regularly save Ensembles to preserve your workspace setups
+
+!! Installation Instructions
+
+!!! Drag and Drop Installation
+# Visit the [ext[plugin page|https://burningtreec.github.io/TiddlyFlex]]
+# Drag the plugin link to your ~TiddlyWiki
+# Save and reload your wiki
+
+!!! Node.js Installation  
+# Clone the repository to your `$TIDDLYWIKI_PLUGIN_PATH`:
+#> `git clone --depth=1 git@github.com:BurningTreeC/TiddlyFlex.git $TIDDLYWIKI_PLUGIN_PATH`
+# Add to your `tiddlywiki.info` file:
+#> ```
+#> "plugins": [
+#>     "TiddlyFlex/TiddlyFlex"  
+#> ]
+#> ```
+# Restart your ~TiddlyWiki server
+
+!! Technical Requirements
+
+* ~TiddlyWiki 5.3.3 or higher
+* Modern web browser with CSS Flexbox support
+* JavaScript enabled for full functionality
+
+!! Troubleshooting
+
+!!! Common Issues
+* ''Tiddlers not displaying'': Check that ~TiddlyFlex is set as your active layout
+* ''Keyboard shortcuts not working'': Verify no browser extensions are intercepting key combinations  
+* ''Drag and drop issues'': Toggle drag mode off and on, or check animation settings
+* ''Layout problems'': Try refreshing the page or switching layouts temporarily
+
+!!! Getting Help
+* Check the [ext[GitHub repository|https://github.com/BurningTreeC/TiddlyFlex]] for issues and discussions
+* Review configuration settings if features aren't working as expected
+* Ensure you're using a compatible ~TiddlyWiki version
+
+!! About
+
+~TiddlyFlex is developed by Simon Huber and is available under an open source license. The plugin leverages modern web technologies to provide a superior ~TiddlyWiki experience with flexible, customizable layouts.
+
+Version: <<version>>
+Core Version Required: >=5.3.3
+Source: https://github.com/BurningTreeC/TiddlyFlex
