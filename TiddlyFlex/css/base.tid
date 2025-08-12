@@ -148,6 +148,7 @@ body.tc-resizing .tc-tiddlyflex-story-river-container {
 
 		.tc-tiddlyflex-story-river-container {
 			flex-basis: clamp(<<tdff.css-tiddlyflex-column-count-story-calc>>,calc(100% - {{$:/state/sidebar/width}}),100%);
+			max-width: 100%;
 		}
 
 	<% else %>
@@ -155,6 +156,7 @@ body.tc-resizing .tc-tiddlyflex-story-river-container {
 		.tc-tiddlyflex-story-river-container {
 			flex-basis: calc(100% - {{$:/state/sidebar/width}});
 			max-width: calc(100% - {{$:/state/sidebar/width}});
+			min-width: {{$:/config/tiddlyflex/story-river/min-width}};
 		}
 
 	<% endif %>
@@ -165,6 +167,7 @@ body.tc-resizing .tc-tiddlyflex-story-river-container {
 
 	.tc-tiddlyflex-story-river-container {
 		flex-basis: 100%;
+		max-width: 100%;
 	}
 
 <% endif %>
