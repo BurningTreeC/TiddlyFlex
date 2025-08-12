@@ -69,7 +69,6 @@ TiddlyFlex offers extensive customization options through the TiddlyWiki Control
 ### Sidebar Settings
 - **Width**: Configure sidebar width in % or px (default: 25%)
 - **Snap Width**: Set the width limit below which sidebar collapses (default: 100px)
-- **Resizer**: Enable/disable sidebar resizing functionality
 
 ### Story River Configuration
 - **Minimum Width**: Set minimum column width (default: 300px)

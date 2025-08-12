@@ -83,8 +83,7 @@ Access all configuration options through the Control Panel → Settings → ~Tid
 
 !!! Sidebar Configuration
 * ''Width'': Set sidebar width in percentage or pixels (default: 25%)
-* ''Snap Width'': Configure the width limit below which the sidebar collapses (default: 100px)  
-* ''Resizer'': Enable or disable sidebar resizing functionality
+* ''Snap Width'': Configure the width limit below which the sidebar collapses (default: 100px)
 
 !!! Story River Settings
 * ''Minimum Width'': Set the minimum width for columns (default: 300px)
@@ -193,6 +192,7 @@ Access the Ensemble system through the sidebar "Ensemble" tab.
 
 ~TiddlyFlex is developed by Simon Huber and is available under an open source license. The plugin leverages modern web technologies to provide a superior ~TiddlyWiki experience with flexible, customizable layouts.
 
-Version: <<version>>
+Version: {{$:/plugins/BTC/resizer!!version}}
+TiddlyWiki Version: <<version>>
 Core Version Required: >=5.3.3
 Source: https://github.com/BurningTreeC/TiddlyFlex
