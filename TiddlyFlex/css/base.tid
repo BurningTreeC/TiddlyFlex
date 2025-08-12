@@ -114,11 +114,13 @@ tags: $:/tags/Stylesheet
 
 		.tc-tiddlyflex-story-river-container {
 			flex-basis: clamp(<<tdff.css-tiddlyflex-column-count-story-calc>>,calc(100% - max({{{ [{$:/state/sidebar/width}!is[blank]] :else[[0px]] }}},{{$:/config/tiddlyflex/sidebar/width}})),100%);
+			max-width: 100%;
 		}
 
 	<% else %>
 
 		.tc-tiddlyflex-story-river-container {
+			flex-basis: calc(100% - {{$:/config/tiddlyflex/sidebar/width}});
 			max-width: calc(100% - {{$:/config/tiddlyflex/sidebar/width}});
 		}
 
