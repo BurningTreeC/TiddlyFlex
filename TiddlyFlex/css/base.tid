@@ -94,7 +94,8 @@ tags: $:/tags/Stylesheet
 <%if [{$:/state/tiddlyflex/story-river/filter}match[yes]] %>
 
 	.tc-tiddlyflex-story-river-container-inner {
-		border: 2px solid <<colour primary>>;
+		outline: 2px solid <<colour primary>>;
+		outline-offset: -2px;
 	}
 
 <% endif %>
