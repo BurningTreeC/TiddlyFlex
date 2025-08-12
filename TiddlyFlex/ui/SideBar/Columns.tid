@@ -5,9 +5,9 @@ list-after: $:/plugins/BTC/TiddlyFlex/ui/SideBar/Ensemble
 
 \procedure swap-column-left()
 <$let 
-	currentColumnNumber={{{ [<currentColumn>removeprefix[]] }}}
+	currentColumnNumber=<<currentColumn>>
 	targetColumnNumber={{{ [<currentColumnNumber>subtract[1]] }}}
-	targetColumn={{{ [<targetColumnNumber>addprefix[]] }}}
+	targetColumn=<targetColumnNumber>>
 	currentStoryList={{{ [[$:/StoryList-]addsuffix<currentColumn>] }}}
 	targetStoryList={{{ [[$:/StoryList-]addsuffix<targetColumn>] }}}
 	currentHistoryList={{{ [[$:/HistoryList-]addsuffix<currentColumn>] }}}
@@ -20,9 +20,9 @@ list-after: $:/plugins/BTC/TiddlyFlex/ui/SideBar/Ensemble
 		<$action-setfield $tiddler=<<currentStoryList>> list=<<targetTiddlers>>/>
 		<$action-setfield $tiddler=<<targetStoryList>> list=<<currentTiddlers>>/>
 		<!-- Swap history lists -->
-		<$action-setfield $tiddler="$:/temp/history-swap" text={{{ [<currentHistoryList>get[text]] }}}/>
-		<$action-setfield $tiddler=<<currentHistoryList>> text={{{ [<targetHistoryList>get[text]] }}}/>
-		<$action-setfield $tiddler=<<targetHistoryList>> text={{{ [{$:/temp/history-swap}get[text]] }}}/>
+		<$action-setfield $tiddler="$:/temp/history-swap" text={{{ [<currentHistoryList>get[text]] }}} current-tiddler={{{ [<currentHistoryList>get[current-tiddler]] }}}/>
+		<$action-setfield $tiddler=<<currentHistoryList>> text={{{ [<targetHistoryList>get[text]] }}} current-tiddler={{{ [<targetHistoryList>get[current-tiddler]] }}}/>
+		<$action-setfield $tiddler=<<targetHistoryList>> text={{{ [[$:/temp/history-swap]get[text]] }}} current-tiddler={{{ [[$:/temp/history-swap]get[current-tiddler]] }}}/>
 		<$action-deletetiddler $tiddler="$:/temp/history-swap"/>
 	<% endif %>
 </$let>
@@ -30,10 +30,10 @@ list-after: $:/plugins/BTC/TiddlyFlex/ui/SideBar/Ensemble
 
 \procedure swap-column-right()
 <$let 
-	currentColumnNumber={{{ [<currentColumn>removeprefix[]] }}}
+	currentColumnNumber=<<currentColumn>>
 	targetColumnNumber={{{ [<currentColumnNumber>add[1]] }}}
-	targetColumn={{{ [<targetColumnNumber>addprefix[]] }}}
-	maxColumn={{{ [subfilter<tdff.tiddlyflex-enlist-columns>last[]removeprefix[]] }}}
+	targetColumn=<<targetColumnNumber>>
+	maxColumn={{{ [subfilter<tdff.tiddlyflex-enlist-columns>last[]] }}}
 	currentStoryList={{{ [[$:/StoryList-]addsuffix<currentColumn>] }}}
 	targetStoryList={{{ [[$:/StoryList-]addsuffix<targetColumn>] }}}
 	currentHistoryList={{{ [[$:/HistoryList-]addsuffix<currentColumn>] }}}
@@ -46,9 +46,9 @@ list-after: $:/plugins/BTC/TiddlyFlex/ui/SideBar/Ensemble
 		<$action-setfield $tiddler=<<currentStoryList>> list=<<targetTiddlers>>/>
 		<$action-setfield $tiddler=<<targetStoryList>> list=<<currentTiddlers>>/>
 		<!-- Swap history lists -->
-		<$action-setfield $tiddler="$:/temp/history-swap" text={{{ [<currentHistoryList>get[text]] }}}/>
-		<$action-setfield $tiddler=<<currentHistoryList>> text={{{ [<targetHistoryList>get[text]] }}}/>
-		<$action-setfield $tiddler=<<targetHistoryList>> text={{{ [{$:/temp/history-swap}get[text]] }}}/>
+		<$action-setfield $tiddler="$:/temp/history-swap" text={{{ [<currentHistoryList>get[text]] }}} current-tiddler={{{ [<currentHistoryList>get[current-tiddler]] }}}/>
+		<$action-setfield $tiddler=<<currentHistoryList>> text={{{ [<targetHistoryList>get[text]] }}} current-tiddler={{{ [<targetHistoryList>get[current-tiddler]] }}}/>
+		<$action-setfield $tiddler=<<targetHistoryList>> text={{{ [[$:/temp/history-swap]get[text]] }}} current-tiddler={{{ [[$:/temp/history-swap]get[current-tiddler]] }}}/>
 		<$action-deletetiddler $tiddler="$:/temp/history-swap"/>
 	<% endif %>
 </$let>
@@ -58,12 +58,12 @@ list-after: $:/plugins/BTC/TiddlyFlex/ui/SideBar/Ensemble
 <$let
 	sourceStoryList={{{ [[$:/StoryList-]addsuffix<currentColumn>] }}}
 	targetStoryList={{{ [[$:/StoryList-]addsuffix<moveTarget>] }}}
-	sourceTiddlers={{{ [list<sourceStoryList>] }}}
-	existingTiddlers={{{ [list<targetStoryList>] }}}
+	sourceTiddlers={{{ [list<sourceStoryList>format:titlelist[]join[ ]] }}}
+	existingTiddlers={{{ [list<targetStoryList>format:titlelist[]join[ ]] }}}
 >
 	<!-- Add source tiddlers to target, avoiding duplicates -->
 	<$list filter=<<sourceTiddlers>> variable="tiddler">
-		<%if [<existingTiddlers>!contains<tiddler>] %>
+		<%if [<targetStoryList>!contains<tiddler>] %>
 			<$action-listops $tiddler=<<targetStoryList>> $subfilter="[<tiddler>]"/>
 		<% endif %>
 	</$list>
@@ -74,7 +74,7 @@ list-after: $:/plugins/BTC/TiddlyFlex/ui/SideBar/Ensemble
 
 \procedure clear-column()
 <$action-setfield $tiddler={{{ [[$:/StoryList-]addsuffix<currentColumn>] }}} list=""/>
-<$action-setfield $tiddler={{{ [[$:/HistoryList-]addsuffix<currentColumn>] }}} text="[]"/>
+<$action-setfield $tiddler={{{ [[$:/HistoryList-]addsuffix<currentColumn>] }}} text="[]" current-tiddler=""/>
 \end
 
 \whitespace trim
