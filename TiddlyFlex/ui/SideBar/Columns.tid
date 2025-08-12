@@ -7,7 +7,7 @@ list-after: $:/plugins/BTC/TiddlyFlex/ui/SideBar/Ensemble
 <$let 
 	currentColumnNumber=<<currentColumn>>
 	targetColumnNumber={{{ [<currentColumnNumber>subtract[1]] }}}
-	targetColumn=<targetColumnNumber>>
+	targetColumn=<<targetColumnNumber>>
 	currentStoryList={{{ [[$:/StoryList-]addsuffix<currentColumn>] }}}
 	targetStoryList={{{ [[$:/StoryList-]addsuffix<targetColumn>] }}}
 	currentHistoryList={{{ [[$:/HistoryList-]addsuffix<currentColumn>] }}}
