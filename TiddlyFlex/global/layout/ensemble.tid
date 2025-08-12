@@ -26,7 +26,6 @@ Do you want to overwrite it?
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="sidebar-width" value={{$:/config/tiddlyflex/sidebar/width}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="drag-drop-animation-duration" value={{$:/config/tiddlyflex/dragndrop/AnimationDuration}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="edit-missing-tiddlers" value={{$:/config/tiddlyflex/navigation/edit-missing-tiddlers}}/>
-	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="sidebar-resizer" value={{$:/config/tiddlyflex/sidebar/resizer}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="story-river-min-width" value={{$:/config/tiddlyflex/story-river/min-width}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="box-shadow-spread" value={{$:/config/tiddlyflex/story-river/tiddler/box-shadow-spread}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler=<<ensembleTiddler>> field="tiddler-controls-breakpoint" value={{$:/config/tiddlyflex/story-river/tiddler/controls-breakpoint}}/>
@@ -120,7 +119,6 @@ Do you want to overwrite it?
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/config/tiddlyflex/sidebar/width" value={{{ [<ensembleTiddler>get[sidebar-width]] ~15% }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/config/tiddlyflex/dragndrop/AnimationDuration" value={{{ [<ensembleTiddler>get[drag-drop-animation-duration]] ~175 }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/config/tiddlyflex/navigation/edit-missing-tiddlers" value={{{ [<ensembleTiddler>get[edit-missing-tiddlers]] ~no }}}/>
-	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/config/tiddlyflex/sidebar/resizer" value={{{ [<ensembleTiddler>get[sidebar-resizer]] ~no }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/config/tiddlyflex/story-river/min-width" value={{{ [<ensembleTiddler>get[story-river-min-width]] ~300px }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/config/tiddlyflex/story-river/tiddler/box-shadow-spread" value={{{ [<ensembleTiddler>get[box-shadow-spread]] ~4px }}}/>
 	<$macrocall $name="tiddlyflex-set-ensemble-configuration" tiddler="$:/config/tiddlyflex/story-river/tiddler/controls-breakpoint" value={{{ [<ensembleTiddler>get[tiddler-controls-breakpoint]] ~4 }}}/>
