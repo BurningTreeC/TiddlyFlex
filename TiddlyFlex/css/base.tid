@@ -91,15 +91,6 @@ tags: $:/tags/Stylesheet
 	max-width: 100%;
 }
 
-<%if [{$:/state/tiddlyflex/story-river/filter}match[yes]] %>
-
-	.tc-tiddlyflex-story-river-container-inner {
-		outline: 2px solid <<colour primary>>;
-		outline-offset: -2px;
-	}
-
-<% endif %>
-
 @media (min-width: 992px) {
 
 	.tc-tiddlyflex-story-river-container {
@@ -373,6 +364,20 @@ body.tc-resizing .tc-tiddlyflex-story-river-container {
 		<<colour tiddler-background>> 20px
 	);
 }
+
+<%if [{$:/state/tiddlyflex/story-river/filter}match[yes]] %>
+
+	.tc-tiddlyflex-story-river-active {
+		background: repeating-linear-gradient(
+			to right,
+			<<colour page-background>>,
+			<<colour page-background>> 10px,
+			<<colour primary>> 10px,
+			<<colour primary>> 20px
+		);
+	}
+
+<% endif %>
 
 .tc-tiddlyflex-activate-column {
 	position: absolute;
