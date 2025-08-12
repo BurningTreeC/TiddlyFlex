@@ -1,0 +1,228 @@
+title: $:/plugins/BTC/TiddlyFlex/styles/ensemble-sidebar
+tags: $:/tags/Stylesheet
+
+.tc-tiddlyflex-ensemble-sidebar {
+	padding: 0.5em;
+}
+
+.tc-tiddlyflex-ensemble-sidebar h2 {
+	font-size: 1.2em;
+	margin: 0.5em 0;
+}
+
+.tc-tiddlyflex-ensemble-sidebar h3 {
+	font-size: 1em;
+	margin: 0.75em 0 0.5em 0;
+	color: <<colour foreground>>;
+}
+
+/* Save Section */
+.tc-tiddlyflex-ensemble-save-section {
+	margin-bottom: 1.5em;
+	padding-bottom: 1em;
+	border-bottom: 1px solid <<colour tiddler-border>>;
+}
+
+.tc-tiddlyflex-ensemble-form {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75em;
+}
+
+.tc-tiddlyflex-form-group {
+	display: flex;
+	flex-direction: column;
+	gap: 0.25em;
+}
+
+.tc-tiddlyflex-form-group label {
+	font-size: 0.9em;
+}
+
+.tc-tiddlyflex-input-group {
+	display: flex;
+	align-items: center;
+	gap: 0.5em;
+	position: relative;
+}
+
+.tc-tiddlyflex-ensemble-input {
+	flex: 1;
+	padding: 0.5em;
+	border: 1px solid <<colour tiddler-border>>;
+	border-radius: 3px;
+	background: <<colour tiddler-background>>;
+	color: <<colour foreground>>;
+}
+
+.tc-tiddlyflex-ensemble-input:focus {
+	outline: none;
+	border-color: <<colour primary>>;
+}
+
+.tc-tiddlyflex-clear-btn {
+	padding: 0.25em;
+	opacity: 0.5;
+}
+
+.tc-tiddlyflex-clear-btn:hover {
+	opacity: 1;
+}
+
+.tc-tiddlyflex-clear-btn svg {
+	width: 1em;
+	height: 1em;
+	fill: <<colour muted-foreground>>;
+}
+
+.tc-tiddlyflex-icon-preview {
+	display: flex;
+	align-items: center;
+	padding: 0.25em;
+}
+
+.tc-tiddlyflex-icon-preview svg {
+	width: 1.2em;
+	height: 1.2em;
+	fill: <<colour primary>>;
+}
+
+.tc-tiddlyflex-save-btn {
+	padding: 0.5em 1em;
+	border: 1px solid <<colour primary>>;
+	border-radius: 3px;
+	background: <<colour primary>>;
+	color: <<colour background>>;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5em;
+	font-weight: 500;
+}
+
+.tc-tiddlyflex-save-btn:hover:not([disabled]) {
+	background: <<colour primary>>;
+	opacity: 0.9;
+}
+
+.tc-tiddlyflex-save-btn[disabled] {
+	opacity: 0.5;
+	cursor: not-allowed;
+	background: <<colour muted-foreground>>;
+	border-color: <<colour muted-foreground>>;
+}
+
+.tc-tiddlyflex-save-btn svg {
+	width: 1em;
+	height: 1em;
+	fill: <<colour background>>;
+}
+
+/* Load Section */
+.tc-tiddlyflex-ensemble-load-section {
+	margin-top: 1em;
+}
+
+.tc-tiddlyflex-no-ensembles {
+	text-align: center;
+	padding: 2em 1em;
+	font-style: italic;
+}
+
+.tc-tiddlyflex-ensemble-list {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75em;
+}
+
+.tc-tiddlyflex-ensemble-item {
+	border: 1px solid <<colour tiddler-border>>;
+	border-radius: 4px;
+	padding: 0.75em;
+	background: <<colour tiddler-background>>;
+}
+
+.tc-tiddlyflex-ensemble-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 0.5em;
+}
+
+.tc-tiddlyflex-ensemble-title {
+	display: flex;
+	align-items: center;
+	gap: 0.5em;
+}
+
+.tc-tiddlyflex-ensemble-icon {
+	display: flex;
+	align-items: center;
+}
+
+.tc-tiddlyflex-ensemble-icon svg {
+	width: 1.2em;
+	height: 1.2em;
+	fill: <<colour primary>>;
+}
+
+.tc-tiddlyflex-ensemble-info {
+	font-size: 0.9em;
+}
+
+.tc-tiddlyflex-ensemble-actions {
+	display: flex;
+	gap: 0.5em;
+}
+
+.tc-tiddlyflex-load-btn,
+.tc-tiddlyflex-update-btn,
+.tc-tiddlyflex-delete-btn {
+	padding: 0.25em 0.5em;
+	border: 1px solid <<colour tiddler-border>>;
+	border-radius: 3px;
+	background: <<colour page-background>>;
+	display: flex;
+	align-items: center;
+	gap: 0.25em;
+	font-size: 0.9em;
+}
+
+.tc-tiddlyflex-load-btn:hover {
+	background: <<colour primary>>;
+	color: <<colour background>>;
+	border-color: <<colour primary>>;
+}
+
+.tc-tiddlyflex-load-btn:hover svg {
+	fill: <<colour background>>;
+}
+
+.tc-tiddlyflex-update-btn:hover {
+	background: <<colour notification-background>>;
+	border-color: <<colour notification-border>>;
+}
+
+.tc-tiddlyflex-delete-btn:hover {
+	background: <<colour alert-background>>;
+	border-color: <<colour alert-border>>;
+}
+
+.tc-tiddlyflex-load-btn svg,
+.tc-tiddlyflex-update-btn svg,
+.tc-tiddlyflex-delete-btn svg {
+	width: 1em;
+	height: 1em;
+	fill: <<colour foreground>>;
+}
+
+.tc-tiddlyflex-delete-btn:hover svg {
+	fill: <<colour alert-highlight>>;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+	.tc-tiddlyflex-ensemble-actions {
+		flex-wrap: wrap;
+	}
+}

@@ -1,66 +1,152 @@
 title: $:/plugins/BTC/TiddlyFlex/ui/SideBar/Ensemble
-caption: Ensemble
+caption: Workspaces
 tags: $:/tags/SideBar
 
-\define tiddlyflex-get-ensemble-delete-message()
+\procedure tiddlyflex-get-ensemble-delete-message()
 Do you want to delete the Ensemble "$(ensembleName)$"?
 \end
+
 \procedure tiddlyflex-delete-ensemble-actions()
 <$action-confirm $message=<<tiddlyflex-get-ensemble-delete-message>>>
 	<$action-deletetiddler $tiddler=<<ensembleTiddler>>/>
 </$action-confirm>
 \end
-\procedure tiddlyflex-ensemble-list()
-\whitespace trim
-<$wikify name="foregroundColour" text=<<colour foreground>>>
-<span class="tc-small-gap-right" style={{{ [[font-size: 24px; color: ]addsuffix<foregroundColour>addsuffix[;]] }}}>
-<div style="width: 24px; height: 24px; text-align: center; display: inline-block;">
-<%if [<ensembleTiddler>get[icon]] %>
-<$transclude tiddler={{{ [<ensembleTiddler>get[icon]] }}}/>
-<% else %>
-<$text text={{{ [<ensembleName>splitbefore[]] }}}/>
-<% endif %>
-</div>
-</span>
-</$wikify>
-<span style="font-size: 24px;">
-<$text text=<<ensembleName>>/>
-</span>
-<$button actions=<<tiddlyflex-load-ensemble-actions>> class="tc-small-gap-left">
-Load
-</$button>
-<$button class="tc-small-gap-left" actions=<<tiddlyflex-delete-ensemble-actions>>>
-Delete
-</$button>
-<$button class="tc-big-gap-left">
-<$macrocall $name="tiddlyflex-save-ensemble-actions" ensembleTitle=<<ensembleName>> icon={{{ [<ensembleTiddler>get[icon]] }}}/>
-Save
-</$button>
+
+\procedure tiddlyflex-clear-save-form()
+<$action-deletefield $tiddler="$:/temp/tiddlyflex/save-ensemble/story-title" $field="text"/>
+<$action-deletefield $tiddler="$:/temp/tiddlyflex/save-ensemble/story-title" $field="icon"/>
 \end
+
+\procedure tiddlyflex-save-and-clear()
+<$macrocall $name="tiddlyflex-save-ensemble-actions" ensembleTitle=<<ensembleTitle>> icon=<<icon>>/>
+<<tiddlyflex-clear-save-form>>
+\end
+
 \whitespace trim
 
-!! Save Ensemble
+<div class="tc-tiddlyflex-ensemble-sidebar">
 
-Give your ensemble a title:<br>
-<$edit-text tiddler="$:/temp/tiddlyflex/save-ensemble/story-title" default="" placeholder="Title" tag="input" class="tc-story-title tc-small-gap-right"/><$button class="tc-btn-invisible tc-greyed-out-button"><$action-deletefield $tiddler="$:/temp/tiddlyflex/save-ensemble/story-title" $field="text"/>{{$:/core/images/close-button}}</$button>
+<h2>Workspace Management</h2>
+<p class="tc-muted">Save and load workspace configurations</p>
 
-Optionally, provide an icon:<br>
-<$edit-text tiddler="$:/temp/tiddlyflex/save-ensemble/story-title" default="" field="icon" placeholder="Icon" tag="input" class="tc-small-gap-right"/><$button class="tc-btn-invisible tc-greyed-out-button"><$action-deletefield $tiddler="$:/temp/tiddlyflex/save-ensemble/story-title" $field="icon"/>{{$:/core/images/close-button}}</$button>
+<div class="tc-tiddlyflex-ensemble-save-section">
+	<h3>Save Current Workspace</h3>
+	
+	<div class="tc-tiddlyflex-ensemble-form">
+		<div class="tc-tiddlyflex-form-group">
+			<label class="tc-muted">Name:</label>
+			<div class="tc-tiddlyflex-input-group">
+				<$edit-text 
+					tiddler="$:/temp/tiddlyflex/save-ensemble/story-title" 
+					default="" 
+					placeholder="Enter workspace name" 
+					tag="input" 
+					class="tc-tiddlyflex-ensemble-input"
+				/>
+				<$button 
+					actions=<<tiddlyflex-clear-save-form>>
+					class="tc-btn-invisible tc-tiddlyflex-clear-btn"
+					tooltip="Clear form"
+				>
+					{{$:/core/images/close-button}}
+				</$button>
+			</div>
+		</div>
+		
+		<div class="tc-tiddlyflex-form-group">
+			<label class="tc-muted">Icon (optional):</label>
+			<div class="tc-tiddlyflex-input-group">
+				<$edit-text 
+					tiddler="$:/temp/tiddlyflex/save-ensemble/story-title" 
+					field="icon"
+					default="" 
+					placeholder="$:/core/images/star-filled" 
+					tag="input" 
+					class="tc-tiddlyflex-ensemble-input"
+				/>
+				<%if [{$:/temp/tiddlyflex/save-ensemble/story-title}has[icon]] %>
+					<span class="tc-tiddlyflex-icon-preview">
+						<$transclude tiddler={{$:/temp/tiddlyflex/save-ensemble/story-title!!icon}}/>
+					</span>
+				<% endif %>
+			</div>
+		</div>
+		
+		<$let 
+			ensembleTitle={{{ [[$:/temp/tiddlyflex/save-ensemble/story-title]get[text]] }}} 
+			icon={{{ [[$:/temp/tiddlyflex/save-ensemble/story-title]get[icon]] }}}
+		>
+			<%if [<ensembleTitle>!is[blank]] %>
+				<$button actions=<<tiddlyflex-save-and-clear>> class="tc-tiddlyflex-save-btn">
+					{{$:/core/images/save-button}} Save Workspace
+				</$button>
+			<% else %>
+				<$button class="tc-tiddlyflex-save-btn tc-btn-invisible" disabled="yes">
+					{{$:/core/images/save-button}} Save Workspace
+				</$button>
+			<% endif %>
+		</$let>
+	</div>
+</div>
 
-<$let ensembleTitle={{{ [[$:/temp/tiddlyflex/save-ensemble/story-title]get[text]] }}} icon={{{ [[$:/temp/tiddlyflex/save-ensemble/story-title]get[icon]] }}}>
-	<$button><$macrocall $name="tiddlyflex-save-ensemble-actions" ensembleTitle=<<ensembleTitle>> icon=<<icon>>/>Save</$button>
-</$let>
+<div class="tc-tiddlyflex-ensemble-load-section">
+	<h3>Saved Workspaces</h3>
+	
+	<%if [all[tiddlers+shadows]prefix[$:/Ensemble/]count[]compare:number:eq[0]] %>
+		<p class="tc-muted tc-tiddlyflex-no-ensembles">No saved workspaces yet</p>
+	<% else %>
+		<div class="tc-tiddlyflex-ensemble-list">
+			<$list filter="[all[tiddlers+shadows]prefix[$:/Ensemble/]]" variable="ensembleTiddler">
+				<$let ensembleName={{{ [<ensembleTiddler>removeprefix[$:/Ensemble/]] }}}>
+					<div class="tc-tiddlyflex-ensemble-item">
+						<div class="tc-tiddlyflex-ensemble-header">
+							<span class="tc-tiddlyflex-ensemble-title">
+								<span class="tc-tiddlyflex-ensemble-icon">
+									<%if [<ensembleTiddler>get[icon]] %>
+										<$transclude tiddler={{{ [<ensembleTiddler>get[icon]] }}}/>
+									<% else %>
+										{{$:/core/images/file}}
+									<% endif %>
+								</span>
+								<strong><<ensembleName>></strong>
+							</span>
+							<span class="tc-tiddlyflex-ensemble-info">
+								<span class="tc-muted">
+									<$count filter="[<ensembleTiddler>indexes[]]"/> settings
+								</span>
+							</span>
+						</div>
+						
+						<div class="tc-tiddlyflex-ensemble-actions">
+							<$button 
+								actions=<<tiddlyflex-load-ensemble-actions>> 
+								class="tc-btn-invisible tc-tiddlyflex-load-btn"
+								tooltip="Load this workspace"
+							>
+								{{$:/core/images/import-button}} Load
+							</$button>
+							
+							<$button 
+								class="tc-btn-invisible tc-tiddlyflex-update-btn"
+								tooltip="Update with current settings"
+							>
+								<$macrocall $name="tiddlyflex-save-ensemble-actions" ensembleTitle=<<ensembleName>> icon={{{ [<ensembleTiddler>get[icon]] }}}/>
+								{{$:/core/images/refresh-button}} Update
+							</$button>
+							
+							<$button 
+								actions=<<tiddlyflex-delete-ensemble-actions>>
+								class="tc-btn-invisible tc-tiddlyflex-delete-btn"
+								tooltip="Delete this workspace"
+							>
+								{{$:/core/images/delete-button}} Delete
+							</$button>
+						</div>
+					</div>
+				</$let>
+			</$list>
+		</div>
+	<% endif %>
+</div>
 
-<hr class="simple">
-
-!! Load Ensemble
-
-<$list filter="[all[tiddlers+shadows]prefix[$:/Ensemble/]]" variable="ensembleTiddler" storyview="tiddlypop">
-
-<$let ensembleName={{{ [<ensembleTiddler>removeprefix[$:/Ensemble/]] }}}>
-
-<<tiddlyflex-ensemble-list>>
-
-</$let>
-
-</$list>
+</div>
