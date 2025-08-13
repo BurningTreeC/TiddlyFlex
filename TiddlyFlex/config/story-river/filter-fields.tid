@@ -2,5 +2,4 @@ title: $:/config/tiddlyflex/story-river/filter/fields
 caption: Story-River Filter Fields-Suffix
 description: The Fields Suffix used for the search operator when filtering the Story Rivers
 settings-template: $:/plugins/BTC/TiddlyFlex/ui/ControlPanel/Templates/input
-
-*
+text: *

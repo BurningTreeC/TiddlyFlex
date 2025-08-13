@@ -2,5 +2,4 @@ title: $:/config/tiddlyflex/story-river/filter/flags
 caption: Story-River Filter Flags-Suffix
 description: The Flags Suffix used for the search operator when filtering the Story Rivers
 settings-template: $:/plugins/BTC/TiddlyFlex/ui/ControlPanel/Templates/input
-
-words
+text: words
