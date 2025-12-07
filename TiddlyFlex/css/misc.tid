@@ -50,4 +50,15 @@ tags: $:/tags/Stylesheet
 
 	<% endif %>
 
+	.tc-flexbox-story-column-resizer-flexbox {
+		position: absolute;
+		right: -4px;
+		top: 0;
+		bottom: 0;
+		width: 8px;
+		cursor: col-resize;
+		z-index: 501;
+		background: transparent;
+	}
+
 <% endif %>
