@@ -7,6 +7,7 @@ code-body: yes
 
 \whitespace trim
 \import [subfilter{$:/core/config/GlobalImportFilter}]
+\function tdff.css-tiddlyflex-column-count-sidebar-calc() [<tdff.css-tiddlyflex-column-count>compare:number:lteq[3]addprefix[calc(100% - (]addsuffix[ * ]addsuffix{$:/config/tiddlyflex/story-river/min-width}addsuffix[))]] :else[[calc(100% - (3 * ]addsuffix{$:/config/tiddlyflex/story-river/min-width}addsuffix[))]]
 \procedure on-resize-start-action()
 <%if [[$:/state/sidebar/width]is[missing]] [[$:/state/sidebar/width]!has[throttle.refresh]] %>
 	<$action-setfield $tiddler="$:/state/sidebar/width" throttle.refresh="yes"/>
