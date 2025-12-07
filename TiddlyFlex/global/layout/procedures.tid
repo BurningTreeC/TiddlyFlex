@@ -134,6 +134,7 @@ tags: $:/tags/Global
 			columnZIndex={{{ [<columns>subtract<colIndex>add[1]] }}}
 		>
 			<div
+				class="tc-flexbox-story-column"
 				style.display="flex"
 				style.position="relative"
 				style.z-index=<<columnZIndex>>
