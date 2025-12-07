@@ -78,8 +78,8 @@ tags: $:/tags/Global
 	:else[<columns>!match[2]then<tf.get.max.column.width.more.than.two>]
 \end
 
-\function tf.get.min.column.width.percentage() [tf.convert.px.to.percentage<tf.get.table.width>,[150px]addsuffix[%]]
-\function tf.get.max.column.width.percentage() [<colIndex>!match<columns>then<tf.get.table.width>!is[blank]then<tf.get.max.column.width>]
+\function tf.get.min.column.width.percentage() [{$:/state/tiddlyflex/story-river/filter}match[yes]then<cellWidth>] :else[tf.convert.px.to.percentage<tf.get.table.width>,[150px]addsuffix[%]]
+\function tf.get.max.column.width.percentage() [{$:/state/tiddlyflex/story-river/filter}match[yes]then<cellWidth>] :else[<colIndex>!match<columns>then<tf.get.table.width>!is[blank]then<tf.get.max.column.width>]
 
 \procedure resizable-flexbox-story-on-before-resize-start-actions()
 <$action-setfield $tiddler={{{ [<stateTiddlerPrefix>addsuffix[parent-size]] }}} text=<<tv-action-parent-size>>/>
@@ -140,7 +140,7 @@ tags: $:/tags/Global
 				style.z-index=<<columnZIndex>>
 				style.min-width=<<tf.get.min.column.width.percentage>>
 				style.max-width=<<tf.get.max.column.width.percentage>>
-				style.width={{{ [<stateTiddlerPrefix>addsuffix<colIndex>get[text]!prefix[Infinity]] :else[<cellWidth>] }}}
+				style.width={{{ [{$:/state/tiddlyflex/story-river/filter}match[yes]then<cellWidth>] :else[<stateTiddlerPrefix>addsuffix<colIndex>get[text]!prefix[Infinity]] :else[<cellWidth>] }}}
 			>
 				<$set name="transclusion" value=<<tiddlyFlexColumn>>>
 					<$vars tv-story-list={{{ [[$:/StoryList-]addsuffix<tiddlyFlexColumn>] }}} tv-history-list={{{ [[$:/HistoryList-]addsuffix<tiddlyFlexColumn>] }}} openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
