@@ -32,7 +32,17 @@ code-body: yes
 \procedure tiddlyflex-hide-sidebar-actions() <$action-setfield $tiddler="$:/state/sidebar" text="no"/>
 \procedure tiddlyflex-layout-story-rivers()
 \whitespace trim
-<$transclude $variable="resizable-flexbox-story"/>
+<%if [[$:/plugins/BTC/resizer]!is[missing]] %>
+	<$transclude $variable="resizable-flexbox-story"/>
+<% else %>
+	<$list filter="[subfilter<tdff.tiddlyflex-enlist-columns>]" variable="tiddlyFlexColumn">
+		<$set name="transclusion" value=<<tiddlyFlexColumn>>>
+			<$vars tv-story-list={{{ [[$:/StoryList-]addsuffix<tiddlyFlexColumn>] }}} tv-history-list={{{ [[$:/HistoryList-]addsuffix<tiddlyFlexColumn>] }}} openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
+				<$transclude $variable="tiddlyflex-message-catcher" tiddlyflex-layout-inner=<<tiddlyflex-layout-story>>/>
+			</$vars>
+		</$set>
+	</$list>
+<% endif %>
 \end
 \procedure tiddlyflex-layout-drafts-inner()
 <$transclude tiddler="$:/plugins/BTC/TiddlyFlex/ui/Templates/drafts"/>

@@ -16,6 +16,8 @@ tags: $:/tags/Stylesheet
 
 		.tc-flexbox-story-column {
 			width: 100% !important;
+			min-width: 100% !important;
+			max-width: 100% !important;
 		}
 
 		.tc-flexbox-story-column-resizer-flexbox {
