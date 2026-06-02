@@ -150,10 +150,6 @@ Error message and password prompt
 
 <li>$:/_demo/left-toolbar/css</li>
 
-<li>$:/_demo/top-center-bar</li>
-
-<li>$:/_demo/top-center-bar/css</li>
-
 <li>$:/_styles/documentation</li>
 
 <li>$:/columns</li>
@@ -259,10 +255,6 @@ Error message and password prompt
 ,
 {"title":"$:/_demo/left-toolbar/css","created":"20251207094311022","modified":"20251207094653334","tags":"$:/tags/Stylesheet","type":"text/vnd.tiddlywiki","text":".tfc-left-toolbar {\ndisplay: flex;\nflex-direction: column;\njustify-content: center;\nalign-items: center;\nheight: 100%;\nwidth: 50px;\n}\n\n.tfc-left-toolbar > button {\npadding: 0.5em;\n}","revision":"0","bag":"default"}
 ,
-{"title":"$:/_demo/top-center-bar","created":"20251207095054540","modified":"20251207101557265","tags":"$:/tags/TopCenterBar","type":"text/vnd.tiddlywiki","text":"\u003Cdiv class=\"tfc-top-center-bar\">\n\u003C$let\n\tcurrentColumn={{{ [subfilter\u003Ctdff.tiddlyflex-enlist-columns>] :intersection[{$:/columns!!current-column}] ~[subfilter\u003Ctdff.tiddlyflex-current-column-filtered>] }}}\n\tlastColumn={{{ [subfilter\u003Ctdff.tiddlyflex-enlist-columns>last[]] }}}\n\ttv-story-list={{{ [[$:/StoryList-]addsuffix\u003CcurrentColumn>!match[$:/StoryList-]] ~$:/StoryList-1 }}}\n\ttv-history-list={{{ [[$:/HistoryList-]addsuffix\u003CcurrentColumn>!match[$:/HistoryList-]] ~$:/HistoryList-1 }}}\n\tfocusedTiddler={{{ [\u003Ctv-history-list>get[current-tiddler]] }}}\n>\n\u003C%if [list\u003Ctv-story-list>match\u003CfocusedTiddler>] %>\n\u003Cdiv class=\"tc-tiny-gap-right\">''Focused Tiddler:''\u003C/div>\u003C$text text=\u003C\u003CfocusedTiddler>>/>\n\u003C% endif %>\n\u003C/$let>\n\u003C/div>","revision":"0","bag":"default"}
-,
-{"title":"$:/_demo/top-center-bar/css","created":"20251207095850579","modified":"20251207100004228","tags":"$:/tags/Stylesheet","type":"text/vnd.tiddlywiki","text":".tfc-top-center-bar {\ndisplay: flex;\nflex-direction: row;\njustify-content: center;\nalign-items: center;\n}","revision":"0","bag":"default"}
-,
 {"title":"$:/_styles/documentation","created":"20251207104657269","modified":"20251207104712068","tags":"$:/tags/Stylesheet","type":"text/vnd.tiddlywiki","text":".tc-red-icon svg {\nfill: red;\n}\n\n[data-tags=\"BigImage\"] .tc-tiddler-frame img {\nwidth: 100%;\n}\n\n\u003C%if [{$:/state/show-dragndrop-elements}match[yes]] %>\n.tc-tiddlyflex-droppable-top-half, .tc-tiddlyflex-droppable-bottom-half {\nborder: 1px dashed grey;\n}\n\u003C% endif %>","revision":"0","bag":"default"}
 ,
 {"title":"$:/columns","created":"20251207091953210","current-column":"2","list":"1 2 3","modified":"20260602052423308","type":"text/vnd.tiddlywiki","revision":"0","bag":"default"}
@@ -323,7 +315,7 @@ Error message and password prompt
 ,
 {"title":"$:/StoryList-1","text":"","list":"[[Resizer Compatibility]] [[The Great Wave off the Coast of Kanagawa]] [[I am one of that guy's paintings]]","revision":"1","bag":"default"}
 ,
-{"title":"$:/StoryList-2","created":"20260601185820365","list":"[[Star me on GitHub]] $:/plugins/BTC/TiddlyFlex","modified":"20260602052541465","type":"text/vnd.tiddlywiki","revision":"0","bag":"default"}
+{"title":"$:/StoryList-2","created":"20260601185820365","list":"[[Star me on GitHub]] $:/plugins/BTC/TiddlyFlex","modified":"20260602053945517","type":"text/vnd.tiddlywiki","revision":"0","bag":"default"}
 ,
 {"title":"$:/StoryList-3","created":"20260601185820365","list":"[[Ceci n’est pas une pipe.]] [[Vincent's bedroom]] [[Nikola Tesla - With his equipment]] [[The Birth of Venus]]","modified":"20260602052135876","type":"text/vnd.tiddlywiki","revision":"0","bag":"default"}
 ,
