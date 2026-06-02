@@ -5,22 +5,66 @@ tags: $:/tags/TopRightBar $:/tags/PageControls
 list-before: $:/plugins/BTC/TiddlyFlex/ui/Buttons/TopToolbar/add-column
 
 \whitespace trim
-\procedure remove-column-actions()
-<$set name="columnCount" value={{{ [list[$:/columns]count[]] }}}>
-	<$list filter="[[$:/columns]get[current-column]match<columnCount>]">
-		<$action-setfield $tiddler="$:/columns" current-column={{{ [<columnCount>subtract[1]!match[0]] ~1 }}}/>
-	</$list>
-	<$list filter="[<columnCount>!match[1]]">
-		<$action-listops $tiddler="$:/columns" $subfilter="-[<columnCount>]"/>
-	</$list>
-</$set>
-\end
 <%if [tdff.tiddlyflex-layout[]] %>
-	<$let columns={{{ [list[$:/columns]count[]] ~1 }}}>
-		<$button class=<<tv-config-toolbar-class>> actions=<<remove-column-actions>> tooltip="remove column">
+	<$let
+		stateTiddlerPrefix="$:/state/resizable-flexbox-story/"
+		columnsActual={{{ [list[$:/columns]count[]] }}}
+		columns={{{ [<columnsActual>!match[0]] ~1 }}}
+		nextColumn={{{ [<columns>subtract[1]!match[0]] ~1 }}}
+
+		lastColumn={{{ [list[$:/columns]last[]] }}}
+		newLastColumn={{{ [list[$:/columns]butlast[]last[]] ~1 }}}
+
+		oldCellWidthNumeric={{{ [[100]divide<columns>fixed[6]] }}}
+		removedColumnWidthNumeric={{{ [<stateTiddlerPrefix>addsuffix[col-]addsuffix<lastColumn>get[text]removesuffix[%]else<oldCellWidthNumeric>fixed[6]] }}}
+		cellDiff={{{ [<removedColumnWidthNumeric>divide<nextColumn>fixed[6]] }}}
+
+		canRemoveColumn={{{ [<columns>compare:number:gt[1]then[yes]else[no]] }}}
+		removeColumnTooltip={{{ [<canRemoveColumn>match[yes]then[remove column]else[cannot remove the last column]] }}}
+	>
+		<$button
+			class=<<tv-config-toolbar-class>>
+			tooltip=<<removeColumnTooltip>>
+			disabled={{{ [<canRemoveColumn>match[no]then[yes]] }}}
+		>
+			<%if [<canRemoveColumn>match[yes]] %>
+
+				<!-- If the active column is the removed column, move active state to the new last column. -->
+				<$list filter="[[$:/columns]get[current-column]match<lastColumn>]">
+					<$action-setfield
+						$tiddler="$:/columns"
+						current-column=<<newLastColumn>>
+					/>
+				</$list>
+
+				<!--
+				Each remaining column receives the same amount:
+				removedColumnWidth / remainingColumnCount.
+				-->
+				<$list filter="[list[$:/columns]butlast[]]" variable="column">
+					<$action-setfield
+						$tiddler={{{ [<stateTiddlerPrefix>addsuffix[col-]addsuffix<column>] }}}
+						text={{{ [<stateTiddlerPrefix>addsuffix[col-]addsuffix<column>get[text]removesuffix[%]else<oldCellWidthNumeric>add<cellDiff>fixed[6]addsuffix[%]] }}}
+					/>
+				</$list>
+
+				<!-- Remove the last column from the list. -->
+				<$action-listops
+					$tiddler="$:/columns"
+					$subfilter="-[<lastColumn>]"
+				/>
+
+				<!-- Delete stale state for the removed column. -->
+				<$action-deletetiddler
+					$tiddler={{{ [<stateTiddlerPrefix>addsuffix[col-]addsuffix<lastColumn>] }}}
+				/>
+
+			<% endif %>
+
 			<$list filter="[<tv-config-toolbar-icons>match[yes]]">
 				{{$:/core/images/minus-button}}
 			</$list>
+
 			<$list filter="[<tv-config-toolbar-text>match[yes]]">
 				<span class="tc-btn-text">
 					<$text text="Remove a column"/>

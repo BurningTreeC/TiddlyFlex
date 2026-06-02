@@ -30,6 +30,9 @@ tags: $:/tags/Stylesheet
 	flex-basis: 100%;
 	max-height: 100%;
 	max-width: 100%;
+	min-width: 0;
+	min-height: 0;
+	overflow: hidden;
 	position: relative;
 }
 
@@ -89,6 +92,13 @@ tags: $:/tags/Stylesheet
 	overflow: hidden;
 	max-height: 100%;
 	max-width: 100%;
+}
+
+.tc-tiddlyflex-story-river-container,
+.tc-tiddlyflex-story-river-container-inner {
+	min-width: 0;
+	min-height: 0;
+	overflow: hidden;
 }
 
 @media (min-width: 992px) {
@@ -256,8 +266,14 @@ body.tc-resizing .tc-tiddlyflex-story-river-container {
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
+	min-width: 0;
+	max-width: 100%;
 	flex-grow: 0;
 	flex-shrink: 0;
+	flex-basis: auto;
+	height: 100%;
+	overflow: visible;
+	box-sizing: border-box;
 	max-height: 100%;
 	z-index: 998;
 	-webkit-box-shadow: 0px 0px 5px 0px <<colour tiddlyflex-box-shadow>>;
@@ -300,6 +316,7 @@ body.tc-resizing .tc-tiddlyflex-story-river-container {
 <% endif %>
 
 .tc-tiddlyflex-sidebar-container {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
@@ -307,9 +324,24 @@ body.tc-resizing .tc-tiddlyflex-story-river-container {
 	max-height: 100%;
 	flex-grow: 1;
 	flex-shrink: 0;
+	flex-basis: auto;
+	width: 100%;
+	height: 100%;
+	min-width: 0;
+	max-width: 100%;
+	min-height: 0;
+	box-sizing: border-box;
+	overflow-x: auto;
+	overflow-y: auto;
+	<!-- overflow: hidden ? -->
 }
 
 .tc-tiddlyflex-sidebar-container-inner {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	min-width: 0;
+	min-height: 0;
 	display: flex;
 	flex-grow: 1;
 	flex-shrink: 0;
@@ -317,12 +349,224 @@ body.tc-resizing .tc-tiddlyflex-story-river-container {
 	scroll-behavior: smooth;
 	flex-basis: 0;
 	flex-direction: row;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+
+.tc-tiddlyflex-sidebar-container-inner * {
+	box-sizing: border-box;
+	max-width: 100%;
+}
+
+.tc-tiddlyflex-sidebar-container-inner a,
+.tc-tiddlyflex-sidebar-container-inner .tc-tiddler-title,
+.tc-tiddlyflex-sidebar-container-inner .tc-sidebar-lists,
+.tc-tiddlyflex-sidebar-container-inner .tc-sidebar-scrollable {
+	overflow-wrap: anywhere;
+	word-break: break-word;
+}
+
+.tc-tiddlyflex-sidebar-container-inner pre,
+.tc-tiddlyflex-sidebar-container-inner code {
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+}
+
+.tc-tiddlyflex-sidebar-container-inner img,
+.tc-tiddlyflex-sidebar-container-inner svg,
+.tc-tiddlyflex-sidebar-container-inner canvas,
+.tc-tiddlyflex-sidebar-container-inner video {
+	max-width: 100%;
+	height: auto;
+}
+
+.tc-tiddlyflex-sidebar-container-inner table {
+	max-width: 100%;
+	display: block;
+	overflow-x: auto;
 }
 
 .tc-tiddlyflex-sidebar-scrollable {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	width: auto;
+	height: auto;
+	min-width: 0;
+	min-height: 0;
+	max-width: 100%;
+	max-height: 100%;
+	box-sizing: border-box;
+	overflow-x: auto;
+	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
 	padding-top: 42px;
 	padding-left: 42px;
-	min-width: 100%;
+}
+
+/*
+Neutralise the core TW fixed sidebar only inside TiddlyFlex.
+Do NOT set height:100%; use top/right/bottom/left instead.
+*/
+.tc-tiddlyflex-sidebar .tc-sidebar-scrollable {
+	position: absolute !important;
+	top: 0 !important;
+	right: 0 !important;
+	bottom: 0 !important;
+	left: 0 !important;inset: 0 !important;
+	inset-inline-start: 0 !important;
+	inset-inline-end: 0 !important;width: auto !important;
+	height: auto !important;
+	min-width: 0 !important;
+	min-height: 0 !important;
+	max-width: 100% !important;
+	max-height: 100% !important;margin: 0 !important;
+	box-sizing: border-box;overflow-x: auto !important;
+	overflow-y: auto !important;
+	-webkit-overflow-scrolling: touch;padding-top: 42px !important;
+	padding-right: 0 !important;
+	padding-bottom: 28px !important;
+	padding-left: 42px !important;
+}
+
+/* Sidebar internals must not force the sidebar wider. */
+.tc-tiddlyflex-sidebar .tc-sidebar-header,
+.tc-tiddlyflex-sidebar .tc-sidebar-lists,
+.tc-tiddlyflex-sidebar .tc-sidebar-tabs,
+.tc-tiddlyflex-sidebar .tc-tab-set,
+.tc-tiddlyflex-sidebar .tc-tab-buttons,
+.tc-tiddlyflex-sidebar .tc-tab-content,
+.tc-tiddlyflex-sidebar .tc-search,
+.tc-tiddlyflex-sidebar .tc-advanced-search {
+	min-width: 0;
+	max-width: 100%;
+	box-sizing: border-box;
+}
+
+/*
+Do not create another vertical scroll layer here.
+The outer sidebar scrollable is already the vertical scroll container.
+Horizontal overflow can still scroll inside lists/tab content.
+*/
+.tc-tiddlyflex-sidebar .tc-sidebar-lists,
+.tc-tiddlyflex-sidebar .tc-tab-content {
+	overflow-x: auto;
+	overflow-y: visible;
+}
+
+/* Core TW uses nowrap here. Keep it, but contain it inside horizontal scroll. */
+.tc-tiddlyflex-sidebar .tc-sidebar-lists .tc-menu-list-item {
+	max-width: 100%;
+	box-sizing: border-box;
+}
+
+/* Inputs stay inside the sidebar. */
+.tc-tiddlyflex-sidebar input,
+.tc-tiddlyflex-sidebar textarea,
+.tc-tiddlyflex-sidebar select {
+	max-width: 100%;
+	box-sizing: border-box;
+}
+
+/*
+Long links/titles should wrap where possible.
+Menu list items remain horizontally scrollable if nowrap wins.
+*/
+.tc-tiddlyflex-sidebar a,
+.tc-tiddlyflex-sidebar .tc-title,
+.tc-tiddlyflex-sidebar .tc-tiddler-title,
+.tc-tiddlyflex-sidebar .tc-sidebar-lists li {
+	overflow-wrap: anywhere;
+	word-break: break-word;
+}
+
+/* Media containment */
+.tc-tiddlyflex-sidebar img,
+.tc-tiddlyflex-sidebar svg,
+.tc-tiddlyflex-sidebar canvas,
+.tc-tiddlyflex-sidebar video {
+	max-width: 100%;
+	height: auto;
+	box-sizing: border-box;
+}
+
+/* Code containment */
+.tc-tiddlyflex-sidebar pre,
+.tc-tiddlyflex-sidebar code {
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+	word-break: break-word;
+}
+
+/* Tables scroll horizontally inside the sidebar. */
+.tc-tiddlyflex-sidebar table {
+	display: block;
+	max-width: 100%;
+	overflow-x: auto;
+	box-sizing: border-box;
+}
+
+/*
+Horizontal scrolling inside the TiddlyFlex sidebar.The outer scroll container gets both x and y scrollbars.
+Wide inner content may exceed the visible width, but it must not shift the layout.
+*/.tc-tiddlyflex-sidebar .tc-sidebar-scrollable,
+.tc-tiddlyflex-sidebar-scrollable {
+	overflow-x: auto !important;
+	overflow-y: auto !important;
+	overscroll-behavior: contain;
+}
+
+/*
+Allow sidebar list/tab content to become wider than the visible sidebar,
+so the parent scroll container can show a horizontal scrollbar.
+*/
+.tc-tiddlyflex-sidebar .tc-sidebar-lists,
+.tc-tiddlyflex-sidebar .tc-tab-content {
+	min-width: 0;
+	width: max-content;
+	max-width: none;
+	box-sizing: border-box;
+}
+
+/*
+But never let the scroll area itself become wider than the sidebar.
+The scroll area stays clipped; only its content may be wider.
+*/
+.tc-tiddlyflex-sidebar .tc-sidebar-scrollable,
+.tc-tiddlyflex-sidebar-scrollable {
+	max-width: 100%;
+	box-sizing: border-box;
+}
+
+/*
+Keep menu/list rows on one line if you want horizontal scrolling.
+This is important: wrapping destroys the need for x-scroll.
+*/
+.tc-tiddlyflex-sidebar .tc-sidebar-lists .tc-menu-list-item,
+.tc-tiddlyflex-sidebar .tc-sidebar-lists li,
+.tc-tiddlyflex-sidebar .tc-sidebar-lists a,
+.tc-tiddlyflex-sidebar .tc-tab-content a {
+	white-space: nowrap;
+	overflow-wrap: normal;
+	word-break: normal;
+}
+
+/*
+Search/header controls should still stay inside the sidebar.
+They should not create huge horizontal width.
+*/
+.tc-tiddlyflex-sidebar .tc-sidebar-header,
+.tc-tiddlyflex-sidebar .tc-sidebar-search,
+.tc-tiddlyflex-sidebar .tc-search,
+.tc-tiddlyflex-sidebar .tc-advanced-search,
+.tc-tiddlyflex-sidebar input,
+.tc-tiddlyflex-sidebar textarea,
+.tc-tiddlyflex-sidebar select,
+.tc-tiddlyflex-sidebar button {
+	max-width: 100%;
+	box-sizing: border-box;
 }
 
 .tc-tiddlyflex-sidebar-shown-eventcatcher {
