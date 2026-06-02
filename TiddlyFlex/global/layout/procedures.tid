@@ -179,6 +179,7 @@ tags: $:/tags/Global
 							<$transclude $variable="tiddlyflex-message-catcher" tiddlyflex-layout-inner=<<tiddlyflex-layout-story>>/>
 							<$resizer
 								class="tc-flexbox-story-column-resizer-flexbox"
+								disable={{{ [{$:/state/tiddlyflex/story-river/filter}match[yes]] :else[[no]] }}}
 								direction="horizontal"
 								mode="split-pair"
 								min="10%"

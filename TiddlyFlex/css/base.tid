@@ -30,6 +30,7 @@ tags: $:/tags/Stylesheet
 	flex-basis: 100%;
 	max-height: 100%;
 	max-width: 100%;
+	width: 100%;
 	min-width: 0;
 	min-height: 0;
 	overflow: hidden;
@@ -49,6 +50,8 @@ tags: $:/tags/Stylesheet
 
 	.tc-tiddlyflex-main {
 		overflow-x: clip;
+		overflow-y: clip;
+		overflow-clip-margin: 0;
 	}
 
 }
@@ -86,12 +89,14 @@ tags: $:/tags/Stylesheet
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
-	flex-grow: 1;
+	flex-grow: 0;
 	flex-shrink: 0;
+	min-width: 0;
 	flex-basis: 100%;
 	overflow: hidden;
 	max-height: 100%;
-	max-width: 100%;
+	max-width: none;
+	box-sizing: border-box;
 }
 
 .tc-tiddlyflex-story-river-container,
@@ -182,12 +187,17 @@ body.tc-resizing .tc-tiddlyflex-story-river-container {
 	max-height: 100%;
 	flex-grow: 1;
 	flex-shrink: 0;
+	width: 100%;
+	height: 100%;
+	min-width: 0;
+	box-sizing: border-box;
 }
 
 @media (min-width: 992px) {
 
 	.tc-tiddlyflex-story-river-container-inner {
-		overflow: hidden;
+		overflow-x: auto;
+		overflox-y: auto;
 		flex-basis: 0;
 	}
 
