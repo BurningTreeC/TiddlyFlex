@@ -61,4 +61,52 @@ tags: $:/tags/Stylesheet
 		background: transparent;
 	}
 
+	.tc-tiddlyflex-hide-bars-button {
+		position: fixed;
+		bottom: 30px;
+		right: 30px;
+		width: 30px;
+		height: 30px;
+		z-index: 999999;
+	}
+
+	.tc-tiddlyflex-hide-bars-button:hover {
+		opacity: 1;
+	}
+
+	.tc-tiddlyflex-hide-bars-button button svg {
+		fill: <<colour muted-foreground>>;
+		height: 30px;
+		width: 30px;
+	}
+
+	.tc-tiddlyflex-hide-bars-button button:hover svg {
+		fill: <<colour foreground>>;
+	}
+
+	<%if [{$:/state/tiddlyflex/hidden-bars}match[yes]] %>
+
+		.tc-tiddlyflex-header, .tc-tiddlyflex-footer, .tc-tiddlyflex-leftbar, .tc-tiddlyflex-sidebar {
+			display: none;
+		}
+
+		.tc-tiddlyflex-story-river-container {
+			flex-basis: 100%;
+			width: 100%;
+		}
+
+		.tc-tiddlyflex-story-river-wrapper-inner .tc-tiddlyflex-story-river {
+			padding: 10px;
+		}
+
+		.tc-tiddlyflex-story-river-inner > .tc-tiddler-view-frame, .tc-tiddlyflex-story-river-inner > .tc-tiddler-edit-frame {
+			margin-bottom: 10px;
+		}
+
+		.tc-tiddler-frame {
+			padding: 14px 21px 21px 21px;
+		}
+
+	<% endif %>
+
 <% endif %>

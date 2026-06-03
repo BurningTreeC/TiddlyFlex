@@ -90,6 +90,7 @@ code-body: yes
 			<div class={{{ [{$:/state/sidebar}!match[no]then[tc-tiddlyflex-sidebar-hide tc-btn-invisible tc-tiddlyflex-sidebar-shown]] [{$:/state/sidebar}match[no]then[tc-tiddlyflex-sidebar-hide tc-btn-invisible tc-tiddlyflex-sidebar-hidden]] }}}/>
 		</$eventcatcher>
 		<$transclude $variable="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner={{$:/core/ui/CommandPaletteTemplate}}/>
+		<$transclude $tiddler="$:/plugins/BTC/TiddlyFlex/ui/hide-bars-button"/>
 		<$transclude $variable="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner=<<tiddlyflex-layout-header>>/>
 		<div class="tc-tiddlyflex-main-wrapper">
 			<$transclude $variable="tiddlyflex-message-catcher-outside" tiddlyflex-layout-inner=<<tiddlyflex-layout-leftbar>>/>

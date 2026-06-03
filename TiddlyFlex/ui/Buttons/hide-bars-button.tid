@@ -1,0 +1,14 @@
+title: $:/plugins/BTC/TiddlyFlex/ui/hide-bars-button
+
+\whitespace trim
+<div class="tc-tiddlyflex-hide-bars-button">
+	<%if [{$:/state/tiddlyflex/hidden-bars}match[yes]] %>
+		<$button class="tc-btn-invisible" set="$:/state/tiddlyflex/hidden-bars" setTo="no">
+			{{$:/core/images/preview-closed}}
+		</$button>
+	<% else %>
+		<$button class="tc-btn-invisible" set="$:/state/tiddlyflex/hidden-bars" setTo="yes">
+			{{$:/core/images/preview-open}}
+		</$button>
+	<% endif %>
+</div>
