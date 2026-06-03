@@ -171,8 +171,8 @@ tags: $:/tags/Global
 					style.min-width="0"
 					style.flex-grow="0"
 					style.flex-shrink="0"
-					style.flex-basis={{{ [<stateTiddlerPrefix>addsuffix<colIndex>get[text]!prefix[Infinity]] :else[<cellWidth>] }}}
-					style.width={{{ [<stateTiddlerPrefix>addsuffix<colIndex>get[text]!prefix[Infinity]] :else[<cellWidth>] }}}
+					style.flex-basis={{{ [{$:/state/tiddlyflex/story-river/filter}match[yes]then<cellWidth>] :else[<stateTiddlerPrefix>addsuffix<colIndex>get[text]!prefix[Infinity]] :else[<cellWidth>] }}}
+					style.width={{{ [{$:/state/tiddlyflex/story-river/filter}match[yes]then<cellWidth>] :else[<stateTiddlerPrefix>addsuffix<colIndex>get[text]!prefix[Infinity]] :else[<cellWidth>] }}}
 				>
 					<$set name="transclusion" value=<<tiddlyFlexColumn>>>
 						<$vars tv-story-list={{{ [[$:/StoryList-]addsuffix<tiddlyFlexColumn>] }}} tv-history-list={{{ [[$:/HistoryList-]addsuffix<tiddlyFlexColumn>] }}} openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
