@@ -28,4 +28,8 @@ tags: $:/tags/Stylesheet
 
 	}
 
+	.tc-resizer.tc-sidebar-resizer-tiddlyflex {
+		position: absolute !important;
+	}
+
 <% endif %>
